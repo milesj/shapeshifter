@@ -1,0 +1,42 @@
+{
+    "string": "string",
+    "number": "number",
+    "bool": "bool",
+    "func": "func",
+    "null": {
+        "type": "string",
+        "null": true
+    },
+    "required": {
+        "type": "number",
+        "required": true
+    },
+    "enum": {
+        "type": "enum",
+        "valueType": "string",
+        "values": ["foo", "bar"]
+    },
+    "instanceOf": {
+        "type": "instanceOf",
+        "contract": "ClassName"
+    },
+    "arrayOf": {
+        "type": "arrayOf",
+        "valueType": "string"
+    },
+    "objectOf": {
+        "type": "objectOf",
+        "keyType": "string",
+        "valueType": "string"
+    },
+    "shape": {
+        "type": "shape",
+        "fields": {
+            "foo": "string",
+            "bar": {
+                "type": "number",
+                "null": true
+            }
+        }
+    }
+}

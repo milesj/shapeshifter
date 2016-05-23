@@ -1,0 +1,25 @@
+{
+    "string": "string",
+    "string_required": {
+        "type": "string",
+        "required": true
+    },
+    "string_null": {
+        "type": "string",
+        "null": true
+    },
+    "number": "number",
+    "number_expanded": {
+        "type": "number"
+    },
+    "bool": "bool",
+    "bool_required": {
+        "type": "bool",
+        "required": true
+    },
+    "func": "func",
+    "func_notnull": {
+        "type": "func",
+        "null": false
+    }
+}

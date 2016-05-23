@@ -1,0 +1,30 @@
+{
+  "name": "reagent",
+  "version": "0.0.1",
+  "description": "Generate resource schemas for React PropTypes, Flow, and TypeScript.",
+  "main": "reagent.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "babel ./src -d ./lib",
+    "watch": "babel --watch ./src -d ./lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milesj/reagent.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/milesj/reagent/issues"
+  },
+  "homepage": "https://github.com/milesj/reagent#readme",
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-eslint": "^6.0.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-2": "^6.5.0",
+    "eslint": "^2.10.2"
+  }
+}
