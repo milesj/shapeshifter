@@ -1,6 +1,16 @@
 
-var Parser = require('./lib/Parser').default;
+var Schema = require('./lib/Schema').default;
+var ReactCompiler = require('./lib/compilers/React').default;
+var FlowCompiler = require('./lib/compilers/Flow').default;
 
-var p = new Parser(require('./tests/primitive-schema.json'));
+var s = new Schema(require('./tests/primitive-schema.json'));
 
-console.log(p.parse());
+console.log(s.parse());
+
+var rc = new ReactCompiler(s);
+
+console.log(rc.compile());
+
+var fc = new FlowCompiler(s);
+
+console.log(fc.compile());

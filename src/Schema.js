@@ -11,7 +11,7 @@ import ObjectDef from './definitions/Object';
 import ShapeDef from './definitions/Shape';
 import StringDef from './definitions/String';
 
-export default class Parser {
+export default class Schema {
     constructor(json) {
         let schema = {};
 
@@ -23,16 +23,24 @@ export default class Parser {
             throw new Error('Parse requires a valid JSON structure.');
         }
 
+        if (!schema.name) {
+            throw new Error('No name found in schema.');
+        } else if (!schema.fields || !Object.keys(schema.fields).length) {
+            throw new Error('No fields found in schema.')
+        }
+
         this.schema = schema;
+        this.name = schema.name;
         this.fields = {};
+        this.fieldNames = Object.keys(schema.fields);
     }
 
     parse() {
         let schema = this.schema,
             fields = {};
 
-        Object.keys(schema).forEach(field => {
-            let config = schema[field],
+        this.fieldNames.forEach(field => {
+            let config = schema.fields[field],
                 definition = null;
 
             // Convert primitives to configuration objects
