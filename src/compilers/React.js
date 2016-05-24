@@ -1,16 +1,21 @@
 import Compiler from '../Compiler';
 import indent from '../helpers/indent';
-import config from '../config';
 
 export default class ReactCompiler extends Compiler {
     compile() {
-        let fields = this.compileFields();
+        let fields = this.compileFields(this.schema.fields);
 
-        return `const ${this.schema.name + config.schemaSuffix} = PropTypes.shape({\n${fields.join(',\n')}\n});`;
+        return `const ${this.getResourceName()} = PropTypes.shape({\n${fields.join(',\n')}\n});`;
     }
 
     renderBool(field, definition) {
         return this.wrapProperty(field, definition, 'bool');
+    }
+
+    renderEnum(field, definition) {
+        return this.wrapProperty(field, definition, this.wrapFunction('oneOf',
+          this.formatArray(definition.config.values, definition.config.valueType)
+        ));
     }
 
     renderFunc(field, definition) {
@@ -23,6 +28,10 @@ export default class ReactCompiler extends Compiler {
 
     renderString(field, definition) {
         return this.wrapProperty(field, definition, 'string');
+    }
+
+    wrapFunction(name, args = '') {
+        return `${name}(${args})`;
     }
 
     wrapIsRequired(template, definition) {

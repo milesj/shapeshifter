@@ -1,3 +1,4 @@
+import config from './config';
 import ArrayDef from './definitions/Array';
 import BoolDef from './definitions/Bool';
 import EnumDef from './definitions/Enum';
@@ -13,26 +14,55 @@ export default class Compiler {
         this.schema = schema;
     }
 
-    compileFields() {
-        let fields = [];
+    compileFields(fields) {
+        let compiledFields = [];
 
-        this.schema.fieldNames.forEach(field => {
-            let definition = this.schema.fields[field];
+        Object.keys(fields).forEach(field => {
+            let definition = fields[field],
+                compiledField;
 
             if (definition instanceof BoolDef) {
-                fields.push(this.renderBool(field, definition));
+                compiledField = this.renderBool(field, definition);
+
+            } else if (definition instanceof EnumDef) {
+                compiledField = this.renderEnum(field, definition);
 
             } else if (definition instanceof FuncDef) {
-                fields.push(this.renderFunc(field, definition));
+                compiledField = this.renderFunc(field, definition);
 
             } else if (definition instanceof NumberDef) {
-                fields.push(this.renderNumber(field, definition));
+                compiledField = this.renderNumber(field, definition);
 
             } else if (definition instanceof StringDef) {
-                fields.push(this.renderString(field, definition));
+                compiledField = this.renderString(field, definition);
             }
+
+            compiledFields.push(compiledField);
         });
 
-        return fields;
+        return compiledFields;
+    }
+
+    formatArray(values, type) {
+        let array = values.map(value => this.formatValue(value, type)).join(', ');
+
+        return `[${array}]`;
+    }
+
+    formatValue(value, type) {
+        switch (type || typeof value) {
+            case 'string':
+                return `'${value}'`;
+            case 'function':
+                return `${value}`;
+            case 'number':
+                return parseFloat(value);
+            default:
+                throw new TypeError('Unknown type passed to `formatValue()`.');
+        }
+    }
+
+    getResourceName(subResource = '') {
+        return this.schema.name + subResource + config.schemaSuffix;
     }
 }

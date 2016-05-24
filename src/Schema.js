@@ -20,7 +20,7 @@ export default class Schema {
         } else if (isObject(json)) {
             schema = json;
         } else {
-            throw new Error('Parse requires a valid JSON structure.');
+            throw new SyntaxError('Parse requires a valid JSON structure.');
         }
 
         if (!schema.name) {
@@ -48,13 +48,13 @@ export default class Schema {
                 if (isPrimitive(config)) {
                     config = { type: config };
                 } else {
-                    throw new Error(`Invalid primitive type "${config}".`);
+                    throw new TypeError(`Invalid primitive type "${config}".`);
                 }
             }
             
             // Check if a type exists
             if (!config.type || !isSupported(config.type)) {
-                throw new Error(`Type "${config.type || 'unknown'}" not supported.`);
+                throw new TypeError(`Type "${config.type || 'unknown'}" not supported.`);
             }
 
             // Instantiate definition classes for each type
@@ -62,13 +62,13 @@ export default class Schema {
                 case 'array':
                     definition = new ArrayDef(config);
                     break;
-                case 'bool':
+                case 'boolean':
                     definition = new BoolDef(config);
                     break;
                 case 'enum':
                     definition = new EnumDef(config);
                     break;
-                case 'func':
+                case 'function':
                     definition = new FuncDef(config);
                     break;
                 case 'instance':

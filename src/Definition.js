@@ -1,20 +1,22 @@
+import config from './config';
+
 export default class Definition {
-    constructor(config) {
+    constructor(cfg) {
         this.config = {
-            null: true,
-            required: false,
-            ...config
+            null: config.defaultNull,
+            required: config.defaultRequired,
+            ...cfg
         };
 
         this.validateConfig();
     }
 
     isNullable() {
-        return this.config.null || false;
+        return this.config.null;
     }
 
     isRequired() {
-        return this.config.required || false;
+        return this.config.required;
     }
 
     validateConfig() {

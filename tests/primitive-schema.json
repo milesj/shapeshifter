@@ -14,14 +14,31 @@
         "number_expanded": {
             "type": "number"
         },
-        "bool": "bool",
-        "bool_required": {
-            "type": "bool",
+        "boolean": "boolean",
+        "boolean_required": {
+            "type": "boolean",
             "required": true
         },
-        "func": "func",
-        "func_notnull": {
-            "type": "func",
+        "function": "function",
+        "function_notnull": {
+            "type": "function",
+            "null": false
+        },
+        "enum_number": {
+            "type": "enum",
+            "valueType": "number",
+            "values": [123, 456.78]
+        },
+        "enum_string": {
+            "type": "enum",
+            "valueType": "string",
+            "values": ["foo", "bar"],
+            "required": true
+        },
+        "enum_function": {
+            "type": "enum",
+            "valueType": "function",
+            "values": ["function1Name", "function2Name"],
             "null": false
         }
     }

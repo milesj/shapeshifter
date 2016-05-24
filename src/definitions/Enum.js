@@ -1,24 +1,34 @@
-import { TYPE_COMPOSITE } from '../constants';
-import isPrimitive from '../helpers/isPrimitive';
+import Definition from '../Definition';
 
-export default function enumerable(type, values = []) {
-    if (!isPrimitive(type)) {
-        throw new TypeError('Enumerable type must be a primitive: bool, func, number, string, instance.');
+export const SUPPORTED_TYPES = ['number', 'string', 'function'];
 
-    } else if (!Array.isArray(values)) {
-        throw new TypeError('Enumerable values must be an array.');
+export default class Enum extends Definition {
+    validateConfig() {
+        super.validateConfig();
 
-    } else if (!values.every(value => type.validate(value))) {
-        throw new TypeError('Enumerable values do not match the defined type.');
+        let config = this.config;
+
+        if (!config.valueType || SUPPORTED_TYPES.indexOf(config.valueType) === -1) {
+            throw new TypeError(`Enumerable value type "${config.valueType || 'unknown'}" not supported.`);
+        }
+
+        if (!Array.isArray(config.values)) {
+            throw new TypeError('Enumerable values must be an array.');
+
+        } else if (!config.values.every(value => this.validateValue(value))) {
+            throw new TypeError('Enumerable values do not match the defined value type.');
+        }
     }
 
-    return {
-        definition: 'enum',
-        dataType: TYPE_COMPOSITE,
-        type,
-        values,
-        validate(value) {
-            return (type.validate(value) && values.indexOf(value) >= 0);
-        },
-    };
+    // TODO - support non-primitive values
+    validateValue(value) {
+        let valueType = this.config.valueType;
+
+        // Function names are defined as string within the schema
+        if (valueType === 'function') {
+            valueType = 'string';
+        }
+
+        return (typeof value === valueType);
+    }
 }

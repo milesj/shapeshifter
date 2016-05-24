@@ -11,6 +11,6 @@ var rc = new ReactCompiler(s);
 
 console.log(rc.compile());
 
-var fc = new FlowCompiler(s);
+// var fc = new FlowCompiler(s);
 
-console.log(fc.compile());
+// console.log(fc.compile());
