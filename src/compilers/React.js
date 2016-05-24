@@ -8,40 +8,42 @@ export default class ReactCompiler extends Compiler {
         return `const ${this.getResourceName()} = PropTypes.shape({\n${fields.join(',\n')}\n});`;
     }
 
-    renderBool(field, definition) {
-        return this.wrapProperty(field, definition, 'bool');
+    renderBool(definition) {
+        return this.wrapProperty(definition, 'bool');
     }
 
-    renderEnum(field, definition) {
+    renderEnum(definition) {
         let { values, valueType } = definition.config;
 
-        return this.wrapProperty(field, definition,
+        return this.wrapProperty(definition,
           this.wrapFunction('oneOf', this.formatArray(values, valueType)));
     }
 
-    renderFunc(field, definition) {
-        return this.wrapProperty(field, definition, 'func');
+    renderFunc(definition) {
+        return this.wrapProperty(definition, 'func');
     }
 
-    renderInstance(field, definition) {
-        return this.wrapProperty(field, definition,
-          this.wrapFunction('instanceOf', this.formatValue(definition.config.contract, 'function')));
+    renderInstance(definition) {
+        let { contract } = definition.config;
+
+        return this.wrapProperty(definition,
+          this.wrapFunction('instanceOf', this.formatValue(contract, 'function')));
     }
 
-    renderNumber(field, definition) {
-        return this.wrapProperty(field, definition, 'number');
+    renderNumber(definition) {
+        return this.wrapProperty(definition, 'number');
     }
 
-    renderString(field, definition) {
-        return this.wrapProperty(field, definition, 'string');
+    renderString(definition) {
+        return this.wrapProperty(definition, 'string');
     }
 
     wrapFunction(name, args = '') {
         return `${name}(${args})`;
     }
 
-    wrapProperty(field, definition, template, depth = 1) {
-        let response = `${indent(depth)}${field}: PropTypes.${template}`;
+    wrapProperty(definition, template, depth = 1) {
+        let response = `${indent(depth)}${definition.field}: PropTypes.${template}`;
 
         if (definition.isRequired()) {
             response += '.isRequired';

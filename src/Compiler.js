@@ -14,52 +14,46 @@ export default class Compiler {
         this.schema = schema;
     }
 
-    compileFields(fields) {
-        let compiledFields = [];
+    compileField(definition) {
+        if (definition instanceof BoolDef) {
+            return this.renderBool(definition);
 
-        Object.keys(fields).forEach(field => {
-            let definition = fields[field],
-                compiledField;
+        } else if (definition instanceof EnumDef) {
+            return this.renderEnum(definition);
 
-            if (definition instanceof BoolDef) {
-                compiledField = this.renderBool(field, definition);
+        } else if (definition instanceof FuncDef) {
+            return this.renderFunc(definition);
 
-            } else if (definition instanceof EnumDef) {
-                compiledField = this.renderEnum(field, definition);
+        } else if (definition instanceof InstanceDef) {
+            return this.renderInstance(definition);
 
-            } else if (definition instanceof FuncDef) {
-                compiledField = this.renderFunc(field, definition);
+        } else if (definition instanceof NumberDef) {
+            return this.renderNumber(definition);
 
-            } else if (definition instanceof InstanceDef) {
-                compiledField = this.renderInstance(field, definition);
-
-            } else if (definition instanceof NumberDef) {
-                compiledField = this.renderNumber(field, definition);
-
-            } else if (definition instanceof StringDef) {
-                compiledField = this.renderString(field, definition);
-            }
-
-            compiledFields.push(compiledField);
-        });
-
-        return compiledFields;
+        } else if (definition instanceof StringDef) {
+            return this.renderString(definition);
+        }
     }
 
-    formatArray(values, type) {
-        let array = values.map(value => this.formatValue(value, type)).join(', ');
+    compileFields(fields) {
+        return fields.map(definition => this.compileField(definition));
+    }
 
-        return `[${array}]`;
+    formatArray(array, type) {
+        return `[${array.map(value => this.formatValue(value, type)).join(', ')}]`;
     }
 
     formatValue(value, type) {
         switch (type || typeof value) {
             case 'string':
                 return `'${value}'`;
+
             case 'function':
                 return `${value}`;
+
             case 'number':
                 return parseFloat(value);
+
             default:
                 throw new TypeError('Unknown type passed to `formatValue()`.');
         }

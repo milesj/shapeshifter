@@ -1,7 +1,8 @@
 import config from './config';
 
 export default class Definition {
-    constructor(cfg) {
+    constructor(field, cfg) {
+        this.field = field;
         this.config = {
             null: config.defaultNull,
             required: config.defaultRequired,
