@@ -40,6 +40,15 @@
             "valueType": "function",
             "values": ["function1Name", "function2Name"],
             "null": false
+        },
+        "instance": {
+            "type": "instance",
+            "contract": "ClassName"
+        },
+        "instance_path": {
+            "type": "instance",
+            "contract": "Module.Package.ClassName",
+            "required": true
         }
     }
 }

@@ -30,6 +30,9 @@ export default class Compiler {
             } else if (definition instanceof FuncDef) {
                 compiledField = this.renderFunc(field, definition);
 
+            } else if (definition instanceof InstanceDef) {
+                compiledField = this.renderInstance(field, definition);
+
             } else if (definition instanceof NumberDef) {
                 compiledField = this.renderNumber(field, definition);
 

@@ -13,13 +13,19 @@ export default class ReactCompiler extends Compiler {
     }
 
     renderEnum(field, definition) {
-        return this.wrapProperty(field, definition, this.wrapFunction('oneOf',
-          this.formatArray(definition.config.values, definition.config.valueType)
-        ));
+        let { values, valueType } = definition.config;
+
+        return this.wrapProperty(field, definition,
+          this.wrapFunction('oneOf', this.formatArray(values, valueType)));
     }
 
     renderFunc(field, definition) {
         return this.wrapProperty(field, definition, 'func');
+    }
+
+    renderInstance(field, definition) {
+        return this.wrapProperty(field, definition,
+          this.wrapFunction('instanceOf', this.formatValue(definition.config.contract, 'function')));
     }
 
     renderNumber(field, definition) {
@@ -34,11 +40,13 @@ export default class ReactCompiler extends Compiler {
         return `${name}(${args})`;
     }
 
-    wrapIsRequired(template, definition) {
-        return definition.isRequired() ? `${template}.isRequired` : template;
-    }
-
     wrapProperty(field, definition, template, depth = 1) {
-        return this.wrapIsRequired(`${indent(depth)}${field}: PropTypes.${template}`, definition);
+        let response = `${indent(depth)}${field}: PropTypes.${template}`;
+
+        if (definition.isRequired()) {
+            response += '.isRequired';
+        }
+
+        return response;
     }
 }
