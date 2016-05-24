@@ -41,6 +41,11 @@ export default class ReactCompiler extends Compiler {
         return this.wrapPropType(definition, 'number');
     }
 
+    renderObject(definition) {
+        return this.wrapPropType(definition,
+          this.wrapFunction('objectOf', this.compileField(definition.valueType)));
+    }
+
     renderString(definition) {
         return this.wrapPropType(definition, 'string');
     }

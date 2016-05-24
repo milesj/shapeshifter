@@ -1,4 +1,4 @@
 import Definition from '../Definition';
 
-export default class Func extends Definition {
+export default class FuncDefinition extends Definition {
 }

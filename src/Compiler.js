@@ -33,13 +33,12 @@ export default class Compiler {
         } else if (definition instanceof NumberDef) {
             return this.renderNumber(definition);
 
+        } else if (definition instanceof ObjectDef) {
+            return this.renderObject(definition);
+
         } else if (definition instanceof StringDef) {
             return this.renderString(definition);
         }
-    }
-
-    compileFields(fields) {
-        return fields.map(definition => this.compileField(definition));
     }
 
     formatArray(array, type) {

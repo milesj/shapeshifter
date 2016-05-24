@@ -1,7 +1,7 @@
 import Definition from '../Definition';
 import Factory from '../Factory';
 
-export default class Array extends Definition {
+export default class ArrayDefinition extends Definition {
     validateConfig() {
         super.validateConfig();
 

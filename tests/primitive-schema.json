@@ -64,6 +64,26 @@
                 "type": "instance",
                 "contract": "ArrayInstanceClass"
             }
+        },
+        "object_string": {
+            "type": "object",
+            "valueType": "string"
+        },
+        "object_number": {
+            "type": "object",
+            "valueType": "number"
+        },
+        "object_key_number": {
+            "type": "object",
+            "valueType": "string",
+            "keyType": "number"
+        },
+        "object_array": {
+            "type": "object",
+            "valueType": {
+                "type": "array",
+                "valueType": "string"
+            }
         }
     }
 }

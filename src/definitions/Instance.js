@@ -1,6 +1,6 @@
 import Definition from '../Definition';
 
-export default class Instance extends Definition {
+export default class InstanceDefinition extends Definition {
     validateConfig() {
         super.validateConfig();
 

@@ -1,4 +1,4 @@
 import Definition from '../Definition';
 
-export default class Bool extends Definition {
+export default class BoolDefinition extends Definition {
 }

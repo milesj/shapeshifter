@@ -15,6 +15,7 @@ export default class Schema {
 
         if (!schema.name) {
             throw new Error('No name found in schema.');
+
         } else if (!schema.fields || !Object.keys(schema.fields).length) {
             throw new Error('No fields found in schema.')
         }

@@ -1,4 +1,4 @@
 import Definition from '../Definition';
 
-export default class Number extends Definition {
+export default class NumberDefinition extends Definition {
 }

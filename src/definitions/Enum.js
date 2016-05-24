@@ -1,20 +1,23 @@
 import Definition from '../Definition';
 import isPrimitive from '../helpers/isPrimitive';
 
-export default class Enum extends Definition {
+export default class EnumDefinition extends Definition {
     validateConfig() {
         super.validateConfig();
 
         let { values, valueType } = this.config;
 
-        if (!valueType || !isPrimitive(valueType)) {
-            throw new TypeError(`Enumerable value type "${valueType || 'unknown'}" not supported.`);
+        if (!valueType) {
+            throw new SyntaxError('Enum definitions require a "valueType" property.');
+
+        } else if (!isPrimitive(valueType)) {
+            throw new TypeError(`Enum value type "${valueType || 'unknown'}" not supported.`);
 
         } else if (!Array.isArray(values)) {
-            throw new TypeError('Enumerable values must be an array.');
+            throw new TypeError('Enum values must be an array.');
 
         } else if (!values.every(value => this.validateValue(value))) {
-            throw new TypeError('Enumerable values do not match the defined value type.');
+            throw new TypeError('Enum values do not match the defined value type.');
         }
     }
 
