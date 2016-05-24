@@ -49,6 +49,21 @@
             "type": "instance",
             "contract": "Module.Package.ClassName",
             "required": true
+        },
+        "array_string": {
+            "type": "array",
+            "valueType": "string"
+        },
+        "array_number": {
+            "type": "array",
+            "valueType": "number"
+        },
+        "array_instance": {
+            "type": "array",
+            "valueType": {
+                "type": "instance",
+                "contract": "ArrayInstanceClass"
+            }
         }
     }
 }

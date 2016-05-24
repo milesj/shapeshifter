@@ -15,7 +15,10 @@ export default class Compiler {
     }
 
     compileField(definition) {
-        if (definition instanceof BoolDef) {
+        if (definition instanceof ArrayDef) {
+            return this.renderArray(definition);
+
+        } else if (definition instanceof BoolDef) {
             return this.renderBool(definition);
 
         } else if (definition instanceof EnumDef) {
