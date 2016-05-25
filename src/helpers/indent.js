@@ -1,12 +1,12 @@
 import config from '../config';
 
 export default function indent(depth) {
-    let response = '';
+  let response = '';
 
-    while (depth > 0) {
-        response += config.indentCharacter;
-        depth--;
-    }
+  while (depth > 0) {
+    response += config.indentCharacter;
+    depth--;
+  }
 
-    return response;
+  return response;
 }

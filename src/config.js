@@ -1,6 +1,6 @@
 export default {
-    defaultNull: true,
-    defaultRequired: false,
-    indentCharacter: '  ',
-    schemaSuffix: 'Schema'
+  defaultNull: true,
+  defaultRequired: false,
+  indentCharacter: '  ',
+  schemaSuffix: 'Schema',
 };

@@ -13,109 +13,111 @@ import UnionDef from './definitions/Union';
 import indent from './helpers/indent';
 
 export default class Compiler {
-    constructor(schema) {
-        this.schema = schema;
+  constructor(schema) {
+    this.schema = schema;
+  }
+
+  compileAttribute(definition, depth = 0) {
+    if (definition instanceof ArrayDef) {
+      return this.renderArray(definition, depth);
+
+    } else if (definition instanceof BoolDef) {
+      return this.renderBool(definition, depth);
+
+    } else if (definition instanceof EnumDef) {
+      return this.renderEnum(definition, depth);
+
+    } else if (definition instanceof FuncDef) {
+      return this.renderFunc(definition, depth);
+
+    } else if (definition instanceof InstanceDef) {
+      return this.renderInstance(definition, depth);
+
+    } else if (definition instanceof NumberDef) {
+      return this.renderNumber(definition, depth);
+
+    } else if (definition instanceof ObjectDef) {
+      return this.renderObject(definition, depth);
+
+    } else if (definition instanceof ShapeDef) {
+      return this.renderShape(definition, depth);
+
+    } else if (definition instanceof StringDef) {
+      return this.renderString(definition, depth);
+
+    } else if (definition instanceof UnionDef) {
+      return this.renderUnion(definition, depth);
     }
 
-    compileAttribute(definition, depth = 0) {
-        if (definition instanceof ArrayDef) {
-            return this.renderArray(definition, depth);
+    return null;
+  }
 
-        } else if (definition instanceof BoolDef) {
-            return this.renderBool(definition, depth);
+  compileArrayItems(items, depth = 0, valueType) {
+    return items.map(item => (
+      indent(depth) + this.wrapItem(this.compileOrFormat(item, depth, valueType))
+    ));
+  }
 
-        } else if (definition instanceof EnumDef) {
-            return this.renderEnum(definition, depth);
+  compileObjectProps(props, depth = 0) {
+    return props.map(prop => (
+      indent(depth) + this.wrapProperty(prop.attribute, this.compileOrFormat(prop, depth))
+    ));
+  }
 
-        } else if (definition instanceof FuncDef) {
-            return this.renderFunc(definition, depth);
+  compileOrFormat(value, depth, valueType) {
+    return (value instanceof Definition)
+      ? this.compileAttribute(value, depth)
+      : this.formatValue(value, valueType);
+  }
 
-        } else if (definition instanceof InstanceDef) {
-            return this.renderInstance(definition, depth);
-
-        } else if (definition instanceof NumberDef) {
-            return this.renderNumber(definition, depth);
-
-        } else if (definition instanceof ObjectDef) {
-            return this.renderObject(definition, depth);
-
-        } else if (definition instanceof ShapeDef) {
-            return this.renderShape(definition, depth);
-
-        } else if (definition instanceof StringDef) {
-            return this.renderString(definition, depth);
-
-        } else if (definition instanceof UnionDef) {
-            return this.renderUnion(definition, depth);
-        }
+  formatArray(items, depth) {
+    if (Array.isArray(items)) {
+      items = items.join('\n');
     }
 
-    compileArrayItems(items, depth = 0, valueType) {
-        return items.map(item => (
-            indent(depth) + this.wrapItem(this.compileOrFormat(item, depth, valueType))
-        ));
+    return `[\n${items}\n${indent(depth)}]`;
+  }
+
+  formatObject(props, depth) {
+    if (Array.isArray(props)) {
+      props = props.join('\n');
     }
 
-    compileObjectProps(props, depth = 0) {
-        return props.map(prop => (
-            indent(depth) + this.wrapProperty(prop.attribute, this.compileOrFormat(prop, depth))
-        ));
+    return `{\n${props}\n${indent(depth)}}`;
+  }
+
+  formatValue(value, type) {
+    type = type || typeof value;
+
+    switch (type) {
+      case 'string':
+        return `'${value}'`;
+
+      case 'function':
+      case 'boolean':
+        return `${value}`;
+
+      case 'number':
+        return parseFloat(value);
+
+      default:
+        throw new TypeError(`Unknown type "${type}" passed to formatValue().`);
     }
+  }
 
-    compileOrFormat(value, depth, valueType) {
-        return (value instanceof Definition)
-          ? this.compileAttribute(value, depth)
-          : this.formatValue(value, valueType)
-    }
+  getSchemaName(format = '') {
+    return this.schema.name + format + config.schemaSuffix;
+  }
 
-    formatArray(items, depth) {
-        if (Array.isArray(items)) {
-            items = items.join('\n');
-        }
+  wrapFunction(name, args = '') {
+    return `${name}(${args})`;
+  }
 
-        return `[\n${items}\n${indent(depth)}]`;
-    }
+  wrapItem(value) {
+    return `${value},`;
+  }
 
-    formatObject(props, depth) {
-        if (Array.isArray(props)) {
-            props = props.join('\n');
-        }
-
-        return `{\n${props}\n${indent(depth)}}`;
-    }
-
-    formatValue(value, type) {
-        type = type || typeof value;
-
-        switch (type) {
-            case 'string':
-                return `'${value}'`;
-
-            case 'function':
-            case 'boolean':
-                return `${value}`;
-
-            case 'number':
-                return parseFloat(value);
-
-            default:
-                throw new TypeError(`Unknown type "${type}" passed to formatValue().`);
-        }
-    }
-
-    getSchemaName(format = '') {
-        return this.schema.name + format + config.schemaSuffix;
-    }
-
-    wrapFunction(name, args = '') {
-        return `${name}(${args})`;
-    }
-
-    wrapItem(value) {
-        return `${value},`;
-    }
-
-    wrapProperty(key, value) {
-        return `${key}: ${value},`;
-    }
+  wrapProperty(key, value) {
+    return `${key}: ${value},`;
+  }
 }

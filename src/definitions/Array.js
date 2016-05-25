@@ -2,15 +2,15 @@ import Definition from '../Definition';
 import Factory from '../Factory';
 
 export default class ArrayDefinition extends Definition {
-    validateConfig() {
-        super.validateConfig();
+  validateConfig() {
+    super.validateConfig();
 
-        let { valueType } = this.config;
+    const { valueType } = this.config;
 
-        if (!valueType) {
-            throw new SyntaxError('Array definitions require a "valueType" property.');
-        }
-
-        this.valueType = Factory.definition('valueType', valueType);
+    if (!valueType) {
+      throw new SyntaxError('Array definitions require a "valueType" property.');
     }
+
+    this.valueType = Factory.definition('valueType', valueType);
+  }
 }
