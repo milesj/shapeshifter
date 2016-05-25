@@ -3,11 +3,9 @@ import indent from '../helpers/indent';
 
 export default class ReactCompiler extends Compiler {
     compile() {
-        let fields = this.schema.fields.map(definition => {
-            return this.wrapProperty(definition.field, this.compileField(definition));
-        });
+        let fields = this.schema.fields;
 
-        return `const ${this.getResourceName()} = PropTypes.shape({\n${fields.join('\n')}\n});`;
+        return `const ${this.getResourceName()} = ${this.renderShape({ fields })};`;
     }
 
     renderArray(definition) {
@@ -23,7 +21,7 @@ export default class ReactCompiler extends Compiler {
         let { values, valueType } = definition.config;
 
         return this.wrapPropType(definition,
-          this.wrapFunction('oneOf', this.formatArray(values, valueType)));
+            this.wrapFunction('oneOf', this.formatArray(values, valueType)));
     }
 
     renderFunc(definition) {
@@ -34,7 +32,7 @@ export default class ReactCompiler extends Compiler {
         let { contract } = definition.config;
 
         return this.wrapPropType(definition,
-          this.wrapFunction('instanceOf', this.formatValue(contract, 'function')));
+            this.wrapFunction('instanceOf', this.formatValue(contract, 'function')));
     }
 
     renderNumber(definition) {
@@ -43,7 +41,13 @@ export default class ReactCompiler extends Compiler {
 
     renderObject(definition) {
         return this.wrapPropType(definition,
-          this.wrapFunction('objectOf', this.compileField(definition.valueType)));
+            this.wrapFunction('objectOf', this.compileField(definition.valueType)));
+    }
+
+    renderShape(definition, depth = 0) {
+        return this.wrapPropType(definition,
+            this.wrapFunction('shape', this.formatObject(
+                this.compileProperties(definition.fields, depth + 1), depth)));
     }
 
     renderString(definition) {
@@ -61,7 +65,7 @@ export default class ReactCompiler extends Compiler {
     wrapPropType(definition, template) {
         let response = `PropTypes.${template}`;
 
-        if (definition.isRequired()) {
+        if (definition.isRequired && definition.isRequired()) {
             response += '.isRequired';
         }
 

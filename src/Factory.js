@@ -1,12 +1,12 @@
-import ArrayDef from '../lib/definitions/Array';
-import BoolDef from '../lib/definitions/Bool';
-import EnumDef from '../lib/definitions/Enum';
-import FuncDef from '../lib/definitions/Func';
-import InstanceDef from '../lib/definitions/Instance';
-import NumberDef from '../lib/definitions/Number';
-import ObjectDef from '../lib/definitions/Object';
-import ShapeDef from '../lib/definitions/Shape';
-import StringDef from '../lib/definitions/String';
+import ArrayDefinition from '../lib/definitions/Array';
+import BoolDefinition from '../lib/definitions/Bool';
+import EnumDefinition from '../lib/definitions/Enum';
+import FuncDefinition from '../lib/definitions/Func';
+import InstanceDefinition from '../lib/definitions/Instance';
+import NumberDefinition from '../lib/definitions/Number';
+import ObjectDefinition from '../lib/definitions/Object';
+import ShapeDefinition from '../lib/definitions/Shape';
+import StringDefinition from '../lib/definitions/String';
 import isPrimitive from '../lib/helpers/isPrimitive';
 import isSupported from '../lib/helpers/isSupported';
 
@@ -30,23 +30,23 @@ export default class Factory {
         // Instantiate definition classes
         switch (config.type) {
             case 'array':
-                return new ArrayDef(field, config);
+                return new ArrayDefinition(field, config);
             case 'boolean':
-                return new BoolDef(field, config);
+                return new BoolDefinition(field, config);
             case 'enum':
-                return new EnumDef(field, config);
+                return new EnumDefinition(field, config);
             case 'function':
-                return new FuncDef(field, config);
+                return new FuncDefinition(field, config);
             case 'instance':
-                return new InstanceDef(field, config);
+                return new InstanceDefinition(field, config);
             case 'number':
-                return new NumberDef(field, config);
+                return new NumberDefinition(field, config);
             case 'object':
-                return new ObjectDef(field, config);
+                return new ObjectDefinition(field, config);
             case 'shape':
-                return new ShapeDef(field, config);
+                return new ShapeDefinition(field, config);
             case 'string':
-                return new StringDef(field, config);
+                return new StringDefinition(field, config);
         }
     };
 }

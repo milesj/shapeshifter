@@ -84,6 +84,45 @@
                 "type": "array",
                 "valueType": "string"
             }
+        },
+        "shape": {
+            "type": "shape",
+            "fields": {
+                "string": "string",
+                "number": "number",
+                "instance": {
+                    "type": "instance",
+                    "contract": "ShapeInstanceClass",
+                    "required": true
+                },
+                "enum": {
+                    "type": "enum",
+                    "valueType": "string",
+                    "values": ["foo", "bar"]
+                }
+            }
+        },
+        "shape_nested": {
+            "type": "shape",
+            "fields": {
+                "string": "string",
+                "shape1": {
+                    "type": "shape",
+                    "fields": {
+                        "number": "number",
+                        "shape2": {
+                            "type": "shape",
+                            "fields": {
+                                "object": {
+                                    "type": "object",
+                                    "valueType": "boolean",
+                                    "required": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
