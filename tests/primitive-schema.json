@@ -1,6 +1,6 @@
 {
     "name": "Primitive",
-    "fields": {
+    "attributes": {
         "string": "string",
         "string_required": {
             "type": "string",
@@ -87,7 +87,7 @@
         },
         "shape": {
             "type": "shape",
-            "fields": {
+            "attributes": {
                 "string": "string",
                 "number": "number",
                 "instance": {
@@ -104,15 +104,15 @@
         },
         "shape_nested": {
             "type": "shape",
-            "fields": {
+            "attributes": {
                 "string": "string",
                 "shape1": {
                     "type": "shape",
-                    "fields": {
+                    "attributes": {
                         "number": "number",
                         "shape2": {
                             "type": "shape",
-                            "fields": {
+                            "attributes": {
                                 "object": {
                                     "type": "object",
                                     "valueType": "boolean",

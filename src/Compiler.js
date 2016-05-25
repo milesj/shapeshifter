@@ -15,7 +15,7 @@ export default class Compiler {
         this.schema = schema;
     }
 
-    compileField(definition, depth = 0) {
+    compileAttribute(definition, depth = 0) {
         if (definition instanceof ArrayDef) {
             return this.renderArray(definition, depth);
 
@@ -45,22 +45,32 @@ export default class Compiler {
         }
     }
 
-    compileProperties(fields, depth = 0) {
-        return fields.map(definition => (
-            this.wrapProperty(definition.field, this.compileField(definition, depth), depth)
+    compileArrayItems(items, valueType, depth = 0) {
+        return items.map(item => (
+            indent(depth) + this.wrapItem(this.formatValue(item, valueType))
         ));
     }
 
-    formatArray(array, type) {
-        return `[${array.map(value => this.formatValue(value, type)).join(', ')}]`;
+    compileObjectProps(attributes, depth = 0) {
+        return attributes.map(definition => (
+            indent(depth) + this.wrapProperty(definition.attribute, this.compileAttribute(definition, depth))
+        ));
     }
 
-    formatObject(properties, depth) {
-        if (Array.isArray(properties)) {
-            properties = properties.join('\n');
+    formatArray(items, depth) {
+        if (Array.isArray(items)) {
+            items = items.join('\n');
         }
 
-        return `{\n${properties}\n${indent(depth)}}`;
+        return `[\n${items}\n${indent(depth)}]`;
+    }
+
+    formatObject(props, depth) {
+        if (Array.isArray(props)) {
+            props = props.join('\n');
+        }
+
+        return `{\n${props}\n${indent(depth)}}`;
     }
 
     formatValue(value, type) {
@@ -82,5 +92,17 @@ export default class Compiler {
 
     getResourceName(subResource = '') {
         return this.schema.name + subResource + config.schemaSuffix;
+    }
+
+    wrapFunction(name, args = '') {
+        return `${name}(${args})`;
+    }
+
+    wrapItem(value) {
+        return `${value},`;
+    }
+
+    wrapProperty(key, value) {
+        return `${key}: ${value},`;
     }
 }

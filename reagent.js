@@ -5,7 +5,7 @@ var FlowCompiler = require('./lib/compilers/Flow').default;
 
 var s = new Schema(require('./tests/primitive-schema.json'));
 
-console.log(s.parse());
+console.log(s);
 
 var rc = new ReactCompiler(s);
 

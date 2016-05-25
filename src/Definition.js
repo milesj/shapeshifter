@@ -1,12 +1,12 @@
 import config from './config';
 
 export default class Definition {
-    constructor(field, cfg) {
-        this.field = field;
+    constructor(attribute, schema) {
+        this.attribute = attribute;
         this.config = {
             null: config.defaultNull,
             required: config.defaultRequired,
-            ...cfg
+            ...schema
         };
 
         this.validateConfig();

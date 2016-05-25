@@ -3,25 +3,26 @@ import indent from '../helpers/indent';
 
 export default class ReactCompiler extends Compiler {
     compile() {
-        let fields = this.schema.fields;
+        let attributes = this.schema.attributes;
 
-        return `const ${this.getResourceName()} = ${this.renderShape({ fields })};`;
+        return `const ${this.getResourceName()} = ${this.renderShape({ attributes })};`;
     }
 
     renderArray(definition) {
         return this.wrapPropType(definition,
-            this.wrapFunction('arrayOf', this.compileField(definition.valueType)));
+            this.wrapFunction('arrayOf', this.compileAttribute(definition.valueType)));
     }
 
     renderBool(definition) {
         return this.wrapPropType(definition, 'bool');
     }
 
-    renderEnum(definition) {
+    renderEnum(definition, depth = 0) {
         let { values, valueType } = definition.config;
 
         return this.wrapPropType(definition,
-            this.wrapFunction('oneOf', this.formatArray(values, valueType)));
+            this.wrapFunction('oneOf', this.formatArray(
+                this.compileArrayItems(values, valueType, depth + 1), depth)));
     }
 
     renderFunc(definition) {
@@ -41,25 +42,17 @@ export default class ReactCompiler extends Compiler {
 
     renderObject(definition) {
         return this.wrapPropType(definition,
-            this.wrapFunction('objectOf', this.compileField(definition.valueType)));
+            this.wrapFunction('objectOf', this.compileAttribute(definition.valueType)));
     }
 
     renderShape(definition, depth = 0) {
         return this.wrapPropType(definition,
             this.wrapFunction('shape', this.formatObject(
-                this.compileProperties(definition.fields, depth + 1), depth)));
+                this.compileObjectProps(definition.attributes, depth + 1), depth)));
     }
 
     renderString(definition) {
         return this.wrapPropType(definition, 'string');
-    }
-
-    wrapFunction(name, args = '') {
-        return `${name}(${args})`;
-    }
-
-    wrapProperty(key, value, depth = 1) {
-        return `${indent(depth)}${key}: ${value},`;
     }
 
     wrapPropType(definition, template) {

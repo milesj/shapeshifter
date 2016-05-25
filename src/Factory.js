@@ -12,7 +12,7 @@ import isSupported from '../lib/helpers/isSupported';
 
 export default class Factory {
 
-    static definition(field, config) {
+    static definition(attribute, config) {
         // Convert primitives to configuration objects
         if (typeof config === 'string') {
             if (isPrimitive(config)) {
@@ -30,23 +30,23 @@ export default class Factory {
         // Instantiate definition classes
         switch (config.type) {
             case 'array':
-                return new ArrayDefinition(field, config);
+                return new ArrayDefinition(attribute, config);
             case 'boolean':
-                return new BoolDefinition(field, config);
+                return new BoolDefinition(attribute, config);
             case 'enum':
-                return new EnumDefinition(field, config);
+                return new EnumDefinition(attribute, config);
             case 'function':
-                return new FuncDefinition(field, config);
+                return new FuncDefinition(attribute, config);
             case 'instance':
-                return new InstanceDefinition(field, config);
+                return new InstanceDefinition(attribute, config);
             case 'number':
-                return new NumberDefinition(field, config);
+                return new NumberDefinition(attribute, config);
             case 'object':
-                return new ObjectDefinition(field, config);
+                return new ObjectDefinition(attribute, config);
             case 'shape':
-                return new ShapeDefinition(field, config);
+                return new ShapeDefinition(attribute, config);
             case 'string':
-                return new StringDefinition(field, config);
+                return new StringDefinition(attribute, config);
         }
     };
 }

@@ -5,15 +5,17 @@ export default class ShapeDefinition extends Definition {
     validateConfig() {
         super.validateConfig();
 
-        let { fields } = this.config;
+        let { attributes } = this.config;
 
-        if (!fields || !Object.keys(fields).length) {
+        if (!attributes || !Object.keys(attributes).length) {
             throw new Error(
-                'Shape definitions require a "shape" property, ' +
-                'which is an object mapping of fields to type definitions.'
+                'Shape definitions require an "attributes" property, ' +
+                'which is an object mapping of attributes to type definitions.'
             );
         }
 
-        this.fields = Object.keys(fields).map(field => Factory.definition(field, fields[field]));
+        this.attributes = Object.keys(attributes).map(attribute => (
+          Factory.definition(attribute, attributes[attribute])
+        ));
     }
 }

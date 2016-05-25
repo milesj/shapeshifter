@@ -16,19 +16,17 @@ export default class Schema {
         if (!schema.name) {
             throw new Error('No name found in schema.');
 
-        } else if (!schema.fields || !Object.keys(schema.fields).length) {
-            throw new Error('No fields found in schema.')
+        } else if (!schema.attributes || !Object.keys(schema.attributes).length) {
+            throw new Error('No attributes found in schema.')
         }
 
         this.schema = schema;
         this.name = schema.name;
-        this.fields = [];
-        this.fieldNames = Object.keys(schema.fields);
-    }
-
-    parse() {
-        this.fields = this.fieldNames
-          .map(field => Factory.definition(field, this.schema.fields[field]));
+        this.constants = schema.constants || [];
+        this.formats = schema.formats || [];
+        this.attributes = Object.keys(schema.attributes).map(attribute => (
+            Factory.definition(attribute, schema.attributes[attribute])
+        ));
 
         return this;
     }
