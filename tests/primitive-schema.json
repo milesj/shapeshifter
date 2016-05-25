@@ -123,6 +123,32 @@
                     }
                 }
             }
+        },
+        "union": {
+            "type": "union",
+            "valueTypes": [
+                "number",
+                "boolean",
+                {
+                    "type": "instance",
+                    "contract": "UnionInstanceClass"
+                },
+                {
+                    "type": "object",
+                    "valueType": "string"
+                },
+                {
+                    "type": "shape",
+                    "attributes": {
+                        "string": "string",
+                        "enum": {
+                            "type": "enum",
+                            "valueType": "number",
+                            "values": [123, 456, 789]
+                        }
+                    }
+                }
+            ]
         }
     }
 }

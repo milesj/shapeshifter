@@ -1,11 +1,10 @@
 import Compiler from '../Compiler';
-import indent from '../helpers/indent';
 
 export default class ReactCompiler extends Compiler {
     compile() {
         let attributes = this.schema.attributes;
 
-        return `const ${this.getResourceName()} = ${this.renderShape({ attributes })};`;
+        return `const ${this.getSchemaName()} = ${this.renderShape({ attributes })};`;
     }
 
     renderArray(definition) {
@@ -22,7 +21,7 @@ export default class ReactCompiler extends Compiler {
 
         return this.wrapPropType(definition,
             this.wrapFunction('oneOf', this.formatArray(
-                this.compileArrayItems(values, valueType, depth + 1), depth)));
+                this.compileArrayItems(values, depth + 1, valueType), depth)));
     }
 
     renderFunc(definition) {
@@ -49,6 +48,12 @@ export default class ReactCompiler extends Compiler {
         return this.wrapPropType(definition,
             this.wrapFunction('shape', this.formatObject(
                 this.compileObjectProps(definition.attributes, depth + 1), depth)));
+    }
+
+    renderUnion(definition, depth = 0) {
+        return this.wrapPropType(definition,
+            this.wrapFunction('oneOfType', this.formatArray(
+                this.compileArrayItems(definition.valueTypes, depth + 1), depth)));
     }
 
     renderString(definition) {

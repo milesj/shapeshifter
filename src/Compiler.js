@@ -1,4 +1,5 @@
 import config from './config';
+import Definition from './Definition';
 import ArrayDef from './definitions/Array';
 import BoolDef from './definitions/Bool';
 import EnumDef from './definitions/Enum';
@@ -8,6 +9,7 @@ import NumberDef from './definitions/Number';
 import ObjectDef from './definitions/Object';
 import ShapeDef from './definitions/Shape';
 import StringDef from './definitions/String';
+import UnionDef from './definitions/Union';
 import indent from './helpers/indent';
 
 export default class Compiler {
@@ -42,19 +44,28 @@ export default class Compiler {
 
         } else if (definition instanceof StringDef) {
             return this.renderString(definition, depth);
+
+        } else if (definition instanceof UnionDef) {
+            return this.renderUnion(definition, depth);
         }
     }
 
-    compileArrayItems(items, valueType, depth = 0) {
+    compileArrayItems(items, depth = 0, valueType) {
         return items.map(item => (
-            indent(depth) + this.wrapItem(this.formatValue(item, valueType))
+            indent(depth) + this.wrapItem(this.compileOrFormat(item, depth, valueType))
         ));
     }
 
-    compileObjectProps(attributes, depth = 0) {
-        return attributes.map(definition => (
-            indent(depth) + this.wrapProperty(definition.attribute, this.compileAttribute(definition, depth))
+    compileObjectProps(props, depth = 0) {
+        return props.map(prop => (
+            indent(depth) + this.wrapProperty(prop.attribute, this.compileOrFormat(prop, depth))
         ));
+    }
+
+    compileOrFormat(value, depth, valueType) {
+        return (value instanceof Definition)
+          ? this.compileAttribute(value, depth)
+          : this.formatValue(value, valueType)
     }
 
     formatArray(items, depth) {
@@ -74,7 +85,9 @@ export default class Compiler {
     }
 
     formatValue(value, type) {
-        switch (type || typeof value) {
+        type = type || typeof value;
+
+        switch (type) {
             case 'string':
                 return `'${value}'`;
 
@@ -86,12 +99,12 @@ export default class Compiler {
                 return parseFloat(value);
 
             default:
-                throw new TypeError('Unknown type passed to `formatValue()`.');
+                throw new TypeError(`Unknown type "${type}" passed to formatValue().`);
         }
     }
 
-    getResourceName(subResource = '') {
-        return this.schema.name + subResource + config.schemaSuffix;
+    getSchemaName(format = '') {
+        return this.schema.name + format + config.schemaSuffix;
     }
 
     wrapFunction(name, args = '') {
