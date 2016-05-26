@@ -1,6 +1,6 @@
-import Compiler from '../Compiler';
+import Renderer from '../Renderer';
 
-export default class ReactCompiler extends Compiler {
+export default class ReactRenderer extends Renderer {
   compile() {
     const attributes = this.schema.attributes;
 
