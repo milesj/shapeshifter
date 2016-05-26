@@ -1,6 +1,12 @@
 import cfg from './config';
 
 export default class Definition {
+  /**
+   * Represents a type definition for an attribute.
+   *
+   * @param {String} attribute
+   * @param {Object} config
+   */
   constructor(attribute, config) {
     this.attribute = attribute;
     this.config = {
@@ -12,14 +18,27 @@ export default class Definition {
     this.validateConfig();
   }
 
+  /**
+   * Returns true if the attribute allows nulls.
+   *
+   * @returns {Boolean}
+   */
   isNullable() {
     return this.config.null;
   }
 
+  /**
+   * Returns true if the attribute is required.
+   *
+   * @returns {Boolean}
+   */
   isRequired() {
     return this.config.required;
   }
 
+  /**
+   * Validate the definition configuration.
+   */
   validateConfig() {
     const config = this.config;
 

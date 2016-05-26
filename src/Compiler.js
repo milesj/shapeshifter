@@ -17,7 +17,92 @@ export default class Compiler {
     this.schema = schema;
   }
 
-  compileAttribute(definition, depth = 0) {
+  compile(path) {
+
+  }
+
+  compileFolder(path) {
+
+  }
+
+  compileFile(path) {
+    
+  }
+
+  /**
+   * Format a primitive value to it's visual representation.
+   *
+   * @param {*} value
+   * @param {String} [type]
+   * @returns {String}
+   */
+  format(value, type) {
+    type = type || typeof value;
+
+    switch (type) {
+      case 'string':
+        return `'${value}'`;
+
+      case 'function':
+      case 'boolean':
+        return `${value}`;
+
+      case 'number':
+        return `${parseFloat(value)}`;
+
+      default:
+        throw new TypeError(`Unknown type "${type}" passed to formatValue().`);
+    }
+  }
+
+  /**
+   * Format a list (or string) of items into an array respecting depth indentation.
+   *
+   * @param {String|Array} items
+   * @param {Number} depth
+   * @returns {String}
+   */
+  formatArray(items, depth) {
+    if (Array.isArray(items)) {
+      items = items.join('\n');
+    }
+
+    return `[\n${items}\n${indent(depth)}]`;
+  }
+
+  /**
+   * Format a list (or string) of properties into an object respecting depth indentation.
+   *
+   * @param {String|Array} props
+   * @param {Number} depth
+   * @returns {String}
+   */
+  formatObject(props, depth) {
+    if (Array.isArray(props)) {
+      props = props.join('\n');
+    }
+
+    return `{\n${props}\n${indent(depth)}}`;
+  }
+
+  /**
+   * Return the schema name to be used as the prop type or type alias name.
+   *
+   * @param {String} [format]
+   * @returns {String}
+   */
+  getSchemaName(format = '') {
+    return this.schema.name + format + config.schemaSuffix;
+  }
+
+  /**
+   * Render a definition to it's visual representation.
+   *
+   * @param {Definition} definition
+   * @param {Number} depth
+   * @returns {String}
+   */
+  render(definition, depth = 0) {
     if (definition instanceof ArrayDef) {
       return this.renderArray(definition, depth);
 
@@ -52,71 +137,75 @@ export default class Compiler {
     return null;
   }
 
-  compileArrayItems(items, depth = 0, valueType) {
+  /**
+   * Render an array of items by formatting each value and prepending an indentation.
+   *
+   * @param {*[]} items
+   * @param {Number} depth
+   * @param {String} [valueType]
+   * @returns {Array}
+   */
+  renderArrayItems(items, depth = 0, valueType) {
     return items.map(item => (
-      indent(depth) + this.wrapItem(this.compileOrFormat(item, depth, valueType))
+      indent(depth) + this.wrapItem(this.renderOrFormat(item, depth, valueType))
     ));
   }
 
-  compileObjectProps(props, depth = 0) {
+  /**
+   * Render a mapping of properties by formatting each value and prepending an indentation.
+   *
+   * @param {*[]} props
+   * @param {Number} depth
+   * @returns {Array}
+   */
+  renderObjectProps(props, depth = 0) {
     return props.map(prop => (
-      indent(depth) + this.wrapProperty(prop.attribute, this.compileOrFormat(prop, depth))
+      indent(depth) + this.wrapProperty(prop.attribute, this.renderOrFormat(prop, depth))
     ));
   }
 
-  compileOrFormat(value, depth, valueType) {
+  /**
+   * Either render a definition or format a value.
+   *
+   * @param {*|Definition} value
+   * @param {Number} depth
+   * @param {String} [valueType]
+   * @returns {String}
+   */
+  renderOrFormat(value, depth, valueType) {
     return (value instanceof Definition)
-      ? this.compileAttribute(value, depth)
-      : this.formatValue(value, valueType);
+      ? this.render(value, depth)
+      : this.format(value, valueType);
   }
 
-  formatArray(items, depth) {
-    if (Array.isArray(items)) {
-      items = items.join('\n');
-    }
-
-    return `[\n${items}\n${indent(depth)}]`;
-  }
-
-  formatObject(props, depth) {
-    if (Array.isArray(props)) {
-      props = props.join('\n');
-    }
-
-    return `{\n${props}\n${indent(depth)}}`;
-  }
-
-  formatValue(value, type) {
-    type = type || typeof value;
-
-    switch (type) {
-      case 'string':
-        return `'${value}'`;
-
-      case 'function':
-      case 'boolean':
-        return `${value}`;
-
-      case 'number':
-        return parseFloat(value);
-
-      default:
-        throw new TypeError(`Unknown type "${type}" passed to formatValue().`);
-    }
-  }
-
-  getSchemaName(format = '') {
-    return this.schema.name + format + config.schemaSuffix;
-  }
-
+  /**
+   * Render a name and optional arguments into an function representation.
+   *
+   * @param {String} name
+   * @param {String} [args]
+   * @returns {String}
+   */
   wrapFunction(name, args = '') {
     return `${name}(${args})`;
   }
 
+  /**
+   * Render a value into an array item representation.
+   *
+   * @param {String} value
+   * @returns {String}
+   */
   wrapItem(value) {
     return `${value},`;
   }
 
+  /**
+   * Render a key and value into an object property representation.
+   *
+   * @param {String} key
+   * @param {String} value
+   * @returns {String}
+   */
   wrapProperty(key, value) {
     return `${key}: ${value},`;
   }

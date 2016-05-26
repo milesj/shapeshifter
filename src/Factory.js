@@ -11,7 +11,13 @@ import UnionDefinition from './definitions/Union';
 import isPrimitive from './helpers/isPrimitive';
 
 export default class Factory {
-
+  /**
+   * Create a new definition based on the defined attribute configuration.
+   *
+   * @param {String} attribute
+   * @param {Object} config
+   * @returns {Definition}
+   */
   static definition(attribute, config) {
     // Convert primitives to configuration objects
     if (typeof config === 'string') {
