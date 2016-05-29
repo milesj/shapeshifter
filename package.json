@@ -21,6 +21,9 @@
     "url": "https://github.com/milesj/reagent/issues"
   },
   "homepage": "https://github.com/milesj/reagent#readme",
+  "dependencies": {
+    "command-line-args": "^2.1.6"
+  },
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-eslint": "^6.0.4",

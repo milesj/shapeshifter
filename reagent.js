@@ -1,16 +1,19 @@
+var CommandLine = require('command-line-args');
+var Compiler = require('./lib/Compiler').default;
 
-var Schema = require('./lib/Schema').default;
-var ReactCompiler = require('./lib/compilers/React').default;
-var FlowCompiler = require('./lib/compilers/Flow').default;
+// Parse command line options
+var options = CommandLine([
+  { name: 'null', alias: 'n', type: Boolean, defaultValue: true },
+  { name: 'required', alias: 'r', type: Boolean, defaultValue: false },
+  { name: 'indent', type: String, defaultValue: '  ' },
+  { name: 'renderer', type: String, defaultValue: 'react' },
+  { name: 'suffix', type: String, defaultValue: 'Schema' },
+  { name: 'paths', type: String, multiple: true, defaultOption: true },
+]).parse();
 
-var s = new Schema(require('./tests/primitive-schema.json'));
+// Instantiate and run compiler
+var app = new Compiler(options);
 
-console.log(s);
-
-var rc = new ReactCompiler(s);
-
-console.log(rc.compile());
-
-// var fc = new FlowCompiler(s);
-
-// console.log(fc.compile());
+options.paths.forEach(path => {
+  app.compile(path).then(output => console.log(output));
+});
