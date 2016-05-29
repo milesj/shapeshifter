@@ -8,6 +8,9 @@ import ObjectDefinition from './definitions/Object';
 import ShapeDefinition from './definitions/Shape';
 import StringDefinition from './definitions/String';
 import UnionDefinition from './definitions/Union';
+import FlowRenderer from './renderers/Flow';
+import ReactRenderer from './renderers/React';
+import TypeScriptRenderer from './renderers/TypeScript';
 import isPrimitive from './helpers/isPrimitive';
 
 export default class Factory {
@@ -82,6 +85,30 @@ export default class Factory {
 
       default:
         throw new TypeError(`Type "${config.type || 'unknown'}" not supported.`);
+    }
+  }
+
+  /**
+   * Create a new renderer with the defined schema.
+   *
+   * @param {String} renderer
+   * @param {Schema} schema
+   * @returns {Renderer}
+   */
+  static renderer(renderer, schema) {
+    switch (renderer) {
+      case 'react':
+        return new ReactRenderer(schema);
+
+      case 'flow':
+        return new FlowRenderer(schema);
+
+      case 'ts':
+      case 'typescript':
+        return new TypeScriptRenderer(schema);
+
+      default:
+        throw new Error(`Renderer "${renderer || 'unknown'}" not supported.`);
     }
   }
 }

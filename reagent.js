@@ -1,3 +1,4 @@
+var path = require('path');
 var CommandLine = require('command-line-args');
 var Compiler = require('./lib/Compiler').default;
 
@@ -8,12 +9,11 @@ var options = CommandLine([
   { name: 'indent', type: String, defaultValue: '  ' },
   { name: 'renderer', type: String, defaultValue: 'react' },
   { name: 'suffix', type: String, defaultValue: 'Schema' },
-  { name: 'paths', type: String, multiple: true, defaultOption: true },
+  { name: 'path', type: String, defaultOption: true },
 ]).parse();
 
 // Instantiate and run compiler
-var app = new Compiler(options);
-
-options.paths.forEach(path => {
-  app.compile(path).then(output => console.log(output));
-});
+new Compiler(options)
+  .compile(path.normalize(path.join(__dirname, options.path)))
+  .then(Compiler.output)
+  .catch(Compiler.error);

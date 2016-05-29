@@ -18,32 +18,6 @@ export default class Renderer {
   }
 
   /**
-   * Format a primitive value to it's visual representation.
-   *
-   * @param {*} value
-   * @param {String} [type]
-   * @returns {String}
-   */
-  format(value, type) {
-    type = type || typeof value;
-
-    switch (type) {
-      case 'string':
-        return `'${value}'`;
-
-      case 'function':
-      case 'boolean':
-        return `${value}`;
-
-      case 'number':
-        return `${parseFloat(value)}`;
-
-      default:
-        throw new TypeError(`Unknown type "${type}" passed to formatValue().`);
-    }
-  }
-
-  /**
    * Format a list (or string) of items into an array respecting depth indentation.
    *
    * @param {String|Array} items
@@ -74,13 +48,46 @@ export default class Renderer {
   }
 
   /**
+   * Format a primitive value to it's visual representation.
+   *
+   * @param {*} value
+   * @param {String} [type]
+   * @returns {String}
+   */
+  formatValue(value, type) {
+    type = type || typeof value;
+
+    switch (type) {
+      case 'string':
+        return `'${value}'`;
+
+      case 'function':
+      case 'boolean':
+        return `${value}`;
+
+      case 'number':
+        return `${parseFloat(value)}`;
+
+      default:
+        throw new TypeError(`Unknown type "${type}" passed to formatValue().`);
+    }
+  }
+
+  /**
    * Return the schema name to be used as the prop type or type alias name.
    *
    * @param {String} [format]
    * @returns {String}
    */
   getSchemaName(format = '') {
-    return this.schema.name + format + config.schemaSuffix;
+    return (this.schema.name + format + config.schemaSuffix).replace(' ', '').trim();
+  }
+
+  /**
+   * Render the current schema into a formatted output.
+   */
+  render() {
+    throw new Error('Renderer not implemented.');
   }
 
   /**
@@ -90,7 +97,7 @@ export default class Renderer {
    * @param {Number} depth
    * @returns {String}
    */
-  render(definition, depth = 0) {
+  renderAttribute(definition, depth = 0) {
     if (definition instanceof ArrayDef) {
       return this.renderArray(definition, depth);
 
@@ -162,8 +169,8 @@ export default class Renderer {
    */
   renderOrFormat(value, depth, valueType) {
     return (value instanceof Definition)
-      ? this.render(value, depth)
-      : this.format(value, valueType);
+      ? this.renderAttribute(value, depth)
+      : this.formatValue(value, valueType);
   }
 
   /**

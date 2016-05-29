@@ -1,8 +1,11 @@
+/* eslint-disable no-console, global-require */
+
 import fs from 'fs';
+import path from 'path';
+import chalk from 'chalk';
 import config from './config';
-import FlowRenderer from './renderers/Flow';
-import ReactRenderer from './renderers/React';
-import TypeScriptRenderer from './renderers/TypeScript';
+import Factory from './Factory';
+import Schema from './Schema';
 
 export default class Compiler {
   constructor(options) {
@@ -13,43 +16,87 @@ export default class Compiler {
     config.schemaSuffix = options.suffix;
   }
 
-  compile(path) {
+  /**
+   * Output the rendered schema to stdout.
+   *
+   * @param {String} value
+   */
+  static output(value) {
+    console.log(value);
+  }
+
+  /**
+   * Output any caught errors to stderr.
+   *
+   * @param {Error|String} error
+   */
+  static error(error) {
+    const message = (error instanceof Error) ? error.message : error;
+
+    console.error(chalk.bgRed.white(message));
+    process.exit(1);
+  }
+
+  /**
+   * Compile either a file or a folder by rendering each schema file.
+   *
+   * @param {String} target
+   * @returns {Promise}
+   */
+  compile(target) {
     return new Promise((resolve, reject) => {
-      fs.stats(path, (error, stats) => {
+      fs.stat(target, (error, stats) => {
         if (error) {
           reject(error);
+          return;
         }
 
-        console.log(stats);
-
         if (stats.isDirectory()) {
-          resolve(this.compileFolder(path));
+          resolve(this.compileFolder(target));
         } else if (stats.isFile()) {
-          resolve(this.compileFile(path));
+          resolve(this.compileFile(target));
         } else {
           reject('Unsupported file type.');
         }
-      })
+      });
     });
   }
 
-  compileFolder(path) {
-    console.log(path);
+  /**
+   * Compile a folder by looping over all JS and JSON files and rendering them.
+   *
+   * @param {String} folder
+   * @returns {Promise}
+   */
+  compileFolder(folder) {
+    return new Promise((resolve, reject) => {
+      fs.readdir(folder, (error, files) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        const output = [];
+
+        files.forEach(file => {
+          if (file.match(/\.(js|json)$/)) {
+            output.push(this.compileFile(path.join(folder, file)));
+          }
+        });
+
+        resolve(output.join('\n\n'));
+      });
+    });
   }
 
-  compileFile(path) {
-    console.log(path);
-  }
-
-  createRenderer(schema) {
-    switch (config.renderer) {
-      case 'react':
-        return new ReactRenderer(schema);
-      case 'flow':
-        return new FlowRenderer(schema);
-      case 'ts':
-      case 'typescript':
-        return new TypeScriptRenderer(schema);
-    }
+  /**
+   * Compile a file by rendering the schema at the defined path.
+   *
+   * @param {String} file
+   * @returns {String}
+   */
+  compileFile(file) {
+    // Use require() as it handles JSON and JS files easily
+    return Factory.renderer(config.renderer, new Schema(require(file))).render();
   }
 }

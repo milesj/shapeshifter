@@ -1,10 +1,13 @@
 import Renderer from '../Renderer';
 
 export default class ReactRenderer extends Renderer {
-  compile() {
+  /**
+   * {@inheritdoc}
+   */
+  render() {
     const attributes = this.schema.attributes;
 
-    return `const ${this.getSchemaName()} = ${this.renderShape({ attributes })};`;
+    return `export const ${this.getSchemaName()} = ${this.renderShape({ attributes })};`;
   }
 
   /**
@@ -15,7 +18,7 @@ export default class ReactRenderer extends Renderer {
    */
   renderArray(definition) {
     return this.wrapPropType(definition,
-      this.wrapFunction('arrayOf', this.render(definition.valueType)));
+      this.wrapFunction('arrayOf', this.renderAttribute(definition.valueType)));
   }
 
   /**
@@ -65,7 +68,7 @@ export default class ReactRenderer extends Renderer {
     const { contract } = definition.config;
 
     return this.wrapPropType(definition,
-      this.wrapFunction('instanceOf', this.format(contract, 'function')));
+      this.wrapFunction('instanceOf', this.formatValue(contract, 'function')));
   }
 
   /**
@@ -86,7 +89,7 @@ export default class ReactRenderer extends Renderer {
    */
   renderObject(definition) {
     return this.wrapPropType(definition,
-      this.wrapFunction('objectOf', this.render(definition.valueType)));
+      this.wrapFunction('objectOf', this.renderAttribute(definition.valueType)));
   }
 
   /**

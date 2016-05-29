@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/milesj/reagent#readme",
   "dependencies": {
+    "chalk": "^1.1.3",
     "command-line-args": "^2.1.6"
   },
   "devDependencies": {
