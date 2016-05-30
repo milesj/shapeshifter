@@ -1,0 +1,59 @@
+{
+    "name": "Primitive",
+    "attributes": {
+        "boolField": "bool",
+        "boolFieldExpanded": {
+            "type": "bool",
+            "required": true
+        },
+        "booleanField": "boolean",
+        "booleanFieldExpanded": {
+            "type": "boolean",
+            "null": false
+        },
+        "funcField": "func",
+        "funcFieldExpanded": {
+            "type": "func",
+            "required": true
+        },
+        "functionField": "function",
+        "functionFieldExpanded": {
+            "type": "function",
+            "null": true
+        },
+        "intField": "int",
+        "intFieldExpanded": {
+            "type": "int"
+        },
+        "integerField": "integer",
+        "integerFieldExpanded": {
+            "type": "integer",
+            "required": true
+        },
+        "numField": "num",
+        "numFieldExpanded": {
+            "type": "num",
+            "null": true
+        },
+        "numberField": "number",
+        "numberFieldExpanded": {
+            "type": "number",
+            "null": false,
+            "required": true
+        },
+        "floatField": "float",
+        "floatFieldExpanded": {
+            "type": "float",
+            "required": true
+        },
+        "strField": "str",
+        "strFieldExpanded": {
+            "type": "str",
+            "null": false
+        },
+        "stringField": "string",
+        "stringFieldExpanded": {
+            "type": "string"
+        }
+    }
+}

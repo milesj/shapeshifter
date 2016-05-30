@@ -1,5 +1,6 @@
 import Definition from '../Definition';
 import isPrimitive from '../helpers/isPrimitive';
+import normalizeType from '../helpers/normalizeType';
 
 export default class EnumDefinition extends Definition {
   validateConfig() {
@@ -22,7 +23,7 @@ export default class EnumDefinition extends Definition {
   }
 
   validateValue(value) {
-    let { valueType } = this.config;
+    let valueType = normalizeType(this.config.valueType);
 
     // Function names are defined as strings within the schema
     if (valueType === 'function') {

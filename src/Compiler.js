@@ -96,7 +96,7 @@ export default class Compiler {
    * @returns {String}
    */
   compileFile(file) {
-    // Use require() as it handles JSON and JS files easily
+    // Use `require()` as it handles JSON and JS files easily
     return Factory.renderer(config.renderer, new Schema(require(file))).render();
   }
 }

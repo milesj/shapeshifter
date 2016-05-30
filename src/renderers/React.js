@@ -7,18 +7,19 @@ export default class ReactRenderer extends Renderer {
   render() {
     const attributes = this.schema.attributes;
 
-    return `export const ${this.getSchemaName()} = ${this.renderShape({ attributes })};`;
+    return `export const ${this.getSchemaName()} = ${this.renderShape({ attributes }, 0)};`;
   }
 
   /**
    * Render a `React.PropType.arrayOf()` definition.
    *
    * @param {ArrayDefinition} definition
+   * @param {Number} depth
    * @returns {String}
    */
-  renderArray(definition) {
+  renderArray(definition, depth) {
     return this.wrapPropType(definition,
-      this.wrapFunction('arrayOf', this.renderAttribute(definition.valueType)));
+      this.wrapFunction('arrayOf', this.renderAttribute(definition.valueType, depth)));
   }
 
   /**
@@ -38,7 +39,7 @@ export default class ReactRenderer extends Renderer {
    * @param {Number} depth
    * @returns {String}
    */
-  renderEnum(definition, depth = 0) {
+  renderEnum(definition, depth) {
     const { values, valueType } = definition.config;
 
     return this.wrapPropType(definition,
@@ -85,11 +86,12 @@ export default class ReactRenderer extends Renderer {
    * Render a `React.PropType.arrayOf()` definition.
    *
    * @param {ObjectDefinition} definition
+   * @param {Number} depth
    * @returns {String}
    */
-  renderObject(definition) {
+  renderObject(definition, depth) {
     return this.wrapPropType(definition,
-      this.wrapFunction('objectOf', this.renderAttribute(definition.valueType)));
+      this.wrapFunction('objectOf', this.renderAttribute(definition.valueType, depth)));
   }
 
   /**
@@ -99,7 +101,7 @@ export default class ReactRenderer extends Renderer {
    * @param {Number} depth
    * @returns {String}
    */
-  renderShape(definition, depth = 0) {
+  renderShape(definition, depth) {
     return this.wrapPropType(definition,
       this.wrapFunction('shape',
         this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth)
@@ -114,7 +116,7 @@ export default class ReactRenderer extends Renderer {
    * @param {Number} depth
    * @returns {String}
    */
-  renderUnion(definition, depth = 0) {
+  renderUnion(definition, depth) {
     return this.wrapPropType(definition,
       this.wrapFunction('oneOfType',
         this.formatArray(this.renderArrayItems(definition.valueTypes, depth + 1), depth)

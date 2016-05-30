@@ -1,0 +1,13 @@
+{
+    "name": "Instance",
+    "attributes": {
+        "instField": {
+            "type": "inst",
+            "contract": "InstanceClassName"
+        },
+        "instanceField": {
+            "type": "instance",
+            "contract": "Namespaced.InstanceClassName"
+        }
+    }
+}

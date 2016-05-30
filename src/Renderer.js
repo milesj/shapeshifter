@@ -11,6 +11,7 @@ import ShapeDef from './definitions/Shape';
 import StringDef from './definitions/String';
 import UnionDef from './definitions/Union';
 import indent from './helpers/indent';
+import normalizeType from './helpers/normalizeType';
 
 export default class Renderer {
   constructor(schema) {
@@ -55,7 +56,7 @@ export default class Renderer {
    * @returns {String}
    */
   formatValue(value, type) {
-    type = type || typeof value;
+    type = normalizeType(type || typeof value);
 
     switch (type) {
       case 'string':
