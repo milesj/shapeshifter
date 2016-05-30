@@ -12,7 +12,7 @@ export default class Schema {
     if (typeof data === 'string') {
       schema = JSON.parse(data);
 
-    } else if (typeof data === 'object' && data) {
+    } else if (this.isObject(data)) {
       schema = data;
 
     } else {
@@ -27,11 +27,14 @@ export default class Schema {
 
     } else if (schema.imports && !Array.isArray(schema.imports)) {
       throw new SyntaxError('Schema imports must be an array of import declarations.');
+
+    } else if (schema.constants && !this.isObject(schema.constants)) {
+      throw new SyntaxError('Schema constants must be an object that maps to primitive values.');
     }
 
     this.schema = schema;
     this.name = schema.name;
-    this.constants = schema.constants || [];
+    this.constants = schema.constants || {};
     this.imports = schema.imports || [];
     this.formats = schema.formats || [];
 
@@ -39,5 +42,15 @@ export default class Schema {
     this.attributes = Object.keys(schema.attributes).map(attribute => (
       Factory.definition(attribute, schema.attributes[attribute])
     ));
+  }
+
+  /**
+   * Return true if the value is an object.
+   *
+   * @param {*} value
+   * @returns {Boolean}
+   */
+  isObject(value) {
+    return (typeof value === 'object' && value);
   }
 }

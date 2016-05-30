@@ -23,14 +23,16 @@ export default class Renderer {
    *
    * @param {String|Array} items
    * @param {Number} depth
+   * @param {String} itemSpacer
+   * @param {String} indentSpacer
    * @returns {String}
    */
-  formatArray(items, depth) {
+  formatArray(items, depth, itemSpacer = '\n', indentSpacer = '\n') {
     if (Array.isArray(items)) {
-      items = items.join('\n');
+      items = items.join(itemSpacer);
     }
 
-    return `[\n${items}\n${indent(depth)}]`;
+    return `[${indentSpacer}${items}${indentSpacer}${indent(depth)}]`;
   }
 
   /**
@@ -77,6 +79,22 @@ export default class Renderer {
   }
 
   /**
+   * Return a rendered list of constants to place at the top of the file.
+   *
+   * @returns {String[]}
+   */
+  getConstants() {
+    const { constants } = this.schema;
+    const response = [];
+
+    Object.keys(constants).forEach(key => {
+      response.push(this.renderConstant(key, constants[key]));
+    });
+
+    return response;
+  }
+
+  /**
    * Return a header template to place at the top of the file.
    *
    * @returns {String}
@@ -88,7 +106,7 @@ export default class Renderer {
   /**
    * Return a rendered list of imports to place at the top of the file.
    *
-   * @returns {String}
+   * @returns {String[]}
    */
   getImports() {
     const response = [];
@@ -97,7 +115,7 @@ export default class Renderer {
       response.push(this.renderImport(importStatement));
     });
 
-    return response.join('');
+    return response;
   }
 
   /**
@@ -174,6 +192,23 @@ export default class Renderer {
   }
 
   /**
+   * Render a constant.
+   *
+   * @param {String} name
+   * @param {*} value
+   * @returns {String}
+   */
+  renderConstant(name, value) {
+    if (Array.isArray(value)) {
+      value = this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
+    } else {
+      value = this.formatValue(value);
+    }
+
+    return `export const ${name} = ${value};`;
+  }
+
+  /**
    * Render an import statement.
    *
    * @param {String} defaultName
@@ -203,7 +238,7 @@ export default class Renderer {
       throw new Error('Import statements require either a default export or named exports.');
     }
 
-    return `import ${imports.join(', ')} from '${path}';\n`;
+    return `import ${imports.join(', ')} from '${path}';`;
   }
 
   /**

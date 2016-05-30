@@ -3,6 +3,10 @@
     "imports": [
         { "default": "InstNamespace", "named": ["InstanceClassName"], "path": "/path/to/InstanceClassName" }
     ],
+    "constants": {
+        "INST_STR": "foobar",
+        "INST_ENABLED": true
+    },
     "attributes": {
         "instField": {
             "type": "inst",

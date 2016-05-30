@@ -76,24 +76,22 @@ export default class Compiler {
           return;
         }
 
-        const header = this.createRenderer().getHeader();
-        const imports = [];
-        const output = [];
+        let header = [this.createRenderer().getHeader()];
+        let output = [];
 
         files.forEach(file => {
           if (file.match(/\.(js|json)$/)) {
             const renderer = this.createRenderer(path.join(folder, file));
 
-            imports.push(renderer.getImports());
-            output.push(renderer.render());
+            header = header.concat(renderer.getImports());
+            output = output.concat(
+              renderer.getConstants(),
+              renderer.render()
+            );
           }
         });
 
-        resolve([
-          header,
-          imports.join(''),
-          output.join('\n\n'),
-        ].join('\n'));
+        resolve(`${header.join('\n')}\n\n${output.join('\n\n')}`);
       });
     });
   }
@@ -109,9 +107,10 @@ export default class Compiler {
 
     return [
       renderer.getHeader(),
-      renderer.getImports(),
+      ...renderer.getImports(),
+      ...renderer.getConstants(),
       renderer.render(),
-    ].join('\n');
+    ].join('\n\n');
   }
 
   /**

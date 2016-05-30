@@ -1,5 +1,9 @@
 {
     "name": "Primitive",
+    "constants": {
+        "PRIMITIVE_VALUES": ["string", 123, true],
+        "PRIMITIVE_STR": "primitive"
+    },
     "attributes": {
         "boolField": "bool",
         "boolFieldExpanded": {

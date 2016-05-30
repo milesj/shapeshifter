@@ -3,6 +3,9 @@
     "imports": [
         { "default": "ArrayClassName", "path": "/path/to/ArrayClassName" }
     ],
+    "constants": {
+        "ARRAY_NUM": 123
+    },
     "attributes": {
         "arrayField": {
             "type": "array",
