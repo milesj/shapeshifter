@@ -1,5 +1,8 @@
 {
     "name": "Shape",
+    "imports": [
+        { "default": "ShapeNamespace", "named": ["ShapeClassName"], "path": "/path/to/ShapeClassName" }
+    ],
     "attributes": {
         "structAlias": {
             "type": "struct",
@@ -68,7 +71,7 @@
                 },
                 "instanceOf": {
                     "type": "instance",
-                    "contract": "Namespaced.ShapeClassName"
+                    "contract": "ShapeNamespace.ShapeClassName"
                 }
             }
         },

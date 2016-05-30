@@ -1,5 +1,8 @@
 {
     "name": "Array",
+    "imports": [
+        { "default": "ArrayClassName", "path": "/path/to/ArrayClassName" }
+    ],
     "attributes": {
         "arrayField": {
             "type": "array",
@@ -29,7 +32,7 @@
             "type": "array",
             "valueType": {
                 "type": "instance",
-                "contract": "ArrayInstanceClass"
+                "contract": "ArrayClassName"
             }
         },
         "numberField": {

@@ -1,5 +1,8 @@
 {
     "name": "Instance",
+    "imports": [
+        { "default": "InstNamespace", "named": ["InstanceClassName"], "path": "/path/to/InstanceClassName" }
+    ],
     "attributes": {
         "instField": {
             "type": "inst",
@@ -7,7 +10,7 @@
         },
         "instanceField": {
             "type": "instance",
-            "contract": "Namespaced.InstanceClassName"
+            "contract": "InstNamespace.InstanceClassName"
         }
     }
 }

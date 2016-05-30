@@ -1,5 +1,8 @@
 {
     "name": "Array",
+    "imports": [
+        { "default": "UnionNamespace", "named": ["UnionClassName"], "path": "/path/to/UnionClassName" }
+    ],
     "attributes": {
         "arrayField": {
             "type": "union",
@@ -51,7 +54,7 @@
                 },
                 {
                     "type": "inst",
-                    "contract": "Namespaced.UnionClassName"
+                    "contract": "UnionNamespace.UnionClassName"
                 }
             ]
         },

@@ -76,15 +76,24 @@ export default class Compiler {
           return;
         }
 
+        const header = this.createRenderer().getHeader();
+        const imports = [];
         const output = [];
 
         files.forEach(file => {
           if (file.match(/\.(js|json)$/)) {
-            output.push(this.compileFile(path.join(folder, file)));
+            const renderer = this.createRenderer(path.join(folder, file));
+
+            imports.push(renderer.getImports());
+            output.push(renderer.render());
           }
         });
 
-        resolve(output.join('\n\n'));
+        resolve([
+          header,
+          imports.join(''),
+          output.join('\n\n'),
+        ].join('\n'));
       });
     });
   }
@@ -96,7 +105,23 @@ export default class Compiler {
    * @returns {String}
    */
   compileFile(file) {
+    const renderer = this.createRenderer(file);
+
+    return [
+      renderer.getHeader(),
+      renderer.getImports(),
+      renderer.render(),
+    ].join('\n');
+  }
+
+  /**
+   * Create a renderer with a schema found at the defined file path.
+   *
+   * @param {String} [file]
+   * @returns {Renderer}
+   */
+  createRenderer(file) {
     // Use `require()` as it handles JSON and JS files easily
-    return Factory.renderer(config.renderer, new Schema(require(file))).render();
+    return Factory.renderer(config.renderer, file ? new Schema(require(file)) : null);
   }
 }

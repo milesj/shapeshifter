@@ -4,6 +4,13 @@ export default class ReactRenderer extends Renderer {
   /**
    * {@inheritdoc}
    */
+  getHeader() {
+    return 'import { PropTypes } from \'react\'';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   render() {
     const attributes = this.schema.attributes;
 

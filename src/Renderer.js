@@ -38,14 +38,16 @@ export default class Renderer {
    *
    * @param {String|Array} props
    * @param {Number} depth
+   * @param {String} propSpacer
+   * @param {String} indentSpacer
    * @returns {String}
    */
-  formatObject(props, depth) {
+  formatObject(props, depth, propSpacer = '\n', indentSpacer = '\n') {
     if (Array.isArray(props)) {
-      props = props.join('\n');
+      props = props.join(propSpacer);
     }
 
-    return `{\n${props}\n${indent(depth)}}`;
+    return `{${indentSpacer}${props}${indentSpacer}${indent(depth)}}`;
   }
 
   /**
@@ -72,6 +74,30 @@ export default class Renderer {
       default:
         throw new TypeError(`Unknown type "${type}" passed to formatValue().`);
     }
+  }
+
+  /**
+   * Return a header template to place at the top of the file.
+   *
+   * @returns {String}
+   */
+  getHeader() {
+    return '';
+  }
+
+  /**
+   * Return a rendered list of imports to place at the top of the file.
+   *
+   * @returns {String}
+   */
+  getImports() {
+    const response = [];
+
+    this.schema.imports.forEach(importStatement => {
+      response.push(this.renderImport(importStatement));
+    });
+
+    return response.join('');
   }
 
   /**
@@ -145,6 +171,39 @@ export default class Renderer {
     return items.map(item => (
       indent(depth) + this.wrapItem(this.renderOrFormat(item, depth, valueType))
     ));
+  }
+
+  /**
+   * Render an import statement.
+   *
+   * @param {String} defaultName
+   * @param {String[]} named
+   * @param {String} path
+   * @returns {String}
+   */
+  renderImport({ default: defaultName, named = [], path }) {
+    if (!path) {
+      throw new Error('Import statements require a file path.');
+
+    } else if (!Array.isArray(named)) {
+      throw new TypeError('Named imports must be an array.');
+    }
+
+    const imports = [];
+
+    if (defaultName) {
+      imports.push(defaultName);
+    }
+
+    if (named.length) {
+      imports.push(this.formatObject(named, 0, ', ', ' '));
+    }
+
+    if (!imports.length) {
+      throw new Error('Import statements require either a default export or named exports.');
+    }
+
+    return `import ${imports.join(', ')} from '${path}';\n`;
   }
 
   /**

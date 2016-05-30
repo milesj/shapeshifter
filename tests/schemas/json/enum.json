@@ -1,5 +1,8 @@
 {
     "name": "Enum",
+    "imports": [
+        { "default": "EnumNamespace", "named": ["fooFunc", "barFunc"], "path": "/path/to/EnumFuncs" }
+    ],
     "attributes": {
         "boolField": {
             "type": "enum",
@@ -19,7 +22,7 @@
         "functionField": {
             "type": "enum",
             "valueType": "function",
-            "values": ["Namespaced.fooFunc", "Namespaced.barFunc"]
+            "values": ["EnumNamespace.fooFunc", "EnumNamespace.barFunc"]
         },
         "intField": {
             "type": "enum",

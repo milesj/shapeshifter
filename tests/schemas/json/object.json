@@ -1,5 +1,8 @@
 {
     "name": "Object",
+    "imports": [
+        { "default": "ObjectClassName", "path": "/path/to/ObjectClassName" }
+    ],
     "attributes": {
         "arrayField": {
             "type": "object",
@@ -30,7 +33,7 @@
             "type": "object",
             "valueType": {
                 "type": "instance",
-                "contract": "ObjectInstanceClass"
+                "contract": "ObjectClassName"
             }
         },
         "numberField": {

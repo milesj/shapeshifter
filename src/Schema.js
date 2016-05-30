@@ -20,15 +20,19 @@ export default class Schema {
     }
 
     if (!schema.name) {
-      throw new Error('No name found in schema.');
+      throw new SyntaxError('No name found in schema.');
 
     } else if (!schema.attributes || !Object.keys(schema.attributes).length) {
-      throw new Error('No attributes found in schema.');
+      throw new SyntaxError('No attributes found in schema.');
+
+    } else if (schema.imports && !Array.isArray(schema.imports)) {
+      throw new SyntaxError('Schema imports must be an array of import declarations.');
     }
 
     this.schema = schema;
     this.name = schema.name;
     this.constants = schema.constants || [];
+    this.imports = schema.imports || [];
     this.formats = schema.formats || [];
 
     // Convert attributes to definitions
