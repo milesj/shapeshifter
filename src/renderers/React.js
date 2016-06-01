@@ -5,7 +5,7 @@ export default class ReactRenderer extends Renderer {
    * {@inheritdoc}
    */
   getHeader() {
-    return 'import { PropTypes } from \'react\'';
+    return 'import { PropTypes } from \'react\';';
   }
 
   /**

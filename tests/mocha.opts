@@ -1,0 +1,5 @@
+--compilers js:babel-register
+--check-leaks
+--ui bdd
+--reporter nyan
+--colors

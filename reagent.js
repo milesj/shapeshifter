@@ -13,7 +13,13 @@ var options = CommandLine([
 ]).parse();
 
 // Instantiate and run compiler
-new Compiler(options)
+new Compiler({
+  defaultNull: options.null,
+  defaultRequired: options.required,
+  indentCharacter: options.indent,
+  renderer: options.renderer,
+  schemaSuffix: options.suffix,
+})
   .compile(path.normalize(path.join(__dirname, options.path)))
   .then(Compiler.output)
   .catch(Compiler.error);

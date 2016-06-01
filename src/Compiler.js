@@ -9,11 +9,11 @@ import Schema from './Schema';
 
 export default class Compiler {
   constructor(options) {
-    config.defaultNull = options.null;
-    config.defaultRequired = options.required;
-    config.indentCharacter = options.indent;
+    config.defaultNull = options.defaultNull;
+    config.defaultRequired = options.defaultRequired;
+    config.indentCharacter = options.indentCharacter;
     config.renderer = options.renderer;
-    config.schemaSuffix = options.suffix;
+    config.schemaSuffix = options.schemaSuffix;
   }
 
   /**
@@ -91,7 +91,7 @@ export default class Compiler {
           }
         });
 
-        resolve(`${header.join('\n')}\n\n${output.join('\n\n')}`);
+        resolve(this.generateOutput(header, output));
       });
     });
   }
@@ -105,12 +105,16 @@ export default class Compiler {
   compileFile(file) {
     const renderer = this.createRenderer(file);
 
-    return [
-      renderer.getHeader(),
-      ...renderer.getImports(),
-      ...renderer.getConstants(),
-      renderer.render(),
-    ].join('\n\n');
+    return this.generateOutput(
+      [
+        renderer.getHeader(),
+        ...renderer.getImports(),
+      ],
+      [
+        renderer.getConstants().join('\n'),
+        renderer.render(),
+      ]
+    );
   }
 
   /**
@@ -122,5 +126,18 @@ export default class Compiler {
   createRenderer(file) {
     // Use `require()` as it handles JSON and JS files easily
     return Factory.renderer(config.renderer, file ? new Schema(require(file)) : null);
+  }
+
+  /**
+   * Generate the output by combining the header and body with the correct whitespace.
+   *
+   * @param {String[]} header
+   * @param {String[]} body
+   * @returns {string}
+   */
+  generateOutput(header, body) {
+    const filter = value => !!value;
+
+    return `${header.filter(filter).join('\n')}\n\n${body.filter(filter).join('\n\n')}\n`;
   }
 }
