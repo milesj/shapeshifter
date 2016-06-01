@@ -7,12 +7,15 @@ import config from '../lib/config';
 
 chai.use(chaiFiles);
 
+// Supported renderers
 const RENDERERS = [
   { name: 'React PropTypes', key: 'react' },
 ];
 
-const SUPPORTED_FORMATS = ['json'];
+// Supported schema file formats
+const SUPPORTED_FORMATS = ['json', 'js'];
 
+// Mocked schemas to use in unit tests
 const SCHEMA_CASES = [
   'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
 ];
