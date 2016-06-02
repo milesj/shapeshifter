@@ -1,5 +1,6 @@
 import Definition from '../Definition';
 import Factory from '../Factory';
+import isObject from '../helpers/isObject';
 
 export default class ShapeDefinition extends Definition {
   /**
@@ -10,7 +11,7 @@ export default class ShapeDefinition extends Definition {
 
     const { attributes } = this.config;
 
-    if (!attributes || typeof attributes !== 'object' || !Object.keys(attributes).length) {
+    if (!isObject(attributes) || !Object.keys(attributes).length) {
       throw new SyntaxError(
         'Shape definitions require an "attributes" property, ' +
         'which is an object mapping of attributes to type definitions.'
