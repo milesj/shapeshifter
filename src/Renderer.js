@@ -125,7 +125,20 @@ export default class Renderer {
    * @returns {String}
    */
   getSchemaName(format = '') {
-    return (this.schema.name + format + config.schemaSuffix).replace(' ', '').trim();
+    return [this.schema.name, format, config.schemaSuffix]
+      .map(value => {
+        if (!value) {
+          return '';
+        }
+
+        value = value
+          .replace(/[^a-zA-Z0-9]+/g, ' ')
+          .replace(/\W+(.)/g, match => match[1].toUpperCase())
+          .trim();
+
+        return value.charAt(0).toUpperCase() + value.slice(1);
+      })
+      .join('');
   }
 
   /**
@@ -218,7 +231,7 @@ export default class Renderer {
    */
   renderImport({ default: defaultName, named = [], path }) {
     if (!path) {
-      throw new Error('Import statements require a file path.');
+      throw new SyntaxError('Import statements require a file path.');
 
     } else if (!Array.isArray(named)) {
       throw new TypeError('Named imports must be an array.');
@@ -244,13 +257,13 @@ export default class Renderer {
   /**
    * Render a mapping of properties by formatting each value and prepending an indentation.
    *
-   * @param {*[]} props
+   * @param {Definition[]} props
    * @param {Number} depth
    * @returns {Array}
    */
   renderObjectProps(props, depth = 0) {
     return props.map(prop => (
-      indent(depth) + this.wrapProperty(prop.attribute, this.renderOrFormat(prop, depth))
+      indent(depth) + this.wrapProperty(prop.attribute, this.renderAttribute(prop, depth))
     ));
   }
 
