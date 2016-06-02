@@ -23,13 +23,13 @@ export default class Schema {
     if (!schema.name) {
       throw new SyntaxError('No name found in schema.');
 
-    } else if (!schema.attributes || !Object.keys(schema.attributes).length) {
+    } else if (!isObject(schema.attributes) || !Object.keys(schema.attributes).length) {
       throw new SyntaxError('No attributes found in schema.');
 
-    } else if (schema.imports && !Array.isArray(schema.imports)) {
+    } else if (schema.hasOwnProperty('imports') && !Array.isArray(schema.imports)) {
       throw new SyntaxError('Schema imports must be an array of import declarations.');
 
-    } else if (schema.constants && !isObject(schema.constants)) {
+    } else if (schema.hasOwnProperty('constants') && !isObject(schema.constants)) {
       throw new SyntaxError('Schema constants must be an object that maps to primitive values.');
     }
 
