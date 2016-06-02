@@ -23,7 +23,13 @@ describe('definitions/Enum', () => {
   it('errors if `values` is not an array', () => {
     expect(() => (
       new EnumDefinition('foo', { valueType: 'string', values: 'string' })
-    )).to.throw(TypeError, 'Enum values must be an array.');
+    )).to.throw(TypeError, 'Enum values must be a non-empty array.');
+  });
+
+  it('errors if `values` is empty', () => {
+    expect(() => (
+      new EnumDefinition('foo', { valueType: 'string', values: [] })
+    )).to.throw(TypeError, 'Enum values must be a non-empty array.');
   });
 
   it('errors if `values` do not match the type in `valueType`', () => {

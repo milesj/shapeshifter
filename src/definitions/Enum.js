@@ -17,8 +17,8 @@ export default class EnumDefinition extends Definition {
     } else if (!isPrimitive(valueType)) {
       throw new TypeError(`Enum value type "${valueType || 'unknown'}" not supported.`);
 
-    } else if (!Array.isArray(values)) {
-      throw new TypeError('Enum values must be an array.');
+    } else if (!Array.isArray(values) || !values.length) {
+      throw new TypeError('Enum values must be a non-empty array.');
 
     } else if (!values.every(value => this.validateValue(value))) {
       throw new TypeError('Enum values do not match the defined value type.');
