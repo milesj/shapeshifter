@@ -2,13 +2,16 @@ import Definition from '../Definition';
 import Factory from '../Factory';
 
 export default class ShapeDefinition extends Definition {
+  /**
+   * {@inheritdoc}
+   */
   validateConfig() {
     super.validateConfig();
 
     const { attributes } = this.config;
 
-    if (!attributes || !Object.keys(attributes).length) {
-      throw new Error(
+    if (!attributes || typeof attributes !== 'object' || !Object.keys(attributes).length) {
+      throw new SyntaxError(
         'Shape definitions require an "attributes" property, ' +
         'which is an object mapping of attributes to type definitions.'
       );

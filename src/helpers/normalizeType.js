@@ -1,3 +1,17 @@
+// Use a hash map for faster lookups
+const ALIAS_MAP = {
+  bool: 'boolean',
+  func: 'function',
+  inst: 'instance',
+  int: 'number',
+  integer: 'number',
+  num: 'number',
+  float: 'number',
+  obj: 'object',
+  struct: 'shape',
+  str: 'string',
+};
+
 /**
  * Expand and return the valid type name for all aliases and shorthands.
  *
@@ -5,34 +19,7 @@
  * @returns {String}
  */
 export default function normalizeType(type) {
-  type = type.toLowerCase();
+  type = String(type).toLowerCase();
 
-  switch (type) {
-    case 'bool':
-      return 'boolean';
-
-    case 'func':
-      return 'function';
-
-    case 'inst':
-      return 'instance';
-
-    case 'int':
-    case 'integer':
-    case 'num':
-    case 'float':
-      return 'number';
-
-    case 'obj':
-      return 'object';
-
-    case 'struct':
-      return 'shape';
-
-    case 'str':
-      return 'string';
-
-    default:
-      return type;
-  }
+  return ALIAS_MAP[type] || type;
 }

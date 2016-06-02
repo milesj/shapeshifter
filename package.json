@@ -10,7 +10,7 @@
     "build": "babel ./src -d ./lib",
     "watch": "babel --watch ./src -d ./lib",
     "lint": "eslint ./src ./tests",
-    "mocha": "mocha --opts ./tests/mocha.opts ./tests",
+    "mocha": "mocha --opts ./tests/mocha.opts ./tests/*.test.js ./tests/**/*.test.js",
     "test": "npm run build && npm run lint && npm run mocha"
   },
   "repository": {

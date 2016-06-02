@@ -3,6 +3,9 @@ import isPrimitive from '../helpers/isPrimitive';
 import normalizeType from '../helpers/normalizeType';
 
 export default class EnumDefinition extends Definition {
+  /**
+   * {@inheritdoc}
+   */
   validateConfig() {
     super.validateConfig();
 
@@ -22,6 +25,12 @@ export default class EnumDefinition extends Definition {
     }
   }
 
+  /**
+   * Validate a value matches the type in `valueType`.
+   *
+   * @param {*} value
+   * @returns {Boolean}
+   */
   validateValue(value) {
     let valueType = normalizeType(this.config.valueType);
 

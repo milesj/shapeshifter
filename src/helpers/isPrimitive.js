@@ -1,4 +1,5 @@
 import { PRIMITIVE_TYPES } from '../constants';
+import normalizeType from './normalizeType';
 
 /**
  * Verify that a value is a primitive type.
@@ -7,5 +8,5 @@ import { PRIMITIVE_TYPES } from '../constants';
  * @returns {Boolean}
  */
 export default function isPrimitive(value) {
-  return (PRIMITIVE_TYPES.indexOf(typeof value) >= 0);
+  return (PRIMITIVE_TYPES.indexOf(normalizeType(value)) >= 0);
 }

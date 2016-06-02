@@ -2,6 +2,9 @@ import Definition from '../Definition';
 import Factory from '../Factory';
 
 export default class ArrayDefinition extends Definition {
+  /**
+   * {@inheritdoc}
+   */
   validateConfig() {
     super.validateConfig();
 

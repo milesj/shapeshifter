@@ -7,7 +7,7 @@ export default class Definition {
    * @param {String} attribute
    * @param {Object} config
    */
-  constructor(attribute, config) {
+  constructor(attribute, config = {}) {
     this.attribute = attribute;
     this.config = {
       null: cfg.defaultNull,

@@ -2,13 +2,16 @@ import Definition from '../Definition';
 import Factory from '../Factory';
 
 export default class UnionDefinition extends Definition {
+  /**
+   * {@inheritdoc}
+   */
   validateConfig() {
     super.validateConfig();
 
     const { valueTypes } = this.config;
 
     if (!Array.isArray(valueTypes) || !valueTypes.length) {
-      throw new Error(
+      throw new SyntaxError(
         'Union definitions require a "valueTypes" property, ' +
         'which is a list of type definitions'
       );
