@@ -1,4 +1,5 @@
 import config from './config';
+import Factory from './Factory';
 import Definition from './Definition';
 import ArrayDef from './definitions/Array';
 import BoolDef from './definitions/Bool';
@@ -125,11 +126,11 @@ export default class Renderer {
   /**
    * Return the schema name to be used as the prop type or type alias name.
    *
-   * @param {String} [format]
+   * @param {String} [setName]
    * @returns {String}
    */
-  getSchemaName(format = '') {
-    return [this.schema.name, format, config.schemaSuffix]
+  getSchemaName(setName = '') {
+    return [this.schema.name, setName, config.schemaSuffix]
       .map(value => {
         if (!value) {
           return '';
@@ -143,6 +144,61 @@ export default class Renderer {
         return value.charAt(0).toUpperCase() + value.slice(1);
       })
       .join('');
+  }
+
+  /**
+   * Return a list of the primary set and all subsets.
+   *
+   * @returns {String[]}
+   */
+  getSets() {
+    const response = [];
+    const baseAttributes = this.schema.schema.attributes;
+    const { attributes, subsets } = this.schema;
+
+    // Default set
+    response.push(this.render('', attributes));
+
+    // Subsets
+    Object.keys(subsets).forEach(setName => {
+      const setAttributes = [];
+      let subset = subsets[setName];
+
+      if (Array.isArray(subset)) {
+        subset = { attributes: subset };
+      }
+
+      const nullable = subset.null || {};
+      const required = subset.required || {};
+
+      subset.attributes.forEach(attribute => {
+        let setConfig = baseAttributes[attribute];
+
+        if (!setConfig) {
+          throw new SyntaxError(`Attribute ${attribute} does not exist in the base schema.`);
+        }
+
+        if (typeof setConfig === 'string') {
+          setConfig = { type: setConfig };
+        } else {
+          setConfig = { ...setConfig }; // Dereference original object
+        }
+
+        if (nullable.hasOwnProperty(attribute)) {
+          setConfig.null = nullable[attribute];
+        }
+
+        if (required.hasOwnProperty(attribute)) {
+          setConfig.required = required[attribute];
+        }
+
+        setAttributes.push(Factory.definition(attribute, setConfig));
+      });
+
+      response.push(this.render(setName, setAttributes));
+    });
+
+    return response;
   }
 
   /**
@@ -195,6 +251,13 @@ export default class Renderer {
   }
 
   /**
+   * Render an array definition.
+   */
+  renderArray() {
+    this.unsupported('array');
+  }
+
+  /**
    * Render an array of items by formatting each value and prepending an indentation.
    *
    * @param {*[]} items
@@ -206,6 +269,13 @@ export default class Renderer {
     return items.map(item => (
       indent(depth) + this.wrapItem(this.renderOrFormat(item, depth, valueType))
     ));
+  }
+
+  /**
+   * Render a boolean definition.
+   */
+  renderBool() {
+    this.unsupported('boolean');
   }
 
   /**
@@ -223,6 +293,20 @@ export default class Renderer {
     }
 
     return `export const ${name} = ${value};`;
+  }
+
+  /**
+   * Render an enum definition.
+   */
+  renderEnum() {
+    this.unsupported('enum');
+  }
+
+  /**
+   * Render a function definition.
+   */
+  renderFunc() {
+    this.unsupported('function');
   }
 
   /**
@@ -259,6 +343,27 @@ export default class Renderer {
   }
 
   /**
+   * Render an instance definition.
+   */
+  renderInstance() {
+    this.unsupported('instance');
+  }
+
+  /**
+   * Render a number definition.
+   */
+  renderNumber() {
+    this.unsupported('number');
+  }
+
+  /**
+   * Render an object definition.
+   */
+  renderObject() {
+    this.unsupported('object');
+  }
+
+  /**
    * Render a mapping of properties by formatting each value and prepending an indentation.
    *
    * @param {Definition[]} props
@@ -283,6 +388,36 @@ export default class Renderer {
     return (value instanceof Definition)
       ? this.renderAttribute(value, depth)
       : this.formatValue(value, valueType);
+  }
+
+  /**
+   * Render a shape definition.
+   */
+  renderShape() {
+    this.unsupported('shape');
+  }
+
+  /**
+   * Render a union definition.
+   */
+  renderUnion() {
+    this.unsupported('union');
+  }
+
+  /**
+   * Render a string definition.
+   */
+  renderString() {
+    this.unsupported('string');
+  }
+
+  /**
+   * Throws an error if a definition is not supported.
+   *
+   * @param {String} definition
+   */
+  unsupported(definition) {
+    throw new Error(`The "${definition}" definition is not supported by ${this.constructor.name}.`);
   }
 
   /**

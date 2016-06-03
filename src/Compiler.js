@@ -84,10 +84,11 @@ export default class Compiler {
             const renderer = this.createRenderer(path.join(folder, file));
 
             header = header.concat(renderer.getImports());
-            output = output.concat(
+            output = [
+              ...output,
               renderer.getConstants().join('\n'),
-              renderer.render()
-            );
+              ...renderer.getSets(),
+            ];
           }
         });
 
@@ -110,7 +111,7 @@ export default class Compiler {
       ...renderer.getImports(),
     ], [
       renderer.getConstants().join('\n'),
-      renderer.render(),
+      ...renderer.getSets(),
     ]);
   }
 

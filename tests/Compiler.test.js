@@ -20,7 +20,7 @@ const SCHEMA_CASES = [
   // Types
   'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
   // Syntax
-  'imports', 'constants',
+  'imports', 'constants', 'sets',
 ];
 
 // Fake a file object for the actual path

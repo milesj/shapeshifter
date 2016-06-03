@@ -31,13 +31,16 @@ export default class Schema {
 
     } else if (schema.hasOwnProperty('constants') && !isObject(schema.constants)) {
       throw new SyntaxError('Schema constants must be an object that maps to primitive values.');
+
+    } else if (schema.hasOwnProperty('subsets') && !isObject(schema.subsets)) {
+      throw new SyntaxError('Schema subsets must be an object.');
     }
 
     this.schema = schema;
     this.name = schema.name;
     this.constants = schema.constants || {};
     this.imports = schema.imports || [];
-    this.formats = schema.formats || [];
+    this.subsets = schema.subsets || {};
 
     // Convert attributes to definitions
     this.attributes = Object.keys(schema.attributes).map(attribute => (

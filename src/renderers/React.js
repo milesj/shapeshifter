@@ -11,10 +11,8 @@ export default class ReactRenderer extends Renderer {
   /**
    * {@inheritdoc}
    */
-  render() {
-    const attributes = this.schema.attributes;
-
-    return `export const ${this.getSchemaName()} = ${this.renderShape({ attributes }, 0)};`;
+  render(setName, attributes = {}) {
+    return `export const ${this.getSchemaName(setName)} = ${this.renderShape({ attributes }, 0)};`;
   }
 
   /**

@@ -74,6 +74,13 @@ describe('Schema', () => {
     })).to.throw(SyntaxError, 'Schema constants must be an object that maps to primitive values.');
   });
 
+  it('errors if `subsets` is defined and not an object', () => {
+    expect(() => new Schema({
+      ...data,
+      subsets: 123,
+    })).to.throw(SyntaxError, 'Schema subsets must be an object.');
+  });
+
   it('creates an array of `Definition`s for `attributes`', () => {
     const schema = new Schema(data);
 
