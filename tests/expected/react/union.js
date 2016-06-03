@@ -1,7 +1,7 @@
 import { PropTypes } from 'react';
 import UnionNamespace, { UnionClassName } from '/path/to/UnionClassName';
 
-export const ArraySchema = PropTypes.shape({
+export const UnionSchema = PropTypes.shape({
   arrayField: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),

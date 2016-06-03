@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Array',
+  name: 'Union',
   imports: [
     { default: 'UnionNamespace', named: ['UnionClassName'], path: '/path/to/UnionClassName' }
   ],

@@ -60,6 +60,10 @@ export default class Renderer {
    * @returns {String}
    */
   formatValue(value, type) {
+    if (value === null) {
+      return 'null';
+    }
+
     type = normalizeType(type || typeof value);
 
     switch (type) {
