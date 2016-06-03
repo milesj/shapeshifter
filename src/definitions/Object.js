@@ -3,7 +3,7 @@ import Factory from '../Factory';
 
 export default class ObjectDefinition extends Definition {
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   constructor(attribute, config) {
     super(attribute, {
@@ -13,7 +13,7 @@ export default class ObjectDefinition extends Definition {
   }
 
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   validateConfig() {
     super.validateConfig();

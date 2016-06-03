@@ -4,7 +4,7 @@ import normalizeType from '../helpers/normalizeType';
 
 export default class EnumDefinition extends Definition {
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   validateConfig() {
     super.validateConfig();

@@ -3,7 +3,7 @@ import Factory from '../Factory';
 
 export default class ArrayDefinition extends Definition {
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   validateConfig() {
     super.validateConfig();

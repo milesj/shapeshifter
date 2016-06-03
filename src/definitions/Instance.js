@@ -2,7 +2,7 @@ import Definition from '../Definition';
 
 export default class InstanceDefinition extends Definition {
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   validateConfig() {
     super.validateConfig();

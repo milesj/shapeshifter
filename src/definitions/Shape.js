@@ -4,7 +4,7 @@ import isObject from '../helpers/isObject';
 
 export default class ShapeDefinition extends Definition {
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   validateConfig() {
     super.validateConfig();

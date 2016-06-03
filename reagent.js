@@ -1,14 +1,15 @@
 var path = require('path');
 var CommandLine = require('command-line-args');
 var Compiler = require('./lib/Compiler').default;
+var config = require('./lib/config').default;
 
 // Parse command line options
 var options = CommandLine([
-  { name: 'null', alias: 'n', type: Boolean, defaultValue: true },
-  { name: 'required', alias: 'r', type: Boolean, defaultValue: false },
-  { name: 'indent', type: String, defaultValue: '  ' },
-  { name: 'renderer', type: String, defaultValue: 'react' },
-  { name: 'suffix', type: String, defaultValue: 'Schema' },
+  { name: 'null', alias: 'n', type: Boolean, defaultValue: config.defaultNull },
+  { name: 'required', alias: 'r', type: Boolean, defaultValue: config.defaultRequired },
+  { name: 'indent', type: String, defaultValue: config.indentCharacter },
+  { name: 'renderer', type: String, defaultValue: config.renderer },
+  { name: 'suffix', type: String, defaultValue: config.schemaSuffix },
   { name: 'path', type: String, defaultOption: true },
 ]).parse();
 

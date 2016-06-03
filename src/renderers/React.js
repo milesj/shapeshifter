@@ -2,14 +2,14 @@ import Renderer from '../Renderer';
 
 export default class ReactRenderer extends Renderer {
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   getHeader() {
     return 'import { PropTypes } from \'react\';';
   }
 
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   render(setName, attributes = {}) {
     return `export const ${this.getSchemaName(setName)} = ${this.renderShape({ attributes }, 0)};`;

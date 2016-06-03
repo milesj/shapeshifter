@@ -1,5 +1,5 @@
 export default {
-  defaultNull: true,
+  defaultNull: false,
   defaultRequired: false,
   indentCharacter: '  ',
   renderer: 'react',
