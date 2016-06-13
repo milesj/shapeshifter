@@ -15,13 +15,11 @@ module.exports = {
       type: 'boolean',
       null: false
     },
-    funcField: 'func',
-    funcFieldExpanded: {
+    funcField: {
       type: 'func',
       required: true
     },
-    functionField: 'function',
-    functionFieldExpanded: {
+    functionField: {
       type: 'function',
       null: true
     },

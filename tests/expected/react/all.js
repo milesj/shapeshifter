@@ -1,6 +1,5 @@
 import { PropTypes } from 'react';
 import ArrayClassName from '/path/to/ArrayClassName';
-import EnumNamespace, { fooFunc, barFunc } from '/path/to/EnumFuncs';
 import DefaultName from '/path/to/ImportClassName';
 import { foo, bar } from '/path/to/named/Imports';
 import AnotherDefault, { Baz, QUX } from '/path/to/named/and/Defaults';
@@ -58,14 +57,6 @@ export const EnumSchema = PropTypes.shape({
   booleanField: PropTypes.oneOf([
     false,
     true,
-  ]),
-  funcField: PropTypes.oneOf([
-    fooFunc,
-    barFunc,
-  ]),
-  functionField: PropTypes.oneOf([
-    EnumNamespace.fooFunc,
-    EnumNamespace.barFunc,
   ]),
   intField: PropTypes.oneOf([
     123,
@@ -154,10 +145,8 @@ export const PrimitiveSchema = PropTypes.shape({
   boolFieldExpanded: PropTypes.bool.isRequired,
   booleanField: PropTypes.bool,
   booleanFieldExpanded: PropTypes.bool,
-  funcField: PropTypes.func,
-  funcFieldExpanded: PropTypes.func.isRequired,
+  funcField: PropTypes.func.isRequired,
   functionField: PropTypes.func,
-  functionFieldExpanded: PropTypes.func,
   intField: PropTypes.number,
   intFieldExpanded: PropTypes.number,
   integerField: PropTypes.number,
@@ -272,8 +261,8 @@ export const UnionSchema = PropTypes.shape({
   ]),
   primitiveFields: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.func,
     PropTypes.number,
+    PropTypes.func,
   ]),
   enumField: PropTypes.oneOfType([
     PropTypes.oneOf([

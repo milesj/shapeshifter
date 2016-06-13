@@ -7,7 +7,7 @@ describe('Definition', () => {
 
     expect(def.attribute).to.equal('foo');
     expect(def.config).to.deep.equal({
-      null: true,
+      null: false,
       required: false,
       key: 'value',
     });

@@ -1,5 +1,4 @@
 import { PropTypes } from 'react';
-import EnumNamespace, { fooFunc, barFunc } from '/path/to/EnumFuncs';
 
 export const EnumSchema = PropTypes.shape({
   boolField: PropTypes.oneOf([
@@ -9,14 +8,6 @@ export const EnumSchema = PropTypes.shape({
   booleanField: PropTypes.oneOf([
     false,
     true,
-  ]),
-  funcField: PropTypes.oneOf([
-    fooFunc,
-    barFunc,
-  ]),
-  functionField: PropTypes.oneOf([
-    EnumNamespace.fooFunc,
-    EnumNamespace.barFunc,
   ]),
   intField: PropTypes.oneOf([
     123,

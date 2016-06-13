@@ -28,7 +28,9 @@ module.exports = {
     },
     funcField: {
       type: 'array',
-      valueType: 'func',
+      valueType: {
+        type: 'func'
+      },
       null: false
     },
     instanceField: {

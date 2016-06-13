@@ -18,7 +18,9 @@ module.exports = {
           type: 'bool',
           null: false
         },
-        func: 'function',
+        func: {
+          type: 'function'
+        },
         number: {
           type: 'number',
           required: true

@@ -1,8 +1,5 @@
 module.exports = {
   name: 'Enum',
-  imports: [
-    { default: 'EnumNamespace', named: ['fooFunc', 'barFunc'], path: '/path/to/EnumFuncs' }
-  ],
   attributes: {
     boolField: {
       type: 'enum',
@@ -13,16 +10,6 @@ module.exports = {
       type: 'enum',
       valueType: 'boolean',
       values: [false, true]
-    },
-    funcField: {
-      type: 'enum',
-      valueType: 'func',
-      values: ['fooFunc', 'barFunc']
-    },
-    functionField: {
-      type: 'enum',
-      valueType: 'function',
-      values: ['EnumNamespace.fooFunc', 'EnumNamespace.barFunc']
     },
     intField: {
       type: 'enum',

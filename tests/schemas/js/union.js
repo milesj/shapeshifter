@@ -24,9 +24,9 @@ module.exports = {
       type: 'union',
       valueTypes: [
         'bool',
-        'func',
+        'integer',
         {
-          type: 'integer'
+          type: 'func'
         }
       ]
     },

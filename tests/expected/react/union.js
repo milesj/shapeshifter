@@ -8,8 +8,8 @@ export const UnionSchema = PropTypes.shape({
   ]),
   primitiveFields: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.func,
     PropTypes.number,
+    PropTypes.func,
   ]),
   enumField: PropTypes.oneOfType([
     PropTypes.oneOf([
