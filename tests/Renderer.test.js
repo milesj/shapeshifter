@@ -156,15 +156,24 @@ describe('Renderer', () => {
     });
   });
 
+  describe('wrapGenerics()', () => {
+    it('wraps values into a generic alias', () => {
+      expect(renderer.wrapGenerics('Array', 'T')).to.equal('Array<T>');
+      expect(renderer.wrapGenerics('Array', 'T1', 'T2')).to.equal('Array<T1, T2>');
+    });
+  });
+
   describe('wrapItem()', () => {
     it('wraps a value into an array item', () => {
       expect(renderer.wrapItem('foo')).to.equal('foo,');
+      expect(renderer.wrapItem('foo', 1)).to.equal('  foo,');
     });
   });
 
   describe('wrapProperty()', () => {
     it('wraps a key and value into an object property', () => {
       expect(renderer.wrapProperty('foo', 'bar')).to.equal('foo: bar,');
+      expect(renderer.wrapProperty('foo', 'bar', 1)).to.equal('  foo: bar,');
     });
   });
 });

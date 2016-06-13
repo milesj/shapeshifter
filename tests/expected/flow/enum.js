@@ -1,11 +1,8 @@
 // @flow
-import EnumNamespace, { fooFunc, barFunc } from '/path/to/EnumFuncs';
 
 export type EnumSchema = {
   boolField: true | false,
   booleanField: false | true,
-  funcField: fooFunc | barFunc,
-  functionField: EnumNamespace.fooFunc | EnumNamespace.barFunc,
   intField: 123,
   integerField: 1 | 2 | 3,
   numField: 123 | 456 | 789,

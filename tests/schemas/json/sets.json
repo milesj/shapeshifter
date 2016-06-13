@@ -22,7 +22,7 @@
         "qux": true
       },
       "null": {
-        "null": true
+        "qux": true
       }
     }
   },

@@ -10,7 +10,7 @@ chai.use(chaiFiles);
 // Supported renderers
 const RENDERERS = [
   { name: 'React PropTypes', key: 'react' },
-  // { name: 'Flow Type', key: 'flow' },
+  { name: 'Flow Type', key: 'flow' },
 ];
 
 // Supported schema file formats

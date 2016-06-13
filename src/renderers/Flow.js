@@ -1,4 +1,5 @@
 import Renderer from '../Renderer';
+import isPrimitive from '../helpers/isPrimitive';
 
 export default class FlowRenderer extends Renderer {
   /**
@@ -19,7 +20,15 @@ export default class FlowRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderArray(definition, depth) {
-    return this.wrapNullable(definition, 'Array<T>'); // TODO
+    let template = this.renderAttribute(definition.valueType, depth);
+
+    if (isPrimitive(definition.valueType.config.type)) {
+      template += '[]';
+    } else {
+      template = this.wrapGenerics('Array', template);
+    }
+
+    return this.wrapNullable(definition, template);
   }
 
   /**
@@ -65,14 +74,19 @@ export default class FlowRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderObject(definition, depth) {
-    return ''; // TODO
+    const key = this.renderAttribute(definition.keyType, depth + 1);
+    const value = this.renderAttribute(definition.valueType, depth + 1);
+
+    return this.wrapNullable(definition,
+      this.formatObject(this.wrapProperty(`[key: ${key}]`, value, depth + 1), depth));
   }
 
   /**
    * {@inheritDoc}
    */
   renderShape(definition, depth) {
-    return this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth);
+    return this.wrapNullable(definition,
+      this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth));
   }
 
   /**

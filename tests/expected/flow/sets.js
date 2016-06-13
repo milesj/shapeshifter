@@ -25,5 +25,5 @@ export type SetsWithNullSchema = {
 
 export type SetsWithBothSchema = {
   baz: boolean,
-  qux: () => void,
+  qux: ?() => void,
 };

@@ -266,9 +266,7 @@ export default class Renderer {
    * @returns {Array}
    */
   renderArrayItems(items, depth = 0, valueType) {
-    return items.map(item => (
-      indent(depth) + this.wrapItem(this.renderOrFormat(item, depth, valueType))
-    ));
+    return items.map(item => this.wrapItem(this.renderOrFormat(item, depth, valueType), depth));
   }
 
   /**
@@ -371,9 +369,7 @@ export default class Renderer {
    * @returns {Array}
    */
   renderObjectProps(props, depth = 0) {
-    return props.map(prop => (
-      indent(depth) + this.wrapProperty(prop.attribute, this.renderAttribute(prop, depth))
-    ));
+    return props.map(prop => this.wrapProperty(prop.attribute, this.renderAttribute(prop, depth), depth));
   }
 
   /**
@@ -432,13 +428,25 @@ export default class Renderer {
   }
 
   /**
+   * Render a generics alias with optional type arguments.
+   *
+   * @param {String} alias
+   * @param {String[]} types
+   * @returns {String}
+     */
+  wrapGenerics(alias, ...types) {
+    return `${alias}<${types.join(', ')}>`;
+  }
+
+  /**
    * Render a value into an array item representation.
    *
    * @param {String} value
+   * @param {Number} depth
    * @returns {String}
    */
-  wrapItem(value) {
-    return `${value},`;
+  wrapItem(value, depth = 0) {
+    return `${indent(depth)}${value},`;
   }
 
   /**
@@ -446,9 +454,10 @@ export default class Renderer {
    *
    * @param {String} key
    * @param {String} value
+   * @param {Number} depth
    * @returns {String}
    */
-  wrapProperty(key, value) {
-    return `${key}: ${value},`;
+  wrapProperty(key, value, depth = 0) {
+    return `${indent(depth)}${key}: ${value},`;
   }
 }
