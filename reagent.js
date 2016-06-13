@@ -11,7 +11,7 @@ var options = CommandLine([
   { name: 'renderer', type: String, defaultValue: config.renderer },
   { name: 'suffix', type: String, defaultValue: config.schemaSuffix },
   { name: 'path', type: String, defaultOption: true },
-]).parse();
+]);
 
 // Instantiate and run compiler
 new Compiler({

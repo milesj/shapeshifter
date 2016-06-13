@@ -369,7 +369,9 @@ export default class Renderer {
    * @returns {Array}
    */
   renderObjectProps(props, depth = 0) {
-    return props.map(prop => this.wrapProperty(prop.attribute, this.renderAttribute(prop, depth), depth));
+    return props.map(prop => (
+      this.wrapProperty(prop.attribute, this.renderAttribute(prop, depth), depth)
+    ));
   }
 
   /**

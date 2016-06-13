@@ -28,7 +28,8 @@
     "funcField": {
       "type": "object",
       "valueType": {
-        "type": "func"
+        "type": "func",
+        "returnType": "string"
       }
     },
     "instanceField": {

@@ -20,9 +20,10 @@ export default class FlowRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderArray(definition, depth) {
+    const configType = definition.valueType.config.type;
     let template = this.renderAttribute(definition.valueType, depth);
 
-    if (isPrimitive(definition.valueType.config.type)) {
+    if (isPrimitive(configType) || configType === 'instance') {
       template += '[]';
     } else {
       template = this.wrapGenerics('Array', template);
@@ -52,8 +53,17 @@ export default class FlowRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  renderFunc(definition) {
-    return this.wrapNullable(definition, '() => void'); // TODO
+  renderFunc(definition, depth) {
+    const returnType = definition.returnType
+        ? this.renderAttribute(definition.returnType, depth + 1)
+        : 'void';
+
+    const argTypes = definition.argTypes
+        // eslint-disable-next-line newline-per-chained-call
+        ? this.renderObjectProps(definition.argTypes).join(' ').trim().replace(/,$/, '')
+        : '';
+
+    return this.wrapNullable(definition, `(${argTypes}) => ${returnType}`);
   }
 
   /**

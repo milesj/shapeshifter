@@ -29,7 +29,14 @@ module.exports = {
     funcField: {
       type: 'array',
       valueType: {
-        type: 'func'
+        type: 'func',
+        returnType: 'number',
+        argTypes: [
+          'string',
+          {
+            type: 'number'
+          }
+        ]
       },
       null: false
     },

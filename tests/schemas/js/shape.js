@@ -19,7 +19,8 @@ module.exports = {
           null: false
         },
         func: {
-          type: 'function'
+          type: 'function',
+          argTypes: ['bool']
         },
         number: {
           type: 'number',

@@ -9,7 +9,7 @@ export type PrimitiveSchema = {
   booleanField: boolean,
   booleanFieldExpanded: boolean,
   funcField: () => void,
-  functionField: ?() => void,
+  functionField: ?(arg0: ?string) => void,
   intField: number,
   intFieldExpanded: number,
   integerField: number,

@@ -21,7 +21,13 @@ module.exports = {
     },
     functionField: {
       type: 'function',
-      null: true
+      null: true,
+      argTypes: [
+        {
+          type: 'string',
+          null: true
+        }
+      ]
     },
     intField: 'int',
     intFieldExpanded: {
