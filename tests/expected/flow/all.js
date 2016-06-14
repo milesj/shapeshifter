@@ -11,15 +11,13 @@ import UnionNamespace, { UnionClassName } from '../stub';
 export const ARRAY_NUM = 123;
 
 export type ArraySchema = {
-  arrayField: string[][],
+  arrayField: Array<string[]>,
   boolField: boolean[],
   enumField: Array<'foo' | 'bar' | 'baz'>,
   funcField: Array<(arg0: string, arg1: number) => number>,
   instanceField: ArrayClassName[],
   numberField: number[],
-  objectField: Array<{
-    [key: string]: number,
-  }>,
+  objectField: Array<{ [key: string]: number }>,
   shapeField: Array<{
     foo: string,
     bar: boolean,
@@ -65,48 +63,22 @@ export type InstanceSchema = {
 };
 
 export type ObjectSchema = {
-  arrayField: {
-    [key: string]: string[],
-  },
-  boolField: {
-    [key: string]: boolean,
-  },
-  enumField: {
-    [key: string]: 'foo' | 'bar' | 'baz',
-  },
-  funcField: {
-    [key: string]: () => string,
-  },
-  instanceField: {
-    [key: string]: ObjectClassName,
-  },
-  numberField: {
-    [key: string]: number,
-  },
-  objectField: {
-    [key: string]: {
-      [key: string]: number,
-    },
-  },
-  shapeField: {
-    [key: string]: {
-      foo: string,
-      bar: boolean,
-      baz: () => void,
-    },
-  },
-  stringField: {
-    [key: string]: string,
-  },
-  unionField: {
-    [key: string]: number | string[],
-  },
-  objShorthandField: {
-    [key: string]: string,
-  },
-  objKeyTypeField: {
-    [key: number]: string,
-  },
+  arrayField: { [key: string]: string[] },
+  boolField: { [key: string]: boolean },
+  enumField: { [key: string]: 'foo' | 'bar' | 'baz' },
+  funcField: { [key: string]: () => string },
+  instanceField: { [key: string]: ObjectClassName },
+  numberField: { [key: string]: number },
+  objectField: { [key: string]: { [key: string]: number } },
+  shapeField: { [key: string]: {
+    foo: string,
+    bar: boolean,
+    baz: () => void,
+  } },
+  stringField: { [key: string]: string },
+  unionField: { [key: string]: number | string[] },
+  objShorthandField: { [key: string]: string },
+  objKeyTypeField: { [key: number]: string },
 };
 
 export const PRIMITIVE_VALUES = ['string', 123, true];
@@ -189,25 +161,15 @@ export type ShapeSchema = {
     instanceOf: ShapeNamespace.ShapeClassName,
   },
   objectFields: {
-    numberObj: {
-      [key: string]: number,
-    },
-    boolObject: {
-      [key: string]: boolean,
-    },
-    intStringObject: {
-      [key: number]: string,
-    },
-    unionObject: {
-      [key: string]: number | string | {
-        foo: string,
-      },
-    },
+    numberObj: { [key: string]: number },
+    boolObject: { [key: string]: boolean },
+    intStringObject: { [key: number]: string },
+    unionObject: { [key: string]: number | string | {
+      foo: string,
+    } },
   },
   unionFields: {
-    multiUnion: number | boolean | ShapeClassName | {
-      [key: string]: string,
-    } | {
+    multiUnion: number | boolean | ShapeClassName | { [key: string]: string } | {
       string: string,
       enum: 123 | 456 | 789,
     },
@@ -215,17 +177,11 @@ export type ShapeSchema = {
 };
 
 export type UnionSchema = {
-  arrayField: string[] | Array<{
-    [key: string]: string,
-  }>,
+  arrayField: string[] | Array<{ [key: string]: string }>,
   primitiveFields: boolean | number | () => void,
   enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123,
   instanceField: UnionClassName | UnionNamespace.UnionClassName,
-  objectField: {
-    [key: string]: number,
-  } | {
-    [key: string]: string[],
-  },
+  objectField: { [key: string]: number } | { [key: string]: string[] },
   shapeField: {
     foo: string,
     bar: boolean,

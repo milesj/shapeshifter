@@ -23,7 +23,7 @@ export default class FlowRenderer extends Renderer {
     const configType = definition.valueType.config.type;
     let template = this.renderAttribute(definition.valueType, depth);
 
-    if (isPrimitive(configType) || configType === 'instance' || configType === 'array') {
+    if (isPrimitive(configType) || configType === 'instance') {
       template += '[]';
     } else {
       template = this.wrapGenerics('Array', template);
@@ -84,11 +84,11 @@ export default class FlowRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderObject(definition, depth) {
-    const key = this.renderAttribute(definition.keyType, depth + 1);
-    const value = this.renderAttribute(definition.valueType, depth + 1);
+    const key = this.renderAttribute(definition.keyType, depth);
+    const value = this.renderAttribute(definition.valueType, depth);
 
     return this.wrapNullable(definition,
-      this.formatObject(this.wrapProperty(`[key: ${key}]`, value, depth + 1), depth));
+      this.formatObject(`[key: ${key}]: ${value}`, 0, ' ', ' '));
   }
 
   /**

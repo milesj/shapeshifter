@@ -27,25 +27,15 @@ export type ShapeSchema = {
     instanceOf: ShapeNamespace.ShapeClassName,
   },
   objectFields: {
-    numberObj: {
-      [key: string]: number,
-    },
-    boolObject: {
-      [key: string]: boolean,
-    },
-    intStringObject: {
-      [key: number]: string,
-    },
-    unionObject: {
-      [key: string]: number | string | {
-        foo: string,
-      },
-    },
+    numberObj: { [key: string]: number },
+    boolObject: { [key: string]: boolean },
+    intStringObject: { [key: number]: string },
+    unionObject: { [key: string]: number | string | {
+      foo: string,
+    } },
   },
   unionFields: {
-    multiUnion: number | boolean | ShapeClassName | {
-      [key: string]: string,
-    } | {
+    multiUnion: number | boolean | ShapeClassName | { [key: string]: string } | {
       string: string,
       enum: 123 | 456 | 789,
     },

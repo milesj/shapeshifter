@@ -2,17 +2,11 @@
 import UnionNamespace, { UnionClassName } from '../stub';
 
 export type UnionSchema = {
-  arrayField: string[] | Array<{
-    [key: string]: string,
-  }>,
+  arrayField: string[] | Array<{ [key: string]: string }>,
   primitiveFields: boolean | number | () => void,
   enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123,
   instanceField: UnionClassName | UnionNamespace.UnionClassName,
-  objectField: {
-    [key: string]: number,
-  } | {
-    [key: string]: string[],
-  },
+  objectField: { [key: string]: number } | { [key: string]: string[] },
   shapeField: {
     foo: string,
     bar: boolean,
