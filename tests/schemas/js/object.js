@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Object',
   imports: [
-    { default: 'ObjectClassName', path: '/path/to/ObjectClassName' }
+    { default: 'ObjectClassName', path: '../stub' }
   ],
   attributes: {
     arrayField: {

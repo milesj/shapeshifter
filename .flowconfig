@@ -1,0 +1,11 @@
+[ignore]
+.*/node_modules/.*
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper='^\/stub' -> './stub.js'
+esproposal.class_instance_fields=enable
+esproposal.class_static_fields=enable

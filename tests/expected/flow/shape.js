@@ -1,5 +1,5 @@
 // @flow
-import ShapeNamespace, { ShapeClassName } from '/path/to/ShapeClassName';
+import ShapeNamespace, { ShapeClassName } from '../stub';
 
 export type ShapeSchema = {
   structAlias: {
@@ -37,10 +37,17 @@ export type ShapeSchema = {
       [key: number]: string,
     },
     unionObject: {
-      [key: string]: ,
+      [key: string]: number | string | {
+        foo: string,
+      },
     },
   },
   unionFields: {
-    multiUnion: ,
+    multiUnion: number | boolean | ShapeClassName | {
+      [key: string]: string,
+    } | {
+      string: string,
+      enum: 123 | 456 | 789,
+    },
   },
 };

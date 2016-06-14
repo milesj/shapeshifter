@@ -1,7 +1,7 @@
 {
   "name": "Shape",
   "imports": [
-    { "default": "ShapeNamespace", "named": ["ShapeClassName"], "path": "/path/to/ShapeClassName" }
+    { "default": "ShapeNamespace", "named": ["ShapeClassName"], "path": "../stub" }
   ],
   "attributes": {
     "structAlias": {

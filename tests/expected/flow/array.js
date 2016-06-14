@@ -1,5 +1,5 @@
 // @flow
-import ArrayClassName from '/path/to/ArrayClassName';
+import ArrayClassName from '../stub';
 
 export const ARRAY_NUM = 123;
 
@@ -19,5 +19,5 @@ export type ArraySchema = {
     baz: () => void,
   }>,
   stringField: string[],
-  unionField: Array<>,
+  unionField: Array<string | 1 | 2 | 3>,
 };

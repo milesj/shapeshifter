@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import ArrayClassName from '/path/to/ArrayClassName';
+import ArrayClassName from '../stub';
 
 export const ARRAY_NUM = 123;
 

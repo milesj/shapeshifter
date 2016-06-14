@@ -1,9 +1,9 @@
 module.exports = {
   name: 'Imports',
   imports: [
-    { default: 'DefaultName', path: '/path/to/ImportClassName' },
-    { named: ['foo', 'bar'], path: '/path/to/named/Imports' },
-    { default: 'AnotherDefault', named: ['Baz', 'QUX'], path: '/path/to/named/and/Defaults' }
+    { default: 'DefaultName', path: '../stub' },
+    { named: ['foo', 'bar'], path: '../stub' },
+    { default: 'AnotherDefault', named: ['Baz', 'QUX'], path: '../stub' }
   ],
   attributes: {
     stringField: 'string'

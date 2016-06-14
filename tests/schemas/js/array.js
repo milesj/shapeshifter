@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Array',
   imports: [
-    { default: 'ArrayClassName', path: '/path/to/ArrayClassName' }
+    { default: 'ArrayClassName', path: '../stub' }
   ],
   constants: {
     ARRAY_NUM: 123

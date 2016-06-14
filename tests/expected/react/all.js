@@ -1,12 +1,12 @@
 import { PropTypes } from 'react';
-import ArrayClassName from '/path/to/ArrayClassName';
-import DefaultName from '/path/to/ImportClassName';
-import { foo, bar } from '/path/to/named/Imports';
-import AnotherDefault, { Baz, QUX } from '/path/to/named/and/Defaults';
-import InstNamespace, { InstanceClassName } from '/path/to/InstanceClassName';
-import ObjectClassName from '/path/to/ObjectClassName';
-import ShapeNamespace, { ShapeClassName } from '/path/to/ShapeClassName';
-import UnionNamespace, { UnionClassName } from '/path/to/UnionClassName';
+import ArrayClassName from '../stub';
+import DefaultName from '../stub';
+import { foo, bar } from '../stub';
+import AnotherDefault, { Baz, QUX } from '../stub';
+import InstNamespace, { InstanceClassName } from '../stub';
+import ObjectClassName from '../stub';
+import ShapeNamespace, { ShapeClassName } from '../stub';
+import UnionNamespace, { UnionClassName } from '../stub';
 
 export const ARRAY_NUM = 123;
 

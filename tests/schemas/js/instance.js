@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Instance',
   imports: [
-    { default: 'InstNamespace', named: ['InstanceClassName'], path: '/path/to/InstanceClassName' }
+    { default: 'InstNamespace', named: ['InstanceClassName'], path: '../stub' }
   ],
   constants: {
     INST_STR: 'foobar',

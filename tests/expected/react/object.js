@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import ObjectClassName from '/path/to/ObjectClassName';
+import ObjectClassName from '../stub';
 
 export const ObjectSchema = PropTypes.shape({
   arrayField: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),

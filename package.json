@@ -9,9 +9,11 @@
   "scripts": {
     "build": "babel ./src -d ./lib",
     "watch": "babel --watch ./src -d ./lib",
-    "lint": "eslint ./src ./tests",
+    "lint": "npm run lint:code && npm run lint:flow",
+    "lint:code": "eslint ./src ./tests",
+    "lint:flow": "flow check ./tests/expected/flow",
     "mocha": "mocha --opts ./tests/mocha.opts ./tests/*.test.js ./tests/**/*.test.js",
-    "test": "npm run build && npm run lint && npm run mocha"
+    "test": "npm run lint && npm run mocha"
   },
   "repository": {
     "type": "git",
@@ -38,6 +40,7 @@
     "eslint": "^2.12.0",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-react": "^5.1.1",
+    "flow-bin": "^0.27.0",
     "mocha": "^2.5.3",
     "react": "^15.1.0"
   }

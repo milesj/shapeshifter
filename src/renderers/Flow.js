@@ -103,7 +103,9 @@ export default class FlowRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderUnion(definition, depth) {
-    return ''; // TODO
+    return definition.valueTypes
+      .map(item => this.renderAttribute(item, depth))
+      .join(' | ');
   }
 
   /**

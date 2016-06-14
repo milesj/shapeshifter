@@ -1,5 +1,5 @@
 // @flow
-import ObjectClassName from '/path/to/ObjectClassName';
+import ObjectClassName from '../stub';
 
 export type ObjectSchema = {
   arrayField: {
@@ -36,7 +36,7 @@ export type ObjectSchema = {
     [key: string]: string,
   },
   unionField: {
-    [key: string]: ,
+    [key: string]: number | string[],
   },
   objShorthandField: {
     [key: string]: string,

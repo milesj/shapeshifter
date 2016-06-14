@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import UnionNamespace, { UnionClassName } from '/path/to/UnionClassName';
+import UnionNamespace, { UnionClassName } from '../stub';
 
 export const UnionSchema = PropTypes.shape({
   arrayField: PropTypes.oneOfType([

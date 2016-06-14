@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import ShapeNamespace, { ShapeClassName } from '/path/to/ShapeClassName';
+import ShapeNamespace, { ShapeClassName } from '../stub';
 
 export const ShapeSchema = PropTypes.shape({
   structAlias: PropTypes.shape({
