@@ -11,7 +11,7 @@ import UnionNamespace, { UnionClassName } from '../stub';
 export const ARRAY_NUM = 123;
 
 export type ArraySchema = {
-  arrayField: Array<string[]>,
+  arrayField: string[][],
   boolField: boolean[],
   enumField: Array<'foo' | 'bar' | 'baz'>,
   funcField: Array<(arg0: string, arg1: number) => number>,

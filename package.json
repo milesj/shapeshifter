@@ -39,6 +39,7 @@
     "chai-files": "^1.2.0",
     "eslint": "^2.12.0",
     "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-flowtype": "^2.2.7",
     "eslint-plugin-react": "^5.1.1",
     "flow-bin": "^0.27.0",
     "mocha": "^2.5.3",

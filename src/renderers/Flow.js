@@ -23,7 +23,7 @@ export default class FlowRenderer extends Renderer {
     const configType = definition.valueType.config.type;
     let template = this.renderAttribute(definition.valueType, depth);
 
-    if (isPrimitive(configType) || configType === 'instance') {
+    if (isPrimitive(configType) || configType === 'instance' || configType === 'array') {
       template += '[]';
     } else {
       template = this.wrapGenerics('Array', template);
