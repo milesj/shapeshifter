@@ -9,11 +9,12 @@
   "scripts": {
     "build": "babel ./src -d ./lib",
     "watch": "babel --watch ./src -d ./lib",
-    "lint": "npm run lint:code && npm run lint:flow",
-    "lint:code": "eslint ./src ./tests",
-    "lint:flow": "flow check ./tests/expected/flow",
+    "lint": "eslint ./src ./tests",
+    "check": "npm run check:flow && npm run check:typescript",
+    "check:flow": "flow check ./tests/expected/flow",
+    "check:typescript": "tslint ./tests/expected/typescript",
     "mocha": "mocha --opts ./tests/mocha.opts ./tests/*.test.js ./tests/**/*.test.js",
-    "test": "npm run lint && npm run mocha"
+    "test": "npm run lint && npm run mocha && npm run check"
   },
   "repository": {
     "type": "git",
@@ -40,11 +41,13 @@
     "eslint": "^2.13.0",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-flowtype": "^2.2.7",
-    "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-import": "^1.8.1",
+    "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-react": "^5.2.2",
     "flow-bin": "^0.27.0",
     "mocha": "^2.5.3",
-    "react": "^15.1.0"
+    "react": "^15.1.0",
+    "tslint": "^3.11.0",
+    "typescript": "^1.8.10"
   }
 }

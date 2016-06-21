@@ -370,7 +370,7 @@ export default class Renderer {
    */
   renderObjectProps(props, depth = 0) {
     return props.map(prop => (
-      this.wrapProperty(prop.attribute, this.renderAttribute(prop, depth), depth)
+      this.wrapProperty(this.wrapPropertyName(prop), this.renderAttribute(prop, depth), depth)
     ));
   }
 
@@ -461,5 +461,15 @@ export default class Renderer {
    */
   wrapProperty(key, value, depth = 0) {
     return `${indent(depth)}${key}: ${value},`;
+  }
+
+  /**
+   * Return the property name as is.
+   *
+   * @param {Definition} definition
+   * @returns {String}
+   */
+  wrapPropertyName(definition) {
+    return definition.attribute;
   }
 }

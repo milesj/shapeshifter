@@ -16,11 +16,7 @@ export default class ReactRenderer extends Renderer {
   }
 
   /**
-   * Render a `React.PropType.arrayOf()` definition.
-   *
-   * @param {ArrayDefinition} definition
-   * @param {Number} depth
-   * @returns {String}
+   * {@inheritDoc}
    */
   renderArray(definition, depth) {
     return this.wrapPropType(definition,
@@ -28,21 +24,14 @@ export default class ReactRenderer extends Renderer {
   }
 
   /**
-   * Render a `React.PropType.bool` definition.
-   *
-   * @param {BoolDefinition} definition
-   * @returns {String}
+   * {@inheritDoc}
    */
   renderBool(definition) {
     return this.wrapPropType(definition, 'bool');
   }
 
   /**
-   * Render a `React.PropType.oneOf()` definition.
-   *
-   * @param {EnumDefinition} definition
-   * @param {Number} depth
-   * @returns {String}
+   * {@inheritDoc}
    */
   renderEnum(definition, depth) {
     const { values, valueType } = definition.config;
@@ -55,20 +44,14 @@ export default class ReactRenderer extends Renderer {
   }
 
   /**
-   * Render a `React.PropType.func` definition.
-   *
-   * @param {FuncDefinition} definition
-   * @returns {String}
+   * {@inheritDoc}
    */
   renderFunc(definition) {
     return this.wrapPropType(definition, 'func');
   }
 
   /**
-   * Render a `React.PropType.instanceOf()` definition.
-   *
-   * @param {InstanceDefinition} definition
-   * @returns {String}
+   * {@inheritDoc}
    */
   renderInstance(definition) {
     const { contract } = definition.config;
@@ -78,21 +61,14 @@ export default class ReactRenderer extends Renderer {
   }
 
   /**
-   * Render a `React.PropType.number` definition.
-   *
-   * @param {NumberDefinition} definition
-   * @returns {String}
+   * {@inheritDoc}
    */
   renderNumber(definition) {
     return this.wrapPropType(definition, 'number');
   }
 
   /**
-   * Render a `React.PropType.arrayOf()` definition.
-   *
-   * @param {ObjectDefinition} definition
-   * @param {Number} depth
-   * @returns {String}
+   * {@inheritDoc}
    */
   renderObject(definition, depth) {
     return this.wrapPropType(definition,
@@ -100,11 +76,7 @@ export default class ReactRenderer extends Renderer {
   }
 
   /**
-   * Render a `React.PropType.shape()` definition.
-   *
-   * @param {ShapeDefinition} definition
-   * @param {Number} depth
-   * @returns {String}
+   * {@inheritDoc}
    */
   renderShape(definition, depth) {
     return this.wrapPropType(definition,
@@ -115,11 +87,7 @@ export default class ReactRenderer extends Renderer {
   }
 
   /**
-   * Render a `React.PropType.oneOfType()` definition.
-   *
-   * @param {UnionDefinition} definition
-   * @param {Number} depth
-   * @returns {String}
+   * {@inheritDoc}
    */
   renderUnion(definition, depth) {
     return this.wrapPropType(definition,
@@ -130,10 +98,7 @@ export default class ReactRenderer extends Renderer {
   }
 
   /**
-   * Render a `React.PropType.string` definition.
-   *
-   * @param {StringDefinition} definition
-   * @returns {String}
+   * {@inheritDoc}
    */
   renderString(definition) {
     return this.wrapPropType(definition, 'string');

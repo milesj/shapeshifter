@@ -1,5 +1,135 @@
 import Renderer from '../Renderer';
+import indent from '../helpers/indent';
+import isPrimitive from '../helpers/isPrimitive';
 
 export default class TypeScriptRenderer extends Renderer {
+  /**
+   * {@inheritDoc}
+   */
+  render(setName, attributes = {}) {
+    return `export interface ${this.getSchemaName(setName)} ${this.renderShape({ attributes }, 0)}`;
+  }
 
+  /**
+   * {@inheritDoc}
+   */
+  renderArray(definition, depth) {
+    const configType = definition.valueType.config.type;
+    let template = this.renderAttribute(definition.valueType, depth);
+
+    if (isPrimitive(configType) || configType === 'instance') {
+      template += '[]';
+    } else {
+      template = this.wrapGenerics('Array', template);
+    }
+
+    return template;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  renderBool(definition) {
+    return 'boolean';
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  renderEnum(definition, depth) {
+    const { values, valueType } = definition.config;
+
+    // todo
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  renderFunc(definition, depth) {
+    const returnType = definition.returnType
+      ? this.renderAttribute(definition.returnType, depth + 1)
+      : 'void';
+
+    const argTypes = definition.argTypes
+      // eslint-disable-next-line newline-per-chained-call
+      ? this.renderObjectProps(definition.argTypes).join(' ').trim().replace(/,$/, '')
+      : '';
+
+    return `(${argTypes}) => ${returnType}`;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  renderInstance(definition) {
+    return this.formatValue(definition.config.contract, 'function');
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  renderNumber(definition) {
+    return 'number';
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  renderObject(definition, depth) {
+    const key = this.renderAttribute(definition.keyType, depth);
+    const value = this.renderAttribute(definition.valueType, depth);
+
+    return this.formatObject(`[key: ${key}]: ${value}`, 0, ' ', ' ');
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  renderShape(definition, depth) {
+    return this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  renderUnion(definition, depth) {
+    return definition.valueTypes
+      .map(item => this.renderAttribute(item, depth))
+      .join(' | ');
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  renderString(definition) {
+    return 'string';
+  }
+
+  /**
+   * End with a semicolon instead of a comma.
+   *
+   * @param {String} key
+   * @param {String} value
+   * @param {Number} depth
+   * @returns {String}
+   */
+  wrapProperty(key, value, depth = 0) {
+    return `${indent(depth)}${key}: ${value};`;
+  }
+
+  /**
+   * Mark as optional.
+   *
+   * @param {Definition} definition
+   * @returns {String}
+   */
+  wrapPropertyName(definition) {
+    const template = definition.attribute;
+
+    if (!definition.isRequired()) {
+      return `${template}?`;
+    }
+
+    return template;
+  }
 }
