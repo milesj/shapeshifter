@@ -1,6 +1,7 @@
 import Renderer from '../Renderer';
 import indent from '../helpers/indent';
 import isPrimitive from '../helpers/isPrimitive';
+import normalizeType from '../helpers/normalizeType';
 
 export default class TypeScriptRenderer extends Renderer {
   /**
@@ -29,17 +30,52 @@ export default class TypeScriptRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  renderBool(definition) {
+  renderBool() {
     return 'boolean';
   }
 
   /**
    * {@inheritDoc}
    */
-  renderEnum(definition, depth) {
-    const { values, valueType } = definition.config;
+  renderEnum(definition) {
+    const { values, valueType, name } = definition.config;
+    const members = [];
 
-    // todo
+    if (!name) {
+      throw new SyntaxError('TypeScript enums require a "name" property.');
+    }
+
+    const enumName = this.formatName(name);
+    let currentIndex = 0;
+    let currentChar = 65;
+
+    switch (normalizeType(valueType)) {
+      // If a string is provided
+      // Assign values incrementally starting from 0
+      case 'string':
+        values.forEach(value => {
+          members.push(`${indent(1)}${value} = ${currentIndex}`);
+          currentIndex++;
+        });
+        break;
+
+      // If a number or boolean is provided
+      // Generate unique keys using the alphabet
+      case 'number':
+      case 'boolean':
+        values.forEach(value => {
+          members.push(`${indent(1)}${String.fromCodePoint(currentChar)} = ${Number(value)}`);
+          currentChar++;
+        });
+        break;
+
+      default:
+        break;
+    }
+
+    this.header.push(`export enum ${enumName} ${this.formatObject(members, 0, ',\n')}`);
+
+    return enumName;
   }
 
   /**
@@ -52,7 +88,7 @@ export default class TypeScriptRenderer extends Renderer {
 
     const argTypes = definition.argTypes
       // eslint-disable-next-line newline-per-chained-call
-      ? this.renderObjectProps(definition.argTypes).join(' ').trim().replace(/,$/, '')
+      ? this.renderObjectProps(definition.argTypes).join(' ').trim().replace(/;$/, '')
       : '';
 
     return `(${argTypes}) => ${returnType}`;
@@ -68,7 +104,7 @@ export default class TypeScriptRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  renderNumber(definition) {
+  renderNumber() {
     return 'number';
   }
 
@@ -101,7 +137,7 @@ export default class TypeScriptRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  renderString(definition) {
+  renderString() {
     return 'string';
   }
 

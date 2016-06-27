@@ -22,6 +22,7 @@ module.exports = {
       type: 'array',
       valueType: {
         type: 'enum',
+        name: 'ArrayStringEnum',
         valueType: 'string',
         values: ['foo', 'bar', 'baz']
       }
@@ -87,6 +88,7 @@ module.exports = {
           },
           {
             type: 'enum',
+            name: 'ArrayUnionNumberEnum',
             valueType: 'number',
             values: [1, 2, 3]
           }

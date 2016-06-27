@@ -4,6 +4,6 @@ export const INST_STR = 'foobar';
 export const INST_ENABLED = true;
 
 export interface InstanceSchema {
-  instField: InstanceClassName;
-  instanceField: InstNamespace.InstanceClassName;
+  instField?: InstanceClassName;
+  instanceField?: InstNamespace.InstanceClassName;
 }

@@ -1,20 +1,26 @@
 import ObjectClassName from '../stub';
 
+export enum ObjectStringEnum {
+  foo = 0,
+  bar = 1,
+  baz = 2
+}
+
 export interface ObjectSchema {
-  arrayField: { [key: string]: string[] };
+  arrayField?: { [key: string]: string[] };
   boolField: { [key: string]: boolean };
-  enumField: { [key: string]: 'foo' | 'bar' | 'baz' };
-  funcField: { [key: string]: () => string };
-  instanceField: { [key: string]: ObjectClassName };
-  numberField: { [key: string]: number };
-  objectField: { [key: string]: { [key: string]: number } };
-  shapeField: { [key: string]: {
-    foo: string;
-    bar: boolean;
+  enumField?: { [key: string]: ObjectStringEnum };
+  funcField?: { [key: string]: () => string };
+  instanceField?: { [key: string]: ObjectClassName };
+  numberField?: { [key: string]: number };
+  objectField?: { [key: string]: { [key: string]: number } };
+  shapeField?: { [key: string]: {
+    foo?: string;
+    bar?: boolean;
     baz: () => void;
   } };
-  stringField: { [key: string]: string };
-  unionField: { [key: string]: number | string[] };
-  objShorthandField: { [key: string]: string };
-  objKeyTypeField: { [key: number]: string };
+  stringField?: { [key: string]: string };
+  unionField?: { [key: string]: number | string[] };
+  objShorthandField?: { [key: string]: string };
+  objKeyTypeField?: { [key: number]: string };
 }

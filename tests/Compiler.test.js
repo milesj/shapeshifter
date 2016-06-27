@@ -9,8 +9,9 @@ chai.use(chaiFiles);
 
 // Supported renderers
 const RENDERERS = [
-  { name: 'React PropTypes', key: 'react' },
-  { name: 'Flow Type', key: 'flow' },
+  { name: 'React PropTypes', key: 'react', ext: 'js' },
+  { name: 'Flow Types', key: 'flow', ext: 'js' },
+  { name: 'TypeScript Types', key: 'typescript', ext: 'ts' },
 ];
 
 // Supported schema file formats
@@ -45,7 +46,7 @@ describe('Compiler', function () {
           SCHEMA_CASES.forEach(schema => {
             it(`when rendering schema case "${schema}"`, function () {
               const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
-              const expectedPath = `${__dirname}/expected/${renderer.key}/${schema}.js`;
+              const expectedPath = `${__dirname}/expected/${renderer.key}/${schema}.${renderer.ext}`;
               const output = new Compiler({ ...config, renderer: renderer.key })
                 .compileFile(actualPath);
 
@@ -56,7 +57,7 @@ describe('Compiler', function () {
 
         it('when rendering an entire folder into a single file', function (done) {
           const actualPath = `${__dirname}/schemas/${format}/`;
-          const expectedPath = `${__dirname}/expected/${renderer.key}/all.js`;
+          const expectedPath = `${__dirname}/expected/${renderer.key}/all.${renderer.ext}`;
 
           new Compiler({ ...config, renderer: renderer.key })
             .compileFolder(actualPath)

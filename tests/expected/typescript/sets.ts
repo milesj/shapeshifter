@@ -1,25 +1,24 @@
-
 export interface SetsSchema {
-  foo: string;
-  bar: number;
+  foo?: string;
+  bar?: number;
   baz: boolean;
-  qux: () => void;
+  qux?: () => void;
 }
 
 export interface SetsBasicSchema {
-  foo: string;
+  foo?: string;
   baz: boolean;
 }
 
 export interface SetsWithRequiredSchema {
   bar: number;
-  baz: boolean;
-  qux: () => void;
+  baz?: boolean;
+  qux?: () => void;
 }
 
 export interface SetsWithNullSchema {
-  foo: string;
-  qux: () => void;
+  foo?: string;
+  qux?: () => void;
 }
 
 export interface SetsWithBothSchema {

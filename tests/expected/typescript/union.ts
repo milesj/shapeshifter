@@ -1,17 +1,35 @@
 import UnionNamespace, { UnionClassName } from '../stub';
 
+export enum UnionStringEnum {
+  foo = 0,
+  bar = 1,
+  baz = 2
+}
+
+export enum UnionNumberEnum {
+  A = 789,
+  B = 456,
+  C = 123
+}
+
+export enum UnionUnionNumberEnum {
+  A = 1,
+  B = 2,
+  C = 3
+}
+
 export interface UnionSchema {
-  arrayField: string[] | Array<{ [key: string]: string }>;
-  primitiveFields: boolean | number | () => void;
-  enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123;
-  instanceField: UnionClassName | UnionNamespace.UnionClassName;
-  objectField: { [key: string]: number } | { [key: string]: string[] };
-  shapeField: {
-    foo: string;
-    bar: boolean;
+  arrayField?: string[] | Array<{ [key: string]: string }>;
+  primitiveFields?: boolean | number | () => void;
+  enumField?: UnionStringEnum | UnionNumberEnum;
+  instanceField?: UnionClassName | UnionNamespace.UnionClassName;
+  objectField?: { [key: string]: number } | { [key: string]: string[] };
+  shapeField?: {
+    foo?: string;
+    bar?: boolean;
     baz: () => void;
   } | {
-    qux: string | boolean;
+    qux?: string | boolean;
   };
-  unionField: string | 1 | 2 | 3 | boolean | number;
+  unionField?: string | UnionUnionNumberEnum | boolean | number;
 }

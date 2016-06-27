@@ -51,6 +51,25 @@ export default class Renderer {
   }
 
   /**
+   * Format a name by converting to pascal case.
+   *
+   * @param {String} value
+   * @returns {String}
+   */
+  formatName(value) {
+    if (!value) {
+      return '';
+    }
+
+    value = value
+      .replace(/[^a-zA-Z0-9]+/g, ' ')
+      .replace(/\W+(.)/g, match => match[1].toUpperCase())
+      .trim();
+
+    return value.charAt(0).toUpperCase() + value.slice(1);
+  }
+
+  /**
    * Format a list (or string) of properties into an object respecting depth indentation.
    *
    * @param {String|Array} props
@@ -131,20 +150,7 @@ export default class Renderer {
    * @returns {String}
    */
   getSchemaName(setName = '') {
-    return [this.schema.name, setName, config.schemaSuffix]
-      .map(value => {
-        if (!value) {
-          return '';
-        }
-
-        value = value
-          .replace(/[^a-zA-Z0-9]+/g, ' ')
-          .replace(/\W+(.)/g, match => match[1].toUpperCase())
-          .trim();
-
-        return value.charAt(0).toUpperCase() + value.slice(1);
-      })
-      .join('');
+    return [this.schema.name, setName, config.schemaSuffix].map(this.formatName).join('');
   }
 
   /**
