@@ -9,6 +9,16 @@ import ShapeNamespace, { ShapeClassName } from '../stub';
 import UnionNamespace, { UnionClassName } from '../stub';
 
 export const ARRAY_NUM = 123;
+export const CONST_STRING = 'string';
+export const STATUS_NUMBER = 123;
+export const MAGIC_FLOAT = 456.78;
+export const IS_ENABLED = true;
+export const EMPTY_VALUE = null;
+export const PRIMITIVE_LIST = ['foo', 123, 456.78, false];
+export const INST_STR = 'foobar';
+export const INST_ENABLED = true;
+export const PRIMITIVE_VALUES = ['string', 123, true];
+export const PRIMITIVE_STR = 'primitive';
 
 export type ArraySchema = {
   arrayField: Array<string[]>,
@@ -26,13 +36,6 @@ export type ArraySchema = {
   stringField: string[],
   unionField: Array<string | 1 | 2 | 3>,
 };
-
-export const CONST_STRING = 'string';
-export const STATUS_NUMBER = 123;
-export const MAGIC_FLOAT = 456.78;
-export const IS_ENABLED = true;
-export const EMPTY_VALUE = null;
-export const PRIMITIVE_LIST = ['foo', 123, 456.78, false];
 
 export type ConstantsSchema = {
   numberField: number,
@@ -53,9 +56,6 @@ export type EnumSchema = {
 export type ImportsSchema = {
   stringField: string,
 };
-
-export const INST_STR = 'foobar';
-export const INST_ENABLED = true;
 
 export type InstanceSchema = {
   instField: InstanceClassName,
@@ -80,9 +80,6 @@ export type ObjectSchema = {
   objShorthandField: { [key: string]: string },
   objKeyTypeField: { [key: number]: string },
 };
-
-export const PRIMITIVE_VALUES = ['string', 123, true];
-export const PRIMITIVE_STR = 'primitive';
 
 export type PrimitiveSchema = {
   boolField: boolean,

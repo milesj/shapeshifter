@@ -4,8 +4,8 @@ export default class ReactRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  getHeader() {
-    return 'import { PropTypes } from \'react\';';
+  beforeParse() {
+    this.imports.push('import { PropTypes } from \'react\';');
   }
 
   /**

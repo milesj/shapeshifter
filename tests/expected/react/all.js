@@ -9,6 +9,16 @@ import ShapeNamespace, { ShapeClassName } from '../stub';
 import UnionNamespace, { UnionClassName } from '../stub';
 
 export const ARRAY_NUM = 123;
+export const CONST_STRING = 'string';
+export const STATUS_NUMBER = 123;
+export const MAGIC_FLOAT = 456.78;
+export const IS_ENABLED = true;
+export const EMPTY_VALUE = null;
+export const PRIMITIVE_LIST = ['foo', 123, 456.78, false];
+export const INST_STR = 'foobar';
+export const INST_ENABLED = true;
+export const PRIMITIVE_VALUES = ['string', 123, true];
+export const PRIMITIVE_STR = 'primitive';
 
 export const ArraySchema = PropTypes.shape({
   arrayField: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
@@ -37,13 +47,6 @@ export const ArraySchema = PropTypes.shape({
     ]),
   ])),
 });
-
-export const CONST_STRING = 'string';
-export const STATUS_NUMBER = 123;
-export const MAGIC_FLOAT = 456.78;
-export const IS_ENABLED = true;
-export const EMPTY_VALUE = null;
-export const PRIMITIVE_LIST = ['foo', 123, 456.78, false];
 
 export const ConstantsSchema = PropTypes.shape({
   numberField: PropTypes.number,
@@ -103,9 +106,6 @@ export const ImportsSchema = PropTypes.shape({
   stringField: PropTypes.string,
 });
 
-export const INST_STR = 'foobar';
-export const INST_ENABLED = true;
-
 export const InstanceSchema = PropTypes.shape({
   instField: PropTypes.instanceOf(InstanceClassName),
   instanceField: PropTypes.instanceOf(InstNamespace.InstanceClassName),
@@ -136,9 +136,6 @@ export const ObjectSchema = PropTypes.shape({
   objShorthandField: PropTypes.objectOf(PropTypes.string),
   objKeyTypeField: PropTypes.objectOf(PropTypes.string),
 });
-
-export const PRIMITIVE_VALUES = ['string', 123, true];
-export const PRIMITIVE_STR = 'primitive';
 
 export const PrimitiveSchema = PropTypes.shape({
   boolField: PropTypes.bool,

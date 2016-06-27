@@ -17,7 +17,21 @@ import normalizeType from './helpers/normalizeType';
 export default class Renderer {
   constructor(schema) {
     this.schema = schema;
+    this.imports = [];
+    this.constants = [];
+    this.header = [];
+    this.sets = [];
   }
+
+  /**
+   * Triggered after parsing finished.
+   */
+  afterParse() {}
+
+  /**
+   * Triggered before parsing begins.
+   */
+  beforeParse() {}
 
   /**
    * Format a list (or string) of items into an array respecting depth indentation.
@@ -89,23 +103,16 @@ export default class Renderer {
    * @returns {String[]}
    */
   getConstants() {
-    const { constants } = this.schema;
-    const response = [];
-
-    Object.keys(constants).forEach(key => {
-      response.push(this.renderConstant(key, constants[key]));
-    });
-
-    return response;
+    return this.constants;
   }
 
   /**
-   * Return a header template to place at the top of the file.
+   * Return a header template to place at the top of the file after constants.
    *
-   * @returns {String}
+   * @returns {String[]}
    */
   getHeader() {
-    return '';
+    return this.header;
   }
 
   /**
@@ -114,13 +121,7 @@ export default class Renderer {
    * @returns {String[]}
    */
   getImports() {
-    const response = [];
-
-    this.schema.imports.forEach(importStatement => {
-      response.push(this.renderImport(importStatement));
-    });
-
-    return response;
+    return this.imports;
   }
 
   /**
@@ -152,12 +153,49 @@ export default class Renderer {
    * @returns {String[]}
    */
   getSets() {
-    const response = [];
+    return this.sets;
+  }
+
+  /**
+   * Parse and render all information defined in the schema.
+   */
+  parse() {
+    this.beforeParse();
+    this.parseImports();
+    this.parseConstants();
+    this.parseSets();
+    this.afterParse();
+  }
+
+  /**
+   * Parse all constants out of the schema and append to the renderer.
+   */
+  parseConstants() {
+    const { constants } = this.schema;
+
+    Object.keys(constants).forEach(key => {
+      this.constants.push(this.renderConstant(key, constants[key]));
+    });
+  }
+
+  /**
+   * Parse all imports out of the schema and append to the renderer.
+   */
+  parseImports() {
+    this.schema.imports.forEach(importStatement => {
+      this.imports.push(this.renderImport(importStatement));
+    });
+  }
+
+  /**
+   * Parse all subsets out of the schema and append to the renderer.
+   */
+  parseSets() {
     const baseAttributes = this.schema.schema.attributes;
     const { attributes, subsets } = this.schema;
 
     // Default set
-    response.push(this.render('', attributes));
+    this.sets.push(this.render('', attributes));
 
     // Subsets
     Object.keys(subsets).forEach(setName => {
@@ -195,10 +233,8 @@ export default class Renderer {
         setAttributes.push(Factory.definition(attribute, setConfig));
       });
 
-      response.push(this.render(setName, setAttributes));
+      this.sets.push(this.render(setName, setAttributes));
     });
-
-    return response;
   }
 
   /**

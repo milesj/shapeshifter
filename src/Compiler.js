@@ -76,23 +76,31 @@ export default class Compiler {
           return;
         }
 
-        let header = [this.createRenderer().getHeader()];
-        let output = [];
+        // Use sets so that duplicates are removed
+        let imports = new Set();
+        let constants = new Set();
+        let header = new Set();
+        let sets = new Set();
 
         files.forEach(file => {
           if (file.match(/\.(js|json)$/)) {
             const renderer = this.createRenderer(path.join(folder, file));
 
-            header = header.concat(renderer.getImports());
-            output = [
-              ...output,
-              renderer.getConstants().join('\n'),
-              ...renderer.getSets(),
-            ];
+            renderer.parse();
+
+            imports = new Set([...imports.values(), ...renderer.getImports()]);
+            constants = new Set([...constants.values(), ...renderer.getConstants()]);
+            header = new Set([...header.values(), ...renderer.getHeader()]);
+            sets = new Set([...sets.values(), ...renderer.getSets()]);
           }
         });
 
-        resolve(this.generateOutput(header, output));
+        resolve(this.generateOutput(
+          Array.from(imports.values()),
+          Array.from(constants.values()),
+          Array.from(header.values()),
+          Array.from(sets.values())
+        ));
       });
     });
   }
@@ -106,13 +114,14 @@ export default class Compiler {
   compileFile(file) {
     const renderer = this.createRenderer(file);
 
-    return this.generateOutput([
+    renderer.parse();
+
+    return this.generateOutput(
+      renderer.getImports(),
+      renderer.getConstants(),
       renderer.getHeader(),
-      ...renderer.getImports(),
-    ], [
-      renderer.getConstants().join('\n'),
-      ...renderer.getSets(),
-    ]);
+      renderer.getSets()
+    );
   }
 
   /**
@@ -129,13 +138,20 @@ export default class Compiler {
   /**
    * Generate the output by combining the header and body with the correct whitespace.
    *
+   * @param {String[]} imports
+   * @param {String[]} constants
    * @param {String[]} header
    * @param {String[]} body
    * @returns {string}
    */
-  generateOutput(header, body) {
-    const filter = value => !!value;
+  generateOutput(imports, constants, header, body) {
+    const chunks = [];
 
-    return `${header.filter(filter).join('\n')}\n\n${body.filter(filter).join('\n\n')}\n`;
+    chunks.push(imports.join('\n'));
+    chunks.push(constants.join('\n'));
+    chunks.push(header.join('\n\n'));
+    chunks.push(body.join('\n\n'));
+
+    return `${chunks.filter(value => !!value).join('\n\n')}\n`;
   }
 }

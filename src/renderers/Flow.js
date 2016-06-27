@@ -5,8 +5,8 @@ export default class FlowRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  getHeader() {
-    return '// @flow';
+  beforeParse() {
+    this.imports.push('// @flow');
   }
 
   /**
