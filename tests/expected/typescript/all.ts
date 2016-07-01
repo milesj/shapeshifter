@@ -133,7 +133,7 @@ export interface ArraySchema {
   arrayField?: Array<string[]>;
   boolField?: boolean[];
   enumField?: Array<ArrayStringEnum>;
-  funcField?: Array<(arg0?: string; arg1?: number) => number>;
+  funcField?: Array<(arg0?: string, arg1?: number) => number>;
   instanceField?: ArrayClassName[];
   numberField: number[];
   objectField?: Array<{ [key: string]: number }>;
@@ -284,7 +284,7 @@ export interface ShapeSchema {
 
 export interface UnionSchema {
   arrayField?: string[] | Array<{ [key: string]: string }>;
-  primitiveFields?: boolean | number | () => void;
+  primitiveFields?: boolean | number | (() => void);
   enumField?: UnionStringEnum | UnionNumberEnum;
   instanceField?: UnionClassName | UnionNamespace.UnionClassName;
   objectField?: { [key: string]: number } | { [key: string]: string[] };

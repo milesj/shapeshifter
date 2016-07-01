@@ -408,11 +408,12 @@ export default class Renderer {
    *
    * @param {Definition[]} props
    * @param {Number} depth
+   * @param {String} sep
    * @returns {Array}
    */
-  renderObjectProps(props, depth = 0) {
+  renderObjectProps(props, depth = 0, sep = ',') {
     return props.map(prop => (
-      this.wrapProperty(this.wrapPropertyName(prop), this.renderAttribute(prop, depth), depth)
+      this.wrapProperty(this.wrapPropertyName(prop), this.renderAttribute(prop, depth), depth, sep)
     ));
   }
 
@@ -499,10 +500,11 @@ export default class Renderer {
    * @param {String} key
    * @param {String} value
    * @param {Number} depth
+   * @param {String} sep
    * @returns {String}
    */
-  wrapProperty(key, value, depth = 0) {
-    return `${indent(depth)}${key}: ${value},`;
+  wrapProperty(key, value, depth = 0, sep = ',') {
+    return `${indent(depth)}${key}: ${value}${sep || ','}`;
   }
 
   /**

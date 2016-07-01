@@ -20,7 +20,7 @@ export enum UnionUnionNumberEnum {
 
 export interface UnionSchema {
   arrayField?: string[] | Array<{ [key: string]: string }>;
-  primitiveFields?: boolean | number | () => void;
+  primitiveFields?: boolean | number | (() => void);
   enumField?: UnionStringEnum | UnionNumberEnum;
   instanceField?: UnionClassName | UnionNamespace.UnionClassName;
   objectField?: { [key: string]: number } | { [key: string]: string[] };

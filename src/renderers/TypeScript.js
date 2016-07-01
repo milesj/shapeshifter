@@ -1,4 +1,5 @@
 import Renderer from '../Renderer';
+import FuncDefinition from '../definitions/Func';
 import indent from '../helpers/indent';
 import isPrimitive from '../helpers/isPrimitive';
 import normalizeType from '../helpers/normalizeType';
@@ -88,7 +89,7 @@ export default class TypeScriptRenderer extends Renderer {
 
     const argTypes = definition.argTypes
       // eslint-disable-next-line newline-per-chained-call
-      ? this.renderObjectProps(definition.argTypes).join(' ').trim().replace(/;$/, '')
+      ? this.renderObjectProps(definition.argTypes).join(' ').replace(/,$/, '')
       : '';
 
     return `(${argTypes}) => ${returnType}`;
@@ -122,7 +123,7 @@ export default class TypeScriptRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderShape(definition, depth) {
-    return this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth);
+    return this.formatObject(this.renderObjectProps(definition.attributes, depth + 1, ';'), depth);
   }
 
   /**
@@ -130,7 +131,12 @@ export default class TypeScriptRenderer extends Renderer {
    */
   renderUnion(definition, depth) {
     return definition.valueTypes
-      .map(item => this.renderAttribute(item, depth))
+      .map(item => {
+        const value = this.renderAttribute(item, depth);
+
+        // Functions need to be wrapped in parenthesis when used in unions
+        return (item instanceof FuncDefinition) ? `(${value})` : value;
+      })
       .join(' | ');
   }
 
@@ -139,18 +145,6 @@ export default class TypeScriptRenderer extends Renderer {
    */
   renderString() {
     return 'string';
-  }
-
-  /**
-   * End with a semicolon instead of a comma.
-   *
-   * @param {String} key
-   * @param {String} value
-   * @param {Number} depth
-   * @returns {String}
-   */
-  wrapProperty(key, value, depth = 0) {
-    return `${indent(depth)}${key}: ${value};`;
   }
 
   /**

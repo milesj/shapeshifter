@@ -18,7 +18,7 @@ export interface ArraySchema {
   arrayField?: Array<string[]>;
   boolField?: boolean[];
   enumField?: Array<ArrayStringEnum>;
-  funcField?: Array<(arg0?: string; arg1?: number) => number>;
+  funcField?: Array<(arg0?: string, arg1?: number) => number>;
   instanceField?: ArrayClassName[];
   numberField: number[];
   objectField?: Array<{ [key: string]: number }>;
