@@ -1,4 +1,5 @@
 # Shapeshifter
+[![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
 Shapeshifter is a command line tool for generating ES2015 compatiable
 files that export React prop types, Flow aliases, and TypeScript
