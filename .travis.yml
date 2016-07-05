@@ -6,3 +6,5 @@ node_js:
   - "6"
   - "6.1"
   - "node"
+notifications:
+  email: false

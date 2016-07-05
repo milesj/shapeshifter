@@ -1,3 +1,8 @@
+/**
+ * @copyright   2016, Miles Johnson
+ * @license     https://opensource.org/licenses/MIT
+ */
+
 import ArrayDefinition from './definitions/Array';
 import BoolDefinition from './definitions/Bool';
 import EnumDefinition from './definitions/Enum';

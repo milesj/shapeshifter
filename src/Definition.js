@@ -1,3 +1,8 @@
+/**
+ * @copyright   2016, Miles Johnson
+ * @license     https://opensource.org/licenses/MIT
+ */
+
 import cfg from './config';
 
 export default class Definition {

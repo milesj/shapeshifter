@@ -1,3 +1,8 @@
+/**
+ * @copyright   2016, Miles Johnson
+ * @license     https://opensource.org/licenses/MIT
+ */
+
 import Renderer from '../Renderer';
 import FuncDefinition from '../definitions/Func';
 import indent from '../helpers/indent';

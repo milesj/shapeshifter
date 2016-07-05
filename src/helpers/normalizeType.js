@@ -1,3 +1,8 @@
+/**
+ * @copyright   2016, Miles Johnson
+ * @license     https://opensource.org/licenses/MIT
+ */
+
 // Use a hash map for faster lookups
 const ALIAS_MAP = {
   bool: 'boolean',

@@ -1,3 +1,8 @@
+/**
+ * @copyright   2016, Miles Johnson
+ * @license     https://opensource.org/licenses/MIT
+ */
+
 /* eslint-disable no-console, global-require */
 
 import fs from 'fs';

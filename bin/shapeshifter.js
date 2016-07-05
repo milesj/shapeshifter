@@ -1,5 +1,10 @@
 #! /usr/bin/env node
 
+/**
+ * @copyright   2016, Miles Johnson
+ * @license     https://opensource.org/licenses/MIT
+ */
+
 var path = require('path');
 var CommandLine = require('command-line-args');
 var Usage = require('command-line-usage');
