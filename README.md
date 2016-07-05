@@ -1,9 +1,9 @@
 # Shapeshifter
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
-Shapeshifter is a command line tool for generating ES2015 compatiable
-files that export React prop types, Flow aliases, and TypeScript
-definitions based on JSON schema files. Schemas can represent database
+Shapeshifter is a command line tool for generating ES2015 compatible
+files that export React prop types, Flow type aliases, or TypeScript
+interfaces from JSON schema files. Schemas can represent database
 tables, API endpoints, data structures, resources, internal shapes,
 and more.
 
@@ -23,13 +23,13 @@ Shapeshifter is provided as a binary which can be executed like so.
 
     shapeshifter [options] [input] > [output]
 
-The binary accepts either a single schema file or a directory of
-schema files for the input. If a directory is provided, they will
-be combined into a single output.
+The binary input accepts either a single schema file or a directory of
+schema files. If a directory is provided, they will be combined into 
+a single output.
 
-By default, the binary will send output to directly to stdout,
-which can then be redirect to a destination of your choosing.
-The output will be sent to the console if no redirect is defined.
+By default, the binary will send output to stdout, which can then be 
+redirected to a destination of your choosing, otherwise the output
+will be sent to the console.
 
 ### Options
 

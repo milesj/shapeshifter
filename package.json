@@ -1,7 +1,7 @@
 {
   "name": "shapeshifter",
   "version": "0.1.0",
-  "description": "Generate React prop types, Flow aliases, and TypeScript definitions based on JSON schema files.",
+  "description": "Generate React prop types, Flow types, or TypeScript interfaces from JSON schema files.",
   "keywords": [
     "generate",
     "schema",
@@ -15,7 +15,8 @@
     "interface",
     "struct",
     "shape",
-    "shift"
+    "shift",
+    "shifter"
   ],
   "bin": {
     "shapeshifter": "./bin/shapeshifter.js"

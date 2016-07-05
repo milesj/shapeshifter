@@ -23,6 +23,7 @@ export default class Compiler {
    */
   static output(value) {
     console.log(value);
+    process.exit(0);
   }
 
   /**
