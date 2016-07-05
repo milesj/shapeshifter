@@ -1,5 +1,5 @@
 // @flow
-import ShapeNamespace, { ShapeClassName } from '../stub';
+import ShapeDefault, { ShapeClassName } from '../stub';
 
 export type ShapeSchema = {
   structAlias: {
@@ -24,7 +24,7 @@ export type ShapeSchema = {
   },
   instanceFields: {
     instOf: ShapeClassName,
-    instanceOf: ShapeNamespace.ShapeClassName,
+    instanceOf: ShapeDefault,
   },
   objectFields: {
     numberObj: { [key: string]: number },

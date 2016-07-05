@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import ObjectClassName from '../stub';
+import ObjectDefault from '../stub';
 
 export const ObjectSchema = PropTypes.shape({
   arrayField: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
@@ -10,7 +10,7 @@ export const ObjectSchema = PropTypes.shape({
     'baz',
   ])),
   funcField: PropTypes.objectOf(PropTypes.func),
-  instanceField: PropTypes.objectOf(PropTypes.instanceOf(ObjectClassName)),
+  instanceField: PropTypes.objectOf(PropTypes.instanceOf(ObjectDefault)),
   numberField: PropTypes.objectOf(PropTypes.number),
   objectField: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
   shapeField: PropTypes.objectOf(PropTypes.shape({

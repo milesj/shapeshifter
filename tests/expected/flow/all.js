@@ -1,12 +1,12 @@
 // @flow
-import ArrayClassName from '../stub';
+import ArrayDefault from '../stub';
 import DefaultName from '../stub';
 import { foo, bar } from '../stub';
-import AnotherDefault, { Baz, QUX } from '../stub';
-import InstNamespace, { InstanceClassName } from '../stub';
-import ObjectClassName from '../stub';
-import ShapeNamespace, { ShapeClassName } from '../stub';
-import UnionNamespace, { UnionClassName } from '../stub';
+import AnotherDefault, { Baz, Qux } from '../stub';
+import InstanceDefault, { InstanceClassName } from '../stub';
+import ObjectDefault from '../stub';
+import ShapeDefault, { ShapeClassName } from '../stub';
+import UnionDefault, { UnionClassName } from '../stub';
 
 export const ARRAY_NUM = 123;
 export const CONST_STRING = 'string';
@@ -25,7 +25,7 @@ export type ArraySchema = {
   boolField: boolean[],
   enumField: Array<'foo' | 'bar' | 'baz'>,
   funcField: Array<(arg0: string, arg1: number) => number>,
-  instanceField: ArrayClassName[],
+  instanceField: ArrayDefault[],
   numberField: number[],
   objectField: Array<{ [key: string]: number }>,
   shapeField: Array<{
@@ -59,7 +59,7 @@ export type ImportsSchema = {
 
 export type InstanceSchema = {
   instField: InstanceClassName,
-  instanceField: InstNamespace.InstanceClassName,
+  instanceField: InstanceDefault,
 };
 
 export type ObjectSchema = {
@@ -67,7 +67,7 @@ export type ObjectSchema = {
   boolField: { [key: string]: boolean },
   enumField: { [key: string]: 'foo' | 'bar' | 'baz' },
   funcField: { [key: string]: () => string },
-  instanceField: { [key: string]: ObjectClassName },
+  instanceField: { [key: string]: ObjectDefault },
   numberField: { [key: string]: number },
   objectField: { [key: string]: { [key: string]: number } },
   shapeField: { [key: string]: {
@@ -155,7 +155,7 @@ export type ShapeSchema = {
   },
   instanceFields: {
     instOf: ShapeClassName,
-    instanceOf: ShapeNamespace.ShapeClassName,
+    instanceOf: ShapeDefault,
   },
   objectFields: {
     numberObj: { [key: string]: number },
@@ -177,7 +177,7 @@ export type UnionSchema = {
   arrayField: string[] | Array<{ [key: string]: string }>,
   primitiveFields: boolean | number | () => void,
   enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123,
-  instanceField: UnionClassName | UnionNamespace.UnionClassName,
+  instanceField: UnionClassName | UnionDefault,
   objectField: { [key: string]: number } | { [key: string]: string[] },
   shapeField: {
     foo: string,

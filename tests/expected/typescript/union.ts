@@ -1,4 +1,4 @@
-import UnionNamespace, { UnionClassName } from '../stub';
+import UnionDefault, { UnionClassName } from '../stub';
 
 export enum UnionStringEnum {
   foo = 0,
@@ -22,7 +22,7 @@ export interface UnionSchema {
   arrayField?: string[] | Array<{ [key: string]: string }>;
   primitiveFields?: boolean | number | (() => void);
   enumField?: UnionStringEnum | UnionNumberEnum;
-  instanceField?: UnionClassName | UnionNamespace.UnionClassName;
+  instanceField?: UnionClassName | UnionDefault;
   objectField?: { [key: string]: number } | { [key: string]: string[] };
   shapeField?: {
     foo?: string;

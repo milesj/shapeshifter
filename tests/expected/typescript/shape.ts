@@ -1,4 +1,4 @@
-import ShapeNamespace, { ShapeClassName } from '../stub';
+import ShapeDefault, { ShapeClassName } from '../stub';
 
 export enum ShapeStrEnum {
   foo = 0,
@@ -41,7 +41,7 @@ export interface ShapeSchema {
   };
   instanceFields?: {
     instOf?: ShapeClassName;
-    instanceOf?: ShapeNamespace.ShapeClassName;
+    instanceOf?: ShapeDefault;
   };
   objectFields?: {
     numberObj?: { [key: string]: number };

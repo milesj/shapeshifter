@@ -1,12 +1,12 @@
 // @flow
-import ObjectClassName from '../stub';
+import ObjectDefault from '../stub';
 
 export type ObjectSchema = {
   arrayField: { [key: string]: string[] },
   boolField: { [key: string]: boolean },
   enumField: { [key: string]: 'foo' | 'bar' | 'baz' },
   funcField: { [key: string]: () => string },
-  instanceField: { [key: string]: ObjectClassName },
+  instanceField: { [key: string]: ObjectDefault },
   numberField: { [key: string]: number },
   objectField: { [key: string]: { [key: string]: number } },
   shapeField: { [key: string]: {

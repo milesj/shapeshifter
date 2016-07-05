@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import UnionNamespace, { UnionClassName } from '../stub';
+import UnionDefault, { UnionClassName } from '../stub';
 
 export const UnionSchema = PropTypes.shape({
   arrayField: PropTypes.oneOfType([
@@ -25,7 +25,7 @@ export const UnionSchema = PropTypes.shape({
   ]),
   instanceField: PropTypes.oneOfType([
     PropTypes.instanceOf(UnionClassName),
-    PropTypes.instanceOf(UnionNamespace.UnionClassName),
+    PropTypes.instanceOf(UnionDefault),
   ]),
   objectField: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.number),

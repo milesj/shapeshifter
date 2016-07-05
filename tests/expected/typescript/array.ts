@@ -1,4 +1,4 @@
-import ArrayClassName from '../stub';
+import ArrayDefault from '../stub';
 
 export const ARRAY_NUM = 123;
 
@@ -19,7 +19,7 @@ export interface ArraySchema {
   boolField?: boolean[];
   enumField?: Array<ArrayStringEnum>;
   funcField?: Array<(arg0?: string, arg1?: number) => number>;
-  instanceField?: ArrayClassName[];
+  instanceField?: ArrayDefault[];
   numberField: number[];
   objectField?: Array<{ [key: string]: number }>;
   shapeField?: Array<{

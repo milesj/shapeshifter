@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import ArrayClassName from '../stub';
+import ArrayDefault from '../stub';
 
 export const ARRAY_NUM = 123;
 
@@ -12,7 +12,7 @@ export const ArraySchema = PropTypes.shape({
     'baz',
   ])),
   funcField: PropTypes.arrayOf(PropTypes.func),
-  instanceField: PropTypes.arrayOf(PropTypes.instanceOf(ArrayClassName)),
+  instanceField: PropTypes.arrayOf(PropTypes.instanceOf(ArrayDefault)),
   numberField: PropTypes.arrayOf(PropTypes.number).isRequired,
   objectField: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.number)),
   shapeField: PropTypes.arrayOf(PropTypes.shape({

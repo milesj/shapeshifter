@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import ShapeNamespace, { ShapeClassName } from '../stub';
+import ShapeDefault, { ShapeClassName } from '../stub';
 
 export const ShapeSchema = PropTypes.shape({
   structAlias: PropTypes.shape({
@@ -32,7 +32,7 @@ export const ShapeSchema = PropTypes.shape({
   }),
   instanceFields: PropTypes.shape({
     instOf: PropTypes.instanceOf(ShapeClassName),
-    instanceOf: PropTypes.instanceOf(ShapeNamespace.ShapeClassName),
+    instanceOf: PropTypes.instanceOf(ShapeDefault),
   }),
   objectFields: PropTypes.shape({
     numberObj: PropTypes.objectOf(PropTypes.number),

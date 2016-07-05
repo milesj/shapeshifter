@@ -1,12 +1,12 @@
 import { PropTypes } from 'react';
-import ArrayClassName from '../stub';
+import ArrayDefault from '../stub';
 import DefaultName from '../stub';
 import { foo, bar } from '../stub';
-import AnotherDefault, { Baz, QUX } from '../stub';
-import InstNamespace, { InstanceClassName } from '../stub';
-import ObjectClassName from '../stub';
-import ShapeNamespace, { ShapeClassName } from '../stub';
-import UnionNamespace, { UnionClassName } from '../stub';
+import AnotherDefault, { Baz, Qux } from '../stub';
+import InstanceDefault, { InstanceClassName } from '../stub';
+import ObjectDefault from '../stub';
+import ShapeDefault, { ShapeClassName } from '../stub';
+import UnionDefault, { UnionClassName } from '../stub';
 
 export const ARRAY_NUM = 123;
 export const CONST_STRING = 'string';
@@ -29,7 +29,7 @@ export const ArraySchema = PropTypes.shape({
     'baz',
   ])),
   funcField: PropTypes.arrayOf(PropTypes.func),
-  instanceField: PropTypes.arrayOf(PropTypes.instanceOf(ArrayClassName)),
+  instanceField: PropTypes.arrayOf(PropTypes.instanceOf(ArrayDefault)),
   numberField: PropTypes.arrayOf(PropTypes.number).isRequired,
   objectField: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.number)),
   shapeField: PropTypes.arrayOf(PropTypes.shape({
@@ -108,7 +108,7 @@ export const ImportsSchema = PropTypes.shape({
 
 export const InstanceSchema = PropTypes.shape({
   instField: PropTypes.instanceOf(InstanceClassName),
-  instanceField: PropTypes.instanceOf(InstNamespace.InstanceClassName),
+  instanceField: PropTypes.instanceOf(InstanceDefault),
 });
 
 export const ObjectSchema = PropTypes.shape({
@@ -120,7 +120,7 @@ export const ObjectSchema = PropTypes.shape({
     'baz',
   ])),
   funcField: PropTypes.objectOf(PropTypes.func),
-  instanceField: PropTypes.objectOf(PropTypes.instanceOf(ObjectClassName)),
+  instanceField: PropTypes.objectOf(PropTypes.instanceOf(ObjectDefault)),
   numberField: PropTypes.objectOf(PropTypes.number),
   objectField: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
   shapeField: PropTypes.objectOf(PropTypes.shape({
@@ -219,7 +219,7 @@ export const ShapeSchema = PropTypes.shape({
   }),
   instanceFields: PropTypes.shape({
     instOf: PropTypes.instanceOf(ShapeClassName),
-    instanceOf: PropTypes.instanceOf(ShapeNamespace.ShapeClassName),
+    instanceOf: PropTypes.instanceOf(ShapeDefault),
   }),
   objectFields: PropTypes.shape({
     numberObj: PropTypes.objectOf(PropTypes.number),
@@ -275,7 +275,7 @@ export const UnionSchema = PropTypes.shape({
   ]),
   instanceField: PropTypes.oneOfType([
     PropTypes.instanceOf(UnionClassName),
-    PropTypes.instanceOf(UnionNamespace.UnionClassName),
+    PropTypes.instanceOf(UnionDefault),
   ]),
   objectField: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.number),

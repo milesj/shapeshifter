@@ -1,11 +1,11 @@
 // @flow
-import UnionNamespace, { UnionClassName } from '../stub';
+import UnionDefault, { UnionClassName } from '../stub';
 
 export type UnionSchema = {
   arrayField: string[] | Array<{ [key: string]: string }>,
   primitiveFields: boolean | number | () => void,
   enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123,
-  instanceField: UnionClassName | UnionNamespace.UnionClassName,
+  instanceField: UnionClassName | UnionDefault,
   objectField: { [key: string]: number } | { [key: string]: string[] },
   shapeField: {
     foo: string,

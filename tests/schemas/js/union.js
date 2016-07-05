@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Union',
   imports: [
-    { default: 'UnionNamespace', named: ['UnionClassName'], path: '../stub' }
+    { default: 'UnionDefault', named: ['UnionClassName'], path: '../stub' }
   ],
   attributes: {
     arrayField: {
@@ -56,7 +56,7 @@ module.exports = {
         },
         {
           type: 'inst',
-          contract: 'UnionNamespace.UnionClassName'
+          contract: 'UnionDefault'
         }
       ]
     },

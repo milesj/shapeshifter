@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Array',
   imports: [
-    { default: 'ArrayClassName', path: '../stub' }
+    { default: 'ArrayDefault', path: '../stub' }
   ],
   constants: {
     ARRAY_NUM: 123
@@ -45,7 +45,7 @@ module.exports = {
       type: 'array',
       valueType: {
         type: 'instance',
-        contract: 'ArrayClassName'
+        contract: 'ArrayDefault'
       }
     },
     numberField: {

@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Shape',
   imports: [
-    { default: 'ShapeNamespace', named: ['ShapeClassName'], path: '../stub' }
+    { default: 'ShapeDefault', named: ['ShapeClassName'], path: '../stub' }
   ],
   attributes: {
     structAlias: {
@@ -76,7 +76,7 @@ module.exports = {
         },
         instanceOf: {
           type: 'instance',
-          contract: 'ShapeNamespace.ShapeClassName'
+          contract: 'ShapeDefault'
         }
       }
     },

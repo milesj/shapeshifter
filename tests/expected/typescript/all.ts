@@ -1,11 +1,11 @@
-import ArrayClassName from '../stub';
+import ArrayDefault from '../stub';
 import DefaultName from '../stub';
 import { foo, bar } from '../stub';
-import AnotherDefault, { Baz, QUX } from '../stub';
-import InstNamespace, { InstanceClassName } from '../stub';
-import ObjectClassName from '../stub';
-import ShapeNamespace, { ShapeClassName } from '../stub';
-import UnionNamespace, { UnionClassName } from '../stub';
+import AnotherDefault, { Baz, Qux } from '../stub';
+import InstanceDefault, { InstanceClassName } from '../stub';
+import ObjectDefault from '../stub';
+import ShapeDefault, { ShapeClassName } from '../stub';
+import UnionDefault, { UnionClassName } from '../stub';
 
 export const ARRAY_NUM = 123;
 export const CONST_STRING = 'string';
@@ -134,7 +134,7 @@ export interface ArraySchema {
   boolField?: boolean[];
   enumField?: Array<ArrayStringEnum>;
   funcField?: Array<(arg0?: string, arg1?: number) => number>;
-  instanceField?: ArrayClassName[];
+  instanceField?: ArrayDefault[];
   numberField: number[];
   objectField?: Array<{ [key: string]: number }>;
   shapeField?: Array<{
@@ -168,7 +168,7 @@ export interface ImportsSchema {
 
 export interface InstanceSchema {
   instField?: InstanceClassName;
-  instanceField?: InstNamespace.InstanceClassName;
+  instanceField?: InstanceDefault;
 }
 
 export interface ObjectSchema {
@@ -176,7 +176,7 @@ export interface ObjectSchema {
   boolField: { [key: string]: boolean };
   enumField?: { [key: string]: ObjectStringEnum };
   funcField?: { [key: string]: () => string };
-  instanceField?: { [key: string]: ObjectClassName };
+  instanceField?: { [key: string]: ObjectDefault };
   numberField?: { [key: string]: number };
   objectField?: { [key: string]: { [key: string]: number } };
   shapeField?: { [key: string]: {
@@ -264,7 +264,7 @@ export interface ShapeSchema {
   };
   instanceFields?: {
     instOf?: ShapeClassName;
-    instanceOf?: ShapeNamespace.ShapeClassName;
+    instanceOf?: ShapeDefault;
   };
   objectFields?: {
     numberObj?: { [key: string]: number };
@@ -286,7 +286,7 @@ export interface UnionSchema {
   arrayField?: string[] | Array<{ [key: string]: string }>;
   primitiveFields?: boolean | number | (() => void);
   enumField?: UnionStringEnum | UnionNumberEnum;
-  instanceField?: UnionClassName | UnionNamespace.UnionClassName;
+  instanceField?: UnionClassName | UnionDefault;
   objectField?: { [key: string]: number } | { [key: string]: string[] };
   shapeField?: {
     foo?: string;

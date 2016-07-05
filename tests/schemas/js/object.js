@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Object',
   imports: [
-    { default: 'ObjectClassName', path: '../stub' }
+    { default: 'ObjectDefault', path: '../stub' }
   ],
   attributes: {
     arrayField: {
@@ -37,7 +37,7 @@ module.exports = {
       type: 'object',
       valueType: {
         type: 'instance',
-        contract: 'ObjectClassName'
+        contract: 'ObjectDefault'
       }
     },
     numberField: {

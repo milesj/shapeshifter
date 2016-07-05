@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Instance',
   imports: [
-    { default: 'InstNamespace', named: ['InstanceClassName'], path: '../stub' }
+    { default: 'InstanceDefault', named: ['InstanceClassName'], path: '../stub' }
   ],
   constants: {
     INST_STR: 'foobar',
@@ -14,7 +14,7 @@ module.exports = {
     },
     instanceField: {
       type: 'instance',
-      contract: 'InstNamespace.InstanceClassName'
+      contract: 'InstanceDefault'
     }
   }
 };
