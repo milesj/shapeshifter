@@ -25,15 +25,6 @@ const SCHEMA_CASES = [
   'imports', 'constants', 'sets',
 ];
 
-// Fake a file object for the actual path
-function fakeFile(path, content) {
-  const actual = file(path);
-  actual._stats = { isFile: () => true };
-  actual._exists = true;
-  actual._content = content;
-  return actual;
-}
-
 describe('Compiler', function () {
   this.timeout(0);
 
@@ -50,7 +41,7 @@ describe('Compiler', function () {
               const output = new Compiler({ ...config, renderer: renderer.key })
                 .compileFile(actualPath);
 
-              expect(fakeFile(actualPath, output)).to.equal(file(expectedPath));
+              expect(output).to.equal(file(expectedPath));
             });
           });
         });
@@ -61,11 +52,9 @@ describe('Compiler', function () {
 
           new Compiler({ ...config, renderer: renderer.key })
             .compileFolder(actualPath)
-            .then(output => {
-              expect(fakeFile(actualPath, output)).to.equal(file(expectedPath));
-            })
-            .then(done)
-            .catch(done);
+            .then(output => expect(output).to.equal(file(expectedPath)))
+            .then(() => done())
+            .catch(() => done());
         });
       });
     });
