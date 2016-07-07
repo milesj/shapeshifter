@@ -81,6 +81,13 @@ describe('Schema', () => {
     })).to.throw(SyntaxError, 'Schema subsets must be an object.');
   });
 
+  it('errors if `references` is defined and not an object', () => {
+    expect(() => new Schema({
+      ...data,
+      references: 123,
+    })).to.throw(SyntaxError, 'Schema references must be an object that maps to other schemas.');
+  });
+
   it('creates an array of `Definition`s for `attributes`', () => {
     const schema = new Schema(data);
 

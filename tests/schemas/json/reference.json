@@ -1,0 +1,17 @@
+{
+    "name": "Reference",
+    "references": {
+        "foo": "./reference-foo.json"
+    },
+    "attributes": {
+        "stringField": "string",
+        "refField": {
+            "type": "ref",
+            "reference": "foo"
+        },
+        "referenceField": {
+            "type": "reference",
+            "reference": "foo"
+        }
+    }
+}

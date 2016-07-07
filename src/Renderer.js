@@ -26,6 +26,7 @@ export default class Renderer {
     this.constants = [];
     this.header = [];
     this.sets = [];
+    this.referencePaths = [];
   }
 
   /**
@@ -149,6 +150,15 @@ export default class Renderer {
   }
 
   /**
+   * Return a list of all relative reference paths.
+   *
+   * @returns {String[]}
+   */
+  getReferences() {
+    return this.referencePaths;
+  }
+
+  /**
    * Return the schema name to be used as the prop type or type alias name.
    *
    * @param {String} [setName]
@@ -175,6 +185,7 @@ export default class Renderer {
     this.parseImports();
     this.parseConstants();
     this.parseSets();
+    this.parseReferences();
     this.afterParse();
   }
 
@@ -196,6 +207,15 @@ export default class Renderer {
     this.schema.imports.forEach(importStatement => {
       this.imports.push(this.renderImport(importStatement));
     });
+  }
+
+  /**
+   * Parse out all reference paths.
+   */
+  parseReferences() {
+    this.referencePaths = Object.keys(this.schema.references).map(key => (
+      this.schema.references[key]
+    ));
   }
 
   /**

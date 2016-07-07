@@ -39,6 +39,9 @@ export default class Schema {
 
     } else if (schema.hasOwnProperty('subsets') && !isObject(schema.subsets)) {
       throw new SyntaxError('Schema subsets must be an object.');
+
+    } else if (schema.hasOwnProperty('references') && !isObject(schema.references)) {
+      throw new SyntaxError('Schema references must be an object that maps to other schemas.');
     }
 
     this.schema = schema;
@@ -46,6 +49,7 @@ export default class Schema {
     this.constants = schema.constants || {};
     this.imports = schema.imports || [];
     this.subsets = schema.subsets || {};
+    this.references = schema.references || {};
 
     // Convert attributes to definitions
     this.attributes = Object.keys(schema.attributes).map(attribute => (

@@ -15,6 +15,7 @@ const ALIAS_MAP = {
   obj: 'object',
   struct: 'shape',
   str: 'string',
+  ref: 'reference',
 };
 
 /**

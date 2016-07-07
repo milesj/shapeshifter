@@ -10,6 +10,7 @@ import FuncDefinition from './definitions/Func';
 import InstanceDefinition from './definitions/Instance';
 import NumberDefinition from './definitions/Number';
 import ObjectDefinition from './definitions/Object';
+import ReferenceDefinition from './definitions/Reference';
 import ShapeDefinition from './definitions/Shape';
 import StringDefinition from './definitions/String';
 import UnionDefinition from './definitions/Union';
@@ -75,6 +76,9 @@ export default class Factory {
 
       case 'union':
         return new UnionDefinition(attribute, config);
+
+      case 'reference':
+        return new ReferenceDefinition(attribute, config);
 
       default:
         throw new TypeError(`Type "${config.type || 'unknown'}" not supported.`);
