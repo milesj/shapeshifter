@@ -35,13 +35,15 @@ describe('Compiler', function () {
         describe(`from ${format.toUpperCase()} files`, function () {
 
           SCHEMA_CASES.forEach(schema => {
-            it(`when rendering schema case "${schema}"`, function () {
+            it(`when rendering schema case "${schema}"`, function (done) {
               const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
               const expectedPath = `${__dirname}/expected/${renderer.key}/${schema}.${renderer.ext}`;
-              const output = new Compiler({ ...config, renderer: renderer.key })
-                .compileFile(actualPath);
 
-              expect(output).to.equal(file(expectedPath));
+              new Compiler({ ...config, renderer: renderer.key })
+                .compileFile(actualPath)
+                .then(output => expect(output).to.equal(file(expectedPath)))
+                .then(() => done())
+                .catch(() => done());
             });
           });
         });

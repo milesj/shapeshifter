@@ -82,31 +82,18 @@ export default class Compiler {
           return;
         }
 
-        // Use sets so that duplicates are removed
-        let imports = new Set();
-        let constants = new Set();
-        let header = new Set();
-        let sets = new Set();
+        let paths = [];
 
         files.forEach(file => {
           if (file.match(/\.(js|json)$/)) {
-            const renderer = this.createRenderer(path.join(folder, file));
-
-            renderer.parse();
-
-            imports = new Set([...imports.values(), ...renderer.getImports()]);
-            constants = new Set([...constants.values(), ...renderer.getConstants()]);
-            header = new Set([...header.values(), ...renderer.getHeader()]);
-            sets = new Set([...sets.values(), ...renderer.getSets()]);
+            paths = [
+              ...this.extractReferencePaths(path.join(folder, file)),
+              ...paths,
+            ];
           }
         });
 
-        resolve(this.generateOutput(
-          Array.from(imports.values()),
-          Array.from(constants.values()),
-          Array.from(header.values()),
-          Array.from(sets.values())
-        ));
+        resolve(paths);
       });
     });
   }
@@ -115,49 +102,84 @@ export default class Compiler {
    * Compile a file by rendering the schema at the defined path.
    *
    * @param {String} file
-   * @returns {String}
+   * @returns {Promise}
    */
   compileFile(file) {
-    const renderer = this.createRenderer(file);
-
-    renderer.parse();
-
-    return this.generateOutput(
-      renderer.getImports(),
-      renderer.getConstants(),
-      renderer.getHeader(),
-      renderer.getSets()
-    );
+    return this.generateOutput(this.extractReferencePaths(file));
   }
 
   /**
    * Create a renderer with a schema found at the defined file path.
    *
-   * @param {String} [file]
+   * @param {String} filePath
    * @returns {Renderer}
    */
-  createRenderer(file) {
+  createRenderer(filePath) {
     // Use `require()` as it handles JSON and JS files easily
-    return Factory.renderer(config.renderer, file ? new Schema(require(file)) : null);
+    return Factory.renderer(config.renderer, new Schema(require(filePath)));
+  }
+
+  /**
+   * Extract a list of file paths based on references defined within the schema.
+   *
+   * @param {String} filePath
+   * @returns {*[]}
+   */
+  extractReferencePaths(filePath) {
+    const basePath = path.dirname(filePath);
+    const paths = [filePath];
+    const schemas = [new Schema(require(filePath))];
+
+    while (schemas.length) {
+      const schema = schemas.shift();
+
+      Object.keys(schema.references).forEach(ref => {
+        const refPath = path.normalize(path.join(basePath, schema.references[ref]));
+
+        if (refPath.match(/\.(js|json)$/)) {
+          schemas.push(new Schema(require(refPath)));
+          paths.unshift(refPath);
+        }
+      });
+    }
+
+    return paths;
   }
 
   /**
    * Generate the output by combining the header and body with the correct whitespace.
    *
-   * @param {String[]} imports
-   * @param {String[]} constants
-   * @param {String[]} header
-   * @param {String[]} body
-   * @returns {string}
+   * @param {String[]} paths
+   * @returns {Promise}
    */
-  generateOutput(imports, constants, header, body) {
-    const chunks = [];
+  generateOutput(paths) {
+    return new Promise((resolve) => {
+      let imports = new Set();
+      let constants = new Set();
+      let header = new Set();
+      let sets = new Set();
 
-    chunks.push(imports.join('\n'));
-    chunks.push(constants.join('\n'));
-    chunks.push(header.join('\n\n'));
-    chunks.push(body.join('\n\n'));
+      // Wrap in a set to remove duplicates
+      new Set(paths).values().forEach(filePath => {
+        const renderer = this.createRenderer(filePath);
 
-    return `${chunks.filter(value => !!value).join('\n\n')}\n`;
+        renderer.parse();
+
+        imports = new Set([...imports.values(), ...renderer.getImports()]);
+        constants = new Set([...constants.values(), ...renderer.getConstants()]);
+        header = new Set([...header.values(), ...renderer.getHeader()]);
+        sets = new Set([...sets.values(), ...renderer.getSets()]);
+      });
+
+      // Combine and filter the chunks
+      const chunks = [];
+
+      chunks.push(imports.values().join('\n'));
+      chunks.push(constants.values().join('\n'));
+      chunks.push(header.values().join('\n\n'));
+      chunks.push(sets.values().join('\n\n'));
+
+      resolve(`${chunks.filter(value => !!value).join('\n\n')}\n`);
+    });
   }
 }
