@@ -45,6 +45,7 @@ export default class Schema {
     }
 
     this.schema = schema;
+    this.path = '';
     this.name = schema.name;
     this.constants = schema.constants || {};
     this.imports = schema.imports || [];

@@ -22,7 +22,7 @@ const SCHEMA_CASES = [
   // Types
   'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
   // Syntax
-  'imports', 'constants', 'sets',
+  'imports', 'constants', 'sets', 'reference',
 ];
 
 describe('Compiler', function () {

@@ -71,29 +71,29 @@ export default class Compiler {
   /**
    * Compile a folder by looping over all JS and JSON files and rendering them.
    *
-   * @param {String} folder
+   * @param {String} folderPath
    * @returns {Promise}
    */
-  compileFolder(folder) {
+  compileFolder(folderPath) {
     return new Promise((resolve, reject) => {
-      fs.readdir(folder, (error, files) => {
+      fs.readdir(folderPath, (error, filePaths) => {
         if (error) {
           reject(error);
           return;
         }
 
-        let paths = [];
+        let schemas = [];
 
-        files.forEach(file => {
-          if (file.match(/\.(js|json)$/)) {
-            paths = [
-              ...this.extractReferencePaths(path.join(folder, file)),
-              ...paths,
+        filePaths.forEach(filePath => {
+          if (filePath.match(/\.(js|json)$/)) {
+            schemas = [
+              ...this.extractSchemas(path.join(folderPath, filePath)),
+              ...schemas,
             ];
           }
         });
 
-        resolve(paths);
+        resolve(this.generateOutput(schemas));
       });
     });
   }
@@ -105,63 +105,62 @@ export default class Compiler {
    * @returns {Promise}
    */
   compileFile(file) {
-    return this.generateOutput(this.extractReferencePaths(file));
-  }
-
-  /**
-   * Create a renderer with a schema found at the defined file path.
-   *
-   * @param {String} filePath
-   * @returns {Renderer}
-   */
-  createRenderer(filePath) {
-    // Use `require()` as it handles JSON and JS files easily
-    return Factory.renderer(config.renderer, new Schema(require(filePath)));
+    return this.generateOutput(this.extractSchemas(file));
   }
 
   /**
    * Extract a list of file paths based on references defined within the schema.
    *
    * @param {String} filePath
-   * @returns {*[]}
+   * @returns {Schema[]}
    */
-  extractReferencePaths(filePath) {
+  extractSchemas(filePath) {
     const basePath = path.dirname(filePath);
-    const paths = [filePath];
-    const schemas = [new Schema(require(filePath))];
+    const pathsToResolve = [filePath];
+    const schemas = [];
 
-    while (schemas.length) {
-      const schema = schemas.shift();
+    // Use `require()` as it handles JSON and JS files easily
+    while (pathsToResolve.length) {
+      const resolvePath = pathsToResolve.shift();
+
+      if (!resolvePath.match(/\.(js|json)$/)) {
+        continue;
+      }
+
+      const schema = new Schema(require(resolvePath));
+
+      schema.path = resolvePath;
+      schemas.unshift(schema);
 
       Object.keys(schema.references).forEach(ref => {
-        const refPath = path.normalize(path.join(basePath, schema.references[ref]));
-
-        if (refPath.match(/\.(js|json)$/)) {
-          schemas.push(new Schema(require(refPath)));
-          paths.unshift(refPath);
-        }
+        pathsToResolve.push(path.normalize(path.join(basePath, schema.references[ref])));
       });
     }
 
-    return paths;
+    return schemas;
   }
 
   /**
    * Generate the output by combining the header and body with the correct whitespace.
    *
-   * @param {String[]} paths
+   * @param {Schema[]} schemas
    * @returns {Promise}
    */
-  generateOutput(paths) {
+  generateOutput(schemas) {
     return new Promise((resolve) => {
+      const rendered = new Set();
       let imports = new Set();
       let constants = new Set();
       let header = new Set();
       let sets = new Set();
 
       // Wrap in a set to remove duplicates
-      new Set(paths).values().forEach(filePath => {
-        const renderer = this.createRenderer(filePath);
+      schemas.forEach(schema => {
+        if (rendered.has(schema.path)) {
+          return;
+        }
+
+        const renderer = Factory.renderer(config.renderer, schema);
 
         renderer.parse();
 
@@ -169,6 +168,7 @@ export default class Compiler {
         constants = new Set([...constants.values(), ...renderer.getConstants()]);
         header = new Set([...header.values(), ...renderer.getHeader()]);
         sets = new Set([...sets.values(), ...renderer.getSets()]);
+        rendered.add(schema.path);
       });
 
       // Combine and filter the chunks
