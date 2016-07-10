@@ -22,4 +22,14 @@ describe('definitions/Reference', () => {
         )).to.throw(TypeError, 'Invalid type detected, "reference" property must be a string.');
       });
   });
+
+  it('errors if `subset` is not a string', () => {
+    truthyValues
+      .filter(value => typeof value !== 'string')
+      .forEach(value => {
+        expect(() => (
+          new ReferenceDefinition('foo', { reference: 'foo', subset: value })
+        )).to.throw(TypeError, 'Invalid type detected, "subset" property must be a string.');
+      });
+  });
 });

@@ -1,14 +1,14 @@
 {
-    "name": "ReferenceFoo",
-    "references": {
-        "bar": "./reference-bar.json"
-    },
-    "attributes": {
-        "numberField": "number",
-        "refField": {
-            "type": "ref",
-            "reference": "bar",
-            "required": true
-        }
+  "name": "ReferenceFoo",
+  "references": {
+    "bar": "./reference-bar.json"
+  },
+  "attributes": {
+    "numberField": "number",
+    "refField": {
+      "type": "ref",
+      "reference": "bar",
+      "required": true
     }
+  }
 }

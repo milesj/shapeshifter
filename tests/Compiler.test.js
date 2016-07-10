@@ -64,6 +64,7 @@ describe('Compiler', function () {
 
       expect(schemas.map(schema => schema.path)).to.deep.equal([
         `${__dirname}/schemas/json/reference-bar.json`,
+        `${__dirname}/schemas/json/reference-set.json`,
         `${__dirname}/schemas/json/reference-foo.json`,
         `${__dirname}/schemas/json/reference.json`,
       ]);

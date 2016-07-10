@@ -1,7 +1,8 @@
 module.exports = {
   name: 'Reference',
   references: {
-    foo: './reference-foo.js'
+    foo: './reference-foo.js',
+    set: './reference-set.js'
   },
   attributes: {
     stringField: 'string',
@@ -13,6 +14,11 @@ module.exports = {
     referenceField: {
       type: 'reference',
       reference: 'foo'
+    },
+    subsetRefField: {
+      type: 'reference',
+      reference: 'set',
+      subset: 'OnlyString'
     }
   }
 };

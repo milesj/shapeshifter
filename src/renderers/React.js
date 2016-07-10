@@ -84,16 +84,7 @@ export default class ReactRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderReference(definition) {
-    const { reference } = definition.config;
-    const refSchema = this.schema.referenceSchemas[reference];
-
-    if (!refSchema) {
-      throw new SyntaxError(
-        `The reference "${reference}" does not exist in the "${this.schema.name}" schema.`
-      );
-    }
-
-    return this.wrapRequired(definition, this.getSchemaName('', refSchema.name));
+    return this.wrapRequired(definition, super.renderReference(definition));
   }
 
   /**

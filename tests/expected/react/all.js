@@ -169,10 +169,21 @@ export const ReferenceFooSchema = PropTypes.shape({
   refField: ReferenceBarSchema.isRequired,
 });
 
+export const ReferenceSetSchema = PropTypes.shape({
+  boolField: PropTypes.bool,
+  stringField: PropTypes.string,
+  numberField: PropTypes.number,
+});
+
+export const ReferenceSetOnlyStringSchema = PropTypes.shape({
+  stringField: PropTypes.string,
+});
+
 export const ReferenceSchema = PropTypes.shape({
   stringField: PropTypes.string,
   refField: ReferenceFooSchema,
   referenceField: ReferenceFooSchema,
+  subsetRefField: ReferenceSetOnlyStringSchema,
 });
 
 export const SetsSchema = PropTypes.shape({

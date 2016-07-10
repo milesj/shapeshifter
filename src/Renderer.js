@@ -465,9 +465,27 @@ export default class Renderer {
 
   /**
    * Render a reference definition.
+   *
+   * @param {Definition} definition
+   * @returns {String}
    */
-  renderReference() {
-    this.unsupported('reference');
+  renderReference(definition) {
+    const { reference, subset } = definition.config;
+    const refSchema = this.schema.referenceSchemas[reference];
+
+    if (!refSchema) {
+      throw new SyntaxError(
+        `The reference "${reference}" does not exist in the "${this.schema.name}" schema.`
+      );
+    }
+
+    if (subset && !refSchema.subsets[subset]) {
+      throw new SyntaxError(
+        `The reference "${reference}" does not contain a subset named "${subset}".`
+      );
+    }
+
+    return this.getSchemaName(subset, refSchema.name);
   }
 
   /**

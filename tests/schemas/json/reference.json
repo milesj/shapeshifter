@@ -1,18 +1,24 @@
 {
-    "name": "Reference",
-    "references": {
-        "foo": "./reference-foo.json"
+  "name": "Reference",
+  "references": {
+    "foo": "./reference-foo.json",
+    "set": "./reference-set.json"
+  },
+  "attributes": {
+    "stringField": "string",
+    "refField": {
+      "type": "ref",
+      "reference": "foo",
+      "null": true
     },
-    "attributes": {
-        "stringField": "string",
-        "refField": {
-            "type": "ref",
-            "reference": "foo",
-            "null": true
-        },
-        "referenceField": {
-            "type": "reference",
-            "reference": "foo"
-        }
+    "referenceField": {
+      "type": "reference",
+      "reference": "foo"
+    },
+    "subsetRefField": {
+      "type": "reference",
+      "reference": "set",
+      "subset": "OnlyString"
     }
+  }
 }

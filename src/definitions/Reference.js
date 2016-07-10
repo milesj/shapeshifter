@@ -12,7 +12,7 @@ export default class ReferenceDefinition extends Definition {
   validateConfig() {
     super.validateConfig();
 
-    const { reference } = this.config;
+    const { reference, subset } = this.config;
 
     if (!reference) {
       throw new SyntaxError(
@@ -22,6 +22,10 @@ export default class ReferenceDefinition extends Definition {
 
     } else if (typeof reference !== 'string') {
       throw new TypeError('Invalid type detected, "reference" property must be a string.');
+    }
+
+    if (subset && typeof subset !== 'string') {
+      throw new TypeError('Invalid type detected, "subset" property must be a string.');
     }
   }
 }

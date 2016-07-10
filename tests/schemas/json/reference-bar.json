@@ -1,6 +1,6 @@
 {
-    "name": "ReferenceBar",
-    "attributes": {
-        "boolField": "bool"
-    }
+  "name": "ReferenceBar",
+  "attributes": {
+    "boolField": "bool"
+  }
 }
