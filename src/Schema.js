@@ -51,6 +51,7 @@ export default class Schema {
     this.imports = schema.imports || [];
     this.subsets = schema.subsets || {};
     this.references = schema.references || {};
+    this.referenceSchemas = {};
 
     // Convert attributes to definitions
     this.attributes = Object.keys(schema.attributes).map(attribute => (

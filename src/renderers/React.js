@@ -83,6 +83,22 @@ export default class ReactRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
+  renderReference(definition) {
+    const { reference } = definition.config;
+    const refSchema = this.schema.referenceSchemas[reference];
+
+    if (!refSchema) {
+      throw new SyntaxError(
+        `The reference "${reference}" does not exist in the "${this.schema.name}" schema.`
+      );
+    }
+
+    return this.wrapRequired(definition, this.getSchemaName('', refSchema.name));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   renderShape(definition, depth) {
     return this.wrapPropType(definition,
       this.wrapFunction('shape',
@@ -117,12 +133,21 @@ export default class ReactRenderer extends Renderer {
    * @returns {String}
    */
   wrapPropType(definition, template) {
-    let response = `PropTypes.${template}`;
+    return this.wrapRequired(definition, `PropTypes.${template}`);
+  }
 
+  /**
+   * Wrap a definition template with required if applicable.
+   *
+   * @param {Definition|Object} definition
+   * @param {String} template
+   * @returns {String}
+   */
+  wrapRequired(definition, template) {
     if (definition.isRequired && definition.isRequired()) {
-      response += '.isRequired';
+      return `${template}.isRequired`;
     }
 
-    return response;
+    return template;
   }
 }

@@ -160,6 +160,21 @@ export const PrimitiveSchema = PropTypes.shape({
   stringFieldExpanded: PropTypes.string,
 });
 
+export const ReferenceBarSchema = PropTypes.shape({
+  boolField: PropTypes.bool,
+});
+
+export const ReferenceFooSchema = PropTypes.shape({
+  numberField: PropTypes.number,
+  refField: ReferenceBarSchema.isRequired,
+});
+
+export const ReferenceSchema = PropTypes.shape({
+  stringField: PropTypes.string,
+  refField: ReferenceFooSchema,
+  referenceField: ReferenceFooSchema,
+});
+
 export const SetsSchema = PropTypes.shape({
   foo: PropTypes.string,
   bar: PropTypes.number,

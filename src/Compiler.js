@@ -87,8 +87,8 @@ export default class Compiler {
         filePaths.forEach(filePath => {
           if (filePath.match(/\.(js|json)$/)) {
             schemas = [
-              ...this.extractSchemas(path.join(folderPath, filePath)),
               ...schemas,
+              ...this.extractSchemas(path.join(folderPath, filePath)),
             ];
           }
         });
@@ -116,13 +116,14 @@ export default class Compiler {
    */
   extractSchemas(filePath) {
     const basePath = path.dirname(filePath);
-    const pathsToResolve = [filePath];
+    const toResolve = [{ resolvePath: filePath }];
     const schemas = [];
 
     // Use `require()` as it handles JSON and JS files easily
-    while (pathsToResolve.length) {
-      const resolvePath = pathsToResolve.shift();
+    while (toResolve.length) {
+      const { resolvePath, parentSchema, refKey } = toResolve.shift();
 
+      // Only support JS and JSON
       if (!resolvePath.match(/\.(js|json)$/)) {
         continue;
       }
@@ -132,8 +133,18 @@ export default class Compiler {
       schema.path = resolvePath;
       schemas.unshift(schema);
 
+      // Assign to parent
+      if (parentSchema && refKey) {
+        parentSchema.referenceSchemas[refKey] = schema;
+      }
+
+      // Extract child references
       Object.keys(schema.references).forEach(ref => {
-        pathsToResolve.push(path.normalize(path.join(basePath, schema.references[ref])));
+        toResolve.push({
+          resolvePath: path.normalize(path.join(basePath, schema.references[ref])),
+          parentSchema: schema,
+          refKey: ref,
+        });
       });
     }
 
@@ -141,7 +152,7 @@ export default class Compiler {
   }
 
   /**
-   * Generate the output by combining the header and body with the correct whitespace.
+   * Generate the output by combining all schemas into a single output.
    *
    * @param {Schema[]} schemas
    * @returns {Promise}
@@ -174,10 +185,10 @@ export default class Compiler {
       // Combine and filter the chunks
       const chunks = [];
 
-      chunks.push(imports.values().join('\n'));
-      chunks.push(constants.values().join('\n'));
-      chunks.push(header.values().join('\n\n'));
-      chunks.push(sets.values().join('\n\n'));
+      chunks.push(Array.from(imports.values()).join('\n'));
+      chunks.push(Array.from(constants.values()).join('\n'));
+      chunks.push(Array.from(header.values()).join('\n\n'));
+      chunks.push(Array.from(sets.values()).join('\n\n'));
 
       resolve(`${chunks.filter(value => !!value).join('\n\n')}\n`);
     });

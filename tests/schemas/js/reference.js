@@ -7,7 +7,8 @@ module.exports = {
     stringField: 'string',
     refField: {
       type: 'ref',
-      reference: 'foo'
+      reference: 'foo',
+      null: true
     },
     referenceField: {
       type: 'reference',

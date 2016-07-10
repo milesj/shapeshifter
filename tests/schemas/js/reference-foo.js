@@ -7,7 +7,8 @@ module.exports = {
     numberField: 'number',
     refField: {
       type: 'ref',
-      reference: 'bar'
+      reference: 'bar',
+      required: true
     }
   }
 };

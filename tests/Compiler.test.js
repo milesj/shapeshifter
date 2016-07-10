@@ -10,8 +10,8 @@ chai.use(chaiFiles);
 // Supported renderers
 const RENDERERS = [
   { name: 'React PropTypes', key: 'react', ext: 'js' },
-  { name: 'Flow Types', key: 'flow', ext: 'js' },
-  { name: 'TypeScript Types', key: 'typescript', ext: 'ts' },
+  // { name: 'Flow Types', key: 'flow', ext: 'js' },
+  // { name: 'TypeScript Types', key: 'typescript', ext: 'ts' },
 ];
 
 // Supported schema file formats
@@ -35,30 +35,38 @@ describe('Compiler', function () {
         describe(`from ${format.toUpperCase()} files`, function () {
 
           SCHEMA_CASES.forEach(schema => {
-            it(`when rendering schema case "${schema}"`, function (done) {
+            it(`when rendering schema case "${schema}"`, function () {
               const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
               const expectedPath = `${__dirname}/expected/${renderer.key}/${schema}.${renderer.ext}`;
 
-              new Compiler({ ...config, renderer: renderer.key })
+              return new Compiler({ ...config, renderer: renderer.key })
                 .compileFile(actualPath)
-                .then(output => expect(output).to.equal(file(expectedPath)))
-                .then(() => done())
-                .catch(() => done());
+                .then(output => expect(output).to.equal(file(expectedPath)));
             });
           });
         });
 
-        it('when rendering an entire folder into a single file', function (done) {
+        it('when rendering an entire folder into a single file', function () {
           const actualPath = `${__dirname}/schemas/${format}/`;
           const expectedPath = `${__dirname}/expected/${renderer.key}/all.${renderer.ext}`;
 
-          new Compiler({ ...config, renderer: renderer.key })
+          return new Compiler({ ...config, renderer: renderer.key })
             .compileFolder(actualPath)
-            .then(output => expect(output).to.equal(file(expectedPath)))
-            .then(() => done())
-            .catch(() => done());
+            .then(output => expect(output).to.equal(file(expectedPath)));
         });
       });
+    });
+  });
+
+  describe('extractSchemas()', () => {
+    it('handles reference paths correctly', () => {
+      const schemas = new Compiler(config).extractSchemas(`${__dirname}/schemas/json/reference.json`);
+
+      expect(schemas.map(schema => schema.path)).to.deep.equal([
+        `${__dirname}/schemas/json/reference-bar.json`,
+        `${__dirname}/schemas/json/reference-foo.json`,
+        `${__dirname}/schemas/json/reference.json`,
+      ]);
     });
   });
 });

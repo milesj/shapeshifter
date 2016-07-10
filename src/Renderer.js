@@ -13,6 +13,7 @@ import FuncDef from './definitions/Func';
 import InstanceDef from './definitions/Instance';
 import NumberDef from './definitions/Number';
 import ObjectDef from './definitions/Object';
+import ReferenceDef from './definitions/Reference';
 import ShapeDef from './definitions/Shape';
 import StringDef from './definitions/String';
 import UnionDef from './definitions/Union';
@@ -162,10 +163,13 @@ export default class Renderer {
    * Return the schema name to be used as the prop type or type alias name.
    *
    * @param {String} [setName]
+   * @param {String} [schemaName]
    * @returns {String}
    */
-  getSchemaName(setName = '') {
-    return [this.schema.name, setName, config.schemaSuffix].map(this.formatName).join('');
+  getSchemaName(setName = '', schemaName = '') {
+    return [schemaName || this.schema.name, setName, config.schemaSuffix]
+      .map(this.formatName)
+      .join('');
   }
 
   /**
@@ -213,9 +217,9 @@ export default class Renderer {
    * Parse out all reference paths.
    */
   parseReferences() {
-    this.referencePaths = Object.keys(this.schema.references).map(key => (
-      this.schema.references[key]
-    ));
+    Object.keys(this.schema.references).forEach(key => {
+      this.referencePaths.push(this.schema.references[key]);
+    });
   }
 
   /**
@@ -303,6 +307,9 @@ export default class Renderer {
 
     } else if (definition instanceof ObjectDef) {
       return this.renderObject(definition, depth);
+
+    } else if (definition instanceof ReferenceDef) {
+      return this.renderReference(definition, depth);
 
     } else if (definition instanceof ShapeDef) {
       return this.renderShape(definition, depth);
@@ -454,6 +461,13 @@ export default class Renderer {
     return (value instanceof Definition)
       ? this.renderAttribute(value, depth)
       : this.formatValue(value, valueType);
+  }
+
+  /**
+   * Render a reference definition.
+   */
+  renderReference() {
+    this.unsupported('reference');
   }
 
   /**
