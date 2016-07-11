@@ -104,6 +104,32 @@ export type PrimitiveSchema = {
   stringFieldExpanded: string,
 };
 
+export type ReferenceBarSchema = {
+  boolField: boolean,
+};
+
+export type ReferenceFooSchema = {
+  numberField: number,
+  refField: ReferenceBarSchema,
+};
+
+export type ReferenceSetSchema = {
+  boolField: boolean,
+  stringField: string,
+  numberField: number,
+};
+
+export type ReferenceSetOnlyStringSchema = {
+  stringField: string,
+};
+
+export type ReferenceSchema = {
+  stringField: string,
+  refField: ?ReferenceFooSchema,
+  referenceField: ReferenceFooSchema,
+  subsetRefField: ReferenceSetOnlyStringSchema,
+};
+
 export type SetsSchema = {
   foo: string,
   bar: number,

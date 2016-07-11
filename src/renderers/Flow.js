@@ -99,6 +99,13 @@ export default class FlowRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
+  renderReference(definition) {
+    return this.wrapNullable(definition, super.renderReference(definition));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   renderShape(definition, depth) {
     return this.wrapNullable(definition,
       this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth));
