@@ -8,7 +8,7 @@
 var path = require('path');
 var CommandLine = require('command-line-args');
 var Usage = require('command-line-usage');
-var Compiler = require('../lib/Compiler').default;
+var Transpiler = require('../lib/Transpiler').default;
 var config = require('../lib/config').default;
 var package = require('../package.json');
 
@@ -85,18 +85,18 @@ var options = CommandLine(optionList);
 
 // Show help menu
 if (options.help || !options.path) {
-  Compiler.output(Usage(help));
+  Transpiler.output(Usage(help));
 
-// Run compiler
+// Run transpiler
 } else {
-  new Compiler({
+  new Transpiler({
     defaultNull: options.nullable,
     defaultRequired: options.required,
     indentCharacter: options.indent,
     renderer: options.format,
     schemaSuffix: options.suffix,
   })
-    .compile(path.normalize(path.join(process.cwd(), options.path)))
-    .then(Compiler.output)
-    .catch(Compiler.error);
+    .transpile(path.normalize(path.join(process.cwd(), options.path)))
+    .then(Transpiler.output)
+    .catch(Transpiler.error);
 }

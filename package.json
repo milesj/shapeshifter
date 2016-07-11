@@ -16,7 +16,8 @@
     "struct",
     "shape",
     "shift",
-    "shifter"
+    "shifter",
+    "transpile"
   ],
   "bin": {
     "shapeshifter": "./bin/shapeshifter.js"

@@ -12,7 +12,7 @@ import config from './config';
 import Factory from './Factory';
 import Schema from './Schema';
 
-export default class Compiler {
+export default class Transpiler {
   constructor(options) {
     config.defaultNull = options.defaultNull;
     config.defaultRequired = options.defaultRequired;
@@ -44,12 +44,12 @@ export default class Compiler {
   }
 
   /**
-   * Compile either a file or a folder by rendering each schema file.
+   * Transpile either a file or a folder by rendering each schema file.
    *
    * @param {String} target
    * @returns {Promise}
    */
-  compile(target) {
+  transpile(target) {
     return new Promise((resolve, reject) => {
       fs.stat(target, (error, stats) => {
         if (error) {
@@ -58,9 +58,9 @@ export default class Compiler {
         }
 
         if (stats.isDirectory()) {
-          resolve(this.compileFolder(target));
+          resolve(this.transpileFolder(target));
         } else if (stats.isFile()) {
-          resolve(this.compileFile(target));
+          resolve(this.transpileFile(target));
         } else {
           reject('Unsupported file type.');
         }
@@ -69,12 +69,12 @@ export default class Compiler {
   }
 
   /**
-   * Compile a folder by looping over all JS and JSON files and rendering them.
+   * Transpile a folder by looping over all JS and JSON files and rendering them.
    *
    * @param {String} folderPath
    * @returns {Promise}
    */
-  compileFolder(folderPath) {
+  transpileFolder(folderPath) {
     return new Promise((resolve, reject) => {
       fs.readdir(folderPath, (error, filePaths) => {
         if (error) {
@@ -99,12 +99,12 @@ export default class Compiler {
   }
 
   /**
-   * Compile a file by rendering the schema at the defined path.
+   * Transpile a file by rendering the schema at the defined path.
    *
    * @param {String} file
    * @returns {Promise}
    */
-  compileFile(file) {
+  transpileFile(file) {
     return this.generateOutput(this.extractSchemas(file));
   }
 
