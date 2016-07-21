@@ -7,6 +7,75 @@ interfaces from JSON schema files. Schemas can represent database
 tables, API endpoints, data structures, resources, internal shapes,
 and more.
 
+Take this user schema for example.
+
+```json
+{
+  "name": "User",
+  "attributes": {
+    "id": "number",
+    "username": "string",
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "location": {
+      "type": "shape",
+      "attributes": {
+        "lat": "number",
+        "long": "number"
+      }
+    }
+  }
+}
+```
+
+Which transpiles down to the following React prop types.
+
+```
+import { PropTypes } from 'react';
+
+export const UserSchema = PropTypes.shape({
+  id: PropTypes.number,
+  username: PropTypes.string,
+  email: PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    lat: PropTypes.number,
+    long: PropTypes.number,
+  }),
+});
+```
+
+Or the following Flow type aliases.
+
+```
+// @flow
+
+export type UserSchema = {
+  id: number,
+  username: string,
+  email: string,
+  location: {
+    lat: number,
+    long: number,
+  },
+};
+```
+
+Or lastly, TypeScript interfaces.
+
+```
+export interface UserSchema {
+  id?: number;
+  username?: string;
+  email: string;
+  location?: {
+    lat?: number;
+    long?: number;
+  };
+}
+```
+
 ## Requirements
 
 * ES2015
@@ -15,13 +84,17 @@ and more.
 
 ## Installation
 
-    npm install shapeshifter --save-dev
+```
+npm install shapeshifter --save-dev
+```
 
 ## Usage
 
 Shapeshifter is provided as a binary which can be executed like so.
 
-    shapeshifter [options] [input] > [output]
+```
+shapeshifter [options] [input] > [output]
+```
 
 The binary input accepts either a single schema file or a directory of
 schema files. If a directory is provided, they will be combined into 
