@@ -32,7 +32,7 @@ Take this user schema for example.
 
 Which transpiles down to the following React prop types.
 
-```
+```javascript
 import { PropTypes } from 'react';
 
 export const UserSchema = PropTypes.shape({
@@ -48,7 +48,7 @@ export const UserSchema = PropTypes.shape({
 
 Or the following Flow type aliases.
 
-```
+```javascript
 // @flow
 
 export type UserSchema = {
@@ -64,7 +64,7 @@ export type UserSchema = {
 
 Or lastly, TypeScript interfaces.
 
-```
+```javascript
 export interface UserSchema {
     id?: number;
     username?: string;
@@ -125,16 +125,32 @@ to "Suffix".
 
 ## Documentation
 
-TODO
-
 ### Schema Structure
 
-TODO
+A schema can either be a JSON file, or a JavaScript file
+that exports an object (Node.js compatible). JSON is preferred
+as it's a consumable format across many languages.
+
+Every schema requires a `name` and `attributes` property.
+The name is used to denote the name of the export found in the
+ES2015 transpiled output file, while the attributes denote the
+available fields in the current schema.
+
+```json
+{
+    "name": "Users",
+    "attributes": {}
+}
+```
+
+Furthermore, a schema supports the following optional properties:
+`imports`, `constants`, and `subsets`. Continue reading for more
+information on all the supported schema properties.
 
 #### Attributes
 
 The `attributes` object represents a mapping of field names to
-[type definitions](#attribut-types). Attributes are usually a
+[type definitions](#attribute-types). Attributes are usually a
 one-to-one mapping of database table columns or data model attributes.
 
 The value of a field, the type definition, represents what type of
@@ -162,10 +178,9 @@ All attribute type definitions support two modifier properties,
 
 When `required` is used by React, it will append `isRequired` to all
 prop types. When used by TypeScript, it will omit `?` on every
-property name.
-
-Required attributes are not supported by Flow, instead it supports
-`null`. Nullable fields will prepend `?` to every type alias.
+property name. Required attributes are not supported by Flow,
+instead it supports `null`. Nullable fields will prepend `?` to
+every type alias.
 
 ```json
 "field": {
@@ -233,13 +248,13 @@ can be defined with `named` (an array).
 "imports": [
     { "path": "./foo.js", "default": "FooClass" },
     { "path": "../bar.js", "named": ["funcName", "constName"] },
-    { "path": "../baz/qux.js": "default": "BarClass", "named": ["className"] }
+    { "path": "../baz/qux.js", "default": "BarClass", "named": ["className"] }
 ]
 ```
 
 #### Constants
 
-The `constants` object is a mapping of constant to a primitive
+The `constants` object is a mapping of a constant to a primitive
 value or an array of primitive values. Constants are transpiled
 down to exported ES2015 `const`s, allowing easy re-use of values.
 
@@ -258,19 +273,119 @@ without introducing duplication.
 
 ### Attribute Types
 
-TODO
+For every attribute defined in a schema, a type definition is required.
+The following types are supported.
 
 #### Primitives
 
-TODO
+There are 3 primitive types, all of which map to native JavaScript
+primitives. They are `string`, `number`, and `boolean`. Primitives
+are the only types that support shorthand notation.
+
+```json
+"name": "string",
+"status": "number",
+"active": "boolean",
+```
+
+As well as the expanded standard notation.
+
+```json
+"name": {
+    "type": "string"
+},
+"status": {
+    "type": "number"
+},
+"active": {
+    "type": "boolean"
+},
+```
+
+This transpiles down to:
+
+```javascript
+// React
+name: PropTypes.string,
+status: PropTypes.number,
+active: PropTypes.bool,
+
+// Flow
+name: string,
+status: number,
+active: boolean,
+
+// TypeScript
+name: string;
+status: number;
+active: boolean;
+```
+
+Alias names: `str`, `num`, `int`, `integer`, `float`, `bool`
 
 #### Arrays
 
-TODO
+An `array` is a compound type that supports a list of value types.
+The contents of the array can be defined using the `valueType`
+property, which is its own type definition.
+
+```json
+"messages": {
+    "type": "array",
+    "valueType": {
+        "type": "string"
+    }
+}
+```
+
+This transpiles down to:
+
+```javascript
+// React
+messages: PropTypes.arrayOf(PropTypes.string),
+
+// Flow
+messages: string[],
+
+// TypeScript
+messages: string[];
+```
+
+Alias names: `list`
 
 #### Objects
 
-TODO
+An `object` is a compound type that maps key-value pairs through
+the `keyType` and `valueType` properties -- both of which are type
+definitions. When transpiling down to React, the `keyType` is not
+required.
+
+This is equivalent to generics from other languages: `Object<T1, T2>`.
+
+```json
+"costs": {
+    "type": "object",
+    "keyType": "string",
+    "valueType": {
+        "type": "number"
+    }
+}
+```
+
+This transpiles down to:
+
+```javascript
+// React
+costs: PropTypes.objectOf(PropTypes.number),
+
+// Flow
+costs: { [key: string]: number },
+
+// TypeScript
+costs: { [key: string]: number };
+```
+
+Alias names: `obj`, `item`
 
 #### Instances
 
