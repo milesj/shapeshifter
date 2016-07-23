@@ -28,12 +28,6 @@ describe('Renderer', () => {
     });
   });
 
-  describe('formatName()', () => {
-    it('camel cases the name', () => {
-      expect(renderer.formatName(' Some Random NamedEnum  ')).to.equal('SomeRandomNamedEnum');
-    });
-  });
-
   describe('formatObject()', () => {
     it('formats a string into brackets', () => {
       expect(renderer.formatObject(123, 0)).to.equal('{\n123\n}');

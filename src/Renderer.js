@@ -18,6 +18,7 @@ import ShapeDef from './definitions/Shape';
 import StringDef from './definitions/String';
 import UnionDef from './definitions/Union';
 import indent from './helpers/indent';
+import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
 
 export default class Renderer {
@@ -55,25 +56,6 @@ export default class Renderer {
     }
 
     return `[${indentSpacer}${items}${indentSpacer}${indent(depth)}]`;
-  }
-
-  /**
-   * Format a name by converting to pascal case.
-   *
-   * @param {String} value
-   * @returns {String}
-   */
-  formatName(value) {
-    if (!value) {
-      return '';
-    }
-
-    value = value
-      .replace(/[^a-zA-Z0-9]+/g, ' ')
-      .replace(/\W+(.)/g, match => match[1].toUpperCase())
-      .trim();
-
-    return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
   /**
@@ -168,7 +150,7 @@ export default class Renderer {
    */
   getSchemaName(setName = '', schemaName = '') {
     return [schemaName || this.schema.name, setName, config.schemaSuffix]
-      .map(this.formatName)
+      .map(formatName)
       .join('');
   }
 

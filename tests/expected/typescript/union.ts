@@ -1,18 +1,18 @@
 import UnionDefault, { UnionClassName } from '../stub';
 
-export enum UnionStringEnum {
+export enum UnionEnumField0Enum {
   foo = 0,
   bar = 1,
   baz = 2
 }
 
-export enum UnionNumberEnum {
+export enum UnionEnumField1Enum {
   A = 789,
   B = 456,
   C = 123
 }
 
-export enum UnionUnionNumberEnum {
+export enum UnionUnionField01Enum {
   A = 1,
   B = 2,
   C = 3
@@ -21,7 +21,7 @@ export enum UnionUnionNumberEnum {
 export interface UnionSchema {
   arrayField?: string[] | Array<{ [key: string]: string }>;
   primitiveFields?: boolean | number | (() => void);
-  enumField?: UnionStringEnum | UnionNumberEnum;
+  enumField?: UnionEnumField0Enum | UnionEnumField1Enum;
   instanceField?: UnionClassName | UnionDefault;
   objectField?: { [key: string]: number } | { [key: string]: string[] };
   shapeField?: {
@@ -31,5 +31,5 @@ export interface UnionSchema {
   } | {
     qux?: string | boolean;
   };
-  unionField?: string | UnionUnionNumberEnum | boolean | number;
+  unionField?: string | UnionUnionField01Enum | boolean | number;
 }

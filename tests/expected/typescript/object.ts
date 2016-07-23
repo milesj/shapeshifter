@@ -1,6 +1,6 @@
 import ObjectDefault from '../stub';
 
-export enum ObjectStringEnum {
+export enum ObjectEnumFieldValueEnum {
   foo = 0,
   bar = 1,
   baz = 2
@@ -9,7 +9,7 @@ export enum ObjectStringEnum {
 export interface ObjectSchema {
   arrayField?: { [key: string]: string[] };
   boolField: { [key: string]: boolean };
-  enumField?: { [key: string]: ObjectStringEnum };
+  enumField?: { [key: string]: ObjectEnumFieldValueEnum };
   funcField?: { [key: string]: () => string };
   instanceField?: { [key: string]: ObjectDefault };
   numberField?: { [key: string]: number };

@@ -1,30 +1,30 @@
-export enum BoolEnum {
+export enum EnumBoolFieldEnum {
   A = 1,
   B = 0
 }
 
-export enum BooleanEnum {
+export enum EnumBooleanFieldEnum {
   A = 0,
   B = 1
 }
 
-export enum IntEnum {
+export enum EnumIntFieldEnum {
   A = 123
 }
 
-export enum IntegerEnum {
+export enum EnumIntegerFieldEnum {
   A = 1,
   B = 2,
   C = 3
 }
 
-export enum NumEnum {
+export enum EnumNumFieldEnum {
   A = 123,
   B = 456,
   C = 789
 }
 
-export enum NumberEnum {
+export enum EnumNumberFieldEnum {
   A = 1,
   B = 2,
   C = 3,
@@ -37,31 +37,31 @@ export enum NumberEnum {
   J = 10
 }
 
-export enum FloatEnum {
+export enum EnumFloatFieldEnum {
   A = 12.34,
   B = 56.78,
   C = 9,
   D = 65.4
 }
 
-export enum StrEnum {
+export enum EnumStrFieldEnum {
   foo = 0,
   bar = 1
 }
 
-export enum StringEnum {
+export enum EnumStringFieldEnum {
   baz = 0,
   qux = 1
 }
 
 export interface EnumSchema {
-  boolField?: BoolEnum;
-  booleanField?: BooleanEnum;
-  intField?: IntEnum;
-  integerField?: IntegerEnum;
-  numField?: NumEnum;
-  numberField?: NumberEnum;
-  floatField?: FloatEnum;
-  strField?: StrEnum;
-  stringField?: StringEnum;
+  boolField?: EnumBoolFieldEnum;
+  booleanField?: EnumBooleanFieldEnum;
+  intField?: EnumIntFieldEnum;
+  integerField?: EnumIntegerFieldEnum;
+  numField?: EnumNumFieldEnum;
+  numberField?: EnumNumberFieldEnum;
+  floatField?: EnumFloatFieldEnum;
+  strField?: EnumStrFieldEnum;
+  stringField?: EnumStringFieldEnum;
 }

@@ -19,45 +19,45 @@ export const INST_ENABLED = true;
 export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
-export enum ArrayStringEnum {
+export enum ArrayEnumFieldEnum {
   foo = 0,
   bar = 1,
   baz = 2
 }
 
-export enum ArrayUnionNumberEnum {
+export enum ArrayUnionField1Enum {
   A = 1,
   B = 2,
   C = 3
 }
 
-export enum BoolEnum {
+export enum EnumBoolFieldEnum {
   A = 1,
   B = 0
 }
 
-export enum BooleanEnum {
+export enum EnumBooleanFieldEnum {
   A = 0,
   B = 1
 }
 
-export enum IntEnum {
+export enum EnumIntFieldEnum {
   A = 123
 }
 
-export enum IntegerEnum {
+export enum EnumIntegerFieldEnum {
   A = 1,
   B = 2,
   C = 3
 }
 
-export enum NumEnum {
+export enum EnumNumFieldEnum {
   A = 123,
   B = 456,
   C = 789
 }
 
-export enum NumberEnum {
+export enum EnumNumberFieldEnum {
   A = 1,
   B = 2,
   C = 3,
@@ -70,60 +70,60 @@ export enum NumberEnum {
   J = 10
 }
 
-export enum FloatEnum {
+export enum EnumFloatFieldEnum {
   A = 12.34,
   B = 56.78,
   C = 9,
   D = 65.4
 }
 
-export enum StrEnum {
+export enum EnumStrFieldEnum {
   foo = 0,
   bar = 1
 }
 
-export enum StringEnum {
+export enum EnumStringFieldEnum {
   baz = 0,
   qux = 1
 }
 
-export enum ObjectStringEnum {
+export enum ObjectEnumFieldValueEnum {
   foo = 0,
   bar = 1,
   baz = 2
 }
 
-export enum ShapeStrEnum {
+export enum ShapeStringEnumEnum {
   foo = 0,
   bar = 1,
   baz = 2
 }
 
-export enum ShapeIntEnum {
+export enum ShapeIntEnumEnum {
   A = 1,
   B = 2,
   C = 3
 }
 
-export enum ShapeUnionNumberEnum {
+export enum ShapeEnumEnum {
   A = 123,
   B = 456,
   C = 789
 }
 
-export enum UnionStringEnum {
+export enum UnionEnumField0Enum {
   foo = 0,
   bar = 1,
   baz = 2
 }
 
-export enum UnionNumberEnum {
+export enum UnionEnumField1Enum {
   A = 789,
   B = 456,
   C = 123
 }
 
-export enum UnionUnionNumberEnum {
+export enum UnionUnionField01Enum {
   A = 1,
   B = 2,
   C = 3
@@ -132,7 +132,7 @@ export enum UnionUnionNumberEnum {
 export interface ArraySchema {
   arrayField?: Array<string[]>;
   boolField?: boolean[];
-  enumField?: Array<ArrayStringEnum>;
+  enumField?: Array<ArrayEnumFieldEnum>;
   funcField?: Array<(arg0?: string, arg1?: number) => number>;
   instanceField?: ArrayDefault[];
   numberField: number[];
@@ -143,7 +143,7 @@ export interface ArraySchema {
     baz: () => void;
   }>;
   stringField?: string[];
-  unionField?: Array<string | ArrayUnionNumberEnum>;
+  unionField?: Array<string | ArrayUnionField1Enum>;
 }
 
 export interface ConstantsSchema {
@@ -151,15 +151,15 @@ export interface ConstantsSchema {
 }
 
 export interface EnumSchema {
-  boolField?: BoolEnum;
-  booleanField?: BooleanEnum;
-  intField?: IntEnum;
-  integerField?: IntegerEnum;
-  numField?: NumEnum;
-  numberField?: NumberEnum;
-  floatField?: FloatEnum;
-  strField?: StrEnum;
-  stringField?: StringEnum;
+  boolField?: EnumBoolFieldEnum;
+  booleanField?: EnumBooleanFieldEnum;
+  intField?: EnumIntFieldEnum;
+  integerField?: EnumIntegerFieldEnum;
+  numField?: EnumNumFieldEnum;
+  numberField?: EnumNumberFieldEnum;
+  floatField?: EnumFloatFieldEnum;
+  strField?: EnumStrFieldEnum;
+  stringField?: EnumStringFieldEnum;
 }
 
 export interface ImportsSchema {
@@ -174,7 +174,7 @@ export interface InstanceSchema {
 export interface ObjectSchema {
   arrayField?: { [key: string]: string[] };
   boolField: { [key: string]: boolean };
-  enumField?: { [key: string]: ObjectStringEnum };
+  enumField?: { [key: string]: ObjectEnumFieldValueEnum };
   funcField?: { [key: string]: () => string };
   instanceField?: { [key: string]: ObjectDefault };
   numberField?: { [key: string]: number };
@@ -285,8 +285,8 @@ export interface ShapeSchema {
     }>;
   };
   enumFields?: {
-    stringEnum?: ShapeStrEnum;
-    intEnum?: ShapeIntEnum;
+    stringEnum?: ShapeStringEnumEnum;
+    intEnum?: ShapeIntEnumEnum;
   };
   instanceFields?: {
     instOf?: ShapeClassName;
@@ -303,7 +303,7 @@ export interface ShapeSchema {
   unionFields?: {
     multiUnion?: number | boolean | ShapeClassName | { [key: string]: string } | {
       string?: string;
-      enum?: ShapeUnionNumberEnum;
+      enum?: ShapeEnumEnum;
     };
   };
 }
@@ -311,7 +311,7 @@ export interface ShapeSchema {
 export interface UnionSchema {
   arrayField?: string[] | Array<{ [key: string]: string }>;
   primitiveFields?: boolean | number | (() => void);
-  enumField?: UnionStringEnum | UnionNumberEnum;
+  enumField?: UnionEnumField0Enum | UnionEnumField1Enum;
   instanceField?: UnionClassName | UnionDefault;
   objectField?: { [key: string]: number } | { [key: string]: string[] };
   shapeField?: {
@@ -321,5 +321,5 @@ export interface UnionSchema {
   } | {
     qux?: string | boolean;
   };
-  unionField?: string | UnionUnionNumberEnum | boolean | number;
+  unionField?: string | UnionUnionField01Enum | boolean | number;
 }

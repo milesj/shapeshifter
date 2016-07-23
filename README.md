@@ -402,7 +402,36 @@ Alias names: `obj`, `map`
 
 #### Enums
 
-TODO
+An `enum` is a fixed list of values, with both the values and the value
+type being defined through the `values` and `valueType` properties
+respectively.
+
+```json
+"words": {
+    "type": "enum",
+    "valueType": "string",
+    "values": ["foo", "bar", "baz"]
+}
+```
+
+This transpiles down to:
+
+```javascript
+// React
+words: PropTypes.oneOf(['foo', 'bar', 'baz']),
+
+// Flow
+words: 'foo' | 'bar' | 'baz',
+
+// TypeScript
+export enum SchemaWordsEnum {
+  foo = 0,
+  bar = 1,
+  baz = 2
+}
+
+words: SchemaWordsEnum;
+```
 
 #### Shapes
 
@@ -461,15 +490,17 @@ Alias names: `inst`
 
 ## FAQ
 
-**Why `arrayOf` and `objectOf` over `array` and `object` React prop types?**
+**Why `arrayOf`, `objectOf` over `array`, `object` React prop types?**
+
 I chose `arrayOf` and `objectOf` because they provide type safety and
 the assurance of the values found within the collection. Using
 non-type safe features would defeat the purpose of this library.
 
 **What about `node`, `element`, and `func` React prop types?**
+
 The `node` and `element` types represent DOM elements or React
 structures found within the application. These types don't really
-map to database tables or structures very well, if at all.
+map to database tables or data structures very well, if at all.
 
 The same could be said for `func` -- however, that is supported.
 I've simply opted out in mentioning it in the documentation, as I'm

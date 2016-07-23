@@ -55,13 +55,11 @@ module.exports = {
       attributes: {
         stringEnum: {
           type: 'enum',
-          name: 'ShapeStrEnum',
           valueType: 'str',
           values: ['foo', 'bar', 'baz']
         },
         intEnum: {
           type: 'enum',
-          name: 'ShapeIntEnum',
           valueType: 'int',
           values: [1, 2, 3]
         }
@@ -138,7 +136,6 @@ module.exports = {
                 string: 'string',
                 enum: {
                   type: 'enum',
-                  name: 'ShapeUnionNumberEnum',
                   valueType: 'number',
                   values: [123, 456, 789]
                 }

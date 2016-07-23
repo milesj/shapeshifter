@@ -6,6 +6,7 @@
 import Renderer from '../Renderer';
 import FuncDefinition from '../definitions/Func';
 import indent from '../helpers/indent';
+import formatName from '../helpers/formatName';
 import isPrimitive from '../helpers/isPrimitive';
 import normalizeType from '../helpers/normalizeType';
 
@@ -44,14 +45,12 @@ export default class TypeScriptRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderEnum(definition) {
-    const { values, valueType, name } = definition.config;
+    const { values, valueType } = definition.config;
     const members = [];
+    const enumName = [this.schema.name, definition.attribute, 'Enum']
+      .map(formatName)
+      .join('');
 
-    if (!name) {
-      throw new SyntaxError('TypeScript enums require a "name" property.');
-    }
-
-    const enumName = this.formatName(name);
     let currentIndex = 0;
     let currentChar = 65;
 

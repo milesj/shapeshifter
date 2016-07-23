@@ -35,13 +35,11 @@ module.exports = {
       valueTypes: [
         {
           type: 'enum',
-          name: 'UnionStringEnum',
           valueType: 'string',
           values: ['foo', 'bar', 'baz']
         },
         {
           type: 'enum',
-          name: 'UnionNumberEnum',
           valueType: 'number',
           values: [789, 456, 123]
         }
@@ -112,7 +110,6 @@ module.exports = {
             },
             {
               type: 'enum',
-              name: 'UnionUnionNumberEnum',
               valueType: 'number',
               values: [1, 2, 3]
             }

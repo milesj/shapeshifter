@@ -20,7 +20,6 @@ module.exports = {
       type: 'object',
       valueType: {
         type: 'enum',
-        name: 'ObjectStringEnum',
         valueType: 'string',
         values: ['foo', 'bar', 'baz']
       },
