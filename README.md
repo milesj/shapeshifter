@@ -125,6 +125,21 @@ to "Suffix".
 
 ## Documentation
 
+* [Schema Structure](#schema-structure)
+    * [Attributes](#attributes)
+    * [Subsets](#subsets)
+    * [Imports](#imports)
+    * [Constants](#constants)
+* [Attribute Types](#attribute-types)
+    * [Primitives](#primitives)
+    * [Arrays](#arrays)
+    * [Objects](#objects)
+    * [Enums](#enums)
+    * [Shapes](#shapes)
+    * [Unions](#unions)
+    * [References](#references)
+    * [Instance Ofs](#instance-ofs)
+
 ### Schema Structure
 
 A schema can either be a JSON file, or a JavaScript file
@@ -325,9 +340,8 @@ Alias names: `str`, `num`, `int`, `integer`, `float`, `bool`
 
 #### Arrays
 
-An `array` is a compound type that supports a list of value types.
-The contents of the array can be defined using the `valueType`
-property, which is its own type definition.
+An `array` is a dynamic list of values, with the type of the value
+defined by the `valueType` property.
 
 ```json
 "messages": {
@@ -355,10 +369,9 @@ Alias names: `list`
 
 #### Objects
 
-An `object` is a compound type that maps key-value pairs through
-the `keyType` and `valueType` properties -- both of which are type
-definitions. When transpiling down to React, the `keyType` is not
-required.
+An `object` maps key-value pairs through the `keyType` and `valueType`
+properties -- both of which are type definitions. When transpiling down
+to React, the `keyType` is not required.
 
 This is equivalent to generics from other languages: `Object<T1, T2>`.
 
@@ -385,11 +398,7 @@ costs: { [key: string]: number },
 costs: { [key: string]: number };
 ```
 
-Alias names: `obj`, `item`
-
-#### Instances
-
-TODO
+Alias names: `obj`, `map`
 
 #### Enums
 
@@ -406,3 +415,62 @@ TODO
 #### References
 
 TODO
+
+#### Instance Ofs
+
+The `instance` type provides a mechanism for comparing a value to
+an object (class, function, etc) found in JavaScript. While this
+doesn't necessarily map to a database table, it does provide an easy
+way to map to something like a model in the application.
+
+The instance type requires a `contract` property, which is the name
+of the object.
+
+```json
+"model": {
+    "type": "instance",
+    "contract": "UserModel"
+}
+```
+
+For the most part, this feature must be used in unison with
+[imports](#imports), as to pull the object into scope.
+
+```json
+"imports": [
+    { "default": "UserModel", "path": "../models/UserModel" }
+]
+```
+
+This transpiles down to:
+
+```javascript
+import UserModel from '../models/UserModel';
+
+// React
+model: PropTypes.instanceOf(UserModel),
+
+// Flow
+model: UserModel,
+
+// TypeScript
+model: UserModel;
+```
+
+Alias names: `inst`
+
+## FAQ
+
+**Why `arrayOf` and `objectOf` over `array` and `object` React prop types?**
+I chose `arrayOf` and `objectOf` because they provide type safety and
+the assurance of the values found within the collection. Using
+non-type safe features would defeat the purpose of this library.
+
+**What about `node`, `element`, and `func` React prop types?**
+The `node` and `element` types represent DOM elements or React
+structures found within the application. These types don't really
+map to database tables or structures very well, if at all.
+
+The same could be said for `func` -- however, that is supported.
+I've simply opted out in mentioning it in the documentation, as I'm
+not too sure on its use case. Kind of a hidden feature really.
