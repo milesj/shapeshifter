@@ -5,6 +5,7 @@
 
 // Use a hash map for faster lookups
 const ALIAS_MAP = {
+  binary: 'boolean',
   bool: 'boolean',
   func: 'function',
   inst: 'instance',

@@ -331,12 +331,12 @@ status: number,
 active: boolean,
 
 // TypeScript
-name: string;
-status: number;
-active: boolean;
+name?: string;
+status?: number;
+active?: boolean;
 ```
 
-Alias names: `str`, `num`, `int`, `integer`, `float`, `bool`
+Alias names: `str`, `num`, `int`, `integer`, `float`, `bool`, `binary`
 
 #### Arrays
 
@@ -362,7 +362,7 @@ messages: PropTypes.arrayOf(PropTypes.string),
 messages: string[],
 
 // TypeScript
-messages: string[];
+messages?: string[];
 ```
 
 Alias names: `list`
@@ -395,7 +395,7 @@ costs: PropTypes.objectOf(PropTypes.number),
 costs: { [key: string]: number },
 
 // TypeScript
-costs: { [key: string]: number };
+costs?: { [key: string]: number };
 ```
 
 Alias names: `obj`, `map`
@@ -430,20 +430,131 @@ export enum SchemaWordsEnum {
   baz = 2
 }
 
-words: SchemaWordsEnum;
+words?: SchemaWordsEnum;
 ```
 
 #### Shapes
 
-TODO
+A `shape` is a key-value object with its own set of attributes and
+types. A shape differs from an object in that an object defines the
+type for all keys and values, while a shape defines individual
+attributes. This provides nested structures within a schema.
+
+A shape is similar to a struct found in the C language.
+
+```json
+"location": {
+    "type": "shape",
+    "attributes": {
+        "lat": "number",
+        "long": "number",
+        "name": {
+            "type": "string",
+            "required": true
+        }
+    }
+}
+```
+
+This transpiles to:
+
+```javascript
+// React
+location: PropTypes.shape({
+    lat: PropTypes.number,
+    long: PropTypes.number,
+    name: PropTypes.string.isRequired,
+}),
+
+// Flow
+location: {
+    lat: number,
+    long: number,
+    name: string,
+},
+
+// TypeScript
+location?: {
+    lat?: number,
+    long?: number,
+    name: string,
+},
+```
+
+Alias names: `struct`
 
 #### Unions
 
-TODO
+The `union` type provides a logical OR operation against a list of
+type definitions defined at `valueTypes`. Any value passed through
+this attribute must match one of the types in the list.
+
+```json
+"error": {
+    "type": "union",
+    "valueTypes": [
+        "string",
+        { "type": "number" },
+        {
+            "type": "instance",
+            "contract": "Error"
+        }
+    ]
+}
+```
+
+This transpiles to:
+
+```javascript
+// React
+error: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.instanceOf(Error),
+]),
+
+// Flow
+error: string | number | Error,
+
+// TypeScript
+error?: string | number | Error;
+```
 
 #### References
 
-TODO
+The final type, `reference`, is the most powerful and versatile type.
+A reference provides a link to an external schema file, permitting
+easy re-use and extensibility, while avoiding schema structure
+duplication across files.
+
+To make use of references, a `references` map must be defined in
+the root of the schema. Each value in the map is a relative path to
+an external schema file.
+
+```json
+{
+    "name": "Users",
+    "references": {
+        "profile": "./profile.json"
+    },
+    "attributes": {}
+}
+```
+
+Once the reference map exists, we can define the attribute type,
+which requires the `reference` property to point to a key found in
+the references map. An optional `subset` property can be defined
+that points to a subset found in the reference schema file.
+
+```json
+"profile": {
+    "type": "reference",
+    "reference": "profile",
+    "subset": ""
+}
+```
+
+Alias names: `ref`
 
 #### Instance Ofs
 
