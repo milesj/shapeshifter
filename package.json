@@ -1,6 +1,6 @@
 {
   "name": "shapeshifter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Generate React prop types, Flow types, or TypeScript interfaces from JSON schema files.",
   "keywords": [
     "generate",
@@ -71,8 +71,5 @@
     "mocha": "^2.5.3",
     "react": "^15.2.0",
     "typescript": "^1.8.10"
-  },
-  "engines": {
-    "node": "^4.2.0"
   }
 }
