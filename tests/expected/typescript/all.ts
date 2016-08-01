@@ -222,14 +222,25 @@ export interface ReferenceFooSchema {
   refField: ReferenceBarSchema;
 }
 
-export interface ReferenceSetSchema {
-  boolField?: boolean;
+export interface ReferenceSelfBasicSchema {
   stringField?: string;
-  numberField?: number;
+}
+
+export interface ReferenceSelfSchema {
+  stringField?: string;
+  referenceField?: ReferenceSelfSchema;
+  requiredRefField: ReferenceSelfSchema;
+  subsetRefField?: Array<ReferenceSelfBasicSchema>;
 }
 
 export interface ReferenceSetOnlyStringSchema {
   stringField?: string;
+}
+
+export interface ReferenceSetSchema {
+  boolField?: boolean;
+  stringField?: string;
+  numberField?: number;
 }
 
 export interface ReferenceSchema {
@@ -237,13 +248,6 @@ export interface ReferenceSchema {
   refField?: ReferenceFooSchema;
   referenceField?: ReferenceFooSchema;
   subsetRefField?: ReferenceSetOnlyStringSchema;
-}
-
-export interface SetsSchema {
-  foo?: string;
-  bar?: number;
-  baz: boolean;
-  qux?: () => void;
 }
 
 export interface SetsBasicSchema {
@@ -265,6 +269,13 @@ export interface SetsWithNullSchema {
 export interface SetsWithBothSchema {
   baz: boolean;
   qux: () => void;
+}
+
+export interface SetsSchema {
+  foo?: string;
+  bar?: number;
+  baz: boolean;
+  qux?: () => void;
 }
 
 export interface ShapeSchema {

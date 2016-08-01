@@ -4,14 +4,14 @@ export type ReferenceBarSchema = {
   boolField: boolean,
 };
 
+export type ReferenceSetOnlyStringSchema = {
+  stringField: string,
+};
+
 export type ReferenceSetSchema = {
   boolField: boolean,
   stringField: string,
   numberField: number,
-};
-
-export type ReferenceSetOnlyStringSchema = {
-  stringField: string,
 };
 
 export type ReferenceFooSchema = {

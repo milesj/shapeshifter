@@ -169,14 +169,25 @@ export const ReferenceFooSchema = PropTypes.shape({
   refField: ReferenceBarSchema.isRequired,
 });
 
-export const ReferenceSetSchema = PropTypes.shape({
-  boolField: PropTypes.bool,
+export const ReferenceSelfBasicSchema = PropTypes.shape({
   stringField: PropTypes.string,
-  numberField: PropTypes.number,
+});
+
+export const ReferenceSelfSchema = PropTypes.shape({
+  stringField: PropTypes.string,
+  referenceField: (...args) => ReferenceSelfSchema(...args),
+  requiredRefField: (...args) => ReferenceSelfSchema(...args).isRequired,
+  subsetRefField: PropTypes.arrayOf(ReferenceSelfBasicSchema),
 });
 
 export const ReferenceSetOnlyStringSchema = PropTypes.shape({
   stringField: PropTypes.string,
+});
+
+export const ReferenceSetSchema = PropTypes.shape({
+  boolField: PropTypes.bool,
+  stringField: PropTypes.string,
+  numberField: PropTypes.number,
 });
 
 export const ReferenceSchema = PropTypes.shape({
@@ -184,13 +195,6 @@ export const ReferenceSchema = PropTypes.shape({
   refField: ReferenceFooSchema,
   referenceField: ReferenceFooSchema,
   subsetRefField: ReferenceSetOnlyStringSchema,
-});
-
-export const SetsSchema = PropTypes.shape({
-  foo: PropTypes.string,
-  bar: PropTypes.number,
-  baz: PropTypes.bool.isRequired,
-  qux: PropTypes.func,
 });
 
 export const SetsBasicSchema = PropTypes.shape({
@@ -212,6 +216,13 @@ export const SetsWithNullSchema = PropTypes.shape({
 export const SetsWithBothSchema = PropTypes.shape({
   baz: PropTypes.bool.isRequired,
   qux: PropTypes.func.isRequired,
+});
+
+export const SetsSchema = PropTypes.shape({
+  foo: PropTypes.string,
+  bar: PropTypes.number,
+  baz: PropTypes.bool.isRequired,
+  qux: PropTypes.func,
 });
 
 export const ShapeSchema = PropTypes.shape({

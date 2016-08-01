@@ -211,9 +211,6 @@ export default class Renderer {
     const baseAttributes = this.schema.schema.attributes;
     const { attributes, subsets } = this.schema;
 
-    // Default set
-    this.sets.push(this.render('', attributes));
-
     // Subsets
     Object.keys(subsets).forEach(setName => {
       const setAttributes = [];
@@ -252,6 +249,9 @@ export default class Renderer {
 
       this.sets.push(this.render(setName, setAttributes));
     });
+
+    // Default set
+    this.sets.push(this.render('', attributes));
   }
 
   /**
@@ -452,8 +452,8 @@ export default class Renderer {
    * @returns {String}
    */
   renderReference(definition) {
-    const { reference, subset } = definition.config;
-    const refSchema = this.schema.referenceSchemas[reference];
+    const { reference, self, subset } = definition.config;
+    const refSchema = self ? this.schema : this.schema.referenceSchemas[reference];
 
     if (!refSchema) {
       throw new SyntaxError(
@@ -520,6 +520,16 @@ export default class Renderer {
      */
   wrapGenerics(alias, ...types) {
     return `${alias}<${types.join(', ')}>`;
+  }
+
+  /**
+   * Return a piece of code wrapped in an IIFE.
+   *
+   * @param {String} code
+   * @returns {String}
+   */
+  wrapIIFE(code) {
+    return `(function () { return ${code}; }())`;
   }
 
   /**

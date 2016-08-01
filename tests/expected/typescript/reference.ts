@@ -2,14 +2,14 @@ export interface ReferenceBarSchema {
   boolField?: boolean;
 }
 
+export interface ReferenceSetOnlyStringSchema {
+  stringField?: string;
+}
+
 export interface ReferenceSetSchema {
   boolField?: boolean;
   stringField?: string;
   numberField?: number;
-}
-
-export interface ReferenceSetOnlyStringSchema {
-  stringField?: string;
 }
 
 export interface ReferenceFooSchema {

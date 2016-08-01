@@ -3,6 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+import path from 'path';
 import Factory from './Factory';
 import isObject from './helpers/isObject';
 
@@ -10,10 +11,13 @@ export default class Schema {
   /**
    * Load and parse a schema, either as a JSON string, or as a JS object.
    *
+   * @param {String} filePath
    * @param {String|Object} data
    */
-  constructor(data) {
+  constructor(filePath, data) {
+    const fileName = path.basename(filePath);
     let schema = {};
+    let error = '';
 
     if (typeof data === 'string') {
       schema = JSON.parse(data);
@@ -22,30 +26,34 @@ export default class Schema {
       schema = data;
 
     } else {
-      throw new SyntaxError('Schema requires a valid JSON structure.');
+      throw new SyntaxError(`[${fileName}] Schema requires a valid JSON structure.`);
     }
 
     if (!schema.name) {
-      throw new SyntaxError('No name found in schema.');
+      error = 'No name found in schema.';
 
     } else if (!isObject(schema.attributes) || !Object.keys(schema.attributes).length) {
-      throw new SyntaxError('No attributes found in schema.');
+      error = 'No attributes found in schema.';
 
     } else if (schema.hasOwnProperty('imports') && !Array.isArray(schema.imports)) {
-      throw new SyntaxError('Schema imports must be an array of import declarations.');
+      error = 'Schema imports must be an array of import declarations.';
 
     } else if (schema.hasOwnProperty('constants') && !isObject(schema.constants)) {
-      throw new SyntaxError('Schema constants must be an object that maps to primitive values.');
+      error = 'Schema constants must be an object that maps to primitive values.';
 
     } else if (schema.hasOwnProperty('subsets') && !isObject(schema.subsets)) {
-      throw new SyntaxError('Schema subsets must be an object.');
+      error = 'Schema subsets must be an object.';
 
     } else if (schema.hasOwnProperty('references') && !isObject(schema.references)) {
-      throw new SyntaxError('Schema references must be an object that maps to other schemas.');
+      error = 'Schema references must be an object that maps to other schemas.';
+    }
+
+    if (error) {
+      throw new SyntaxError(`[${fileName}] ${error}`);
     }
 
     this.schema = schema;
-    this.path = '';
+    this.path = filePath;
     this.name = schema.name;
     this.constants = schema.constants || {};
     this.imports = schema.imports || [];

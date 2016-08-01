@@ -113,14 +113,25 @@ export type ReferenceFooSchema = {
   refField: ReferenceBarSchema,
 };
 
-export type ReferenceSetSchema = {
-  boolField: boolean,
+export type ReferenceSelfBasicSchema = {
   stringField: string,
-  numberField: number,
+};
+
+export type ReferenceSelfSchema = {
+  stringField: string,
+  referenceField: ReferenceSelfSchema,
+  requiredRefField: ?ReferenceSelfSchema,
+  subsetRefField: Array<ReferenceSelfBasicSchema>,
 };
 
 export type ReferenceSetOnlyStringSchema = {
   stringField: string,
+};
+
+export type ReferenceSetSchema = {
+  boolField: boolean,
+  stringField: string,
+  numberField: number,
 };
 
 export type ReferenceSchema = {
@@ -128,13 +139,6 @@ export type ReferenceSchema = {
   refField: ?ReferenceFooSchema,
   referenceField: ReferenceFooSchema,
   subsetRefField: ReferenceSetOnlyStringSchema,
-};
-
-export type SetsSchema = {
-  foo: string,
-  bar: number,
-  baz: boolean,
-  qux: () => void,
 };
 
 export type SetsBasicSchema = {
@@ -156,6 +160,13 @@ export type SetsWithNullSchema = {
 export type SetsWithBothSchema = {
   baz: boolean,
   qux: ?() => void,
+};
+
+export type SetsSchema = {
+  foo: string,
+  bar: number,
+  baz: boolean,
+  qux: () => void,
 };
 
 export type ShapeSchema = {

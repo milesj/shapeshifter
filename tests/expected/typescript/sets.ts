@@ -1,10 +1,3 @@
-export interface SetsSchema {
-  foo?: string;
-  bar?: number;
-  baz: boolean;
-  qux?: () => void;
-}
-
 export interface SetsBasicSchema {
   foo?: string;
   baz: boolean;
@@ -24,4 +17,11 @@ export interface SetsWithNullSchema {
 export interface SetsWithBothSchema {
   baz: boolean;
   qux: () => void;
+}
+
+export interface SetsSchema {
+  foo?: string;
+  bar?: number;
+  baz: boolean;
+  qux?: () => void;
 }

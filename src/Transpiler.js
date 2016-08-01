@@ -128,9 +128,8 @@ export default class Transpiler {
         continue;
       }
 
-      const schema = new Schema(require(resolvePath));
+      const schema = new Schema(resolvePath, require(resolvePath));
 
-      schema.path = resolvePath;
       schemas.unshift(schema);
 
       // Assign to parent

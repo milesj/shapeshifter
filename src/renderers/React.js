@@ -84,7 +84,15 @@ export default class ReactRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderReference(definition) {
-    return this.wrapRequired(definition, super.renderReference(definition));
+    const { self, subset } = definition.config;
+    const reference = super.renderReference(definition);
+
+    // Wrap a function as we need to defer the variable reference
+    if (self && !subset) {
+      return `(...args) => ${this.wrapRequired(definition, `${reference}(...args)`)}`;
+    }
+
+    return this.wrapRequired(definition, reference);
   }
 
   /**

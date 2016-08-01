@@ -22,7 +22,7 @@ const SCHEMA_CASES = [
   // Types
   'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
   // Syntax
-  'imports', 'constants', 'sets', 'reference',
+  'imports', 'constants', 'sets', 'reference', 'reference-self',
 ];
 
 describe('Transpiler', function () {

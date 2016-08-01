@@ -9,7 +9,8 @@ describe('definitions/Reference', () => {
         new ReferenceDefinition('foo', { reference: value })
       )).to.throw(SyntaxError,
         'Reference definitions require a "reference" property, ' +
-        'which points to an external schema to use.');
+        'which points to an external schema to use, ' +
+        'or a "self" property, which uses the current schema.');
     });
   });
 
@@ -20,6 +21,16 @@ describe('definitions/Reference', () => {
         expect(() => (
           new ReferenceDefinition('foo', { reference: value })
         )).to.throw(TypeError, 'Invalid type detected, "reference" property must be a string.');
+      });
+  });
+
+  it('errors if `self` is not a boolean', () => {
+    truthyValues
+      .filter(value => typeof value !== 'boolean')
+      .forEach(value => {
+        expect(() => (
+          new ReferenceDefinition('foo', { self: value })
+        )).to.throw(TypeError, 'Invalid type detected, "self" property must be a boolean.');
       });
   });
 

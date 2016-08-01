@@ -35,7 +35,7 @@ export default class ObjectDefinition extends Definition {
       throw new TypeError(`Object key type "${keyType || 'unknown'}" not supported.`);
     }
 
-    this.keyType = Factory.definition(`${this.attribute}_ey`, keyType);
+    this.keyType = Factory.definition(`${this.attribute}_key`, keyType);
     this.valueType = Factory.definition(`${this.attribute}_value`, valueType);
   }
 }

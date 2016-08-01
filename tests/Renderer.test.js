@@ -4,7 +4,7 @@ import Schema from '../lib/Schema';
 import config from '../lib/config';
 
 describe('Renderer', () => {
-  const renderer = new Renderer(new Schema({
+  const renderer = new Renderer(new Schema('/foo.json', {
     name: 'foo Bar-Baz',
     attributes: { foo: 'string' },
   }));
@@ -153,6 +153,12 @@ describe('Renderer', () => {
     it('wraps a value into a function', () => {
       expect(renderer.wrapFunction('foo')).to.equal('foo()');
       expect(renderer.wrapFunction('foo', 'a, b')).to.equal('foo(a, b)');
+    });
+  });
+
+  describe('wrapIIFE()', () => {
+    it('wraps a value into a function', () => {
+      expect(renderer.wrapIIFE('foo')).to.equal('(function () { return foo; }())');
     });
   });
 

@@ -4,14 +4,14 @@ export const ReferenceBarSchema = PropTypes.shape({
   boolField: PropTypes.bool,
 });
 
+export const ReferenceSetOnlyStringSchema = PropTypes.shape({
+  stringField: PropTypes.string,
+});
+
 export const ReferenceSetSchema = PropTypes.shape({
   boolField: PropTypes.bool,
   stringField: PropTypes.string,
   numberField: PropTypes.number,
-});
-
-export const ReferenceSetOnlyStringSchema = PropTypes.shape({
-  stringField: PropTypes.string,
 });
 
 export const ReferenceFooSchema = PropTypes.shape({

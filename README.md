@@ -556,6 +556,20 @@ that points to a subset found in the reference schema file.
 
 Alias names: `ref`
 
+##### Self References
+
+It's possible to create recursive structures using the `self`
+property, which refers to the current schema in which it was defined.
+When using self, the `reference` property and the `references` map
+is not required.
+
+```json
+"node": {
+    "type": "reference",
+    "self": true
+}
+```
+
 #### Instance Ofs
 
 The `instance` type provides a mechanism for comparing a value to
