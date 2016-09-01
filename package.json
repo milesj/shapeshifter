@@ -17,7 +17,8 @@
     "shape",
     "shift",
     "shifter",
-    "transpile"
+    "transpile",
+    "entity"
   ],
   "bin": {
     "shapeshifter": "./bin/shapeshifter.js"
