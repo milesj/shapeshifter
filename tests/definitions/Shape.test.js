@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { falsyValues } from '../mock-data';
+import { falsyValues } from '../mocks';
 import ShapeDefinition from '../../lib/definitions/Shape';
 import NumberDefinition from '../../lib/definitions/Number';
 import StringDefinition from '../../lib/definitions/String';

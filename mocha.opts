@@ -2,3 +2,4 @@
 --ui bdd
 --reporter nyan
 --colors
+--recursive

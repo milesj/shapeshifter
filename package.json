@@ -33,7 +33,7 @@
     "check": "npm run check:flow && npm run check:typescript",
     "check:flow": "flow check ./tests/expected/flow",
     "check:typescript": "tsc --noEmit --allowJs ./tests/expected/typescript/*",
-    "mocha": "mocha --opts ./tests/mocha.opts ./tests/*.test.js ./tests/**/*.test.js",
+    "mocha": "mocha --opts ./mocha.opts ./tests/*.test.js ./tests/**/*.test.js",
     "test": "npm run build && npm run lint && npm run mocha && npm run check"
   },
   "repository": {

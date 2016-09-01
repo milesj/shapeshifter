@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { falsyValues, truthyValues } from '../mock-data';
+import { falsyValues, truthyValues } from '../mocks';
 import ReferenceDefinition from '../../lib/definitions/Reference';
 
 describe('definitions/Reference', () => {

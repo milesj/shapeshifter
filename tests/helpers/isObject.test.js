@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import isObject from '../../lib/helpers/isObject';
-import { allValues } from '../mock-data';
+import { allValues } from '../mocks';
 
 describe('helpers/isObject', () => {
   it('returns false for non-objects', () => {

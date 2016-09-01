@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { falsyValues } from '../mock-data';
+import { falsyValues } from '../mocks';
 import { COMPOUND_TYPES } from '../../lib/constants';
 import EnumDefinition from '../../lib/definitions/Enum';
 
