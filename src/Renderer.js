@@ -236,11 +236,11 @@ export default class Renderer {
           setConfig = { ...setConfig }; // Dereference original object
         }
 
-        if (nullable.hasOwnProperty(attribute)) {
+        if (attribute in nullable) {
           setConfig.null = nullable[attribute];
         }
 
-        if (required.hasOwnProperty(attribute)) {
+        if (attribute in required) {
           setConfig.required = required[attribute];
         }
 

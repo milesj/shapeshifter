@@ -125,6 +125,7 @@ export default class Transpiler {
 
       // Only support JS and JSON
       if (!resolvePath.match(/\.(js|json)$/)) {
+        // eslint-disable-next-line no-continue
         continue;
       }
 
