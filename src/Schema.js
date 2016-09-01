@@ -35,16 +35,16 @@ export default class Schema {
     } else if (!isObject(schema.attributes) || !Object.keys(schema.attributes).length) {
       error = 'No attributes found in schema.';
 
-    } else if (schema.hasOwnProperty('imports') && !Array.isArray(schema.imports)) {
+    } else if ('imports' in schema && !Array.isArray(schema.imports)) {
       error = 'Schema imports must be an array of import declarations.';
 
-    } else if (schema.hasOwnProperty('constants') && !isObject(schema.constants)) {
+    } else if ('constants' in schema && !isObject(schema.constants)) {
       error = 'Schema constants must be an object that maps to primitive values.';
 
-    } else if (schema.hasOwnProperty('subsets') && !isObject(schema.subsets)) {
+    } else if ('subsets' in schema && !isObject(schema.subsets)) {
       error = 'Schema subsets must be an object.';
 
-    } else if (schema.hasOwnProperty('references') && !isObject(schema.references)) {
+    } else if ('references' in schema && !isObject(schema.references)) {
       error = 'Schema references must be an object that maps to other schemas.';
     }
 
