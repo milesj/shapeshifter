@@ -6,7 +6,7 @@
 export default {
   defaultNull: false,
   defaultRequired: false,
+  includeEntities: false,
   indentCharacter: '  ',
   renderer: 'react',
-  schemaSuffix: 'Schema',
 };

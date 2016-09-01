@@ -1,3 +1,6 @@
+# 1.3.0
+* Removed suffix customization.
+
 # 1.2.0
 * Added support for `self` (recursive) references.
 

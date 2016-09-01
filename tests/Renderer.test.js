@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import Renderer from '../lib/Renderer';
 import Schema from '../lib/Schema';
-import config from '../lib/config';
 
 describe('Renderer', () => {
   const renderer = new Renderer(new Schema('/foo.json', {
@@ -80,16 +79,6 @@ describe('Renderer', () => {
     it('handles sub-schemas', () => {
       expect(renderer.getSchemaName('qux')).to.equal('FooBarBazQuxSchema');
       expect(renderer.getSchemaName('sub resource')).to.equal('FooBarBazSubResourceSchema');
-    });
-
-    it('can change the suffix through config', () => {
-      const oldSuffix = config.schemaSuffix;
-      config.schemaSuffix = 'Some-type alias';
-
-      expect(renderer.getSchemaName()).to.equal('FooBarBazSomeTypeAlias');
-      expect(renderer.getSchemaName('qux')).to.equal('FooBarBazQuxSomeTypeAlias');
-
-      config.schemaSuffix = oldSuffix;
     });
   });
 

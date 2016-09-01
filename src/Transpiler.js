@@ -18,7 +18,7 @@ export default class Transpiler {
     config.defaultRequired = options.defaultRequired;
     config.indentCharacter = options.indentCharacter;
     config.renderer = options.renderer;
-    config.schemaSuffix = options.schemaSuffix;
+    config.includeEntities = options.includeEntities;
   }
 
   /**

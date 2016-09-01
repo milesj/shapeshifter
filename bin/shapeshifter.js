@@ -50,11 +50,10 @@ var optionList = [
     defaultValue: config.renderer,
   },
   {
-    name: 'suffix',
-    description: 'The suffix to append to every type definition.',
-    typeLabel: '[underline]{value}',
-    type: String,
-    defaultValue: config.schemaSuffix,
+    name: 'entities',
+    description: 'Include entity schemas in the output.',
+    type: Boolean,
+    defaultValue: config.includeEntities,
   },
   {
     name: 'path',
@@ -94,7 +93,7 @@ if (options.help || !options.path) {
     defaultRequired: options.required,
     indentCharacter: options.indent,
     renderer: options.format,
-    schemaSuffix: options.suffix,
+    includeEntities: options.entities,
   })
     .transpile(path.normalize(path.join(process.cwd(), options.path)))
     .then(Transpiler.output)

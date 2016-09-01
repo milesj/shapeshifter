@@ -3,7 +3,6 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import config from './config';
 import Factory from './Factory';
 import Definition from './Definition';
 import ArrayDef from './definitions/Array';
@@ -148,8 +147,8 @@ export default class Renderer {
    * @param {String} [schemaName]
    * @returns {String}
    */
-  getSchemaName(setName = '', schemaName = '') {
-    return [schemaName || this.schema.name, setName, config.schemaSuffix]
+  getSchemaName(setName = '', schemaName = '', suffix = 'Schema') {
+    return [schemaName || this.schema.name, setName, suffix]
       .map(formatName)
       .join('');
   }
