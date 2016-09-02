@@ -3,7 +3,7 @@
 export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
-export type PrimitiveSchema = {
+export type PrimitiveShape = {
   boolField: boolean,
   boolFieldExpanded: boolean,
   booleanField: boolean,

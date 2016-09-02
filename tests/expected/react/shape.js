@@ -1,7 +1,7 @@
 import { PropTypes } from 'react';
 import ShapeDefault, { ShapeClassName } from '../stub';
 
-export const ShapeSchema = PropTypes.shape({
+export const ShapeShape = PropTypes.shape({
   structAlias: PropTypes.shape({
     foo: PropTypes.string,
   }),

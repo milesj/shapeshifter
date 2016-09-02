@@ -1,25 +1,25 @@
-export interface SetsBasicSchema {
+export interface SetsBasicShape {
   foo?: string;
   baz: boolean;
 }
 
-export interface SetsWithRequiredSchema {
+export interface SetsWithRequiredShape {
   bar: number;
   baz?: boolean;
   qux?: () => void;
 }
 
-export interface SetsWithNullSchema {
+export interface SetsWithNullShape {
   foo?: string;
   qux?: () => void;
 }
 
-export interface SetsWithBothSchema {
+export interface SetsWithBothShape {
   baz: boolean;
   qux: () => void;
 }
 
-export interface SetsSchema {
+export interface SetsShape {
   foo?: string;
   bar?: number;
   baz: boolean;

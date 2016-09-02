@@ -3,6 +3,6 @@ import DefaultName from '../stub';
 import { foo, bar } from '../stub';
 import AnotherDefault, { Baz, Qux } from '../stub';
 
-export type ImportsSchema = {
+export type ImportsShape = {
   stringField: string,
 };

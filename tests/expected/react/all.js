@@ -20,7 +20,7 @@ export const INST_ENABLED = true;
 export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
-export const ArraySchema = PropTypes.shape({
+export const ArrayShape = PropTypes.shape({
   arrayField: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
   boolField: PropTypes.arrayOf(PropTypes.bool),
   enumField: PropTypes.arrayOf(PropTypes.oneOf([
@@ -48,11 +48,11 @@ export const ArraySchema = PropTypes.shape({
   ])),
 });
 
-export const ConstantsSchema = PropTypes.shape({
+export const ConstantsShape = PropTypes.shape({
   numberField: PropTypes.number,
 });
 
-export const EnumSchema = PropTypes.shape({
+export const EnumShape = PropTypes.shape({
   boolField: PropTypes.oneOf([
     true,
     false,
@@ -102,16 +102,16 @@ export const EnumSchema = PropTypes.shape({
   ]),
 });
 
-export const ImportsSchema = PropTypes.shape({
+export const ImportsShape = PropTypes.shape({
   stringField: PropTypes.string,
 });
 
-export const InstanceSchema = PropTypes.shape({
+export const InstanceShape = PropTypes.shape({
   instField: PropTypes.instanceOf(InstanceClassName),
   instanceField: PropTypes.instanceOf(InstanceDefault),
 });
 
-export const ObjectSchema = PropTypes.shape({
+export const ObjectShape = PropTypes.shape({
   arrayField: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
   boolField: PropTypes.objectOf(PropTypes.bool).isRequired,
   enumField: PropTypes.objectOf(PropTypes.oneOf([
@@ -137,7 +137,7 @@ export const ObjectSchema = PropTypes.shape({
   objKeyTypeField: PropTypes.objectOf(PropTypes.string),
 });
 
-export const PrimitiveSchema = PropTypes.shape({
+export const PrimitiveShape = PropTypes.shape({
   boolField: PropTypes.bool,
   boolFieldExpanded: PropTypes.bool.isRequired,
   booleanField: PropTypes.bool,
@@ -160,72 +160,72 @@ export const PrimitiveSchema = PropTypes.shape({
   stringFieldExpanded: PropTypes.string,
 });
 
-export const ReferenceBarSchema = PropTypes.shape({
+export const ReferenceBarShape = PropTypes.shape({
   boolField: PropTypes.bool,
 });
 
-export const ReferenceFooSchema = PropTypes.shape({
+export const ReferenceFooShape = PropTypes.shape({
   numberField: PropTypes.number,
-  refField: ReferenceBarSchema.isRequired,
+  refField: ReferenceBarShape.isRequired,
 });
 
-export const ReferenceSelfBasicSchema = PropTypes.shape({
+export const ReferenceSelfBasicShape = PropTypes.shape({
   stringField: PropTypes.string,
 });
 
-export const ReferenceSelfSchema = PropTypes.shape({
+export const ReferenceSelfShape = PropTypes.shape({
   stringField: PropTypes.string,
-  referenceField: (...args) => ReferenceSelfSchema(...args),
-  requiredRefField: (...args) => ReferenceSelfSchema(...args).isRequired,
-  subsetRefField: PropTypes.arrayOf(ReferenceSelfBasicSchema),
+  referenceField: (...args) => ReferenceSelfShape(...args),
+  requiredRefField: (...args) => ReferenceSelfShape(...args).isRequired,
+  subsetRefField: PropTypes.arrayOf(ReferenceSelfBasicShape),
 });
 
-export const ReferenceSetOnlyStringSchema = PropTypes.shape({
+export const ReferenceSetOnlyStringShape = PropTypes.shape({
   stringField: PropTypes.string,
 });
 
-export const ReferenceSetSchema = PropTypes.shape({
+export const ReferenceSetShape = PropTypes.shape({
   boolField: PropTypes.bool,
   stringField: PropTypes.string,
   numberField: PropTypes.number,
 });
 
-export const ReferenceSchema = PropTypes.shape({
+export const ReferenceShape = PropTypes.shape({
   stringField: PropTypes.string,
-  refField: ReferenceFooSchema,
-  referenceField: ReferenceFooSchema,
-  subsetRefField: ReferenceSetOnlyStringSchema,
+  refField: ReferenceFooShape,
+  referenceField: ReferenceFooShape,
+  subsetRefField: ReferenceSetOnlyStringShape,
 });
 
-export const SetsBasicSchema = PropTypes.shape({
+export const SetsBasicShape = PropTypes.shape({
   foo: PropTypes.string,
   baz: PropTypes.bool.isRequired,
 });
 
-export const SetsWithRequiredSchema = PropTypes.shape({
+export const SetsWithRequiredShape = PropTypes.shape({
   bar: PropTypes.number.isRequired,
   baz: PropTypes.bool,
   qux: PropTypes.func,
 });
 
-export const SetsWithNullSchema = PropTypes.shape({
+export const SetsWithNullShape = PropTypes.shape({
   foo: PropTypes.string,
   qux: PropTypes.func,
 });
 
-export const SetsWithBothSchema = PropTypes.shape({
+export const SetsWithBothShape = PropTypes.shape({
   baz: PropTypes.bool.isRequired,
   qux: PropTypes.func.isRequired,
 });
 
-export const SetsSchema = PropTypes.shape({
+export const SetsShape = PropTypes.shape({
   foo: PropTypes.string,
   bar: PropTypes.number,
   baz: PropTypes.bool.isRequired,
   qux: PropTypes.func,
 });
 
-export const ShapeSchema = PropTypes.shape({
+export const ShapeShape = PropTypes.shape({
   structAlias: PropTypes.shape({
     foo: PropTypes.string,
   }),
@@ -288,7 +288,7 @@ export const ShapeSchema = PropTypes.shape({
   }),
 });
 
-export const UnionSchema = PropTypes.shape({
+export const UnionShape = PropTypes.shape({
   arrayField: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),

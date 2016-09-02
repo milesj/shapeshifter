@@ -15,7 +15,7 @@ export default class TypeScriptRenderer extends Renderer {
    * {@inheritDoc}
    */
   render(setName, attributes = {}) {
-    return `export interface ${this.getSchemaName(setName)} ${this.renderShape({ attributes }, 0)}`;
+    return `export interface ${this.getObjectName(setName)} ${this.renderShape({ attributes }, 0)}`;
   }
 
   /**

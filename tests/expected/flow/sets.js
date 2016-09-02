@@ -1,27 +1,27 @@
 // @flow
 
-export type SetsBasicSchema = {
+export type SetsBasicShape = {
   foo: string,
   baz: boolean,
 };
 
-export type SetsWithRequiredSchema = {
+export type SetsWithRequiredShape = {
   bar: number,
   baz: boolean,
   qux: () => void,
 };
 
-export type SetsWithNullSchema = {
+export type SetsWithNullShape = {
   foo: ?string,
   qux: ?() => void,
 };
 
-export type SetsWithBothSchema = {
+export type SetsWithBothShape = {
   baz: boolean,
   qux: ?() => void,
 };
 
-export type SetsSchema = {
+export type SetsShape = {
   foo: string,
   bar: number,
   baz: boolean,

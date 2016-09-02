@@ -1,7 +1,7 @@
 // @flow
 import UnionDefault, { UnionClassName } from '../stub';
 
-export type UnionSchema = {
+export type UnionShape = {
   arrayField: string[] | Array<{ [key: string]: string }>,
   primitiveFields: boolean | number | () => void,
   enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123,

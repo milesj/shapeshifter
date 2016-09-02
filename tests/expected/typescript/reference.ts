@@ -1,25 +1,25 @@
-export interface ReferenceBarSchema {
+export interface ReferenceBarShape {
   boolField?: boolean;
 }
 
-export interface ReferenceSetOnlyStringSchema {
+export interface ReferenceSetOnlyStringShape {
   stringField?: string;
 }
 
-export interface ReferenceSetSchema {
+export interface ReferenceSetShape {
   boolField?: boolean;
   stringField?: string;
   numberField?: number;
 }
 
-export interface ReferenceFooSchema {
+export interface ReferenceFooShape {
   numberField?: number;
-  refField: ReferenceBarSchema;
+  refField: ReferenceBarShape;
 }
 
-export interface ReferenceSchema {
+export interface ReferenceShape {
   stringField?: string;
-  refField?: ReferenceFooSchema;
-  referenceField?: ReferenceFooSchema;
-  subsetRefField?: ReferenceSetOnlyStringSchema;
+  refField?: ReferenceFooShape;
+  referenceField?: ReferenceFooShape;
+  subsetRefField?: ReferenceSetOnlyStringShape;
 }

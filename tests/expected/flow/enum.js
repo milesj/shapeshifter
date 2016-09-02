@@ -1,6 +1,6 @@
 // @flow
 
-export type EnumSchema = {
+export type EnumShape = {
   boolField: true | false,
   booleanField: false | true,
   intField: 123,

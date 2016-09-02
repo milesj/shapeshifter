@@ -145,9 +145,10 @@ export default class Renderer {
    *
    * @param {String} [setName]
    * @param {String} [schemaName]
+   * @param {String} [suffix]
    * @returns {String}
    */
-  getSchemaName(setName = '', schemaName = '', suffix = 'Schema') {
+  getObjectName(setName = '', schemaName = '', suffix = 'Shape') {
     return [schemaName || this.schema.name, setName, suffix]
       .map(formatName)
       .join('');
@@ -466,7 +467,7 @@ export default class Renderer {
       );
     }
 
-    return this.getSchemaName(subset, refSchema.name);
+    return this.getObjectName(subset, refSchema.name);
   }
 
   /**

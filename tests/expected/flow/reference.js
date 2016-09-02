@@ -1,27 +1,27 @@
 // @flow
 
-export type ReferenceBarSchema = {
+export type ReferenceBarShape = {
   boolField: boolean,
 };
 
-export type ReferenceSetOnlyStringSchema = {
+export type ReferenceSetOnlyStringShape = {
   stringField: string,
 };
 
-export type ReferenceSetSchema = {
+export type ReferenceSetShape = {
   boolField: boolean,
   stringField: string,
   numberField: number,
 };
 
-export type ReferenceFooSchema = {
+export type ReferenceFooShape = {
   numberField: number,
-  refField: ReferenceBarSchema,
+  refField: ReferenceBarShape,
 };
 
-export type ReferenceSchema = {
+export type ReferenceShape = {
   stringField: string,
-  refField: ?ReferenceFooSchema,
-  referenceField: ReferenceFooSchema,
-  subsetRefField: ReferenceSetOnlyStringSchema,
+  refField: ?ReferenceFooShape,
+  referenceField: ReferenceFooShape,
+  subsetRefField: ReferenceSetOnlyStringShape,
 };

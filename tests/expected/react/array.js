@@ -3,7 +3,7 @@ import ArrayDefault from '../stub';
 
 export const ARRAY_NUM = 123;
 
-export const ArraySchema = PropTypes.shape({
+export const ArrayShape = PropTypes.shape({
   arrayField: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
   boolField: PropTypes.arrayOf(PropTypes.bool),
   enumField: PropTypes.arrayOf(PropTypes.oneOf([

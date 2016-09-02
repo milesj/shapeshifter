@@ -1,12 +1,12 @@
 import { PropTypes } from 'react';
 
-export const ReferenceSelfBasicSchema = PropTypes.shape({
+export const ReferenceSelfBasicShape = PropTypes.shape({
   stringField: PropTypes.string,
 });
 
-export const ReferenceSelfSchema = PropTypes.shape({
+export const ReferenceSelfShape = PropTypes.shape({
   stringField: PropTypes.string,
-  referenceField: (...args) => ReferenceSelfSchema(...args),
-  requiredRefField: (...args) => ReferenceSelfSchema(...args).isRequired,
-  subsetRefField: PropTypes.arrayOf(ReferenceSelfBasicSchema),
+  referenceField: (...args) => ReferenceSelfShape(...args),
+  requiredRefField: (...args) => ReferenceSelfShape(...args).isRequired,
+  subsetRefField: PropTypes.arrayOf(ReferenceSelfBasicShape),
 });

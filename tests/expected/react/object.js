@@ -1,7 +1,7 @@
 import { PropTypes } from 'react';
 import ObjectDefault from '../stub';
 
-export const ObjectSchema = PropTypes.shape({
+export const ObjectShape = PropTypes.shape({
   arrayField: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
   boolField: PropTypes.objectOf(PropTypes.bool).isRequired,
   enumField: PropTypes.objectOf(PropTypes.oneOf([

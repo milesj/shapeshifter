@@ -129,7 +129,7 @@ export enum UnionUnionField01Enum {
   C = 3
 }
 
-export interface ArraySchema {
+export interface ArrayShape {
   arrayField?: Array<string[]>;
   boolField?: boolean[];
   enumField?: Array<ArrayEnumFieldEnum>;
@@ -146,11 +146,11 @@ export interface ArraySchema {
   unionField?: Array<string | ArrayUnionField1Enum>;
 }
 
-export interface ConstantsSchema {
+export interface ConstantsShape {
   numberField?: number;
 }
 
-export interface EnumSchema {
+export interface EnumShape {
   boolField?: EnumBoolFieldEnum;
   booleanField?: EnumBooleanFieldEnum;
   intField?: EnumIntFieldEnum;
@@ -162,16 +162,16 @@ export interface EnumSchema {
   stringField?: EnumStringFieldEnum;
 }
 
-export interface ImportsSchema {
+export interface ImportsShape {
   stringField?: string;
 }
 
-export interface InstanceSchema {
+export interface InstanceShape {
   instField?: InstanceClassName;
   instanceField?: InstanceDefault;
 }
 
-export interface ObjectSchema {
+export interface ObjectShape {
   arrayField?: { [key: string]: string[] };
   boolField: { [key: string]: boolean };
   enumField?: { [key: string]: ObjectEnumFieldValueEnum };
@@ -190,7 +190,7 @@ export interface ObjectSchema {
   objKeyTypeField?: { [key: number]: string };
 }
 
-export interface PrimitiveSchema {
+export interface PrimitiveShape {
   boolField?: boolean;
   boolFieldExpanded: boolean;
   booleanField?: boolean;
@@ -213,72 +213,72 @@ export interface PrimitiveSchema {
   stringFieldExpanded?: string;
 }
 
-export interface ReferenceBarSchema {
+export interface ReferenceBarShape {
   boolField?: boolean;
 }
 
-export interface ReferenceFooSchema {
+export interface ReferenceFooShape {
   numberField?: number;
-  refField: ReferenceBarSchema;
+  refField: ReferenceBarShape;
 }
 
-export interface ReferenceSelfBasicSchema {
+export interface ReferenceSelfBasicShape {
   stringField?: string;
 }
 
-export interface ReferenceSelfSchema {
+export interface ReferenceSelfShape {
   stringField?: string;
-  referenceField?: ReferenceSelfSchema;
-  requiredRefField: ReferenceSelfSchema;
-  subsetRefField?: Array<ReferenceSelfBasicSchema>;
+  referenceField?: ReferenceSelfShape;
+  requiredRefField: ReferenceSelfShape;
+  subsetRefField?: Array<ReferenceSelfBasicShape>;
 }
 
-export interface ReferenceSetOnlyStringSchema {
+export interface ReferenceSetOnlyStringShape {
   stringField?: string;
 }
 
-export interface ReferenceSetSchema {
+export interface ReferenceSetShape {
   boolField?: boolean;
   stringField?: string;
   numberField?: number;
 }
 
-export interface ReferenceSchema {
+export interface ReferenceShape {
   stringField?: string;
-  refField?: ReferenceFooSchema;
-  referenceField?: ReferenceFooSchema;
-  subsetRefField?: ReferenceSetOnlyStringSchema;
+  refField?: ReferenceFooShape;
+  referenceField?: ReferenceFooShape;
+  subsetRefField?: ReferenceSetOnlyStringShape;
 }
 
-export interface SetsBasicSchema {
+export interface SetsBasicShape {
   foo?: string;
   baz: boolean;
 }
 
-export interface SetsWithRequiredSchema {
+export interface SetsWithRequiredShape {
   bar: number;
   baz?: boolean;
   qux?: () => void;
 }
 
-export interface SetsWithNullSchema {
+export interface SetsWithNullShape {
   foo?: string;
   qux?: () => void;
 }
 
-export interface SetsWithBothSchema {
+export interface SetsWithBothShape {
   baz: boolean;
   qux: () => void;
 }
 
-export interface SetsSchema {
+export interface SetsShape {
   foo?: string;
   bar?: number;
   baz: boolean;
   qux?: () => void;
 }
 
-export interface ShapeSchema {
+export interface ShapeShape {
   structAlias?: {
     foo?: string;
   };
@@ -319,7 +319,7 @@ export interface ShapeSchema {
   };
 }
 
-export interface UnionSchema {
+export interface UnionShape {
   arrayField?: string[] | Array<{ [key: string]: string }>;
   primitiveFields?: boolean | number | (() => void);
   enumField?: UnionEnumField0Enum | UnionEnumField1Enum;

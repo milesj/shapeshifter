@@ -1,7 +1,7 @@
 export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
-export interface PrimitiveSchema {
+export interface PrimitiveShape {
   boolField?: boolean;
   boolFieldExpanded: boolean;
   booleanField?: boolean;

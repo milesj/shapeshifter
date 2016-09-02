@@ -18,7 +18,7 @@ export enum UnionUnionField01Enum {
   C = 3
 }
 
-export interface UnionSchema {
+export interface UnionShape {
   arrayField?: string[] | Array<{ [key: string]: string }>;
   primitiveFields?: boolean | number | (() => void);
   enumField?: UnionEnumField0Enum | UnionEnumField1Enum;

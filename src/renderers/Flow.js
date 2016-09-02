@@ -18,7 +18,7 @@ export default class FlowRenderer extends Renderer {
    * {@inheritDoc}
    */
   render(setName, attributes = {}) {
-    return `export type ${this.getSchemaName(setName)} = ${this.renderShape({ attributes }, 0)};`;
+    return `export type ${this.getObjectName(setName)} = ${this.renderShape({ attributes }, 0)};`;
   }
 
   /**

@@ -1,27 +1,27 @@
 import { PropTypes } from 'react';
 
-export const ReferenceBarSchema = PropTypes.shape({
+export const ReferenceBarShape = PropTypes.shape({
   boolField: PropTypes.bool,
 });
 
-export const ReferenceSetOnlyStringSchema = PropTypes.shape({
+export const ReferenceSetOnlyStringShape = PropTypes.shape({
   stringField: PropTypes.string,
 });
 
-export const ReferenceSetSchema = PropTypes.shape({
+export const ReferenceSetShape = PropTypes.shape({
   boolField: PropTypes.bool,
   stringField: PropTypes.string,
   numberField: PropTypes.number,
 });
 
-export const ReferenceFooSchema = PropTypes.shape({
+export const ReferenceFooShape = PropTypes.shape({
   numberField: PropTypes.number,
-  refField: ReferenceBarSchema.isRequired,
+  refField: ReferenceBarShape.isRequired,
 });
 
-export const ReferenceSchema = PropTypes.shape({
+export const ReferenceShape = PropTypes.shape({
   stringField: PropTypes.string,
-  refField: ReferenceFooSchema,
-  referenceField: ReferenceFooSchema,
-  subsetRefField: ReferenceSetOnlyStringSchema,
+  refField: ReferenceFooShape,
+  referenceField: ReferenceFooShape,
+  subsetRefField: ReferenceSetOnlyStringShape,
 });

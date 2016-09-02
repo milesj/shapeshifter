@@ -1,7 +1,7 @@
 // @flow
 import ObjectDefault from '../stub';
 
-export type ObjectSchema = {
+export type ObjectShape = {
   arrayField: { [key: string]: string[] },
   boolField: { [key: string]: boolean },
   enumField: { [key: string]: 'foo' | 'bar' | 'baz' },

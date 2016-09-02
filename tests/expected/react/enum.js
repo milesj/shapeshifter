@@ -1,6 +1,6 @@
 import { PropTypes } from 'react';
 
-export const EnumSchema = PropTypes.shape({
+export const EnumShape = PropTypes.shape({
   boolField: PropTypes.oneOf([
     true,
     false,

@@ -20,7 +20,7 @@ export const INST_ENABLED = true;
 export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
-export type ArraySchema = {
+export type ArrayShape = {
   arrayField: Array<string[]>,
   boolField: boolean[],
   enumField: Array<'foo' | 'bar' | 'baz'>,
@@ -37,11 +37,11 @@ export type ArraySchema = {
   unionField: Array<string | 1 | 2 | 3>,
 };
 
-export type ConstantsSchema = {
+export type ConstantsShape = {
   numberField: number,
 };
 
-export type EnumSchema = {
+export type EnumShape = {
   boolField: true | false,
   booleanField: false | true,
   intField: 123,
@@ -53,16 +53,16 @@ export type EnumSchema = {
   stringField: 'baz' | 'qux',
 };
 
-export type ImportsSchema = {
+export type ImportsShape = {
   stringField: string,
 };
 
-export type InstanceSchema = {
+export type InstanceShape = {
   instField: InstanceClassName,
   instanceField: InstanceDefault,
 };
 
-export type ObjectSchema = {
+export type ObjectShape = {
   arrayField: { [key: string]: string[] },
   boolField: { [key: string]: boolean },
   enumField: { [key: string]: 'foo' | 'bar' | 'baz' },
@@ -81,7 +81,7 @@ export type ObjectSchema = {
   objKeyTypeField: { [key: number]: string },
 };
 
-export type PrimitiveSchema = {
+export type PrimitiveShape = {
   boolField: boolean,
   boolFieldExpanded: boolean,
   booleanField: boolean,
@@ -104,72 +104,72 @@ export type PrimitiveSchema = {
   stringFieldExpanded: string,
 };
 
-export type ReferenceBarSchema = {
+export type ReferenceBarShape = {
   boolField: boolean,
 };
 
-export type ReferenceFooSchema = {
+export type ReferenceFooShape = {
   numberField: number,
-  refField: ReferenceBarSchema,
+  refField: ReferenceBarShape,
 };
 
-export type ReferenceSelfBasicSchema = {
+export type ReferenceSelfBasicShape = {
   stringField: string,
 };
 
-export type ReferenceSelfSchema = {
+export type ReferenceSelfShape = {
   stringField: string,
-  referenceField: ReferenceSelfSchema,
-  requiredRefField: ?ReferenceSelfSchema,
-  subsetRefField: Array<ReferenceSelfBasicSchema>,
+  referenceField: ReferenceSelfShape,
+  requiredRefField: ?ReferenceSelfShape,
+  subsetRefField: Array<ReferenceSelfBasicShape>,
 };
 
-export type ReferenceSetOnlyStringSchema = {
+export type ReferenceSetOnlyStringShape = {
   stringField: string,
 };
 
-export type ReferenceSetSchema = {
+export type ReferenceSetShape = {
   boolField: boolean,
   stringField: string,
   numberField: number,
 };
 
-export type ReferenceSchema = {
+export type ReferenceShape = {
   stringField: string,
-  refField: ?ReferenceFooSchema,
-  referenceField: ReferenceFooSchema,
-  subsetRefField: ReferenceSetOnlyStringSchema,
+  refField: ?ReferenceFooShape,
+  referenceField: ReferenceFooShape,
+  subsetRefField: ReferenceSetOnlyStringShape,
 };
 
-export type SetsBasicSchema = {
+export type SetsBasicShape = {
   foo: string,
   baz: boolean,
 };
 
-export type SetsWithRequiredSchema = {
+export type SetsWithRequiredShape = {
   bar: number,
   baz: boolean,
   qux: () => void,
 };
 
-export type SetsWithNullSchema = {
+export type SetsWithNullShape = {
   foo: ?string,
   qux: ?() => void,
 };
 
-export type SetsWithBothSchema = {
+export type SetsWithBothShape = {
   baz: boolean,
   qux: ?() => void,
 };
 
-export type SetsSchema = {
+export type SetsShape = {
   foo: string,
   bar: number,
   baz: boolean,
   qux: () => void,
 };
 
-export type ShapeSchema = {
+export type ShapeShape = {
   structAlias: {
     foo: string,
   },
@@ -210,7 +210,7 @@ export type ShapeSchema = {
   },
 };
 
-export type UnionSchema = {
+export type UnionShape = {
   arrayField: string[] | Array<{ [key: string]: string }>,
   primitiveFields: boolean | number | () => void,
   enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123,

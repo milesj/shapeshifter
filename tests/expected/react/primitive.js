@@ -3,7 +3,7 @@ import { PropTypes } from 'react';
 export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
-export const PrimitiveSchema = PropTypes.shape({
+export const PrimitiveShape = PropTypes.shape({
   boolField: PropTypes.bool,
   boolFieldExpanded: PropTypes.bool.isRequired,
   booleanField: PropTypes.bool,
