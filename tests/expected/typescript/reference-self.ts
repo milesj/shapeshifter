@@ -1,10 +1,10 @@
-export interface ReferenceSelfBasicShape {
+export interface ReferenceSelfBasicInterface {
   stringField?: string;
 }
 
-export interface ReferenceSelfShape {
+export interface ReferenceSelfInterface {
   stringField?: string;
-  referenceField?: ReferenceSelfShape;
-  requiredRefField: ReferenceSelfShape;
-  subsetRefField?: Array<ReferenceSelfBasicShape>;
+  referenceField?: ReferenceSelfInterface;
+  requiredRefField: ReferenceSelfInterface;
+  subsetRefField?: Array<ReferenceSelfBasicInterface>;
 }

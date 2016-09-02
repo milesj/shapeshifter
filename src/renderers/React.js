@@ -6,6 +6,12 @@
 import Renderer from '../Renderer';
 
 export default class ReactRenderer extends Renderer {
+  constructor(schema) {
+    super(schema);
+
+    this.suffix = 'Shape';
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -17,7 +23,7 @@ export default class ReactRenderer extends Renderer {
    * {@inheritDoc}
    */
   render(setName, attributes = {}) {
-    return `export const ${this.getObjectName(setName)} = ${this.renderShape({ attributes }, 0)};`;
+    return `export const ${setName} = ${this.renderShape({ attributes }, 0)};`;
   }
 
   /**

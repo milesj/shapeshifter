@@ -54,7 +54,7 @@ export enum EnumStringFieldEnum {
   qux = 1
 }
 
-export interface EnumShape {
+export interface EnumInterface {
   boolField?: EnumBoolFieldEnum;
   booleanField?: EnumBooleanFieldEnum;
   intField?: EnumIntFieldEnum;

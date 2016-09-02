@@ -6,7 +6,7 @@ export enum ObjectEnumFieldValueEnum {
   baz = 2
 }
 
-export interface ObjectShape {
+export interface ObjectInterface {
   arrayField?: { [key: string]: string[] };
   boolField: { [key: string]: boolean };
   enumField?: { [key: string]: ObjectEnumFieldValueEnum };

@@ -3,7 +3,7 @@ import ArrayDefault from '../stub';
 
 export const ARRAY_NUM = 123;
 
-export type ArrayShape = {
+export type ArrayType = {
   arrayField: Array<string[]>,
   boolField: boolean[],
   enumField: Array<'foo' | 'bar' | 'baz'>,

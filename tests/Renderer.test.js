@@ -73,16 +73,13 @@ describe('Renderer', () => {
 
   describe('getObjectName()', () => {
     it('camel cases the name', () => {
-      expect(renderer.getObjectName()).to.equal('FooBarBazShape');
+      expect(renderer.getObjectName('foo_bar', 'baz')).to.equal('FooBarBaz');
     });
 
     it('can change the suffix', () => {
-      expect(renderer.getObjectName('foo', 'bar', 'Schema')).to.equal('BarFooSchema');
-    });
-
-    it('handles sub-schemas', () => {
-      expect(renderer.getObjectName('qux')).to.equal('FooBarBazQuxShape');
-      expect(renderer.getObjectName('sub resource')).to.equal('FooBarBazSubResourceShape');
+      renderer.suffix = 'Schema';
+      expect(renderer.getObjectName('foo', 'bar')).to.equal('FooBarSchema');
+      renderer.suffix = '';
     });
   });
 

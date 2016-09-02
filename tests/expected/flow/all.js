@@ -20,7 +20,7 @@ export const INST_ENABLED = true;
 export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
-export type ArrayShape = {
+export type ArrayType = {
   arrayField: Array<string[]>,
   boolField: boolean[],
   enumField: Array<'foo' | 'bar' | 'baz'>,
@@ -37,11 +37,11 @@ export type ArrayShape = {
   unionField: Array<string | 1 | 2 | 3>,
 };
 
-export type ConstantsShape = {
+export type ConstantsType = {
   numberField: number,
 };
 
-export type EnumShape = {
+export type EnumType = {
   boolField: true | false,
   booleanField: false | true,
   intField: 123,
@@ -53,16 +53,16 @@ export type EnumShape = {
   stringField: 'baz' | 'qux',
 };
 
-export type ImportsShape = {
+export type ImportsType = {
   stringField: string,
 };
 
-export type InstanceShape = {
+export type InstanceType = {
   instField: InstanceClassName,
   instanceField: InstanceDefault,
 };
 
-export type ObjectShape = {
+export type ObjectType = {
   arrayField: { [key: string]: string[] },
   boolField: { [key: string]: boolean },
   enumField: { [key: string]: 'foo' | 'bar' | 'baz' },
@@ -81,7 +81,7 @@ export type ObjectShape = {
   objKeyTypeField: { [key: number]: string },
 };
 
-export type PrimitiveShape = {
+export type PrimitiveType = {
   boolField: boolean,
   boolFieldExpanded: boolean,
   booleanField: boolean,
@@ -104,72 +104,72 @@ export type PrimitiveShape = {
   stringFieldExpanded: string,
 };
 
-export type ReferenceBarShape = {
+export type ReferenceBarType = {
   boolField: boolean,
 };
 
-export type ReferenceFooShape = {
+export type ReferenceFooType = {
   numberField: number,
-  refField: ReferenceBarShape,
+  refField: ReferenceBarType,
 };
 
-export type ReferenceSelfBasicShape = {
+export type ReferenceSelfBasicType = {
   stringField: string,
 };
 
-export type ReferenceSelfShape = {
+export type ReferenceSelfType = {
   stringField: string,
-  referenceField: ReferenceSelfShape,
-  requiredRefField: ?ReferenceSelfShape,
-  subsetRefField: Array<ReferenceSelfBasicShape>,
+  referenceField: ReferenceSelfType,
+  requiredRefField: ?ReferenceSelfType,
+  subsetRefField: Array<ReferenceSelfBasicType>,
 };
 
-export type ReferenceSetOnlyStringShape = {
+export type ReferenceSetOnlyStringType = {
   stringField: string,
 };
 
-export type ReferenceSetShape = {
+export type ReferenceSetType = {
   boolField: boolean,
   stringField: string,
   numberField: number,
 };
 
-export type ReferenceShape = {
+export type ReferenceType = {
   stringField: string,
-  refField: ?ReferenceFooShape,
-  referenceField: ReferenceFooShape,
-  subsetRefField: ReferenceSetOnlyStringShape,
+  refField: ?ReferenceFooType,
+  referenceField: ReferenceFooType,
+  subsetRefField: ReferenceSetOnlyStringType,
 };
 
-export type SetsBasicShape = {
+export type SetsBasicType = {
   foo: string,
   baz: boolean,
 };
 
-export type SetsWithRequiredShape = {
+export type SetsWithRequiredType = {
   bar: number,
   baz: boolean,
   qux: () => void,
 };
 
-export type SetsWithNullShape = {
+export type SetsWithNullType = {
   foo: ?string,
   qux: ?() => void,
 };
 
-export type SetsWithBothShape = {
+export type SetsWithBothType = {
   baz: boolean,
   qux: ?() => void,
 };
 
-export type SetsShape = {
+export type SetsType = {
   foo: string,
   bar: number,
   baz: boolean,
   qux: () => void,
 };
 
-export type ShapeShape = {
+export type ShapeType = {
   structAlias: {
     foo: string,
   },
@@ -210,7 +210,7 @@ export type ShapeShape = {
   },
 };
 
-export type UnionShape = {
+export type UnionType = {
   arrayField: string[] | Array<{ [key: string]: string }>,
   primitiveFields: boolean | number | () => void,
   enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123,

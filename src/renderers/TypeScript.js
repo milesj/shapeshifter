@@ -11,11 +11,17 @@ import isPrimitive from '../helpers/isPrimitive';
 import normalizeType from '../helpers/normalizeType';
 
 export default class TypeScriptRenderer extends Renderer {
+  constructor(schema) {
+    super(schema);
+
+    this.suffix = 'Interface';
+  }
+
   /**
    * {@inheritDoc}
    */
   render(setName, attributes = {}) {
-    return `export interface ${this.getObjectName(setName)} ${this.renderShape({ attributes }, 0)}`;
+    return `export interface ${setName} ${this.renderShape({ attributes }, 0)}`;
   }
 
   /**

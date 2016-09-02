@@ -35,7 +35,7 @@ Which transpiles down to the following React prop types.
 ```javascript
 import { PropTypes } from 'react';
 
-export const UserSchema = PropTypes.shape({
+export const UserShape = PropTypes.shape({
     id: PropTypes.number,
     username: PropTypes.string,
     email: PropTypes.string.isRequired,
@@ -51,7 +51,7 @@ Or the following Flow type aliases.
 ```javascript
 // @flow
 
-export type UserSchema = {
+export type UserType = {
     id: number,
     username: string,
     email: string,
@@ -65,7 +65,7 @@ export type UserSchema = {
 Or lastly, TypeScript interfaces.
 
 ```javascript
-export interface UserSchema {
+export interface UserInterface {
     id?: number;
     username?: string;
     email: string;

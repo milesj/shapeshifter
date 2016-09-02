@@ -7,6 +7,6 @@ export const IS_ENABLED = true;
 export const EMPTY_VALUE = null;
 export const PRIMITIVE_LIST = ['foo', 123, 456.78, false];
 
-export type ConstantsShape = {
+export type ConstantsType = {
   numberField: number,
 };

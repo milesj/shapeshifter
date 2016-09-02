@@ -14,7 +14,7 @@ export enum ArrayUnionField1Enum {
   C = 3
 }
 
-export interface ArrayShape {
+export interface ArrayInterface {
   arrayField?: Array<string[]>;
   boolField?: boolean[];
   enumField?: Array<ArrayEnumFieldEnum>;

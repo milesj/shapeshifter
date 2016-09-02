@@ -18,7 +18,7 @@ export enum ShapeEnumEnum {
   C = 789
 }
 
-export interface ShapeShape {
+export interface ShapeInterface {
   structAlias?: {
     foo?: string;
   };

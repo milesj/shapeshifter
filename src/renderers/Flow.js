@@ -7,6 +7,12 @@ import Renderer from '../Renderer';
 import isPrimitive from '../helpers/isPrimitive';
 
 export default class FlowRenderer extends Renderer {
+  constructor(schema) {
+    super(schema);
+
+    this.suffix = 'Type';
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -18,7 +24,7 @@ export default class FlowRenderer extends Renderer {
    * {@inheritDoc}
    */
   render(setName, attributes = {}) {
-    return `export type ${this.getObjectName(setName)} = ${this.renderShape({ attributes }, 0)};`;
+    return `export type ${setName} = ${this.renderShape({ attributes }, 0)};`;
   }
 
   /**

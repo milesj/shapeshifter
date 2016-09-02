@@ -1,7 +1,7 @@
 // @flow
 import ShapeDefault, { ShapeClassName } from '../stub';
 
-export type ShapeShape = {
+export type ShapeType = {
   structAlias: {
     foo: string,
   },

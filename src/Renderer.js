@@ -23,6 +23,7 @@ import normalizeType from './helpers/normalizeType';
 export default class Renderer {
   constructor(schema) {
     this.schema = schema;
+    this.suffix = '';
     this.imports = [];
     this.constants = [];
     this.header = [];
@@ -143,15 +144,11 @@ export default class Renderer {
   /**
    * Return the schema name to be used as the prop type or type alias name.
    *
-   * @param {String} [setName]
-   * @param {String} [schemaName]
-   * @param {String} [suffix]
+   * @param {String...} names
    * @returns {String}
    */
-  getObjectName(setName = '', schemaName = '', suffix = 'Shape') {
-    return [schemaName || this.schema.name, setName, suffix]
-      .map(formatName)
-      .join('');
+  getObjectName(...names) {
+    return [...names, this.suffix].map(formatName).join('');
   }
 
   /**
@@ -209,7 +206,7 @@ export default class Renderer {
    */
   parseSets() {
     const baseAttributes = this.schema.schema.attributes;
-    const { attributes, subsets } = this.schema;
+    const { attributes, subsets, name } = this.schema;
 
     // Subsets
     Object.keys(subsets).forEach(setName => {
@@ -247,11 +244,11 @@ export default class Renderer {
         setAttributes.push(Factory.definition(attribute, setConfig));
       });
 
-      this.sets.push(this.render(setName, setAttributes));
+      this.sets.push(this.render(this.getObjectName(name, setName), setAttributes));
     });
 
     // Default set
-    this.sets.push(this.render('', attributes));
+    this.sets.push(this.render(this.getObjectName(name), attributes));
   }
 
   /**
@@ -467,7 +464,7 @@ export default class Renderer {
       );
     }
 
-    return this.getObjectName(subset, refSchema.name);
+    return this.getObjectName(refSchema.name, subset);
   }
 
   /**

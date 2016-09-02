@@ -1,12 +1,12 @@
 // @flow
 
-export type ReferenceSelfBasicShape = {
+export type ReferenceSelfBasicType = {
   stringField: string,
 };
 
-export type ReferenceSelfShape = {
+export type ReferenceSelfType = {
   stringField: string,
-  referenceField: ReferenceSelfShape,
-  requiredRefField: ?ReferenceSelfShape,
-  subsetRefField: Array<ReferenceSelfBasicShape>,
+  referenceField: ReferenceSelfType,
+  requiredRefField: ?ReferenceSelfType,
+  subsetRefField: Array<ReferenceSelfBasicType>,
 };
