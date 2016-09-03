@@ -10,7 +10,7 @@ import path from 'path';
 import chalk from 'chalk';
 import config from './config';
 import Factory from './Factory';
-import Schema from './Schema';
+import SchemaReader from './SchemaReader';
 
 export default class Transpiler {
   constructor(options) {
@@ -112,7 +112,7 @@ export default class Transpiler {
    * Extract a list of file paths based on references defined within the schema.
    *
    * @param {String} filePath
-   * @returns {Schema[]}
+   * @returns {SchemaReader[]}
    */
   extractSchemas(filePath) {
     const basePath = path.dirname(filePath);
@@ -129,7 +129,7 @@ export default class Transpiler {
         continue;
       }
 
-      const schema = new Schema(resolvePath, require(resolvePath));
+      const schema = new SchemaReader(resolvePath, require(resolvePath));
 
       schemas.unshift(schema);
 
@@ -139,7 +139,7 @@ export default class Transpiler {
       }
 
       // Extract child references
-      Object.keys(schema.references).forEach(ref => {
+      Object.keys(schema.references).forEach((ref) => {
         toResolve.push({
           resolvePath: path.normalize(path.join(basePath, schema.references[ref])),
           parentSchema: schema,
@@ -154,7 +154,7 @@ export default class Transpiler {
   /**
    * Generate the output by combining all schemas into a single output.
    *
-   * @param {Schema[]} schemas
+   * @param {SchemaReader[]} schemas
    * @returns {Promise}
    */
   generateOutput(schemas) {
@@ -166,7 +166,7 @@ export default class Transpiler {
       let sets = new Set();
 
       // Wrap in a set to remove duplicates
-      schemas.forEach(schema => {
+      schemas.forEach((schema) => {
         if (rendered.has(schema.path)) {
           return;
         }

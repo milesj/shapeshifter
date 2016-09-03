@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import Renderer from '../lib/Renderer';
-import Schema from '../lib/Schema';
+import SchemaReader from '../lib/SchemaReader';
 
 describe('Renderer', () => {
-  const renderer = new Renderer(new Schema('/foo.json', {
+  const renderer = new Renderer(new SchemaReader('/foo.json', {
     name: 'foo Bar-Baz',
     attributes: { foo: 'string' },
   }));

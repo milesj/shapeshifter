@@ -89,7 +89,7 @@ export default class Factory {
    * Create a new renderer with the defined schema.
    *
    * @param {String} renderer
-   * @param {Schema} [schema]
+   * @param {SchemaReader} [schema]
    * @returns {Renderer}
    */
   static renderer(renderer, schema) {

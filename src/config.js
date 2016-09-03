@@ -6,7 +6,8 @@
 export default {
   defaultNull: false,
   defaultRequired: false,
-  includeEntities: false,
+  includeSchemas: false,
+  includeTypes: true,
   indentCharacter: '  ',
   renderer: 'react',
 };
