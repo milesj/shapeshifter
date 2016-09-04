@@ -19,6 +19,6 @@ export default class ArrayDefinition extends Definition {
       throw new SyntaxError('Array definitions require a "valueType" property.');
     }
 
-    this.valueType = Factory.definition(this.attribute, valueType);
+    this.valueType = Factory.definition(this.options, this.attribute, valueType);
   }
 }

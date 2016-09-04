@@ -8,17 +8,12 @@
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
-import config from './config';
 import Factory from './Factory';
 import SchemaReader from './SchemaReader';
 
 export default class Transpiler {
   constructor(options) {
-    config.defaultNull = options.defaultNull;
-    config.defaultRequired = options.defaultRequired;
-    config.indentCharacter = options.indentCharacter;
-    config.renderer = options.renderer;
-    config.includeEntities = options.includeEntities;
+    this.options = options;
   }
 
   /**
@@ -129,7 +124,7 @@ export default class Transpiler {
         continue;
       }
 
-      const schema = new SchemaReader(resolvePath, require(resolvePath));
+      const schema = new SchemaReader(resolvePath, require(resolvePath), this.options);
 
       schemas.unshift(schema);
 
@@ -171,7 +166,7 @@ export default class Transpiler {
           return;
         }
 
-        const renderer = Factory.renderer(config.renderer, schema);
+        const renderer = Factory.renderer(this.options, schema);
 
         renderer.parse();
 

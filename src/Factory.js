@@ -24,11 +24,12 @@ export default class Factory {
   /**
    * Create a new definition based on the defined attribute configuration.
    *
+   * @param {Object} options
    * @param {String} attribute
-   * @param {Object|String} config
+   * @param {Object} config
    * @returns {Definition}
    */
-  static definition(attribute, config) {
+  static definition(options, attribute, config) {
     // Convert primitives to configuration objects
     if (typeof config === 'string') {
       if (isPrimitive(normalizeType(config))) {
@@ -48,37 +49,37 @@ export default class Factory {
     // Instantiate definition classes
     switch (config.type) {
       case 'array':
-        return new ArrayDefinition(attribute, config);
+        return new ArrayDefinition(options, attribute, config);
 
       case 'boolean':
-        return new BoolDefinition(attribute, config);
+        return new BoolDefinition(options, attribute, config);
 
       case 'enum':
-        return new EnumDefinition(attribute, config);
+        return new EnumDefinition(options, attribute, config);
 
       case 'function':
-        return new FuncDefinition(attribute, config);
+        return new FuncDefinition(options, attribute, config);
 
       case 'instance':
-        return new InstanceDefinition(attribute, config);
+        return new InstanceDefinition(options, attribute, config);
 
       case 'number':
-        return new NumberDefinition(attribute, config);
+        return new NumberDefinition(options, attribute, config);
 
       case 'object':
-        return new ObjectDefinition(attribute, config);
+        return new ObjectDefinition(options, attribute, config);
 
       case 'shape':
-        return new ShapeDefinition(attribute, config);
+        return new ShapeDefinition(options, attribute, config);
 
       case 'string':
-        return new StringDefinition(attribute, config);
+        return new StringDefinition(options, attribute, config);
 
       case 'union':
-        return new UnionDefinition(attribute, config);
+        return new UnionDefinition(options, attribute, config);
 
       case 'reference':
-        return new ReferenceDefinition(attribute, config);
+        return new ReferenceDefinition(options, attribute, config);
 
       default:
         throw new TypeError(`Type "${config.type || 'unknown'}" not supported.`);
@@ -88,20 +89,22 @@ export default class Factory {
   /**
    * Create a new renderer with the defined schema.
    *
-   * @param {String} renderer
+   * @param {Object} options
    * @param {SchemaReader} [schema]
    * @returns {Renderer}
    */
-  static renderer(renderer, schema) {
+  static renderer(options, schema) {
+    const { renderer } = options;
+
     switch (renderer.toLowerCase()) {
       case 'react':
-        return new ReactRenderer(schema);
+        return new ReactRenderer(options, schema);
 
       case 'flow':
-        return new FlowRenderer(schema);
+        return new FlowRenderer(options, schema);
 
       case 'typescript':
-        return new TypeScriptRenderer(schema);
+        return new TypeScriptRenderer(options, schema);
 
       default:
         throw new Error(`Renderer "${renderer || 'unknown'}" not supported.`);

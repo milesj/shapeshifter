@@ -21,7 +21,8 @@ import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
 
 export default class Renderer {
-  constructor(schema) {
+  constructor(options, schema) {
+    this.options = options;
     this.schema = schema;
     this.suffix = '';
     this.imports = [];
@@ -55,7 +56,7 @@ export default class Renderer {
       items = items.join(itemSpacer);
     }
 
-    return `[${indentSpacer}${items}${indentSpacer}${indent(depth)}]`;
+    return `[${indentSpacer}${items}${indentSpacer}${indent(depth, this.options.indentCharacter)}]`;
   }
 
   /**
@@ -72,7 +73,7 @@ export default class Renderer {
       props = props.join(propSpacer);
     }
 
-    return `{${indentSpacer}${props}${indentSpacer}${indent(depth)}}`;
+    return `{${indentSpacer}${props}${indentSpacer}${indent(depth, this.options.indentCharacter)}}`;
   }
 
   /**
@@ -205,6 +206,10 @@ export default class Renderer {
    * Parse all subsets out of the schema and append to the renderer.
    */
   parseSets() {
+    if (!this.options.includeTypes) {
+      return;
+    }
+
     const baseAttributes = this.schema.schema.attributes;
     const { attributes, subsets, name } = this.schema;
 
@@ -241,7 +246,7 @@ export default class Renderer {
           setConfig.required = required[attribute];
         }
 
-        setAttributes.push(Factory.definition(attribute, setConfig));
+        setAttributes.push(Factory.definition(this.options, attribute, setConfig));
       });
 
       this.sets.push(this.render(this.getObjectName(name, setName), setAttributes));
@@ -537,7 +542,7 @@ export default class Renderer {
    * @returns {String}
    */
   wrapItem(value, depth = 0) {
-    return `${indent(depth)}${value},`;
+    return `${indent(depth, this.options.indentCharacter)}${value},`;
   }
 
   /**
@@ -550,7 +555,7 @@ export default class Renderer {
    * @returns {String}
    */
   wrapProperty(key, value, depth = 0, sep = ',') {
-    return `${indent(depth)}${key}: ${value}${sep || ','}`;
+    return `${indent(depth, this.options.indentCharacter)}${key}: ${value}${sep || ','}`;
   }
 
   /**

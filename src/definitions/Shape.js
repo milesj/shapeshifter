@@ -23,8 +23,8 @@ export default class ShapeDefinition extends Definition {
       );
     }
 
-    this.attributes = Object.keys(attributes).map(attribute => (
-      Factory.definition(attribute, attributes[attribute])
+    this.attributes = Object.keys(attributes).map((attribute) => (
+      Factory.definition(this.options, attribute, attributes[attribute])
     ));
   }
 }

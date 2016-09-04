@@ -3,20 +3,20 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import cfg from './config';
-
 export default class Definition {
   /**
    * Represents a type definition for an attribute.
    *
+   * @param {Object} options
    * @param {String} attribute
    * @param {Object} config
    */
-  constructor(attribute, config = {}) {
+  constructor(options, attribute, config = {}) {
+    this.options = options;
     this.attribute = attribute;
     this.config = {
-      null: cfg.defaultNull,
-      required: cfg.defaultRequired,
+      null: options.defaultNull,
+      required: options.defaultRequired,
       ...config,
     };
 

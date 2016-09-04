@@ -1,12 +1,13 @@
 import { expect } from 'chai';
 import Renderer from '../lib/Renderer';
 import SchemaReader from '../lib/SchemaReader';
+import { options } from './mocks';
 
 describe('Renderer', () => {
-  const renderer = new Renderer(new SchemaReader('/foo.json', {
+  const renderer = new Renderer(options, new SchemaReader('/foo.json', {
     name: 'foo Bar-Baz',
     attributes: { foo: 'string' },
-  }));
+  }, options));
 
   describe('formatArray()', () => {
     it('formats a string into brackets', () => {

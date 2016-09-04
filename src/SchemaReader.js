@@ -13,10 +13,12 @@ export default class SchemaReader {
    *
    * @param {String} filePath
    * @param {String|Object} data
+   * @param {Object} options
    */
-  constructor(filePath, data) {
+  constructor(filePath, data, options) {
     this.path = filePath;
     this.name = path.basename(filePath);
+    this.options = options;
     this.attributes = {};
     this.constants = {};
     this.imports = [];
@@ -81,8 +83,8 @@ export default class SchemaReader {
     }
 
     // Convert to type definitions
-    this.attributes = Object.keys(attributes).map(attribute => (
-      Factory.definition(attribute, attributes[attribute])
+    this.attributes = Object.keys(attributes).map((attribute) => (
+      Factory.definition(this.options, attribute, attributes[attribute])
     ));
   }
 

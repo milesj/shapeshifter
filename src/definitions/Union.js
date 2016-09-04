@@ -23,7 +23,7 @@ export default class UnionDefinition extends Definition {
     }
 
     this.valueTypes = valueTypes.map((type, i) => (
-      Factory.definition(`${this.attribute}_${i}`, type))
-    );
+      Factory.definition(this.options, `${this.attribute}_${i}`, type)
+    ));
   }
 }

@@ -10,8 +10,8 @@ export default class ObjectDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  constructor(attribute, config) {
-    super(attribute, {
+  constructor(options, attribute, config) {
+    super(options, attribute, {
       keyType: 'string',
       ...config,
     });
@@ -35,7 +35,7 @@ export default class ObjectDefinition extends Definition {
       throw new TypeError(`Object key type "${keyType || 'unknown'}" not supported.`);
     }
 
-    this.keyType = Factory.definition(`${this.attribute}_key`, keyType);
-    this.valueType = Factory.definition(`${this.attribute}_value`, valueType);
+    this.keyType = Factory.definition(this.options, `${this.attribute}_key`, keyType);
+    this.valueType = Factory.definition(this.options, `${this.attribute}_value`, valueType);
   }
 }

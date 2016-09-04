@@ -3,19 +3,18 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import config from '../config';
-
 /**
  * Create a string that represents indentation using the defined depth.
  *
  * @param {Number} depth
+ * @param {String} character
  * @returns {String}
  */
-export default function indent(depth) {
+export default function indent(depth, character = '  ') {
   let response = '';
 
   while (depth > 0) {
-    response += config.indentCharacter;
+    response += character;
     depth--;
   }
 

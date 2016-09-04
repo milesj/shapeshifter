@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { falsyValues } from '../mocks';
+import { options, falsyValues } from '../mocks';
 import UnionDefinition from '../../lib/definitions/Union';
 import BoolDefinition from '../../lib/definitions/Bool';
 import NumberDefinition from '../../lib/definitions/Number';
@@ -9,7 +9,7 @@ describe('definitions/Union', () => {
   it('errors if `valueTypes` is not an array', () => {
     falsyValues.forEach(value => {
       expect(() => (
-        new UnionDefinition('foo', { valueTypes: value })
+        new UnionDefinition(options, 'foo', { valueTypes: value })
       )).to.throw(SyntaxError,
         'Union definitions require a "valueTypes" property, ' +
         'which is a list of type definitions');
@@ -18,14 +18,14 @@ describe('definitions/Union', () => {
 
   it('errors if `valueTypes` has no items', () => {
     expect(() => (
-      new UnionDefinition('foo', { valueTypes: [] })
+      new UnionDefinition(options, 'foo', { valueTypes: [] })
     )).to.throw(SyntaxError,
       'Union definitions require a "valueTypes" property, ' +
       'which is a list of type definitions');
   });
 
   it('creates an array of `Definition`s for `valueTypes`', () => {
-    const def = new UnionDefinition('foo', {
+    const def = new UnionDefinition(options, 'foo', {
       valueTypes: ['bool', 'number', 'string'],
     });
 

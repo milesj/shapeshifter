@@ -11,8 +11,8 @@ import isPrimitive from '../helpers/isPrimitive';
 import normalizeType from '../helpers/normalizeType';
 
 export default class TypeScriptRenderer extends Renderer {
-  constructor(schema) {
-    super(schema);
+  constructor(options, schema) {
+    super(options, schema);
 
     this.suffix = 'Interface';
   }
@@ -51,6 +51,7 @@ export default class TypeScriptRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderEnum(definition) {
+    const { indentCharacter: char } = this.options;
     const { values, valueType } = definition.config;
     const members = [];
     const enumName = [this.schema.name, definition.attribute, 'Enum']
@@ -64,8 +65,8 @@ export default class TypeScriptRenderer extends Renderer {
       // If a string is provided
       // Assign values incrementally starting from 0
       case 'string':
-        values.forEach(value => {
-          members.push(`${indent(1)}${value} = ${currentIndex}`);
+        values.forEach((value) => {
+          members.push(`${indent(1, char)}${value} = ${currentIndex}`);
           currentIndex++;
         });
         break;
@@ -74,8 +75,8 @@ export default class TypeScriptRenderer extends Renderer {
       // Generate unique keys using the alphabet
       case 'number':
       case 'boolean':
-        values.forEach(value => {
-          members.push(`${indent(1)}${String.fromCodePoint(currentChar)} = ${Number(value)}`);
+        values.forEach((value) => {
+          members.push(`${indent(1, char)}${String.fromCodePoint(currentChar)} = ${Number(value)}`);
           currentChar++;
         });
         break;

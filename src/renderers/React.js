@@ -6,8 +6,8 @@
 import Renderer from '../Renderer';
 
 export default class ReactRenderer extends Renderer {
-  constructor(schema) {
-    super(schema);
+  constructor(options, schema) {
+    super(options, schema);
 
     this.suffix = 'Shape';
   }

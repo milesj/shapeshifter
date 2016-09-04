@@ -17,14 +17,16 @@ export default class FuncDefinition extends Definition {
 
     // TODO test
     if (typeof returnType !== 'undefined') {
-      this.returnType = Factory.definition('returnType', returnType);
+      this.returnType = Factory.definition(this.options, 'returnType', returnType);
     }
 
     if (typeof argTypes !== 'undefined') {
       if (!Array.isArray(argTypes)) {
         throw new SyntaxError('Function argument types must be an array of type definitions.');
       } else {
-        this.argTypes = argTypes.map((type, i) => Factory.definition(`arg${i}`, type));
+        this.argTypes = argTypes.map((type, i) => (
+          Factory.definition(this.options, `arg${i}`, type)
+        ));
       }
     }
   }
