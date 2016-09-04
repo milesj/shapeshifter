@@ -58,7 +58,7 @@ var optionList = [
     name: 'types',
     description: 'Include type definition exports in the output.',
     type: Boolean,
-    defaultValue: true,
+    defaultValue: false,
   },
   {
     name: 'path',

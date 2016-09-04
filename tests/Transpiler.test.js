@@ -40,7 +40,11 @@ describe('Transpiler', function () {
                 const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
                 const expectedPath = `${__dirname}/expected/${renderer.key}/${schema}.${renderer.ext}`;
 
-                return new Transpiler({ ...options, renderer: renderer.key })
+                return new Transpiler({
+                  ...options,
+                  renderer: renderer.key,
+                  includeTypes: true,
+                })
                   .transpileFile(actualPath)
                   .then(output => expect(output).to.equal(file(expectedPath)));
               });
@@ -51,7 +55,11 @@ describe('Transpiler', function () {
             const actualPath = `${__dirname}/schemas/${format}/`;
             const expectedPath = `${__dirname}/expected/${renderer.key}/all.${renderer.ext}`;
 
-            return new Transpiler({ ...options, renderer: renderer.key })
+            return new Transpiler({
+              ...options,
+              renderer: renderer.key,
+              includeTypes: true,
+            })
               .transpileFolder(actualPath)
               .then(output => expect(output).to.equal(file(expectedPath)));
           });

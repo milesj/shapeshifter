@@ -20,13 +20,15 @@
     "transpile",
     "entity"
   ],
-  "bin": {
-    "shapeshifter": "./bin/shapeshifter.js"
-  },
-  "directories": {
-    "test": "tests"
-  },
+  "main": "./lib/index.js",
+  "bin": "./bin/shapeshifter.js",
+  "files": [
+    "*.md",
+    "bin",
+    "lib"
+  ],
   "scripts": {
+    "clean": "rimraf ./lib",
     "build": "babel ./src -d ./lib",
     "watch": "babel --watch ./src -d ./lib",
     "lint": "eslint ./src ./tests",
@@ -34,7 +36,10 @@
     "check:flow": "flow check ./tests/expected/flow",
     "check:typescript": "tsc --noEmit --allowJs ./tests/expected/typescript/*",
     "mocha": "mocha --opts ./mocha.opts ./tests/*.test.js ./tests/**/*.test.js",
-    "test": "npm run build && npm run lint && npm run mocha && npm run check"
+    "pretest": "npm run build && npm run lint",
+    "test": "npm run mocha",
+    "posttest": "npm run check",
+    "preversion": "npm test"
   },
   "repository": {
     "type": "git",
@@ -71,6 +76,7 @@
     "flow-bin": "^0.32.0",
     "mocha": "^3.0.2",
     "react": "^15.3.1",
+    "rimraf": "^2.5.4",
     "typescript": "^1.8.10"
   }
 }

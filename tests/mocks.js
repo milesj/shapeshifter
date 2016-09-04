@@ -7,5 +7,5 @@ export const options = {
   indentCharacter: '  ',
   renderer: 'react',
   includeSchemas: false,
-  includeTypes: true,
+  includeTypes: false,
 };
