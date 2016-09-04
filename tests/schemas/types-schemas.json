@@ -1,0 +1,10 @@
+{
+  "name": "Parent",
+  "meta": {
+    "resourceName": "parents"
+  },
+  "attributes": {
+    "id": "number",
+    "name": "string"
+  }
+}
