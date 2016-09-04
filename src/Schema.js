@@ -3,8 +3,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import OneRelation from './schemas/OneRelation';
-import ManyRelation from './schemas/ManyRelation';
+const HAS_ONE = 'one';
+const HAS_MANY = 'many';
 
 export default class Schema {
   /**
@@ -17,7 +17,7 @@ export default class Schema {
     this.resourceName = resourceName;
     this.primaryKey = primaryKey;
     this.attributes = [];
-    this.relations = {};
+    this.relations = [];
   }
 
   /**
@@ -33,11 +33,19 @@ export default class Schema {
    * Map a one/many relational schema to the current schema.
    *
    * @param {String} attribute
-   * @param {Relation} relation
+   * @param {Schema} schema
+   * @param {String} relation
    */
-  addRelation(attribute, relation) {
-    this.relations[attribute] = relation;
-    this.attributes.push(attribute);
+  addRelation(attribute, schema, relation) {
+    this.relations.push({
+      attribute,
+      schema,
+      relation,
+    });
+
+    if (this.attributes.indexOf(attribute) === -1) {
+      this.attributes.push(attribute);
+    }
   }
 
   /**
@@ -64,9 +72,9 @@ export default class Schema {
       const schema = relations[attribute];
 
       if (schema instanceof Schema) {
-        this.addRelation(attribute, new OneRelation(schema));
+        this.addRelation(attribute, schema, HAS_ONE);
       } else {
-        throw new Error(`Relation "${attribute}" is not a valid schema.`);
+        throw new Error(`One relation "${attribute}" is not a valid schema.`);
       }
     });
 
@@ -83,12 +91,15 @@ export default class Schema {
       const schema = relations[attribute];
 
       if (schema instanceof Schema) {
-        this.addRelation(attribute, new ManyRelation(schema));
+        this.addRelation(attribute, schema, HAS_MANY);
       } else {
-        throw new Error(`Relation "${attribute}" is not a valid schema.`);
+        throw new Error(`Many relation "${attribute}" is not a valid schema.`);
       }
     });
 
     return this;
   }
 }
+
+Schema.HAS_ONE = HAS_ONE;
+Schema.HAS_MANY = HAS_MANY;

@@ -4,8 +4,5 @@
  */
 
 import Schema from './Schema';
-import OneRelation from './schemas/OneRelation';
-import ManyRelation from './schemas/ManyRelation';
 
-export { OneRelation, ManyRelation };
 export default Schema;
