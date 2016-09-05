@@ -77,10 +77,8 @@ describe('Renderer', () => {
       expect(renderer.getObjectName('foo_bar', 'baz')).to.equal('FooBarBaz');
     });
 
-    it('can change the suffix', () => {
-      renderer.suffix = 'Schema';
-      expect(renderer.getObjectName('foo', 'bar')).to.equal('FooBarSchema');
-      renderer.suffix = '';
+    it('can append the suffix', () => {
+      expect(renderer.getObjectName('foo', 'bar', 'Schema')).to.equal('FooBarSchema');
     });
   });
 

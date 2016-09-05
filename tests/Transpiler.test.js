@@ -121,11 +121,11 @@ describe('Transpiler', function () {
     });
   });
 
-  describe('extractSchemas()', () => {
+  describe('extractReaders()', () => {
     it('handles reference paths correctly', () => {
-      const schemas = new Transpiler(options).extractSchemas(`${__dirname}/schemas/json/reference.json`);
+      const readers = new Transpiler(options).extractReaders(`${__dirname}/schemas/json/reference.json`);
 
-      expect(schemas.map(schema => schema.path)).to.deep.equal([
+      expect(readers.map(reader => reader.path)).to.deep.equal([
         `${__dirname}/schemas/json/reference-bar.json`,
         `${__dirname}/schemas/json/reference-set.json`,
         `${__dirname}/schemas/json/reference-foo.json`,

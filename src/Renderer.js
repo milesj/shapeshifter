@@ -21,14 +21,15 @@ import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
 
 export default class Renderer {
-  constructor(options, schema) {
+  constructor(options, reader) {
     this.options = options;
-    this.schema = schema;
+    this.reader = reader;
     this.suffix = '';
     this.imports = [];
     this.constants = [];
     this.header = [];
     this.sets = [];
+    this.schemas = [];
     this.referencePaths = [];
   }
 
@@ -143,13 +144,22 @@ export default class Renderer {
   }
 
   /**
-   * Return the schema name to be used as the prop type or type alias name.
+   * Return the export name to be used as the prop type or type alias name.
    *
    * @param {String...} names
    * @returns {String}
    */
   getObjectName(...names) {
-    return [...names, this.suffix].map(formatName).join('');
+    return names.map(formatName).join('');
+  }
+
+  /**
+   * Return a list of schema class definitions.
+   *
+   * @returns {String[]}
+   */
+  getSchemas() {
+    return this.schemas;
   }
 
   /**
@@ -166,10 +176,11 @@ export default class Renderer {
    */
   parse() {
     this.beforeParse();
+    this.parseReferences();
     this.parseImports();
     this.parseConstants();
+    this.parseSchemas();
     this.parseSets();
-    this.parseReferences();
     this.afterParse();
   }
 
@@ -177,7 +188,7 @@ export default class Renderer {
    * Parse all constants out of the schema and append to the renderer.
    */
   parseConstants() {
-    const { constants } = this.schema;
+    const { constants } = this.reader;
 
     Object.keys(constants).forEach(key => {
       this.constants.push(this.renderConstant(key, constants[key]));
@@ -188,7 +199,7 @@ export default class Renderer {
    * Parse all imports out of the schema and append to the renderer.
    */
   parseImports() {
-    this.schema.imports.forEach(importStatement => {
+    this.reader.imports.forEach(importStatement => {
       this.imports.push(this.renderImport(importStatement));
     });
   }
@@ -197,21 +208,43 @@ export default class Renderer {
    * Parse out all reference paths.
    */
   parseReferences() {
-    Object.keys(this.schema.references).forEach(key => {
-      this.referencePaths.push(this.schema.references[key]);
+    Object.keys(this.reader.references).forEach(key => {
+      this.referencePaths.push(this.reader.references[key]);
     });
   }
 
   /**
-   * Parse all subsets out of the schema and append to the renderer.
+   * Parse out all schemas.
+   */
+  parseSchemas() {
+    if (!this.options.includeSchemas) {
+      return;
+    }
+
+    const { attributes, name, metadata } = this.reader;
+
+    this.imports.push(this.renderImport({
+      default: 'Schema',
+      path: 'shapeshifter',
+    }));
+
+    this.schemas.push(this.renderSchema(
+      this.getObjectName(name, 'Schema'),
+      attributes,
+      metadata
+    ));
+  }
+
+  /**
+   * Parse all type subsets out of the schema and append to the renderer.
    */
   parseSets() {
     if (!this.options.includeTypes) {
       return;
     }
 
-    const baseAttributes = this.schema.schema.attributes;
-    const { attributes, subsets, name } = this.schema;
+    const baseAttributes = this.reader.data.attributes;
+    const { attributes, subsets, name } = this.reader;
 
     // Subsets
     Object.keys(subsets).forEach(setName => {
@@ -249,11 +282,11 @@ export default class Renderer {
         setAttributes.push(Factory.definition(this.options, attribute, setConfig));
       });
 
-      this.sets.push(this.render(this.getObjectName(name, setName), setAttributes));
+      this.sets.push(this.render(this.getObjectName(name, setName, this.suffix), setAttributes));
     });
 
     // Default set
-    this.sets.push(this.render(this.getObjectName(name), attributes));
+    this.sets.push(this.render(this.getObjectName(name, this.suffix), attributes));
   }
 
   /**
@@ -455,21 +488,84 @@ export default class Renderer {
    */
   renderReference(definition) {
     const { reference, self, subset } = definition.config;
-    const refSchema = self ? this.schema : this.schema.referenceSchemas[reference];
+    const refReader = self ? this.reader : this.reader.referenceReaders[reference];
 
-    if (!refSchema) {
+    if (!refReader) {
       throw new SyntaxError(
-        `The reference "${reference}" does not exist in the "${this.schema.name}" schema.`
+        `The reference "${reference}" does not exist in the "${this.reader.name}" schema.`
       );
     }
 
-    if (subset && !refSchema.subsets[subset]) {
+    if (subset && !refReader.subsets[subset]) {
       throw new SyntaxError(
         `The reference "${reference}" does not contain a subset named "${subset}".`
       );
     }
 
-    return this.getObjectName(refSchema.name, subset);
+    return this.getObjectName(refReader.name, subset, this.suffix);
+  }
+
+  /**
+   * Render a class schema.
+   *
+   * @param {String} name
+   * @param {Definition[]} attributes
+   * @param {Object} metadata
+   * @returns {string}
+   */
+  renderSchema(name, attributes, metadata) {
+    const { primaryKey = 'id', resourceName } = metadata;
+    const references = this.reader.referenceReaders;
+    const fields = [];
+    const hasOne = [];
+    const hasMany = [];
+
+    if (!resourceName || typeof resourceName !== 'string') {
+      throw new SyntaxError(
+        'Schemas require a "meta.resourceName" property to be defined. ' +
+        'The resource name is a unique key found within a URL.'
+      );
+    }
+
+    attributes.forEach((definition) => {
+      fields.push(this.wrapItem(this.formatValue(definition.attribute, 'string'), 2));
+
+      if (definition instanceof ReferenceDef) {
+        hasOne.push(this.wrapProperty(
+          definition.attribute,
+          this.getObjectName(references[definition.config.reference].name, 'Schema'),
+          2
+        ));
+      }
+
+      if (
+        definition instanceof ArrayDef &&
+        definition.valueType instanceof ReferenceDef
+      ) {
+        hasMany.push(this.wrapProperty(
+          definition.attribute,
+          this.getObjectName(references[definition.valueType.config.reference].name, 'Schema'),
+          2
+        ));
+      }
+    });
+
+    const chain = `\n${indent(1, this.options.indentCharacter)}`;
+    let schema = `export const ${name} = new Schema('${resourceName}', '${primaryKey}')`;
+
+    if (fields.length) {
+      schema += `${chain}.addAttributes(${this.formatArray(fields, 1)})`;
+    }
+
+    if (hasOne.length) {
+      schema += `${chain}.hasOne(${this.formatObject(hasOne, 1)})`;
+    }
+
+    if (hasMany.length) {
+      schema += `${chain}.hasMany(${this.formatObject(hasMany, 1)})`;
+    }
+
+    return `${schema};`;
   }
 
   /**

@@ -1,0 +1,10 @@
+{
+  "name": "SingleChild",
+  "meta": {
+    "resourceName": "single-child"
+  },
+  "attributes": {
+    "id": "number",
+    "active": "boolean"
+  }
+}

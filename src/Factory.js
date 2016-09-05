@@ -87,24 +87,24 @@ export default class Factory {
   }
 
   /**
-   * Create a new renderer with the defined schema.
+   * Create a new renderer with the defined reader.
    *
    * @param {Object} options
-   * @param {SchemaReader} [schema]
+   * @param {SchemaReader} reader
    * @returns {Renderer}
    */
-  static renderer(options, schema) {
+  static renderer(options, reader) {
     const { renderer } = options;
 
     switch (renderer.toLowerCase()) {
       case 'react':
-        return new ReactRenderer(options, schema);
+        return new ReactRenderer(options, reader);
 
       case 'flow':
-        return new FlowRenderer(options, schema);
+        return new FlowRenderer(options, reader);
 
       case 'typescript':
-        return new TypeScriptRenderer(options, schema);
+        return new TypeScriptRenderer(options, reader);
 
       default:
         throw new Error(`Renderer "${renderer || 'unknown'}" not supported.`);

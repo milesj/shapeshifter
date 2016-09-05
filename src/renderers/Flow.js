@@ -7,8 +7,8 @@ import Renderer from '../Renderer';
 import isPrimitive from '../helpers/isPrimitive';
 
 export default class FlowRenderer extends Renderer {
-  constructor(options, schema) {
-    super(options, schema);
+  constructor(options, reader) {
+    super(options, reader);
 
     this.suffix = 'Type';
   }

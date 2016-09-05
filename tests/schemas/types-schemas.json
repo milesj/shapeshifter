@@ -3,8 +3,23 @@
   "meta": {
     "resourceName": "parents"
   },
+  "references": {
+    "single": "./reference-single.json",
+    "multiple": "./reference-multiple.json"
+  },
   "attributes": {
     "id": "number",
-    "name": "string"
+    "name": "string",
+    "children": {
+      "type": "array",
+      "valueType": {
+        "type": "reference",
+        "reference": "multiple"
+      }
+    },
+    "orphan": {
+      "type": "reference",
+      "reference": "single"
+    }
   }
 }

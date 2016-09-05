@@ -1,0 +1,10 @@
+{
+  "name": "MultipleChildren",
+  "meta": {
+    "primaryKey": "uuid",
+    "resourceName": "multiple-children"
+  },
+  "attributes": {
+    "uuid": "string"
+  }
+}

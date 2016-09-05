@@ -19,17 +19,18 @@ export default class SchemaReader {
     this.path = filePath;
     this.name = path.basename(filePath);
     this.options = options;
-    this.attributes = {};
+    this.metadata = {};
+    this.attributes = [];
     this.constants = {};
     this.imports = [];
     this.subsets = {};
     this.references = {};
-    this.referenceSchemas = {};
+    this.referenceReaders = {};
 
     if (typeof data === 'string') {
-      this.schema = JSON.parse(data);
+      this.data = JSON.parse(data);
     } else if (isObject(data)) {
-      this.schema = data;
+      this.data = data;
     } else {
       this.throwError('Schema requires a valid JSON structure.');
     }
@@ -50,10 +51,14 @@ export default class SchemaReader {
    * Setup the state of the schema.
    */
   setup() {
-    const data = this.schema;
+    const data = this.data;
 
     this.setName(data.name);
     this.setAttributes(data.attributes);
+
+    if ('meta' in data) {
+      this.setMeta(data.meta);
+    }
 
     if ('constants' in data) {
       this.setConstants(data.constants);
@@ -112,6 +117,19 @@ export default class SchemaReader {
     }
 
     this.imports = imports;
+  }
+
+  /**
+   * Set schema metadata.
+   *
+   * @param {Object} metadata
+   */
+  setMeta(metadata) {
+    if (!isObject(metadata)) {
+      this.throwError('Schema metadata must be an object of strings.');
+    }
+
+    this.metadata = metadata;
   }
 
   /**

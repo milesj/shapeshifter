@@ -6,13 +6,12 @@
 import Renderer from '../Renderer';
 import FuncDefinition from '../definitions/Func';
 import indent from '../helpers/indent';
-import formatName from '../helpers/formatName';
 import isPrimitive from '../helpers/isPrimitive';
 import normalizeType from '../helpers/normalizeType';
 
 export default class TypeScriptRenderer extends Renderer {
-  constructor(options, schema) {
-    super(options, schema);
+  constructor(options, reader) {
+    super(options, reader);
 
     this.suffix = 'Interface';
   }
@@ -54,9 +53,7 @@ export default class TypeScriptRenderer extends Renderer {
     const { indentCharacter: char } = this.options;
     const { values, valueType } = definition.config;
     const members = [];
-    const enumName = [this.schema.name, definition.attribute, 'Enum']
-      .map(formatName)
-      .join('');
+    const enumName = this.getObjectName(this.reader.name, definition.attribute, 'Enum');
 
     let currentIndex = 0;
     let currentChar = 65;

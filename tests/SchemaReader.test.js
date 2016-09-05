@@ -16,7 +16,7 @@ describe('Schema', () => {
   it('parses a JSON string', () => {
     const schema = new SchemaReader('/foo.json', JSON.stringify(data), options);
 
-    expect(schema.schema).to.deep.equal(data);
+    expect(schema.data).to.deep.equal(data);
   });
 
   it('errors on an invalid JSON string', () => {
@@ -26,7 +26,7 @@ describe('Schema', () => {
   it('allows a JSON or literal object', () => {
     const schema = new SchemaReader('/foo.json', data, options);
 
-    expect(schema.schema).to.deep.equal(data);
+    expect(schema.data).to.deep.equal(data);
   });
 
   it('errors if the schema is not an object or JSON string', () => {
