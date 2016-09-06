@@ -27,6 +27,8 @@ export default class Schema {
    */
   addAttributes(attributes) {
     this.attributes = this.attributes.concat(attributes);
+
+    return this;
   }
 
   /**
@@ -46,6 +48,8 @@ export default class Schema {
     if (this.attributes.indexOf(attribute) === -1) {
       this.attributes.push(attribute);
     }
+
+    return this;
   }
 
   /**

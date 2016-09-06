@@ -223,7 +223,7 @@ export default class Renderer {
 
     const { attributes, name, metadata } = this.reader;
 
-    this.imports.push(this.renderImport({
+    this.imports.unshift(this.renderImport({
       default: 'Schema',
       path: 'shapeshifter',
     }));
@@ -514,7 +514,7 @@ export default class Renderer {
    * @returns {string}
    */
   renderSchema(name, attributes, metadata) {
-    const { primaryKey = 'id', resourceName } = metadata;
+    const { primaryKey, resourceName } = metadata;
     const references = this.reader.referenceReaders;
     const fields = [];
     const hasOne = [];
@@ -551,9 +551,15 @@ export default class Renderer {
     });
 
     const chain = `\n${indent(1, this.options.indentCharacter)}`;
-    let schema = `export const ${name} = new Schema('${resourceName}', '${primaryKey}')`;
+    const args = [`'${resourceName}'`];
 
-    if (fields.length) {
+    if (primaryKey) {
+      args.push(`'${primaryKey}'`);
+    }
+
+    let schema = `export const ${name} = new Schema(${args.join(', ')})`;
+
+    if (fields.length && this.options.includeAttributes) {
       schema += `${chain}.addAttributes(${this.formatArray(fields, 1)})`;
     }
 

@@ -88,6 +88,13 @@ describe('Schema', () => {
     }, options)).to.throw(SyntaxError, '[Foo] Schema references must be an object that maps to other schemas.');
   });
 
+  it('errors if `meta` is defined and not an object', () => {
+    expect(() => new SchemaReader('/foo.json', {
+      ...data,
+      meta: 123,
+    }, options)).to.throw(SyntaxError, '[Foo] Schema metadata must be an object of strings.');
+  });
+
   it('creates an array of `Definition`s for `attributes`', () => {
     const schema = new SchemaReader('/foo.json', data, options);
 

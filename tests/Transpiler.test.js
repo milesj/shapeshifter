@@ -102,6 +102,15 @@ describe('Transpiler', function () {
         .then(output => expect(output).to.equal(file(expectedPath)));
     });
 
+    it('can include schemas with attributes through configuration', () => {
+      const actualPath = `${__dirname}/schemas/types-schemas.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/with-schemas-attributes.js`;
+
+      return new Transpiler({ ...otherOptions, includeSchemas: true, includeAttributes: true })
+        .transpileFile(actualPath)
+        .then(output => expect(output).to.equal(file(expectedPath)));
+    });
+
     it('can omit schemas through configuration', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/no-schemas.js`;
