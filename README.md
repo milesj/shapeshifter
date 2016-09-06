@@ -1,4 +1,4 @@
-# Shapeshifter v1.2.0
+# Shapeshifter v2.0.0
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
 Shapeshifter is a command line tool for generating ES2015 compatible
@@ -80,7 +80,7 @@ export interface UserInterface {
 
 * ES2015
 * Node 4+
-* React 14+ / Flow 0.20+ / TypeScript 1.6+
+* React 0.14+ / Flow 0.20+ / TypeScript 1.6+
 
 ## Installation
 
@@ -120,8 +120,14 @@ generated output. Defaults to 2 spaces.
 `--format` - The format to output to. Accepts "react", "flow", or
 "typescript". Defaults to "react".
 
-`--suffix` - The suffix to append to all type definitions. Defaults
-to "Suffix".
+`--schemas` - Include schema class exports in the output. Defaults to
+"false".
+
+`--attributes` - Include an attribute list in the schema class export.
+Defaults to "false".
+
+`--types` - Include type definition exports in the output. Defaults to
+"false".
 
 ## Documentation
 
@@ -130,6 +136,7 @@ to "Suffix".
     * [Subsets](#subsets)
     * [Imports](#imports)
     * [Constants](#constants)
+    * [Metadata](#metadata)
 * [Attribute Types](#attribute-types)
     * [Primitives](#primitives)
     * [Arrays](#arrays)
@@ -283,6 +290,23 @@ without introducing duplication.
     "STATUS_ACTIVE": 1,
     "STATUSES": [0, 1],
     "ADMIN_FLAG": "admin"
+}
+```
+
+#### Metadata
+
+The `meta` object allows arbitrary metadata to be defined. Only two
+fields are supported currently, `primaryKey` and `resourceName`, both
+of which are required when generating `Schema` classes using `--schemas`.
+The `primaryKey` defines the unique identifier / primary key of the record,
+usually "id" (default), while `resourceName` is the unique name found in
+a URL path. For example, in the URL "/api/users/123", the "users" path
+part would be the resource name.
+
+```json
+"meta": {
+    "primaryKey": "id",
+    "resourceName": "users"
 }
 ```
 
@@ -552,6 +576,19 @@ that points to a subset found in the reference schema file.
     "reference": "profile",
     "subset": ""
 }
+```
+
+This transpiles to:
+
+```javascript
+// React
+profile: ProfileShape,
+
+// Flow
+profile: ProfileType,
+
+// TypeScript
+profile?: ProfileInterface;
 ```
 
 Alias names: `ref`

@@ -551,10 +551,10 @@ export default class Renderer {
     });
 
     const chain = `\n${indent(1, this.options.indentCharacter)}`;
-    const args = [`'${resourceName}'`];
+    const args = [this.formatValue(resourceName, 'string')];
 
     if (primaryKey) {
-      args.push(`'${primaryKey}'`);
+      args.push(this.formatValue(primaryKey, 'string'));
     }
 
     let schema = `export const ${name} = new Schema(${args.join(', ')})`;
