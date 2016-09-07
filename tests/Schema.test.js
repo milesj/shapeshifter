@@ -2,12 +2,13 @@ import { expect } from 'chai';
 import Schema from '../lib/Schema';
 
 describe('Schema', () => {
-  const schema = new Schema();
+  let schema;
+  const foo = new Schema('foos');
+  const qux = new Schema('quxs', 'uuid');
 
-  const foo = new Schema();
-
-  const qux = new Schema();
-  qux.primaryKey = 'uuid';
+  beforeEach(() => {
+    schema = new Schema('bars');
+  });
 
   describe('addAttributes()', () => {
     it('adds attributes', () => {
@@ -23,15 +24,58 @@ describe('Schema', () => {
     });
   });
 
-  describe('hasOne()', () => {
+  describe('addRelation()', () => {
     it('errors if not a schema', () => {
       expect(() => {
-        schema.hasOne({
-          foo: 'bar',
-        });
-      }).to.throw(Error, 'One relation "foo" is not a valid schema.');
+        schema.addRelation('foo', 'bar');
+      }).to.throw(Error, 'Relation "foo" is not a valid schema.');
     });
 
+    it('errors if been mapped before', () => {
+      expect(() => {
+        schema.addRelation('foo', new Schema(), Schema.HAS_ONE);
+        schema.addRelation('foo', new Schema(), Schema.HAS_MANY);
+      }).to.throw(Error, 'Relation "foo" has already been mapped as "hasOne".');
+    });
+  });
+
+  describe('belongsTo()', () => {
+    it('adds a schema and maps the attribute', () => {
+      expect(schema.relations).to.deep.equal([]);
+
+      schema.belongsTo({ qux });
+
+      expect(schema.relations).to.deep.equal([
+        {
+          attribute: 'qux',
+          schema: qux,
+          relation: 'belongsTo',
+          collection: false,
+        },
+      ]);
+      expect(schema.attributes).to.deep.equal(['qux']);
+    });
+  });
+
+  describe('belongsToMany()', () => {
+    it('adds a schema and maps the attribute', () => {
+      expect(schema.relations).to.deep.equal([]);
+
+      schema.belongsToMany({ qux });
+
+      expect(schema.relations).to.deep.equal([
+        {
+          attribute: 'qux',
+          schema: qux,
+          relation: 'belongsToMany',
+          collection: true,
+        },
+      ]);
+      expect(schema.attributes).to.deep.equal(['qux']);
+    });
+  });
+
+  describe('hasOne()', () => {
     it('adds a schema and maps the attribute', () => {
       expect(schema.relations).to.deep.equal([]);
 
@@ -41,38 +85,33 @@ describe('Schema', () => {
         {
           attribute: 'qux',
           schema: qux,
-          relation: 'one',
+          relation: 'hasOne',
+          collection: false,
         },
       ]);
-      expect(schema.attributes).to.deep.equal(['foo', 'bar', 'baz', 'qux']);
+      expect(schema.attributes).to.deep.equal(['qux']);
     });
   });
 
   describe('hasMany()', () => {
-    it('errors if not a schema', () => {
-      expect(() => {
-        schema.hasMany({
-          foo: 'bar',
-        });
-      }).to.throw(Error, 'Many relation "foo" is not a valid schema.');
-    });
-
     it('adds a schema and maps the attribute', () => {
-      schema.hasMany({ foo });
+      schema.hasMany({ foo, qux });
 
       expect(schema.relations).to.deep.equal([
         {
-          attribute: 'qux',
-          schema: qux,
-          relation: 'one',
-        },
-        {
           attribute: 'foo',
           schema: foo,
-          relation: 'many',
+          relation: 'hasMany',
+          collection: true,
+        },
+        {
+          attribute: 'qux',
+          schema: qux,
+          relation: 'hasMany',
+          collection: true,
         },
       ]);
-      expect(schema.attributes).to.deep.equal(['foo', 'bar', 'baz', 'qux']);
+      expect(schema.attributes).to.deep.equal(['foo', 'qux']);
     });
   });
 });

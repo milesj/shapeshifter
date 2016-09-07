@@ -3,8 +3,10 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-const HAS_ONE = 'one';
-const HAS_MANY = 'many';
+const BELONGS_TO = 'belongsTo';
+const BELONGS_TO_MANY = 'belongsToMany';
+const HAS_ONE = 'hasOne';
+const HAS_MANY = 'hasMany';
 
 export default class Schema {
   /**
@@ -18,12 +20,14 @@ export default class Schema {
     this.primaryKey = primaryKey;
     this.attributes = [];
     this.relations = [];
+    this.relationTypes = {};
   }
 
   /**
    * Map a list of attribute names.
    *
    * @param {String[]} attributes
+   * @returns {Schema}
    */
   addAttributes(attributes) {
     this.attributes = this.attributes.concat(attributes);
@@ -37,13 +41,26 @@ export default class Schema {
    * @param {String} attribute
    * @param {Schema} schema
    * @param {String} relation
+   * @returns {Schema}
    */
   addRelation(attribute, schema, relation) {
+    if (!(schema instanceof Schema)) {
+      throw new Error(`Relation "${attribute}" is not a valid schema.`);
+
+    } else if (this.relationTypes[attribute]) {
+      throw new Error(
+        `Relation "${attribute}" has already been mapped as "${this.relationTypes[attribute]}".`
+      );
+    }
+
     this.relations.push({
       attribute,
       schema,
       relation,
+      collection: (relation === BELONGS_TO_MANY || relation === HAS_MANY),
     });
+
+    this.relationTypes[attribute] = relation;
 
     if (this.attributes.indexOf(attribute) === -1) {
       this.attributes.push(attribute);
@@ -53,57 +70,62 @@ export default class Schema {
   }
 
   /**
-   * @see hasOne
+   * Map multiple relations for a specific type.
+   *
+   * @param {Object} schemas
+   * @param {String} relation
+   * @returns {Schema}
    */
-  belongsTo(relations) {
-    return this.hasOne(relations);
+  addRelations(schemas, relation) {
+    Object.keys(schemas).forEach((attribute) => {
+      this.addRelation(attribute, schemas[attribute], relation);
+    });
+
+    return this;
   }
 
   /**
-   * @see hasMany
+   * Map belongs-to nested entities by attribute name.
+   *
+   * @param {Object} relations
+   * @returns {Schema}
+   */
+  belongsTo(relations) {
+    return this.addRelations(relations, BELONGS_TO);
+  }
+
+  /**
+   * Map belongs-to-many nested entities by attribute name.
+   *
+   * @param {Object} relations
+   * @returns {Schema}
    */
   belongsToMany(relations) {
-    return this.hasMany(relations);
+    return this.addRelations(relations, BELONGS_TO_MANY);
   }
 
   /**
    * Map has-one nested entities by attribute name.
    *
    * @param {Object} relations
+   * @returns {Schema}
    */
   hasOne(relations) {
-    Object.keys(relations).forEach((attribute) => {
-      const schema = relations[attribute];
-
-      if (schema instanceof Schema) {
-        this.addRelation(attribute, schema, HAS_ONE);
-      } else {
-        throw new Error(`One relation "${attribute}" is not a valid schema.`);
-      }
-    });
-
-    return this;
+    return this.addRelations(relations, HAS_ONE);
   }
 
   /**
    * Map has-many nested entities by attribute name.
    *
    * @param {Object} relations
+   * @returns {Schema}
    */
   hasMany(relations) {
-    Object.keys(relations).forEach((attribute) => {
-      const schema = relations[attribute];
-
-      if (schema instanceof Schema) {
-        this.addRelation(attribute, schema, HAS_MANY);
-      } else {
-        throw new Error(`Many relation "${attribute}" is not a valid schema.`);
-      }
-    });
-
-    return this;
+    return this.addRelations(relations, HAS_MANY);
   }
 }
 
+Schema.BELONGS_TO = BELONGS_TO;
+Schema.BELONGS_TO_MANY = BELONGS_TO_MANY;
 Schema.HAS_ONE = HAS_ONE;
 Schema.HAS_MANY = HAS_MANY;
