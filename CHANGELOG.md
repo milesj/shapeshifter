@@ -1,3 +1,8 @@
+# 2.1.0
+* Added `belongsTo()` and `belongsToMany()` to `Schema`.
+* Added `collection` boolean to the schema relation object.
+* Fixed the lib build process.
+
 # 2.0.0
 * Added new `--schemas`, `--attributes`, and `--types` options to the CLI.
 * Added new entity schema mapping through the new `Schema` class.

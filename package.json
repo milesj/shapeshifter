@@ -36,7 +36,7 @@
     "check:flow": "flow check ./tests/expected/flow",
     "check:typescript": "tsc --noEmit --allowJs ./tests/expected/typescript/*",
     "mocha": "mocha --opts ./mocha.opts ./tests/*.test.js ./tests/**/*.test.js",
-    "pretest": "npm run build && npm run lint",
+    "pretest": "npm run clean && npm run build && npm run lint",
     "test": "npm run mocha",
     "posttest": "npm run check",
     "preversion": "npm test"
@@ -69,7 +69,7 @@
     "chai-files": "^1.4.0",
     "eslint": "^3.4.0",
     "eslint-config-airbnb": "^10.0.1",
-    "eslint-plugin-flowtype": "^2.11.4",
+    "eslint-plugin-flowtype": "^2.15.0",
     "eslint-plugin-import": "^1.14.0",
     "eslint-plugin-jsx-a11y": "^2.2.1",
     "eslint-plugin-react": "^6.2.0",
