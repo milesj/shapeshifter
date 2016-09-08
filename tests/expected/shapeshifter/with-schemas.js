@@ -16,6 +16,6 @@ ParentSchema
   .hasOne({
     orphan: SingleChildSchema,
   })
-  .hasMany({
+  .belongsToMany({
     children: MultipleChildrenSchema,
   });

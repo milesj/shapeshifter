@@ -14,7 +14,8 @@
       "type": "array",
       "valueType": {
         "type": "reference",
-        "reference": "multiple"
+        "reference": "multiple",
+        "relation": "belongsToMany"
       }
     },
     "orphan": {

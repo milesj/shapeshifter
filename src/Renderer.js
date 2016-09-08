@@ -5,6 +5,7 @@
 
 import Factory from './Factory';
 import Definition from './Definition';
+import Schema from './Schema';
 import ArrayDef from './definitions/Array';
 import BoolDef from './definitions/Bool';
 import EnumDef from './definitions/Enum';
@@ -518,8 +519,12 @@ export default class Renderer {
     const { includeAttributes } = this.options;
     const references = this.reader.referenceReaders;
     const fields = [];
-    const hasOne = [];
-    const hasMany = [];
+    const relations = {
+      [Schema.HAS_ONE]: [],
+      [Schema.HAS_MANY]: [],
+      [Schema.BELONGS_TO]: [],
+      [Schema.BELONGS_TO_MANY]: [],
+    };
 
     if (!resourceName || typeof resourceName !== 'string') {
       throw new SyntaxError(
@@ -528,28 +533,47 @@ export default class Renderer {
       );
     }
 
-    const getRefName = (definition) => {
-      const refName = definition.config.self
-        ? this.reader.name
-        : references[definition.config.reference].name;
-
-      return this.wrapProperty(definition.attribute, this.getObjectName(refName, 'Schema'), 2);
-    };
+    let relationDefinition;
+    let relationType;
+    let relationName;
 
     attributes.forEach((definition) => {
       if (includeAttributes) {
         fields.push(this.wrapItem(this.formatValue(definition.attribute, 'string'), 2));
       }
 
+      // Single
       if (definition instanceof ReferenceDef) {
-        hasOne.push(getRefName(definition));
+        relationDefinition = definition;
+        relationType = relationDefinition.config.relation || Schema.HAS_ONE;
       }
 
+      // Multiple
       if (
         definition instanceof ArrayDef &&
         definition.valueType instanceof ReferenceDef
       ) {
-        hasMany.push(getRefName(definition.valueType));
+        relationDefinition = definition.valueType;
+        relationType = relationDefinition.config.relation || Schema.HAS_MANY;
+      }
+
+      // Validate and format template
+      if (relationDefinition) {
+        if (typeof relations[relationType] === 'undefined') {
+          throw new Error(
+            `Invalid relation type for reference attribute "${definition.attribute}".`
+          );
+        }
+
+        relationName = relationDefinition.config.self
+          ? this.reader.name
+          : references[relationDefinition.config.reference].name;
+
+        relations[relationType].push(this.wrapProperty(
+          relationDefinition.attribute,
+          this.getObjectName(relationName, 'Schema'),
+          2
+        ));
       }
     });
 
@@ -560,25 +584,24 @@ export default class Renderer {
       args.push(this.formatValue(primaryKey, 'string'));
     }
 
-    let schema = `export const ${name} = new Schema(${args.join(', ')})`;
-
-    if (fields.length || hasOne.length || hasMany.length) {
-      schema += `;\n\n${name}`;
-    }
+    const schemaTemplate = `export const ${name} = new Schema(${args.join(', ')});`;
+    let chainTemplate = '';
 
     if (fields.length) {
-      schema += `${chain}.addAttributes(${this.formatArray(fields, 1)})`;
+      chainTemplate += `${chain}.addAttributes(${this.formatArray(fields, 1)})`;
     }
 
-    if (hasOne.length) {
-      schema += `${chain}.hasOne(${this.formatObject(hasOne, 1)})`;
+    Object.keys(relations).forEach((relation) => {
+      if (relations[relation].length) {
+        chainTemplate += `${chain}.${relation}(${this.formatObject(relations[relation], 1)})`;
+      }
+    });
+
+    if (chainTemplate) {
+      chainTemplate = `\n\n${name}${chainTemplate};`;
     }
 
-    if (hasMany.length) {
-      schema += `${chain}.hasMany(${this.formatObject(hasMany, 1)})`;
-    }
-
-    return `${schema};`;
+    return `${schemaTemplate}${chainTemplate}`;
   }
 
   /**

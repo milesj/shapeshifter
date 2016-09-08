@@ -4,6 +4,8 @@ declare module "shapeshifter" {
     addRelation(attribute: string, schema: Schema, relation: string): this;
     hasOne(relations: {[key: string]: Schema}): this;
     hasMany(relations: {[key: string]: Schema}): this;
+    belongsTo(relations: {[key: string]: Schema}): this;
+    belongsToMany(relations: {[key: string]: Schema}): this;
   }
 
   declare module.exports: () => Schema;

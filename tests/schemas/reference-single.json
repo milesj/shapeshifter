@@ -8,7 +8,8 @@
     "active": "boolean",
     "self": {
       "type": "reference",
-      "self": true
+      "self": true,
+      "relation": "hasOne"
     }
   }
 }
