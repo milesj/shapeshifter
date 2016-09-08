@@ -5,6 +5,10 @@
   },
   "attributes": {
     "id": "number",
-    "active": "boolean"
+    "active": "boolean",
+    "self": {
+      "type": "reference",
+      "self": true
+    }
   }
 }

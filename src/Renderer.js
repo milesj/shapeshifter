@@ -515,6 +515,7 @@ export default class Renderer {
    */
   renderSchema(name, attributes, metadata) {
     const { primaryKey, resourceName } = metadata;
+    const { includeAttributes } = this.options;
     const references = this.reader.referenceReaders;
     const fields = [];
     const hasOne = [];
@@ -522,31 +523,33 @@ export default class Renderer {
 
     if (!resourceName || typeof resourceName !== 'string') {
       throw new SyntaxError(
-        'Schemas require a "meta.resourceName" property to be defined. ' +
+        `Schema ${name} requires a "meta.resourceName" property to be defined. ` +
         'The resource name is a unique key found within a URL.'
       );
     }
 
+    const getRefName = (definition) => {
+      const refName = definition.config.self
+        ? this.reader.name
+        : references[definition.config.reference].name;
+
+      return this.wrapProperty(definition.attribute, this.getObjectName(refName, 'Schema'), 2);
+    };
+
     attributes.forEach((definition) => {
-      fields.push(this.wrapItem(this.formatValue(definition.attribute, 'string'), 2));
+      if (includeAttributes) {
+        fields.push(this.wrapItem(this.formatValue(definition.attribute, 'string'), 2));
+      }
 
       if (definition instanceof ReferenceDef) {
-        hasOne.push(this.wrapProperty(
-          definition.attribute,
-          this.getObjectName(references[definition.config.reference].name, 'Schema'),
-          2
-        ));
+        hasOne.push(getRefName(definition));
       }
 
       if (
         definition instanceof ArrayDef &&
         definition.valueType instanceof ReferenceDef
       ) {
-        hasMany.push(this.wrapProperty(
-          definition.attribute,
-          this.getObjectName(references[definition.valueType.config.reference].name, 'Schema'),
-          2
-        ));
+        hasMany.push(getRefName(definition.valueType));
       }
     });
 
@@ -559,7 +562,11 @@ export default class Renderer {
 
     let schema = `export const ${name} = new Schema(${args.join(', ')})`;
 
-    if (fields.length && this.options.includeAttributes) {
+    if (fields.length || hasOne.length || hasMany.length) {
+      schema += `;\n\n${name}`;
+    }
+
+    if (fields.length) {
       schema += `${chain}.addAttributes(${this.formatArray(fields, 1)})`;
     }
 

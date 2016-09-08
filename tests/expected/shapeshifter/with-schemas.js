@@ -5,7 +5,14 @@ export const MultipleChildrenSchema = new Schema('multiple-children', 'uuid');
 
 export const SingleChildSchema = new Schema('single-child');
 
-export const ParentSchema = new Schema('parents')
+SingleChildSchema
+  .hasOne({
+    self: SingleChildSchema,
+  });
+
+export const ParentSchema = new Schema('parents');
+
+ParentSchema
   .hasOne({
     orphan: SingleChildSchema,
   })

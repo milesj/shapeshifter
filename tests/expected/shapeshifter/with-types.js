@@ -7,6 +7,7 @@ export type MultipleChildrenType = {
 export type SingleChildType = {
   id: number,
   active: boolean,
+  self: SingleChildType,
 };
 
 export type ParentType = {
