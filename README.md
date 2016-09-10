@@ -1,4 +1,4 @@
-# Shapeshifter v2.1.0
+# Shapeshifter v2.2.0
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
 Shapeshifter is a command line tool for generating ES2015 compatible
@@ -131,7 +131,7 @@ Defaults to "false".
 
 ## Documentation
 
-* [Schema Structure](#schema-structure)
+* [JSON Structure](#json-structure)
     * [Attributes](#attributes)
     * [Subsets](#subsets)
     * [Imports](#imports)
@@ -145,9 +145,15 @@ Defaults to "false".
     * [Shapes](#shapes)
     * [Unions](#unions)
     * [References](#references)
+        * [Self References](#self-references)
+        * [Exported Schemas](#exported-schemas)
+        * [Relation Type](#relation-type)
     * [Instance Ofs](#instance-ofs)
+* [Schema Classes](#schema-classes)
+    * [Including Attributes](#including-attributes)
+    * [Including Relations](#including-relations)
 
-### Schema Structure
+### JSON Structure
 
 A schema can either be a JSON file, or a JavaScript file
 that exports an object (Node.js compatible). JSON is preferred
@@ -297,11 +303,11 @@ without introducing duplication.
 
 The `meta` object allows arbitrary metadata to be defined. Only two
 fields are supported currently, `primaryKey` and `resourceName`, both
-of which are required when generating `Schema` classes using `--schemas`.
+of which are used when generating `Schema` classes using `--schemas`.
 The `primaryKey` defines the unique identifier / primary key of the record,
 usually "id" (default), while `resourceName` is the unique name found in
 a URL path. For example, in the URL "/api/users/123", the "users" path
-part would be the resource name.
+part would be the resource name, and "123" would be the primary key.
 
 ```json
 "meta": {
@@ -312,8 +318,9 @@ part would be the resource name.
 
 ### Attribute Types
 
-For every attribute defined in a schema, a type definition is required.
-The following types are supported.
+For every attribute defined in a JSON schema, a type definition is required.
+Types will be generated when the `--types` CLI option is passed. The
+following types are supported.
 
 #### Primitives
 
@@ -607,6 +614,39 @@ is not required.
 }
 ```
 
+##### Exported Schemas
+
+When generating schema classes using the `--schemas` CLI option,
+all references defined in a schema are considered a relation (ORM style),
+and in turn, will generate schemas as well. To disable this export
+from occurring, set `export` to false.
+
+```json
+"node": {
+    "type": "reference",
+    "reference": "field",
+    "export": false
+}
+```
+
+##### Relation Type
+
+When generating schema classes, like above, a reference attribute can
+define the type of relation it has with the parent schema, using ORM
+styled terminology, and the `relation` property.
+
+The following relation types are supported, which are based on the
+`Schema` [class constants](#schema-classes): `hasOne`, `hasMany`,
+`belongsTo`, and `belongsToMany` (many to many).
+
+```json
+"node": {
+    "type": "reference",
+    "reference": "field",
+    "relation": "belongsTo"
+}
+```
+
 #### Instance Ofs
 
 The `instance` type provides a mechanism for comparing a value to
@@ -649,6 +689,97 @@ model: UserModel;
 ```
 
 Alias names: `inst`
+
+#### Schema Classes
+
+Schema classes are ES2015 based classes that are generated and included
+in the output when `--schemas` is passed to the command line. These
+schemas provide basic attribute and relational support, which in turn
+can be used by consuming libraries through exports.
+
+Using our users example in the intro, and the `--schemas --attributes`
+CLI options, we would get the following output.
+
+```javascript
+export const UserSchema = new Schema('users', 'id');
+```
+
+The following properties are available on the `Schema` class instance.
+
+`resourceName` (string) - The resource name of the schema, passed as
+the first argument to the constructor. This field is based on
+`meta.resourceName` in the JSON schema file.
+
+`primaryKey` (string) - The name of the primary key in the current
+schema, passed as the second argument to the constructor. This field
+is based on `meta.primaryKey` in the JSON schema file. Defaults to "id".
+
+`attributes` (string[]) - List of attribute names in the current schema.
+
+`relations` (object[]) - List of relational objects that map specific
+attributes to externally referenced schemas. The relational object
+follows this structure:
+
+```javascript
+{
+    attribute: 'foo',           // Field name
+    schema: new Schema(),       // Reference schema class
+    relation: Schema.HAS_ONE,   // Relation type
+    collection: false,          // Is it an array?
+}
+```
+
+`relationTypes` (object) - Maps attribute names to relation types. A
+relation type is one of the following constants found on the `Schema`
+class: `HAS_ONE`, `HAS_MANY`, `BELONGS_TO`, `BELONGS_TO_MANY`.
+
+##### Including Attributes
+
+By default, attributes are excluded from the output unless the
+`--attributes` CLI option is passed. One passed, the are defined
+as a list of strings using `addAttributes()`.
+
+Continuing with our previous example, the output will be.
+
+```javascript
+export const UserSchema = new Schema('users', 'id');
+
+UserSchema
+    .addAttributes(['id', 'username', 'email', 'location']);
+```
+
+##### Including Relations
+
+Unlike attributes, relations are always included in the output, as
+relations between entities (via schemas) are highly informational.
+Relations are divided into 4 categories: has one, has many, belongs to,
+and belongs to many (many to many).
+
+Relations are generated based on [references](#references) found
+within the current schema. Assume we add a has many `posts` relation,
+and a has one `country` relation to the current `users` schema,
+we would generate the following output.
+
+```javascript
+export const CountrySchema = new Schema('countries');
+
+export const PostSchema = new Schema('posts');
+
+export const UserSchema = new Schema('users');
+
+PostSchema
+    .belongsTo({
+        user: UserSchema,
+    });
+
+UserSchema
+    .hasOne({
+        country: CountrySchema,
+    })
+    .hasMany({
+        posts: PostSchema,
+    });
+```
 
 ## FAQ
 

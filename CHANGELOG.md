@@ -1,3 +1,9 @@
+# 2.2.0
+* Updated references to toggle schema exporting via the `export` property.
+* Updated references to choose the relation type when schema exporting.
+* Fixed issues with self reference schema exports.
+* Fixed issues with circular references.
+
 # 2.1.0
 * Added `belongsTo()` and `belongsToMany()` to `Schema`.
 * Added `collection` boolean to the schema relation object.
