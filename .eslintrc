@@ -10,6 +10,7 @@
   "rules": {
     "no-param-reassign": 0,
     "padded-blocks": 0,
+    "class-methods-use-this": 0,
     "flowtype/require-parameter-type": 2,
     "flowtype/require-return-type": 2,
     "flowtype/space-after-type-colon": [2, "always"],

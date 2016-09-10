@@ -15,7 +15,7 @@ export default function indent(depth, character = '  ') {
 
   while (depth > 0) {
     response += character;
-    depth--;
+    depth -= 1;
   }
 
   return response;

@@ -64,7 +64,7 @@ export default class TypeScriptRenderer extends Renderer {
       case 'string':
         values.forEach((value) => {
           members.push(`${indent(1, char)}${value} = ${currentIndex}`);
-          currentIndex++;
+          currentIndex += 1;
         });
         break;
 
@@ -74,7 +74,7 @@ export default class TypeScriptRenderer extends Renderer {
       case 'boolean':
         values.forEach((value) => {
           members.push(`${indent(1, char)}${String.fromCodePoint(currentChar)} = ${Number(value)}`);
-          currentChar++;
+          currentChar += 1;
         });
         break;
 

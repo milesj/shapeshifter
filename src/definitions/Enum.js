@@ -44,6 +44,7 @@ export default class EnumDefinition extends Definition {
       valueType = 'string';
     }
 
+    // eslint-disable-next-line valid-typeof
     return (typeof value === valueType);
   }
 }
