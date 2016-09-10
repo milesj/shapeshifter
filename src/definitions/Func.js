@@ -15,7 +15,6 @@ export default class FuncDefinition extends Definition {
 
     const { argTypes, returnType } = this.config;
 
-    // TODO test
     if (typeof returnType !== 'undefined') {
       this.returnType = Factory.definition(this.options, 'returnType', returnType);
     }
