@@ -565,6 +565,10 @@ export default class Renderer {
           );
         }
 
+        if (!relationDefinition.config.export) {
+          return;
+        }
+
         relationName = relationDefinition.config.self
           ? this.reader.name
           : references[relationDefinition.config.reference].name;

@@ -43,4 +43,14 @@ describe('definitions/Reference', () => {
         )).to.throw(TypeError, 'Invalid type detected, "subset" property must be a string.');
       });
   });
+
+  it('errors if `export` is not a boolean', () => {
+    truthyValues
+      .filter(value => typeof value !== 'boolean')
+      .forEach(value => {
+        expect(() => (
+          new ReferenceDefinition(options, 'foo', { reference: 'foo', export: value })
+        )).to.throw(TypeError, 'Invalid type detected, "export" property must be a boolean.');
+      });
+  });
 });

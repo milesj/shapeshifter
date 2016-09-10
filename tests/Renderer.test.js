@@ -186,6 +186,26 @@ QuxSchema
       renderer.options.includeAttributes = false;
     });
 
+    it('renders template and ignores specific references', () => {
+      expect(renderer.renderSchema('QuxSchema', [
+        new StringDefinition(options, 'first_name'),
+        new StringDefinition(options, 'last_name'),
+        new ReferenceDefinition(options, 'post', {
+          reference: 'posts',
+          export: false,
+        }),
+        new ArrayDefinition(options, 'posts', {
+          valueType: {
+            type: 'reference',
+            reference: 'posts',
+            export: false,
+          },
+        }),
+      ], {
+        resourceName: 'quxs',
+      })).to.equal('export const QuxSchema = new Schema(\'quxs\');');
+    });
+
     it('renders template with one references', () => {
       renderer.reader.referenceReaders.posts = { name: 'Posts' };
 

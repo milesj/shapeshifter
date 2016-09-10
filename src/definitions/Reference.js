@@ -9,10 +9,20 @@ export default class ReferenceDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
+  constructor(options, attribute, config) {
+    super(options, attribute, {
+      export: true,
+      ...config,
+    });
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   validateConfig() {
     super.validateConfig();
 
-    const { reference, self, subset } = this.config;
+    const { reference, self, subset, export: doExport } = this.config;
 
     if (!reference && !self) {
       throw new SyntaxError(
@@ -30,6 +40,10 @@ export default class ReferenceDefinition extends Definition {
 
     if (subset && typeof subset !== 'string') {
       throw new TypeError('Invalid type detected, "subset" property must be a string.');
+    }
+
+    if (typeof doExport !== 'boolean') {
+      throw new TypeError('Invalid type detected, "export" property must be a boolean.');
     }
   }
 }
