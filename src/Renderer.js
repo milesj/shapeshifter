@@ -31,6 +31,7 @@ export default class Renderer {
     this.header = [];
     this.sets = [];
     this.schemas = [];
+    this.relations = [];
     this.referencePaths = [];
   }
 
@@ -152,6 +153,15 @@ export default class Renderer {
    */
   getObjectName(...names) {
     return names.map(formatName).join('');
+  }
+
+  /**
+   * Return a list of schema relations.
+   *
+   * @returns {String[]}
+   */
+  getRelations() {
+    return this.relations;
   }
 
   /**
@@ -539,7 +549,7 @@ export default class Renderer {
 
     attributes.forEach((definition) => {
       if (includeAttributes) {
-        fields.push(this.wrapItem(this.formatValue(definition.attribute, 'string'), 2));
+        fields.push(this.wrapItem(this.formatValue(definition.attribute, 'string'), 1));
       }
 
       // Single
@@ -576,12 +586,11 @@ export default class Renderer {
         relations[relationType].push(this.wrapProperty(
           relationDefinition.attribute,
           this.getObjectName(relationName, 'Schema'),
-          2
+          1
         ));
       }
     });
 
-    const chain = `\n${indent(1, this.options.indentCharacter)}`;
     const args = [this.formatValue(resourceName, 'string')];
 
     if (primaryKey) {
@@ -589,23 +598,25 @@ export default class Renderer {
     }
 
     const schemaTemplate = `export const ${name} = new Schema(${args.join(', ')});`;
-    let chainTemplate = '';
+
+    // Generate relations separately so that we avoid circular references
+    let relationTemplate = '';
 
     if (fields.length) {
-      chainTemplate += `${chain}.addAttributes(${this.formatArray(fields, 1)})`;
+      relationTemplate += `.addAttributes(${this.formatArray(fields, 0)})`;
     }
 
     Object.keys(relations).forEach((relation) => {
       if (relations[relation].length) {
-        chainTemplate += `${chain}.${relation}(${this.formatObject(relations[relation], 1)})`;
+        relationTemplate += `.${relation}(${this.formatObject(relations[relation], 0)})`;
       }
     });
 
-    if (chainTemplate) {
-      chainTemplate = `\n\n${name}${chainTemplate};`;
+    if (relationTemplate) {
+      this.relations.push(`${name}${relationTemplate};`);
     }
 
-    return `${schemaTemplate}${chainTemplate}`;
+    return `${schemaTemplate}`;
   }
 
   /**

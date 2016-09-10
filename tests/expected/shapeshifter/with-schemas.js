@@ -5,17 +5,14 @@ export const MultipleChildrenSchema = new Schema('multiple-children', 'uuid');
 
 export const SingleChildSchema = new Schema('single-child');
 
-SingleChildSchema
-  .hasOne({
-    self: SingleChildSchema,
-  });
-
 export const ParentSchema = new Schema('parents');
 
-ParentSchema
-  .hasOne({
-    orphan: SingleChildSchema,
-  })
-  .belongsToMany({
-    children: MultipleChildrenSchema,
-  });
+SingleChildSchema.hasOne({
+  self: SingleChildSchema,
+});
+
+ParentSchema.hasOne({
+  orphan: SingleChildSchema,
+}).belongsToMany({
+  children: MultipleChildrenSchema,
+});

@@ -175,13 +175,14 @@ describe('Renderer', () => {
         new StringDefinition(options, 'last_name'),
       ], {
         resourceName: 'quxs',
-      })).to.equal(`export const QuxSchema = new Schema('quxs');
+      })).to.equal('export const QuxSchema = new Schema(\'quxs\');');
 
-QuxSchema
-  .addAttributes([
-    'first_name',
-    'last_name',
-  ]);`);
+      expect(renderer.relations).to.deep.equal([
+        `QuxSchema.addAttributes([
+  'first_name',
+  'last_name',
+]);`,
+      ]);
 
       renderer.options.includeAttributes = false;
     });
@@ -215,12 +216,13 @@ QuxSchema
         new ReferenceDefinition(options, 'post', { reference: 'posts' }),
       ], {
         resourceName: 'quxs',
-      })).to.equal(`export const QuxSchema = new Schema('quxs');
+      })).to.equal('export const QuxSchema = new Schema(\'quxs\');');
 
-QuxSchema
-  .hasOne({
-    post: PostsSchema,
-  });`);
+      expect(renderer.relations).to.deep.equal([
+        `QuxSchema.hasOne({
+  post: PostsSchema,
+});`,
+      ]);
     });
 
     it('renders template with many references', () => {
@@ -235,12 +237,13 @@ QuxSchema
         }),
       ], {
         resourceName: 'quxs',
-      })).to.equal(`export const QuxSchema = new Schema('quxs');
+      })).to.equal('export const QuxSchema = new Schema(\'quxs\');');
 
-QuxSchema
-  .hasMany({
-    posts: PostsSchema,
-  });`);
+      expect(renderer.relations).to.deep.equal([
+        `QuxSchema.hasMany({
+  posts: PostsSchema,
+});`,
+      ]);
     });
 
     it('renders template with one/many references and a custom relation name', () => {
@@ -260,15 +263,15 @@ QuxSchema
         }),
       ], {
         resourceName: 'quxs',
-      })).to.equal(`export const QuxSchema = new Schema('quxs');
+      })).to.equal('export const QuxSchema = new Schema(\'quxs\');');
 
-QuxSchema
-  .belongsTo({
-    post: PostsSchema,
-  })
-  .belongsToMany({
-    posts: PostsSchema,
-  });`);
+      expect(renderer.relations).to.deep.equal([
+        `QuxSchema.belongsTo({
+  post: PostsSchema,
+}).belongsToMany({
+  posts: PostsSchema,
+});`,
+      ]);
     });
 
     it('renders template with everything', () => {
@@ -290,21 +293,20 @@ QuxSchema
         }),
       ], {
         resourceName: 'quxs',
-      })).to.equal(`export const QuxSchema = new Schema('quxs');
+      })).to.equal('export const QuxSchema = new Schema(\'quxs\');');
 
-QuxSchema
-  .addAttributes([
-    'first_name',
-    'last_name',
-    'post',
-    'posts',
-  ])
-  .hasMany({
-    posts: PostsSchema,
-  })
-  .belongsTo({
-    post: PostsSchema,
-  });`);
+      expect(renderer.relations).to.deep.equal([
+        `QuxSchema.addAttributes([
+  'first_name',
+  'last_name',
+  'post',
+  'posts',
+]).hasMany({
+  posts: PostsSchema,
+}).belongsTo({
+  post: PostsSchema,
+});`,
+      ]);
 
       renderer.options.includeAttributes = false;
     });

@@ -159,6 +159,7 @@ export default class Transpiler {
       let constants = new Set();
       let header = new Set();
       let schemas = new Set();
+      let relations = new Set();
       let sets = new Set();
 
       // Wrap in a set to remove duplicates
@@ -175,6 +176,7 @@ export default class Transpiler {
         constants = new Set([...constants.values(), ...renderer.getConstants()]);
         header = new Set([...header.values(), ...renderer.getHeader()]);
         schemas = new Set([...schemas.values(), ...renderer.getSchemas()]);
+        relations = new Set([...relations.values(), ...renderer.getRelations()]);
         sets = new Set([...sets.values(), ...renderer.getSets()]);
 
         rendered.add(reader.path);
@@ -187,6 +189,7 @@ export default class Transpiler {
       chunks.push(Array.from(constants.values()).join('\n'));
       chunks.push(Array.from(header.values()).join('\n\n'));
       chunks.push(Array.from(schemas.values()).join('\n\n'));
+      chunks.push(Array.from(relations.values()).join('\n\n'));
       chunks.push(Array.from(sets.values()).join('\n\n'));
 
       resolve(`${chunks.filter(value => !!value).join('\n\n')}\n`);
