@@ -1,13 +1,20 @@
 import { expect } from 'chai';
 import Renderer from '../lib/Renderer';
 import SchemaReader from '../lib/SchemaReader';
+import ArrayDefinition from '../lib/definitions/Array';
+import StringDefinition from '../lib/definitions/String';
+import ReferenceDefinition from '../lib/definitions/Reference';
 import { options } from './mocks';
 
 describe('Renderer', () => {
-  const renderer = new Renderer(options, new SchemaReader('/foo.json', {
-    name: 'foo Bar-Baz',
-    attributes: { foo: 'string' },
-  }, options));
+  let renderer;
+
+  beforeEach(() => {
+    renderer = new Renderer(options, new SchemaReader('/foo.json', {
+      name: 'foo Bar-Baz',
+      attributes: { foo: 'string' },
+    }, options));
+  });
 
   describe('formatArray()', () => {
     it('formats a string into brackets', () => {
@@ -135,6 +142,168 @@ describe('Renderer', () => {
         default: 'DefaultName',
         named: ['foo', 'bar'],
       })).to.equal('import DefaultName, { foo, bar } from \'/\';');
+    });
+  });
+
+  describe('renderSchema()', () => {
+    it('errors if no resource name', () => {
+      expect(() => renderer.renderSchema('QuxSchema', [], {})).to.throw(SyntaxError);
+    });
+
+    it('errors if invalud resource name', () => {
+      expect(() => renderer.renderSchema('QuxSchema', [], { resourceName: true })).to.throw(SyntaxError);
+    });
+
+    it('renders template', () => {
+      expect(renderer.renderSchema('QuxSchema', [], {
+        resourceName: 'quxs',
+      })).to.equal('export const QuxSchema = new Schema(\'quxs\');');
+    });
+
+    it('renders template with primary key', () => {
+      expect(renderer.renderSchema('QuxSchema', [], {
+        resourceName: 'quxs',
+        primaryKey: 'uuid',
+      })).to.equal('export const QuxSchema = new Schema(\'quxs\', \'uuid\');');
+    });
+
+    it('renders template with attributes', () => {
+      renderer.options.includeAttributes = true;
+
+      expect(renderer.renderSchema('QuxSchema', [
+        new StringDefinition(options, 'first_name'),
+        new StringDefinition(options, 'last_name'),
+      ], {
+        resourceName: 'quxs',
+      })).to.equal(`export const QuxSchema = new Schema('quxs');
+
+QuxSchema
+  .addAttributes([
+    'first_name',
+    'last_name',
+  ]);`);
+
+      renderer.options.includeAttributes = false;
+    });
+
+    it('renders template with one references', () => {
+      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+
+      expect(renderer.renderSchema('QuxSchema', [
+        new StringDefinition(options, 'first_name'),
+        new StringDefinition(options, 'last_name'),
+        new ReferenceDefinition(options, 'post', { reference: 'posts' }),
+      ], {
+        resourceName: 'quxs',
+      })).to.equal(`export const QuxSchema = new Schema('quxs');
+
+QuxSchema
+  .hasOne({
+    post: PostsSchema,
+  });`);
+    });
+
+    it('renders template with many references', () => {
+      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+
+      expect(renderer.renderSchema('QuxSchema', [
+        new ArrayDefinition(options, 'posts', {
+          valueType: {
+            type: 'reference',
+            reference: 'posts',
+          },
+        }),
+      ], {
+        resourceName: 'quxs',
+      })).to.equal(`export const QuxSchema = new Schema('quxs');
+
+QuxSchema
+  .hasMany({
+    posts: PostsSchema,
+  });`);
+    });
+
+    it('renders template with one/many references and a custom relation name', () => {
+      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+
+      expect(renderer.renderSchema('QuxSchema', [
+        new ReferenceDefinition(options, 'post', {
+          reference: 'posts',
+          relation: 'belongsTo',
+        }),
+        new ArrayDefinition(options, 'posts', {
+          valueType: {
+            type: 'reference',
+            reference: 'posts',
+            relation: 'belongsToMany',
+          },
+        }),
+      ], {
+        resourceName: 'quxs',
+      })).to.equal(`export const QuxSchema = new Schema('quxs');
+
+QuxSchema
+  .belongsTo({
+    post: PostsSchema,
+  })
+  .belongsToMany({
+    posts: PostsSchema,
+  });`);
+    });
+
+    it('renders template with everything', () => {
+      renderer.options.includeAttributes = true;
+      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+
+      expect(renderer.renderSchema('QuxSchema', [
+        new StringDefinition(options, 'first_name'),
+        new StringDefinition(options, 'last_name'),
+        new ReferenceDefinition(options, 'post', {
+          reference: 'posts',
+          relation: 'belongsTo',
+        }),
+        new ArrayDefinition(options, 'posts', {
+          valueType: {
+            type: 'reference',
+            reference: 'posts',
+          },
+        }),
+      ], {
+        resourceName: 'quxs',
+      })).to.equal(`export const QuxSchema = new Schema('quxs');
+
+QuxSchema
+  .addAttributes([
+    'first_name',
+    'last_name',
+    'post',
+    'posts',
+  ])
+  .hasMany({
+    posts: PostsSchema,
+  })
+  .belongsTo({
+    post: PostsSchema,
+  });`);
+
+      renderer.options.includeAttributes = false;
+    });
+
+    it('errors for invalid relation name', () => {
+      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+
+      expect(() => (
+        renderer.renderSchema('QuxSchema', [
+          new StringDefinition(options, 'first_name'),
+          new StringDefinition(options, 'last_name'),
+          new ReferenceDefinition(options, 'post', {
+            reference: 'posts',
+            relation: 'watwat',
+          }),
+        ], {
+          resourceName: 'quxs',
+        })
+      )).to.throw(Error);
     });
   });
 
