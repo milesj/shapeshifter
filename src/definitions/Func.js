@@ -11,8 +11,8 @@ import type { FuncConfig } from '../types';
 
 export default class FuncDefinition extends Definition {
   config: FuncConfig;
-  returnType: Definition;
-  argTypes: Definition[];
+  returnType: ?Definition;
+  argTypes: ?Definition[];
 
   /**
    * {@inheritDoc}

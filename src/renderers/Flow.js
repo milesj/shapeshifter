@@ -1,13 +1,29 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import Renderer from '../Renderer';
+import SchemaReader from '../SchemaReader';
+import Definition from '../Definition';
+import ArrayDefinition from '../definitions/Array';
+import BoolDefinition from '../definitions/Bool';
+import EnumDefinition from '../definitions/Enum';
+import FuncDefinition from '../definitions/Func';
+import InstanceDefinition from '../definitions/Instance';
+import NumberDefinition from '../definitions/Number';
+import ObjectDefinition from '../definitions/Object';
+import ReferenceDefinition from '../definitions/Reference';
+import ShapeDefinition from '../definitions/Shape';
+import StringDefinition from '../definitions/String';
+import UnionDefinition from '../definitions/Union';
 import isPrimitive from '../helpers/isPrimitive';
 
+import type { Options } from '../types';
+
 export default class FlowRenderer extends Renderer {
-  constructor(options, reader) {
+  constructor(options: Options, reader: SchemaReader) {
     super(options, reader);
 
     this.suffix = 'Type';
@@ -16,21 +32,24 @@ export default class FlowRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  afterParse() {
+  afterParse(): void {
     this.imports.unshift('// @flow');
   }
 
   /**
    * {@inheritDoc}
    */
-  render(setName, attributes = {}) {
-    return `export type ${setName} = ${this.renderShape({ attributes }, 0)};`;
+  render(setName: string, attributes: Definition[] = []) {
+    const shape = new ShapeDefinition(this.options, setName);
+    shape.attributes = attributes;
+
+    return `export type ${setName} = ${this.renderShape(shape, 0)};`;
   }
 
   /**
    * {@inheritDoc}
    */
-  renderArray(definition, depth) {
+  renderArray(definition: ArrayDefinition, depth: number): string {
     const configType = definition.valueType.config.type;
     let template = this.renderAttribute(definition.valueType, depth);
 
@@ -46,14 +65,14 @@ export default class FlowRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  renderBool(definition) {
+  renderBool(definition: BoolDefinition): string {
     return this.wrapNullable(definition, 'boolean');
   }
 
   /**
    * {@inheritDoc}
    */
-  renderEnum(definition, depth) {
+  renderEnum(definition: EnumDefinition, depth: number): string {
     const { values, valueType } = definition.config;
 
     return values
@@ -64,7 +83,7 @@ export default class FlowRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  renderFunc(definition, depth) {
+  renderFunc(definition: FuncDefinition, depth: number): string {
     const returnType = definition.returnType
         ? this.renderAttribute(definition.returnType, depth + 1)
         : 'void';
@@ -80,21 +99,21 @@ export default class FlowRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  renderInstance(definition) {
+  renderInstance(definition: InstanceDefinition): string {
     return this.wrapNullable(definition, this.formatValue(definition.config.contract, 'function'));
   }
 
   /**
    * {@inheritDoc}
    */
-  renderNumber(definition) {
+  renderNumber(definition: NumberDefinition): string {
     return this.wrapNullable(definition, 'number');
   }
 
   /**
    * {@inheritDoc}
    */
-  renderObject(definition, depth) {
+  renderObject(definition: ObjectDefinition, depth: number): string {
     const key = this.renderAttribute(definition.keyType, depth);
     const value = this.renderAttribute(definition.valueType, depth);
 
@@ -105,14 +124,14 @@ export default class FlowRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  renderReference(definition) {
+  renderReference(definition: ReferenceDefinition): string {
     return this.wrapNullable(definition, super.renderReference(definition));
   }
 
   /**
    * {@inheritDoc}
    */
-  renderShape(definition, depth) {
+  renderShape(definition: ShapeDefinition, depth: number): string {
     return this.wrapNullable(definition,
       this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth));
   }
@@ -120,17 +139,17 @@ export default class FlowRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  renderUnion(definition, depth) {
-    return definition.valueTypes
-      .map(item => this.renderAttribute(item, depth))
-      .join(' | ');
+  renderString(definition: StringDefinition): string {
+    return this.wrapNullable(definition, 'string');
   }
 
   /**
    * {@inheritDoc}
    */
-  renderString(definition) {
-    return this.wrapNullable(definition, 'string');
+  renderUnion(definition: UnionDefinition, depth: number): string {
+    return definition.valueTypes
+      .map(item => this.renderAttribute(item, depth))
+      .join(' | ');
   }
 
   /**
@@ -140,7 +159,7 @@ export default class FlowRenderer extends Renderer {
    * @param {String} template
    * @returns {String}
    */
-  wrapNullable(definition, template) {
+  wrapNullable(definition: Definition, template: string): string {
     if (definition.isNullable && definition.isNullable()) {
       return `?${template}`;
     }

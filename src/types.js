@@ -76,10 +76,10 @@ export type ObjectConfig = {
 
 export type ReferenceConfig = {
   type: string,
-  reference?: string,
+  reference: string,
+  self: boolean,
   subset?: string,
   relation?: string,
-  self?: boolean,
   export?: boolean,
   null?: boolean,
   required?: boolean,

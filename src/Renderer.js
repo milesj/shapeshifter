@@ -22,7 +22,6 @@ import UnionDefinition from './definitions/Union';
 import indent from './helpers/indent';
 import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
-import isObject from './helpers/isObject';
 
 import type {
   Options,
@@ -338,7 +337,7 @@ export default class Renderer {
   /**
    * Render the current schema into a formatted output.
    */
-  render(): string {
+  render(setName: string, attributes: Definition[] = []): string {
     throw new Error('Renderer not implemented.');
   }
 
@@ -390,7 +389,7 @@ export default class Renderer {
   /**
    * Render an array definition.
    */
-  renderArray(): string {
+  renderArray(definition: ArrayDefinition, depth: number): string {
     return this.unsupported('array');
   }
 
@@ -402,14 +401,14 @@ export default class Renderer {
    * @param {String} [valueType]
    * @returns {Array}
    */
-  renderArrayItems(items: any[], depth: number = 0, valueType: string): string[] {
+  renderArrayItems(items: any[], depth: number = 0, valueType: string = ''): string[] {
     return items.map(item => this.wrapItem(this.renderOrFormat(item, depth, valueType), depth));
   }
 
   /**
    * Render a boolean definition.
    */
-  renderBool(): string {
+  renderBool(definition: BoolDefinition): string {
     return this.unsupported('boolean');
   }
 
@@ -433,23 +432,21 @@ export default class Renderer {
   /**
    * Render an enum definition.
    */
-  renderEnum(): string {
+  renderEnum(definition: EnumDefinition, depth: number): string {
     return this.unsupported('enum');
   }
 
   /**
    * Render a function definition.
    */
-  renderFunc(): string {
+  renderFunc(definition: FuncDefinition, depth: number): string {
     return this.unsupported('function');
   }
 
   /**
    * Render an import statement.
    *
-   * @param {String} defaultName
-   * @param {String[]} named
-   * @param {String} path
+   * @param {Object} statement
    * @returns {String}
    */
   renderImport(statement: ImportStructure): string {
@@ -482,21 +479,21 @@ export default class Renderer {
   /**
    * Render an instance definition.
    */
-  renderInstance(): string {
+  renderInstance(definition: InstanceDefinition): string {
     return this.unsupported('instance');
   }
 
   /**
    * Render a number definition.
    */
-  renderNumber(): string {
+  renderNumber(definition: NumberDefinition): string {
     return this.unsupported('number');
   }
 
   /**
    * Render an object definition.
    */
-  renderObject(): string {
+  renderObject(definition: ObjectDefinition, depth: number): string {
     return this.unsupported('object');
   }
 
@@ -534,7 +531,7 @@ export default class Renderer {
    * @param {Definition} definition
    * @returns {String}
    */
-  renderReference(definition: Definition): string {
+  renderReference(definition: ReferenceDefinition): string {
     const { reference, self, subset } = definition.config;
     const refReader = self ? this.reader : this.reader.referenceReaders[reference];
 
@@ -550,7 +547,7 @@ export default class Renderer {
       );
     }
 
-    return this.getObjectName(refReader.name, subset, this.suffix);
+    return this.getObjectName(refReader.name, subset || '', this.suffix);
   }
 
   /**
@@ -658,22 +655,22 @@ export default class Renderer {
   /**
    * Render a shape definition.
    */
-  renderShape(): string {
+  renderShape(definition: ShapeDefinition, depth: number): string {
     return this.unsupported('shape');
-  }
-
-  /**
-   * Render a union definition.
-   */
-  renderUnion(): string {
-    return this.unsupported('union');
   }
 
   /**
    * Render a string definition.
    */
-  renderString(): string {
+  renderString(definition: StringDefinition): string {
     return this.unsupported('string');
+  }
+
+  /**
+   * Render a union definition.
+   */
+  renderUnion(definition: UnionDefinition, depth: number): string {
+    return this.unsupported('union');
   }
 
   /**

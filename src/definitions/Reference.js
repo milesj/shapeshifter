@@ -16,6 +16,8 @@ export default class ReferenceDefinition extends Definition {
    */
   constructor(options: Options, attribute: string, config: Object) {
     super(options, attribute, {
+      reference: '',
+      self: false,
       export: true,
       ...config,
     });
