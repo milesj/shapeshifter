@@ -29,13 +29,13 @@ describe('Transpiler', function () {
   this.timeout(0);
 
   describe('transpile()', () => {
-    RENDERERS.forEach(renderer => {
+    RENDERERS.forEach((renderer) => {
       describe(`outputs ${renderer.name}`, function () {
 
-        SUPPORTED_FORMATS.forEach(format => {
+        SUPPORTED_FORMATS.forEach((format) => {
           describe(`from ${format.toUpperCase()} files`, function () {
 
-            SCHEMA_CASES.forEach(schema => {
+            SCHEMA_CASES.forEach((schema) => {
               it(`when rendering schema case "${schema}"`, function () {
                 const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
                 const expectedPath = `${__dirname}/expected/${renderer.key}/${schema}.${renderer.ext}`;

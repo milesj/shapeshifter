@@ -1,28 +1,52 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import Factory from './Factory';
 import Definition from './Definition';
 import Schema from './Schema';
-import ArrayDef from './definitions/Array';
-import BoolDef from './definitions/Bool';
-import EnumDef from './definitions/Enum';
-import FuncDef from './definitions/Func';
-import InstanceDef from './definitions/Instance';
-import NumberDef from './definitions/Number';
-import ObjectDef from './definitions/Object';
-import ReferenceDef from './definitions/Reference';
-import ShapeDef from './definitions/Shape';
-import StringDef from './definitions/String';
-import UnionDef from './definitions/Union';
+import SchemaReader from './SchemaReader';
+import ArrayDefinition from './definitions/Array';
+import BoolDefinition from './definitions/Bool';
+import EnumDefinition from './definitions/Enum';
+import FuncDefinition from './definitions/Func';
+import InstanceDefinition from './definitions/Instance';
+import NumberDefinition from './definitions/Number';
+import ObjectDefinition from './definitions/Object';
+import ReferenceDefinition from './definitions/Reference';
+import ShapeDefinition from './definitions/Shape';
+import StringDefinition from './definitions/String';
+import UnionDefinition from './definitions/Union';
 import indent from './helpers/indent';
 import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
 
+import type {
+  Options,
+  BaseConfig,
+  ReferenceConfig,
+  PrimitiveType,
+  MetadataField,
+  ImportStructure,
+} from './types';
+
+type TemplateList = string[];
+
 export default class Renderer {
-  constructor(options, reader) {
+  options: Options;
+  reader: SchemaReader;
+  suffix: string;
+  imports: TemplateList;
+  constants: TemplateList;
+  header: TemplateList;
+  sets: TemplateList;
+  schemas: TemplateList;
+  relations: TemplateList;
+  referencePaths: string[];
+
+  constructor(options: Options, reader: SchemaReader) {
     this.options = options;
     this.reader = reader;
     this.suffix = '';
@@ -54,7 +78,12 @@ export default class Renderer {
    * @param {String} indentSpacer
    * @returns {String}
    */
-  formatArray(items, depth, itemSpacer = '\n', indentSpacer = '\n') {
+  formatArray(
+    items: string | string[],
+    depth: number,
+    itemSpacer: string = '\n',
+    indentSpacer: string = '\n'
+  ): string {
     if (Array.isArray(items)) {
       items = items.join(itemSpacer);
     }
@@ -71,7 +100,12 @@ export default class Renderer {
    * @param {String} indentSpacer
    * @returns {String}
    */
-  formatObject(props, depth, propSpacer = '\n', indentSpacer = '\n') {
+  formatObject(
+    props: string | string[],
+    depth: number,
+    propSpacer: string = '\n',
+    indentSpacer: string = '\n'
+  ): string {
     if (Array.isArray(props)) {
       props = props.join(propSpacer);
     }
@@ -86,7 +120,7 @@ export default class Renderer {
    * @param {String} [type]
    * @returns {String}
    */
-  formatValue(value, type) {
+  formatValue(value: any, type: string = ''): string {
     if (value === null) {
       return 'null';
     }
@@ -114,7 +148,7 @@ export default class Renderer {
    *
    * @returns {String[]}
    */
-  getConstants() {
+  getConstants(): TemplateList {
     return this.constants;
   }
 
@@ -123,7 +157,7 @@ export default class Renderer {
    *
    * @returns {String[]}
    */
-  getHeader() {
+  getHeader(): TemplateList {
     return this.header;
   }
 
@@ -132,7 +166,7 @@ export default class Renderer {
    *
    * @returns {String[]}
    */
-  getImports() {
+  getImports(): TemplateList {
     return this.imports;
   }
 
@@ -141,7 +175,7 @@ export default class Renderer {
    *
    * @returns {String[]}
    */
-  getReferences() {
+  getReferences(): TemplateList {
     return this.referencePaths;
   }
 
@@ -151,7 +185,7 @@ export default class Renderer {
    * @param {String...} names
    * @returns {String}
    */
-  getObjectName(...names) {
+  getObjectName(...names: string[]): string {
     return names.map(formatName).join('');
   }
 
@@ -160,7 +194,7 @@ export default class Renderer {
    *
    * @returns {String[]}
    */
-  getRelations() {
+  getRelations(): TemplateList {
     return this.relations;
   }
 
@@ -169,7 +203,7 @@ export default class Renderer {
    *
    * @returns {String[]}
    */
-  getSchemas() {
+  getSchemas(): TemplateList {
     return this.schemas;
   }
 
@@ -178,7 +212,7 @@ export default class Renderer {
    *
    * @returns {String[]}
    */
-  getSets() {
+  getSets(): TemplateList {
     return this.sets;
   }
 
@@ -201,7 +235,7 @@ export default class Renderer {
   parseConstants() {
     const { constants } = this.reader;
 
-    Object.keys(constants).forEach(key => {
+    Object.keys(constants).forEach((key) => {
       this.constants.push(this.renderConstant(key, constants[key]));
     });
   }
@@ -210,8 +244,8 @@ export default class Renderer {
    * Parse all imports out of the schema and append to the renderer.
    */
   parseImports() {
-    this.reader.imports.forEach(importStatement => {
-      this.imports.push(this.renderImport(importStatement));
+    this.reader.imports.forEach((statement) => {
+      this.imports.push(this.renderImport(statement));
     });
   }
 
@@ -219,7 +253,7 @@ export default class Renderer {
    * Parse out all reference paths.
    */
   parseReferences() {
-    Object.keys(this.reader.references).forEach(key => {
+    Object.keys(this.reader.references).forEach((key) => {
       this.referencePaths.push(this.reader.references[key]);
     });
   }
@@ -258,7 +292,7 @@ export default class Renderer {
     const { attributes, subsets, name } = this.reader;
 
     // Subsets
-    Object.keys(subsets).forEach(setName => {
+    Object.keys(subsets).forEach((setName) => {
       const setAttributes = [];
       let subset = subsets[setName];
 
@@ -269,7 +303,7 @@ export default class Renderer {
       const nullable = subset.null || {};
       const required = subset.required || {};
 
-      subset.attributes.forEach(attribute => {
+      subset.attributes.forEach((attribute) => {
         let setConfig = baseAttributes[attribute];
 
         if (!setConfig) {
@@ -277,9 +311,9 @@ export default class Renderer {
         }
 
         if (typeof setConfig === 'string') {
-          setConfig = { type: setConfig };
+          setConfig = ({ type: setConfig }: BaseConfig);
         } else {
-          setConfig = { ...setConfig }; // Dereference original object
+          setConfig = ({ ...setConfig }: BaseConfig); // Dereference original object
         }
 
         if (attribute in nullable) {
@@ -303,7 +337,7 @@ export default class Renderer {
   /**
    * Render the current schema into a formatted output.
    */
-  render() {
+  render(setName: string, attributes: Definition[] = []): string {
     throw new Error('Renderer not implemented.');
   }
 
@@ -314,49 +348,49 @@ export default class Renderer {
    * @param {Number} depth
    * @returns {String}
    */
-  renderAttribute(definition, depth = 0) {
-    if (definition instanceof ArrayDef) {
+  renderAttribute(definition: Definition, depth: number = 0): string {
+    if (definition instanceof ArrayDefinition) {
       return this.renderArray(definition, depth);
 
-    } else if (definition instanceof BoolDef) {
+    } else if (definition instanceof BoolDefinition) {
       return this.renderBool(definition, depth);
 
-    } else if (definition instanceof EnumDef) {
+    } else if (definition instanceof EnumDefinition) {
       return this.renderEnum(definition, depth);
 
-    } else if (definition instanceof FuncDef) {
+    } else if (definition instanceof FuncDefinition) {
       return this.renderFunc(definition, depth);
 
-    } else if (definition instanceof InstanceDef) {
+    } else if (definition instanceof InstanceDefinition) {
       return this.renderInstance(definition, depth);
 
-    } else if (definition instanceof NumberDef) {
+    } else if (definition instanceof NumberDefinition) {
       return this.renderNumber(definition, depth);
 
-    } else if (definition instanceof ObjectDef) {
+    } else if (definition instanceof ObjectDefinition) {
       return this.renderObject(definition, depth);
 
-    } else if (definition instanceof ReferenceDef) {
+    } else if (definition instanceof ReferenceDefinition) {
       return this.renderReference(definition, depth);
 
-    } else if (definition instanceof ShapeDef) {
+    } else if (definition instanceof ShapeDefinition) {
       return this.renderShape(definition, depth);
 
-    } else if (definition instanceof StringDef) {
+    } else if (definition instanceof StringDefinition) {
       return this.renderString(definition, depth);
 
-    } else if (definition instanceof UnionDef) {
+    } else if (definition instanceof UnionDefinition) {
       return this.renderUnion(definition, depth);
     }
 
-    return null;
+    return '';
   }
 
   /**
    * Render an array definition.
    */
-  renderArray() {
-    this.unsupported('array');
+  renderArray(definition: ArrayDefinition, depth: number): string {
+    return this.unsupported('array');
   }
 
   /**
@@ -367,15 +401,15 @@ export default class Renderer {
    * @param {String} [valueType]
    * @returns {Array}
    */
-  renderArrayItems(items, depth = 0, valueType) {
+  renderArrayItems(items: any[], depth: number = 0, valueType: string = ''): string[] {
     return items.map(item => this.wrapItem(this.renderOrFormat(item, depth, valueType), depth));
   }
 
   /**
    * Render a boolean definition.
    */
-  renderBool() {
-    this.unsupported('boolean');
+  renderBool(definition: BoolDefinition): string {
+    return this.unsupported('boolean');
   }
 
   /**
@@ -385,7 +419,7 @@ export default class Renderer {
    * @param {*} value
    * @returns {String}
    */
-  renderConstant(name, value) {
+  renderConstant(name: string, value: PrimitiveType | PrimitiveType[]): string {
     if (Array.isArray(value)) {
       value = this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
     } else {
@@ -398,26 +432,26 @@ export default class Renderer {
   /**
    * Render an enum definition.
    */
-  renderEnum() {
-    this.unsupported('enum');
+  renderEnum(definition: EnumDefinition, depth: number): string {
+    return this.unsupported('enum');
   }
 
   /**
    * Render a function definition.
    */
-  renderFunc() {
-    this.unsupported('function');
+  renderFunc(definition: FuncDefinition, depth: number): string {
+    return this.unsupported('function');
   }
 
   /**
    * Render an import statement.
    *
-   * @param {String} defaultName
-   * @param {String[]} named
-   * @param {String} path
+   * @param {Object} statement
    * @returns {String}
    */
-  renderImport({ default: defaultName, named = [], path }) {
+  renderImport(statement: ImportStructure): string {
+    const { default: defaultName, named = [], path } = statement;
+
     if (!path) {
       throw new SyntaxError('Import statements require a file path.');
 
@@ -445,22 +479,22 @@ export default class Renderer {
   /**
    * Render an instance definition.
    */
-  renderInstance() {
-    this.unsupported('instance');
+  renderInstance(definition: InstanceDefinition): string {
+    return this.unsupported('instance');
   }
 
   /**
    * Render a number definition.
    */
-  renderNumber() {
-    this.unsupported('number');
+  renderNumber(definition: NumberDefinition): string {
+    return this.unsupported('number');
   }
 
   /**
    * Render an object definition.
    */
-  renderObject() {
-    this.unsupported('object');
+  renderObject(definition: ObjectDefinition, depth: number): string {
+    return this.unsupported('object');
   }
 
   /**
@@ -471,7 +505,7 @@ export default class Renderer {
    * @param {String} sep
    * @returns {Array}
    */
-  renderObjectProps(props, depth = 0, sep = ',') {
+  renderObjectProps(props: Definition[], depth: number = 0, sep: string = ','): string[] {
     return props.map(prop => (
       this.wrapProperty(this.wrapPropertyName(prop), this.renderAttribute(prop, depth), depth, sep)
     ));
@@ -485,7 +519,7 @@ export default class Renderer {
    * @param {String} [valueType]
    * @returns {String}
    */
-  renderOrFormat(value, depth, valueType) {
+  renderOrFormat(value: any | Definition, depth: number, valueType: string = ''): string {
     return (value instanceof Definition)
       ? this.renderAttribute(value, depth)
       : this.formatValue(value, valueType);
@@ -497,8 +531,8 @@ export default class Renderer {
    * @param {Definition} definition
    * @returns {String}
    */
-  renderReference(definition) {
-    const { reference, self, subset } = definition.config;
+  renderReference(definition: ReferenceDefinition): string {
+    const { reference, self, subset = '' } = definition.config;
     const refReader = self ? this.reader : this.reader.referenceReaders[reference];
 
     if (!refReader) {
@@ -524,12 +558,12 @@ export default class Renderer {
    * @param {Object} metadata
    * @returns {string}
    */
-  renderSchema(name, attributes, metadata) {
+  renderSchema(name: string, attributes: Definition[] = [], metadata: MetadataField): string {
     const { primaryKey, resourceName } = metadata;
     const { includeAttributes } = this.options;
     const references = this.reader.referenceReaders;
     const fields = [];
-    const relations = {
+    const relations: { [key: string]: string[] } = {
       [Schema.HAS_ONE]: [],
       [Schema.HAS_MANY]: [],
       [Schema.BELONGS_TO]: [],
@@ -543,9 +577,8 @@ export default class Renderer {
       );
     }
 
-    let relationDefinition;
-    let relationType;
-    let relationName;
+    let relationDefinition: ?ReferenceDefinition = null;
+    let relationType: string = '';
 
     attributes.forEach((definition) => {
       if (includeAttributes) {
@@ -553,18 +586,15 @@ export default class Renderer {
       }
 
       // Single
-      if (definition instanceof ReferenceDef) {
+      if (definition instanceof ReferenceDefinition) {
         relationDefinition = definition;
-        relationType = relationDefinition.config.relation || Schema.HAS_ONE;
+        relationType = Schema.HAS_ONE;
       }
 
       // Multiple
-      if (
-        definition instanceof ArrayDef &&
-        definition.valueType instanceof ReferenceDef
-      ) {
+      if (definition.valueType && definition.valueType instanceof ReferenceDefinition) {
         relationDefinition = definition.valueType;
-        relationType = relationDefinition.config.relation || Schema.HAS_MANY;
+        relationType = Schema.HAS_MANY;
       }
 
       // Validate and format template
@@ -575,15 +605,17 @@ export default class Renderer {
           );
         }
 
-        if (!relationDefinition.config.export) {
+        const relationConfig: ReferenceConfig = relationDefinition.config;
+
+        if (!relationConfig.export) {
           return;
         }
 
-        relationName = relationDefinition.config.self
+        const relationName = relationConfig.self
           ? this.reader.name
-          : references[relationDefinition.config.reference].name;
+          : references[relationConfig.reference].name;
 
-        relations[relationType].push(this.wrapProperty(
+        relations[relationConfig.relation || relationType].push(this.wrapProperty(
           relationDefinition.attribute,
           this.getObjectName(relationName, 'Schema'),
           1
@@ -622,22 +654,22 @@ export default class Renderer {
   /**
    * Render a shape definition.
    */
-  renderShape() {
-    this.unsupported('shape');
-  }
-
-  /**
-   * Render a union definition.
-   */
-  renderUnion() {
-    this.unsupported('union');
+  renderShape(definition: ShapeDefinition, depth: number): string {
+    return this.unsupported('shape');
   }
 
   /**
    * Render a string definition.
    */
-  renderString() {
-    this.unsupported('string');
+  renderString(definition: StringDefinition): string {
+    return this.unsupported('string');
+  }
+
+  /**
+   * Render a union definition.
+   */
+  renderUnion(definition: UnionDefinition, depth: number): string {
+    return this.unsupported('union');
   }
 
   /**
@@ -645,7 +677,7 @@ export default class Renderer {
    *
    * @param {String} definition
    */
-  unsupported(definition) {
+  unsupported(definition: string): string {
     throw new Error(`The "${definition}" definition is not supported by ${this.constructor.name}.`);
   }
 
@@ -656,7 +688,7 @@ export default class Renderer {
    * @param {String} [args]
    * @returns {String}
    */
-  wrapFunction(name, args = '') {
+  wrapFunction(name: string, args: string = ''): string {
     return `${name}(${args})`;
   }
 
@@ -667,7 +699,7 @@ export default class Renderer {
    * @param {String[]} types
    * @returns {String}
      */
-  wrapGenerics(alias, ...types) {
+  wrapGenerics(alias: string, ...types: string[]): string {
     return `${alias}<${types.join(', ')}>`;
   }
 
@@ -677,7 +709,7 @@ export default class Renderer {
    * @param {String} code
    * @returns {String}
    */
-  wrapIIFE(code) {
+  wrapIIFE(code: string): string {
     return `(function () { return ${code}; }())`;
   }
 
@@ -688,7 +720,7 @@ export default class Renderer {
    * @param {Number} depth
    * @returns {String}
    */
-  wrapItem(value, depth = 0) {
+  wrapItem(value: string, depth: number = 0): string {
     return `${indent(depth, this.options.indentCharacter)}${value},`;
   }
 
@@ -701,7 +733,7 @@ export default class Renderer {
    * @param {String} sep
    * @returns {String}
    */
-  wrapProperty(key, value, depth = 0, sep = ',') {
+  wrapProperty(key: string, value: string, depth: number = 0, sep: string = ','): string {
     return `${indent(depth, this.options.indentCharacter)}${key}: ${value}${sep || ','}`;
   }
 
@@ -711,7 +743,7 @@ export default class Renderer {
    * @param {Definition} definition
    * @returns {String}
    */
-  wrapPropertyName(definition) {
+  wrapPropertyName(definition: Definition): string {
     return definition.attribute;
   }
 }

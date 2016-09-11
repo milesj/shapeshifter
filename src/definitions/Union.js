@@ -1,12 +1,18 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import Definition from '../Definition';
 import Factory from '../Factory';
 
+import type { UnionConfig } from '../types';
+
 export default class UnionDefinition extends Definition {
+  config: UnionConfig;
+  valueTypes: Definition[];
+
   /**
    * {@inheritDoc}
    */

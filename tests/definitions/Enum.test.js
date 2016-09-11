@@ -5,7 +5,7 @@ import EnumDefinition from '../../lib/definitions/Enum';
 
 describe('definitions/Enum', () => {
   it('errors if `valueType` is empty', () => {
-    falsyValues.forEach(value => {
+    falsyValues.forEach((value) => {
       expect(() => (
         new EnumDefinition(options, 'foo', { valueType: value })
       )).to.throw(SyntaxError, 'Enum definitions require a "valueType" property.');
@@ -13,7 +13,7 @@ describe('definitions/Enum', () => {
   });
 
   it('errors if `valueType` is a non-primitive type', () => {
-    COMPOUND_TYPES.forEach(value => {
+    COMPOUND_TYPES.forEach((value) => {
       expect(() => (
         new EnumDefinition(options, 'foo', { valueType: value })
       )).to.throw(TypeError, `Enum value type "${value}" not supported.`);

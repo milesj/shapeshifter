@@ -1,13 +1,19 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import Definition from '../Definition';
 import Factory from '../Factory';
 import isObject from '../helpers/isObject';
 
+import type { ShapeConfig } from '../types';
+
 export default class ShapeDefinition extends Definition {
+  config: ShapeConfig;
+  attributes: Definition[];
+
   /**
    * {@inheritDoc}
    */
@@ -23,7 +29,7 @@ export default class ShapeDefinition extends Definition {
       );
     }
 
-    this.attributes = Object.keys(attributes).map((attribute) => (
+    this.attributes = Object.keys(attributes).map(attribute => (
       Factory.definition(this.options, attribute, attributes[attribute])
     ));
   }

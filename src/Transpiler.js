@@ -1,6 +1,7 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 /* eslint-disable no-console, global-require */
@@ -11,8 +12,18 @@ import chalk from 'chalk';
 import Factory from './Factory';
 import SchemaReader from './SchemaReader';
 
+import type { Options } from './types';
+
+type ResolveList = {
+  resolvePath: string,
+  parentReader?: SchemaReader,
+  refKey?: string,
+};
+
 export default class Transpiler {
-  constructor(options) {
+  options: Options;
+
+  constructor(options: Options) {
     this.options = options;
   }
 
@@ -21,7 +32,7 @@ export default class Transpiler {
    *
    * @param {String} value
    */
-  static output(value) {
+  static output(value: string) {
     console.log(value);
     process.exit(0);
   }
@@ -31,7 +42,7 @@ export default class Transpiler {
    *
    * @param {Error|String} error
    */
-  static error(error) {
+  static error(error: Error | string) {
     const message = (error instanceof Error) ? error.message : error;
 
     console.error(chalk.bgRed.white(message));
@@ -44,7 +55,7 @@ export default class Transpiler {
    * @param {String} target
    * @returns {Promise}
    */
-  transpile(target) {
+  transpile(target: string): Promise<string> {
     return new Promise((resolve, reject) => {
       fs.stat(target, (error, stats) => {
         if (error) {
@@ -69,7 +80,7 @@ export default class Transpiler {
    * @param {String} folderPath
    * @returns {Promise}
    */
-  transpileFolder(folderPath) {
+  transpileFolder(folderPath: string): Promise<string> {
     return new Promise((resolve, reject) => {
       fs.readdir(folderPath, (error, filePaths) => {
         if (error) {
@@ -79,7 +90,7 @@ export default class Transpiler {
 
         let readers = [];
 
-        filePaths.forEach(filePath => {
+        filePaths.forEach((filePath) => {
           if (filePath.match(/\.(js|json)$/)) {
             readers = [
               ...readers,
@@ -99,7 +110,7 @@ export default class Transpiler {
    * @param {String} file
    * @returns {Promise}
    */
-  transpileFile(file) {
+  transpileFile(file: string): Promise<string> {
     return this.generateOutput(this.extractReaders(file));
   }
 
@@ -109,9 +120,9 @@ export default class Transpiler {
    * @param {String} filePath
    * @returns {SchemaReader[]}
    */
-  extractReaders(filePath) {
+  extractReaders(filePath: string): SchemaReader[] {
     const basePath = path.dirname(filePath);
-    const toResolve = [{ resolvePath: filePath }];
+    const toResolve: ResolveList[] = [{ resolvePath: filePath }];
     const readers = [];
 
     // Use `require()` as it handles JSON and JS files easily
@@ -124,6 +135,7 @@ export default class Transpiler {
         continue;
       }
 
+      // $FlowIssue `resolvePath` cannot be a literal string
       const reader = new SchemaReader(resolvePath, require(resolvePath), this.options);
 
       readers.unshift(reader);
@@ -152,7 +164,7 @@ export default class Transpiler {
    * @param {SchemaReader[]} readers
    * @returns {Promise}
    */
-  generateOutput(readers) {
+  generateOutput(readers: SchemaReader[]): Promise<string> {
     return new Promise((resolve) => {
       const rendered = new Set();
       let imports = new Set();
@@ -172,12 +184,35 @@ export default class Transpiler {
 
         renderer.parse();
 
-        imports = new Set([...imports.values(), ...renderer.getImports()]);
-        constants = new Set([...constants.values(), ...renderer.getConstants()]);
-        header = new Set([...header.values(), ...renderer.getHeader()]);
-        schemas = new Set([...schemas.values(), ...renderer.getSchemas()]);
-        relations = new Set([...relations.values(), ...renderer.getRelations()]);
-        sets = new Set([...sets.values(), ...renderer.getSets()]);
+        imports = new Set([
+          ...Array.from(imports.values()),
+          ...renderer.getImports(),
+        ]);
+
+        constants = new Set([
+          ...Array.from(constants.values()),
+          ...renderer.getConstants(),
+        ]);
+
+        header = new Set([
+          ...Array.from(header.values()),
+          ...renderer.getHeader(),
+        ]);
+
+        schemas = new Set([
+          ...Array.from(schemas.values()),
+          ...renderer.getSchemas(),
+        ]);
+
+        relations = new Set([
+          ...Array.from(relations.values()),
+          ...renderer.getRelations(),
+        ]);
+
+        sets = new Set([
+          ...Array.from(sets.values()),
+          ...renderer.getSets(),
+        ]);
 
         rendered.add(reader.path);
       });

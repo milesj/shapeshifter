@@ -1,13 +1,18 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import Definition from '../Definition';
 import isPrimitive from '../helpers/isPrimitive';
 import normalizeType from '../helpers/normalizeType';
 
+import type { EnumConfig } from '../types';
+
 export default class EnumDefinition extends Definition {
+  config: EnumConfig;
+
   /**
    * {@inheritDoc}
    */
@@ -36,7 +41,7 @@ export default class EnumDefinition extends Definition {
    * @param {*} value
    * @returns {Boolean}
    */
-  validateValue(value) {
+  validateValue(value: any): boolean {
     let valueType = normalizeType(this.config.valueType);
 
     // Function names are defined as strings within the schema

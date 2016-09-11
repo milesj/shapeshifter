@@ -7,7 +7,7 @@ import StringDefinition from '../../lib/definitions/String';
 
 describe('definitions/Union', () => {
   it('errors if `valueTypes` is not an array', () => {
-    falsyValues.forEach(value => {
+    falsyValues.forEach((value) => {
       expect(() => (
         new UnionDefinition(options, 'foo', { valueTypes: value })
       )).to.throw(SyntaxError,

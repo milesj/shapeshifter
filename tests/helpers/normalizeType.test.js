@@ -4,7 +4,7 @@ import normalizeType from '../../lib/helpers/normalizeType';
 
 describe('helpers/normalizeType', () => {
   it('returns the name of built-in types', () => {
-    TYPES.forEach(value => {
+    TYPES.forEach((value) => {
       expect(normalizeType(value)).to.equal(value);
     });
   });

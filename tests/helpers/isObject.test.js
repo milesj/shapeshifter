@@ -6,7 +6,7 @@ describe('helpers/isObject', () => {
   it('returns false for non-objects', () => {
     allValues
       .filter(value => typeof value !== 'object')
-      .forEach(value => {
+      .forEach((value) => {
         expect(isObject(value)).to.equal(false);
       });
   });

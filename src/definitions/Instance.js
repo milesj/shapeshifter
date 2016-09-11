@@ -1,11 +1,16 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import Definition from '../Definition';
 
+import type { InstanceConfig } from '../types';
+
 export default class InstanceDefinition extends Definition {
+  config: InstanceConfig;
+
   /**
    * {@inheritDoc}
    */

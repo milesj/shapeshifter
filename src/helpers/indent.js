@@ -1,6 +1,7 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 /**
@@ -10,7 +11,7 @@
  * @param {String} character
  * @returns {String}
  */
-export default function indent(depth, character = '  ') {
+export default function indent(depth: number, character: string = '  '): string {
   let response = '';
 
   while (depth > 0) {

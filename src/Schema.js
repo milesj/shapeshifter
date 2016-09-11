@@ -1,21 +1,43 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
-const BELONGS_TO = 'belongsTo';
-const BELONGS_TO_MANY = 'belongsToMany';
-const HAS_ONE = 'hasOne';
-const HAS_MANY = 'hasMany';
+const BELONGS_TO: string = 'belongsTo';
+const BELONGS_TO_MANY: string = 'belongsToMany';
+const HAS_ONE: string = 'hasOne';
+const HAS_MANY: string = 'hasMany';
+
+/* eslint-disable no-use-before-define */
+type SchemaMap = { [key: string]: Schema };
+
+type Relation = {
+  attribute: string,
+  schema: Schema,
+  relation: string,
+  collection: boolean,
+};
+/* eslint-enable no-use-before-define */
 
 export default class Schema {
+  resourceName: string;
+  primaryKey: string;
+  attributes: string[];
+  relations: Relation[];
+  relationTypes: { [key: string]: string };
+  static HAS_ONE: string;
+  static HAS_MANY: string;
+  static BELONGS_TO: string;
+  static BELONGS_TO_MANY: string;
+
   /**
    * Represents a basic relational schema for an entity.
    *
    * @param {String} resourceName
    * @param {String} [primaryKey]
    */
-  constructor(resourceName, primaryKey = 'id') {
+  constructor(resourceName: string, primaryKey: string = 'id') {
     this.resourceName = resourceName;
     this.primaryKey = primaryKey;
     this.attributes = [];
@@ -29,7 +51,7 @@ export default class Schema {
    * @param {String[]} attributes
    * @returns {Schema}
    */
-  addAttributes(attributes) {
+  addAttributes(attributes: string[]): this {
     this.attributes = this.attributes.concat(attributes);
 
     return this;
@@ -43,7 +65,7 @@ export default class Schema {
    * @param {String} relation
    * @returns {Schema}
    */
-  addRelation(attribute, schema, relation) {
+  addRelation(attribute: string, schema: Schema, relation: string): this {
     if (!(schema instanceof Schema)) {
       throw new Error(`Relation "${attribute}" is not a valid schema.`);
 
@@ -76,7 +98,7 @@ export default class Schema {
    * @param {String} relation
    * @returns {Schema}
    */
-  addRelations(schemas, relation) {
+  addRelations(schemas: SchemaMap, relation: string): this {
     Object.keys(schemas).forEach((attribute) => {
       this.addRelation(attribute, schemas[attribute], relation);
     });
@@ -90,7 +112,7 @@ export default class Schema {
    * @param {Object} relations
    * @returns {Schema}
    */
-  belongsTo(relations) {
+  belongsTo(relations: SchemaMap): this {
     return this.addRelations(relations, BELONGS_TO);
   }
 
@@ -100,7 +122,7 @@ export default class Schema {
    * @param {Object} relations
    * @returns {Schema}
    */
-  belongsToMany(relations) {
+  belongsToMany(relations: SchemaMap): this {
     return this.addRelations(relations, BELONGS_TO_MANY);
   }
 
@@ -110,7 +132,7 @@ export default class Schema {
    * @param {Object} relations
    * @returns {Schema}
    */
-  hasOne(relations) {
+  hasOne(relations: SchemaMap): this {
     return this.addRelations(relations, HAS_ONE);
   }
 
@@ -120,7 +142,7 @@ export default class Schema {
    * @param {Object} relations
    * @returns {Schema}
    */
-  hasMany(relations) {
+  hasMany(relations: SchemaMap): this {
     return this.addRelations(relations, HAS_MANY);
   }
 }

@@ -1,23 +1,49 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import path from 'path';
 import Factory from './Factory';
+import Definition from './Definition';
 import isObject from './helpers/isObject';
 
+import type {
+  Options,
+  SchemaStructure,
+  AttributesField,
+  MetadataField,
+  ConstantsField,
+  ImportsField,
+  SubsetsField,
+  ReferencesField,
+} from './types';
+
 export default class SchemaReader {
+  data: SchemaStructure;
+  path: string;
+  name: string;
+  options: Options;
+  metadata: MetadataField;
+  attributes: Definition[];
+  constants: ConstantsField;
+  imports: ImportsField;
+  subsets: SubsetsField;
+  references: ReferencesField;
+  referenceReaders: { [key: string]: SchemaReader };
+
   /**
    * Load and parse a schema, either as a JSON string, or as a JS object.
    *
    * @param {String} filePath
-   * @param {String|Object} data
+   * @param {Object} data
    * @param {Object} options
    */
-  constructor(filePath, data, options) {
+  constructor(filePath: string, data: SchemaStructure, options: Options) {
     this.path = filePath;
     this.name = path.basename(filePath);
+    this.data = data;
     this.options = options;
     this.metadata = {};
     this.attributes = [];
@@ -27,14 +53,6 @@ export default class SchemaReader {
     this.references = {};
     this.referenceReaders = {};
 
-    if (typeof data === 'string') {
-      this.data = JSON.parse(data);
-    } else if (isObject(data)) {
-      this.data = data;
-    } else {
-      this.throwError('Schema requires a valid JSON structure.');
-    }
-
     this.setup();
   }
 
@@ -43,7 +61,7 @@ export default class SchemaReader {
    *
    * @param {String} error
    */
-  throwError(error) {
+  throwError(error: string) {
     throw new SyntaxError(`[${this.name}] ${error}`);
   }
 
@@ -56,23 +74,23 @@ export default class SchemaReader {
     this.setName(data.name);
     this.setAttributes(data.attributes);
 
-    if ('meta' in data) {
+    if (typeof data.meta !== 'undefined') {
       this.setMeta(data.meta);
     }
 
-    if ('constants' in data) {
+    if (typeof data.constants !== 'undefined') {
       this.setConstants(data.constants);
     }
 
-    if ('imports' in data) {
+    if (typeof data.imports !== 'undefined') {
       this.setImports(data.imports);
     }
 
-    if ('references' in data) {
+    if (typeof data.references !== 'undefined') {
       this.setReferences(data.references);
     }
 
-    if ('subsets' in data) {
+    if (typeof data.subsets !== 'undefined') {
       this.setSubsets(data.subsets);
     }
   }
@@ -82,13 +100,13 @@ export default class SchemaReader {
    *
    * @param {Object} attributes
    */
-  setAttributes(attributes) {
+  setAttributes(attributes: AttributesField) {
     if (!isObject(attributes) || !Object.keys(attributes).length) {
       this.throwError('No attributes found in schema.');
     }
 
     // Convert to type definitions
-    this.attributes = Object.keys(attributes).map((attribute) => (
+    this.attributes = Object.keys(attributes).map(attribute => (
       Factory.definition(this.options, attribute, attributes[attribute])
     ));
   }
@@ -98,7 +116,7 @@ export default class SchemaReader {
    *
    * @param {Object} constants
    */
-  setConstants(constants) {
+  setConstants(constants: ConstantsField) {
     if (!isObject(constants)) {
       this.throwError('Schema constants must be an object that maps to primitive values.');
     }
@@ -111,7 +129,7 @@ export default class SchemaReader {
    *
    * @param {Object[]} imports
    */
-  setImports(imports) {
+  setImports(imports: ImportsField) {
     if (!Array.isArray(imports)) {
       this.throwError('Schema imports must be an array of import declarations.');
     }
@@ -124,7 +142,7 @@ export default class SchemaReader {
    *
    * @param {Object} metadata
    */
-  setMeta(metadata) {
+  setMeta(metadata: MetadataField) {
     if (!isObject(metadata)) {
       this.throwError('Schema metadata must be an object of strings.');
     }
@@ -137,7 +155,7 @@ export default class SchemaReader {
    *
    * @param {String} name
    */
-  setName(name) {
+  setName(name: string) {
     if (!name || typeof name !== 'string') {
       this.throwError('No name found in schema.');
     }
@@ -150,7 +168,7 @@ export default class SchemaReader {
    *
    * @param {Object} references
    */
-  setReferences(references) {
+  setReferences(references: ReferencesField) {
     if (!isObject(references)) {
       this.throwError('Schema references must be an object that maps to other schemas.');
     }
@@ -163,7 +181,7 @@ export default class SchemaReader {
    *
    * @param {Object} subsets
    */
-  setSubsets(subsets) {
+  setSubsets(subsets: SubsetsField) {
     if (!isObject(subsets)) {
       this.throwError('Schema subsets must be an object.');
     }

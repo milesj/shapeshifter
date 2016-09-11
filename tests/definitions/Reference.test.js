@@ -4,7 +4,7 @@ import ReferenceDefinition from '../../lib/definitions/Reference';
 
 describe('definitions/Reference', () => {
   it('errors if `reference` is empty', () => {
-    falsyValues.forEach(value => {
+    falsyValues.forEach((value) => {
       expect(() => (
         new ReferenceDefinition(options, 'foo', { reference: value })
       )).to.throw(SyntaxError,
@@ -17,7 +17,7 @@ describe('definitions/Reference', () => {
   it('errors if `reference` is not a string', () => {
     truthyValues
       .filter(value => typeof value !== 'string')
-      .forEach(value => {
+      .forEach((value) => {
         expect(() => (
           new ReferenceDefinition(options, 'foo', { reference: value })
         )).to.throw(TypeError, 'Invalid type detected, "reference" property must be a string.');
@@ -27,7 +27,7 @@ describe('definitions/Reference', () => {
   it('errors if `self` is not a boolean', () => {
     truthyValues
       .filter(value => typeof value !== 'boolean')
-      .forEach(value => {
+      .forEach((value) => {
         expect(() => (
           new ReferenceDefinition(options, 'foo', { self: value })
         )).to.throw(TypeError, 'Invalid type detected, "self" property must be a boolean.');
@@ -37,7 +37,7 @@ describe('definitions/Reference', () => {
   it('errors if `subset` is not a string', () => {
     truthyValues
       .filter(value => typeof value !== 'string')
-      .forEach(value => {
+      .forEach((value) => {
         expect(() => (
           new ReferenceDefinition(options, 'foo', { reference: 'foo', subset: value })
         )).to.throw(TypeError, 'Invalid type detected, "subset" property must be a string.');
@@ -47,7 +47,7 @@ describe('definitions/Reference', () => {
   it('errors if `export` is not a boolean', () => {
     truthyValues
       .filter(value => typeof value !== 'boolean')
-      .forEach(value => {
+      .forEach((value) => {
         expect(() => (
           new ReferenceDefinition(options, 'foo', { reference: 'foo', export: value })
         )).to.throw(TypeError, 'Invalid type detected, "export" property must be a boolean.');

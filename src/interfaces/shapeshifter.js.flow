@@ -1,0 +1,15 @@
+declare module "shapeshifter" {
+  declare type SchemaMap = {[key: string]: Schema};
+
+  declare class Schema {
+    addAttributes(attributes: string[]): this;
+    addRelation(attribute: string, schema: Schema, relation: string): this;
+    addRelations(schemas: SchemaMap, relation: string): this;
+    hasOne(relations: SchemaMap): this;
+    hasMany(relations: SchemaMap): this;
+    belongsTo(relations: SchemaMap): this;
+    belongsToMany(relations: SchemaMap): this;
+  }
+
+  declare module.exports: () => Schema;
+}

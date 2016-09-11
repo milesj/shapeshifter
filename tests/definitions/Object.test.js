@@ -6,7 +6,7 @@ import StringDefinition from '../../lib/definitions/String';
 
 describe('definitions/Object', () => {
   it('errors if `valueType` is empty', () => {
-    falsyValues.forEach(value => {
+    falsyValues.forEach((value) => {
       expect(() => (
         new ObjectDefinition(options, 'foo', { valueType: value })
       )).to.throw(SyntaxError, 'Object definitions require a "valueType" property.');
@@ -14,7 +14,7 @@ describe('definitions/Object', () => {
   });
 
   it('errors if `keyType` is empty', () => {
-    falsyValues.forEach(value => {
+    falsyValues.forEach((value) => {
       expect(() => (
         new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' })
       )).to.throw(SyntaxError, 'Object definitions require a "keyType" property.');
@@ -24,7 +24,7 @@ describe('definitions/Object', () => {
   it('errors if `keyType` is not a string', () => {
     truthyValues
       .filter(value => typeof value !== 'string')
-      .forEach(value => {
+      .forEach((value) => {
         expect(() => (
           new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' })
         )).to.throw(TypeError);
