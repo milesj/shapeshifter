@@ -6,5 +6,8 @@
 
 import Definition from '../Definition';
 
+import type { NumberConfig } from '../types';
+
 export default class NumberDefinition extends Definition {
+  config: NumberConfig;
 }

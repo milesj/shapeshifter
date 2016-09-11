@@ -6,5 +6,8 @@
 
 import Definition from '../Definition';
 
+import type { StringConfig } from '../types';
+
 export default class StringDefinition extends Definition {
+  config: StringConfig;
 }

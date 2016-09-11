@@ -7,7 +7,13 @@
 import Definition from '../Definition';
 import Factory from '../Factory';
 
+import type { FuncConfig } from '../types';
+
 export default class FuncDefinition extends Definition {
+  config: FuncConfig;
+  returnType: Definition;
+  argTypes: Definition[];
+
   /**
    * {@inheritDoc}
    */

@@ -22,9 +22,12 @@ import UnionDefinition from './definitions/Union';
 import indent from './helpers/indent';
 import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
+import isObject from './helpers/isObject';
 
 import type {
   Options,
+  BaseConfig,
+  ReferenceConfig,
   PrimitiveType,
   MetadataField,
   ImportStructure,
@@ -309,9 +312,9 @@ export default class Renderer {
         }
 
         if (typeof setConfig === 'string') {
-          setConfig = { type: setConfig };
+          setConfig = ({ type: setConfig }: BaseConfig);
         } else {
-          setConfig = { ...setConfig }; // Dereference original object
+          setConfig = ({ ...setConfig }: BaseConfig); // Dereference original object
         }
 
         if (attribute in nullable) {
@@ -558,12 +561,12 @@ export default class Renderer {
    * @param {Object} metadata
    * @returns {string}
    */
-  renderSchema(name: string, attributes: Definition[], metadata: MetadataField): string {
+  renderSchema(name: string, attributes: Definition[] = [], metadata: MetadataField): string {
     const { primaryKey, resourceName } = metadata;
     const { includeAttributes } = this.options;
     const references = this.reader.referenceReaders;
     const fields = [];
-    const relations = {
+    const relations: { [key: string]: string[] } = {
       [Schema.HAS_ONE]: [],
       [Schema.HAS_MANY]: [],
       [Schema.BELONGS_TO]: [],
@@ -577,9 +580,8 @@ export default class Renderer {
       );
     }
 
-    let relationDefinitioninition;
-    let relationType;
-    let relationName;
+    let relationDefinition: ?ReferenceDefinition = null;
+    let relationType: string = '';
 
     attributes.forEach((definition) => {
       if (includeAttributes) {
@@ -588,37 +590,37 @@ export default class Renderer {
 
       // Single
       if (definition instanceof ReferenceDefinition) {
-        relationDefinitioninition = definition;
-        relationType = relationDefinitioninition.config.relation || Schema.HAS_ONE;
+        relationDefinition = definition;
+        relationType = Schema.HAS_ONE;
       }
 
       // Multiple
-      if (
-        definition instanceof ArrayDefinition &&
-        definition.valueType instanceof ReferenceDefinition
-      ) {
-        relationDefinitioninition = definition.valueType;
-        relationType = relationDefinitioninition.config.relation || Schema.HAS_MANY;
+      if (definition instanceof ArrayDefinition) {
+        if (definition.valueType instanceof ReferenceDefinition) {
+          relationDefinition = definition.valueType;
+          relationType = Schema.HAS_MANY;
+        }
       }
 
       // Validate and format template
-      if (relationDefinitioninition) {
+      if (relationDefinition) {
         if (typeof relations[relationType] === 'undefined') {
           throw new Error(
             `Invalid relation type for reference attribute "${definition.attribute}".`
           );
         }
 
-        if (!relationDefinitioninition.config.export) {
+        const relationConfig: ReferenceConfig = relationDefinition.config;
+        const relationName: string = (relationConfig.self || !relationConfig.reference)
+          ? this.reader.name
+          : references[relationConfig.reference].name;
+
+        if (!relationConfig.export) {
           return;
         }
 
-        relationName = relationDefinitioninition.config.self
-          ? this.reader.name
-          : references[relationDefinitioninition.config.reference].name;
-
-        relations[relationType].push(this.wrapProperty(
-          relationDefinitioninition.attribute,
+        relations[relationConfig.relation || relationType].push(this.wrapProperty(
+          relationDefinition.attribute,
           this.getObjectName(relationName, 'Schema'),
           1
         ));

@@ -7,7 +7,12 @@
 import Definition from '../Definition';
 import Factory from '../Factory';
 
+import type { ArrayConfig } from '../types';
+
 export default class ArrayDefinition extends Definition {
+  config: ArrayConfig;
+  valueType: Definition;
+
   /**
    * {@inheritDoc}
    */

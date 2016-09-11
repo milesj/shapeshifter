@@ -6,13 +6,15 @@
 
 import Definition from '../Definition';
 
-import type { Options, BaseConfig } from '../types';
+import type { Options, ReferenceConfig } from '../types';
 
 export default class ReferenceDefinition extends Definition {
+  config: ReferenceConfig;
+
   /**
    * {@inheritDoc}
    */
-  constructor(options: Options, attribute: string, config: BaseConfig) {
+  constructor(options: Options, attribute: string, config: Object) {
     super(options, attribute, {
       export: true,
       ...config,

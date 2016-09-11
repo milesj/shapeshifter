@@ -74,23 +74,23 @@ export default class SchemaReader {
     this.setName(data.name);
     this.setAttributes(data.attributes);
 
-    if ('meta' in data) {
+    if (typeof data.meta !== 'undefined') {
       this.setMeta(data.meta);
     }
 
-    if ('constants' in data) {
+    if (typeof data.constants !== 'undefined') {
       this.setConstants(data.constants);
     }
 
-    if ('imports' in data) {
+    if (typeof data.imports !== 'undefined') {
       this.setImports(data.imports);
     }
 
-    if ('references' in data) {
+    if (typeof data.references !== 'undefined') {
       this.setReferences(data.references);
     }
 
-    if ('subsets' in data) {
+    if (typeof data.subsets !== 'undefined') {
       this.setSubsets(data.subsets);
     }
   }

@@ -4,12 +4,12 @@
  * @flow
  */
 
-import type { Options, BaseConfig } from './types';
+import type { Options } from './types';
 
 export default class Definition {
   options: Options;
   attribute: string;
-  config: BaseConfig;
+  config: Object;
 
   /**
    * Represents a type definition for an attribute.

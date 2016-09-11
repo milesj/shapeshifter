@@ -8,7 +8,11 @@ import Definition from '../Definition';
 import isPrimitive from '../helpers/isPrimitive';
 import normalizeType from '../helpers/normalizeType';
 
+import type { EnumConfig } from '../types';
+
 export default class EnumDefinition extends Definition {
+  config: EnumConfig;
+
   /**
    * {@inheritDoc}
    */

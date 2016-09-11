@@ -24,7 +24,7 @@ import TypeScriptRenderer from './renderers/TypeScript';
 import isPrimitive from './helpers/isPrimitive';
 import normalizeType from './helpers/normalizeType';
 
-import type { Options } from './types';
+import type { Options, BaseConfig } from './types';
 
 export default class Factory {
   /**
@@ -35,11 +35,11 @@ export default class Factory {
    * @param {Object} config
    * @returns {Definition}
    */
-  static definition(options: Options, attribute: string, config: string | Object): Definition {
+  static definition(options: Options, attribute: string, config: string | BaseConfig): Definition {
     // Convert primitives to configuration objects
     if (typeof config === 'string') {
       if (isPrimitive(normalizeType(config))) {
-        config = { type: config };
+        config = ({ type: config }: BaseConfig);
       } else {
         throw new TypeError(`Invalid primitive type "${config}".`);
       }

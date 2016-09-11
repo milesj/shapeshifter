@@ -8,7 +8,12 @@ import Definition from '../Definition';
 import Factory from '../Factory';
 import isObject from '../helpers/isObject';
 
+import type { ShapeConfig } from '../types';
+
 export default class ShapeDefinition extends Definition {
+  config: ShapeConfig;
+  attributes: Definition[];
+
   /**
    * {@inheritDoc}
    */

@@ -6,7 +6,11 @@
 
 import Definition from '../Definition';
 
+import type { InstanceConfig } from '../types';
+
 export default class InstanceDefinition extends Definition {
+  config: InstanceConfig;
+
   /**
    * {@inheritDoc}
    */
