@@ -1,8 +1,12 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
+import SchemaReader from './SchemaReader';
+import Definition from './Definition';
+import Renderer from './Renderer';
 import ArrayDefinition from './definitions/Array';
 import BoolDefinition from './definitions/Bool';
 import EnumDefinition from './definitions/Enum';
@@ -20,6 +24,8 @@ import TypeScriptRenderer from './renderers/TypeScript';
 import isPrimitive from './helpers/isPrimitive';
 import normalizeType from './helpers/normalizeType';
 
+import type { Options } from './types';
+
 export default class Factory {
   /**
    * Create a new definition based on the defined attribute configuration.
@@ -29,7 +35,7 @@ export default class Factory {
    * @param {Object} config
    * @returns {Definition}
    */
-  static definition(options, attribute, config) {
+  static definition(options: Options, attribute: string, config: string | Object): Definition {
     // Convert primitives to configuration objects
     if (typeof config === 'string') {
       if (isPrimitive(normalizeType(config))) {
@@ -93,7 +99,7 @@ export default class Factory {
    * @param {SchemaReader} reader
    * @returns {Renderer}
    */
-  static renderer(options, reader) {
+  static renderer(options: Options, reader: SchemaReader): Renderer {
     const { renderer } = options;
 
     switch (renderer.toLowerCase()) {

@@ -1,6 +1,7 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 /**
@@ -9,7 +10,7 @@
  * @param {String} value
  * @returns {String}
  */
-export default function formatName(value) {
+export default function formatName(value: string): string {
   if (!value) {
     return '';
   }

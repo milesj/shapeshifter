@@ -1,6 +1,7 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 // Use a hash map for faster lookups
@@ -24,10 +25,10 @@ const ALIAS_MAP = {
 /**
  * Expand and return the valid type name for all aliases and shorthands.
  *
- * @param {String} type
+ * @param {*} type
  * @returns {String}
  */
-export default function normalizeType(type) {
+export default function normalizeType(type: any): string {
   type = String(type).toLowerCase();
 
   return ALIAS_MAP[type] || type;

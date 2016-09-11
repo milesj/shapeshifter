@@ -1,6 +1,7 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import Definition from '../Definition';
@@ -10,7 +11,7 @@ export default class FuncDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig() {
+  validateConfig(): void {
     super.validateConfig();
 
     const { argTypes, returnType } = this.config;

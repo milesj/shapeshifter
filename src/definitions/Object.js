@@ -1,16 +1,19 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import Definition from '../Definition';
 import Factory from '../Factory';
 
+import type { Options, BaseConfig } from '../types';
+
 export default class ObjectDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  constructor(options, attribute, config) {
+  constructor(options: Options, attribute: string, config: BaseConfig) {
     super(options, attribute, {
       keyType: 'string',
       ...config,
@@ -20,7 +23,7 @@ export default class ObjectDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig() {
+  validateConfig(): void {
     super.validateConfig();
 
     const { keyType, valueType } = this.config;

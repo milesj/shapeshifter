@@ -1,9 +1,16 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
+import type { Options, BaseConfig } from './types';
+
 export default class Definition {
+  options: Options;
+  attribute: string;
+  config: BaseConfig;
+
   /**
    * Represents a type definition for an attribute.
    *
@@ -11,7 +18,7 @@ export default class Definition {
    * @param {String} attribute
    * @param {Object} config
    */
-  constructor(options, attribute, config = {}) {
+  constructor(options: Options, attribute: string, config: Object = {}) {
     this.options = options;
     this.attribute = attribute;
     this.config = {
@@ -28,7 +35,7 @@ export default class Definition {
    *
    * @returns {Boolean}
    */
-  isNullable() {
+  isNullable(): boolean {
     return this.config.null;
   }
 
@@ -37,14 +44,14 @@ export default class Definition {
    *
    * @returns {Boolean}
    */
-  isRequired() {
+  isRequired(): boolean {
     return this.config.required;
   }
 
   /**
    * Validate the definition configuration.
    */
-  validateConfig() {
+  validateConfig(): void {
     const config = this.config;
 
     if (typeof config.null !== 'boolean') {

@@ -1,6 +1,7 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import Definition from '../Definition';
@@ -11,7 +12,7 @@ export default class EnumDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig() {
+  validateConfig(): void {
     super.validateConfig();
 
     const { values, valueType } = this.config;
@@ -36,7 +37,7 @@ export default class EnumDefinition extends Definition {
    * @param {*} value
    * @returns {Boolean}
    */
-  validateValue(value) {
+  validateValue(value: any): boolean {
     let valueType = normalizeType(this.config.valueType);
 
     // Function names are defined as strings within the schema

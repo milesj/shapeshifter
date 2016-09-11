@@ -1,6 +1,7 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 /**
@@ -9,6 +10,6 @@
  * @param {*} value
  * @returns {Boolean}
  */
-export default function isObject(value) {
+export default function isObject(value: any): boolean {
   return (typeof value === 'object' && value !== null && !Array.isArray(value));
 }
