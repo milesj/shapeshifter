@@ -34,10 +34,9 @@ export default class TypeScriptRenderer extends Renderer {
    * {@inheritDoc}
    */
   render(setName: string, attributes: Definition[] = []) {
-    const shape = new ShapeDefinition(this.options, setName);
-    shape.attributes = attributes;
+    const shape = this.formatObject(this.renderObjectProps(attributes, 1, ';'), 0);
 
-    return `export interface ${setName} ${this.renderShape(shape, 0)}`;
+    return `export interface ${setName} ${shape}`;
   }
 
   /**

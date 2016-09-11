@@ -16,7 +16,7 @@ export default class ArrayDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig(): void {
+  validateConfig() {
     super.validateConfig();
 
     const { valueType } = this.config;

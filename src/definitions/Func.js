@@ -17,7 +17,7 @@ export default class FuncDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig(): void {
+  validateConfig() {
     super.validateConfig();
 
     const { argTypes, returnType } = this.config;

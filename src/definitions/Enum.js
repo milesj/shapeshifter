@@ -16,7 +16,7 @@ export default class EnumDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig(): void {
+  validateConfig() {
     super.validateConfig();
 
     const { values, valueType } = this.config;

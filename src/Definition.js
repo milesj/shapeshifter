@@ -51,7 +51,7 @@ export default class Definition {
   /**
    * Validate the definition configuration.
    */
-  validateConfig(): void {
+  validateConfig() {
     const config = this.config;
 
     if (typeof config.null !== 'boolean') {

@@ -26,7 +26,7 @@ export default class ReferenceDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig(): void {
+  validateConfig() {
     super.validateConfig();
 
     const { reference, self, subset, export: doExport } = this.config;

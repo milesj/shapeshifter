@@ -32,7 +32,7 @@ export default class Transpiler {
    *
    * @param {String} value
    */
-  static output(value: string): void {
+  static output(value: string) {
     console.log(value);
     process.exit(0);
   }
@@ -42,7 +42,7 @@ export default class Transpiler {
    *
    * @param {Error|String} error
    */
-  static error(error: Error | string): void {
+  static error(error: Error | string) {
     const message = (error instanceof Error) ? error.message : error;
 
     console.error(chalk.bgRed.white(message));

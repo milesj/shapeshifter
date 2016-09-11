@@ -14,7 +14,7 @@ export default class InstanceDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig(): void {
+  validateConfig() {
     super.validateConfig();
 
     const { contract } = this.config;

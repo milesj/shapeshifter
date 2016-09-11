@@ -27,7 +27,7 @@ export default class ObjectDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig(): void {
+  validateConfig() {
     super.validateConfig();
 
     const { keyType, valueType } = this.config;

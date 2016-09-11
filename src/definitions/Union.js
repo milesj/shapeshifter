@@ -16,7 +16,7 @@ export default class UnionDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig(): void {
+  validateConfig() {
     super.validateConfig();
 
     const { valueTypes } = this.config;

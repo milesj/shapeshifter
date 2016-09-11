@@ -32,7 +32,7 @@ export default class FlowRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  afterParse(): void {
+  afterParse() {
     this.imports.unshift('// @flow');
   }
 
@@ -40,10 +40,9 @@ export default class FlowRenderer extends Renderer {
    * {@inheritDoc}
    */
   render(setName: string, attributes: Definition[] = []) {
-    const shape = new ShapeDefinition(this.options, setName);
-    shape.attributes = attributes;
+    const shape = this.formatObject(this.renderObjectProps(attributes, 1), 0);
 
-    return `export type ${setName} = ${this.renderShape(shape, 0)};`;
+    return `export type ${setName} = ${shape};`;
   }
 
   /**

@@ -61,14 +61,14 @@ export default class SchemaReader {
    *
    * @param {String} error
    */
-  throwError(error: string): void {
+  throwError(error: string) {
     throw new SyntaxError(`[${this.name}] ${error}`);
   }
 
   /**
    * Setup the state of the schema.
    */
-  setup(): void {
+  setup() {
     const data = this.data;
 
     this.setName(data.name);
@@ -100,7 +100,7 @@ export default class SchemaReader {
    *
    * @param {Object} attributes
    */
-  setAttributes(attributes: AttributesField): void {
+  setAttributes(attributes: AttributesField) {
     if (!isObject(attributes) || !Object.keys(attributes).length) {
       this.throwError('No attributes found in schema.');
     }
@@ -116,7 +116,7 @@ export default class SchemaReader {
    *
    * @param {Object} constants
    */
-  setConstants(constants: ConstantsField): void {
+  setConstants(constants: ConstantsField) {
     if (!isObject(constants)) {
       this.throwError('Schema constants must be an object that maps to primitive values.');
     }
@@ -129,7 +129,7 @@ export default class SchemaReader {
    *
    * @param {Object[]} imports
    */
-  setImports(imports: ImportsField): void {
+  setImports(imports: ImportsField) {
     if (!Array.isArray(imports)) {
       this.throwError('Schema imports must be an array of import declarations.');
     }
@@ -142,7 +142,7 @@ export default class SchemaReader {
    *
    * @param {Object} metadata
    */
-  setMeta(metadata: MetadataField): void {
+  setMeta(metadata: MetadataField) {
     if (!isObject(metadata)) {
       this.throwError('Schema metadata must be an object of strings.');
     }
@@ -155,7 +155,7 @@ export default class SchemaReader {
    *
    * @param {String} name
    */
-  setName(name: string): void {
+  setName(name: string) {
     if (!name || typeof name !== 'string') {
       this.throwError('No name found in schema.');
     }
@@ -168,7 +168,7 @@ export default class SchemaReader {
    *
    * @param {Object} references
    */
-  setReferences(references: ReferencesField): void {
+  setReferences(references: ReferencesField) {
     if (!isObject(references)) {
       this.throwError('Schema references must be an object that maps to other schemas.');
     }
@@ -181,7 +181,7 @@ export default class SchemaReader {
    *
    * @param {Object} subsets
    */
-  setSubsets(subsets: SubsetsField): void {
+  setSubsets(subsets: SubsetsField) {
     if (!isObject(subsets)) {
       this.throwError('Schema subsets must be an object.');
     }

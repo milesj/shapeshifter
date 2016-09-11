@@ -17,7 +17,7 @@ export default class ShapeDefinition extends Definition {
   /**
    * {@inheritDoc}
    */
-  validateConfig(): void {
+  validateConfig() {
     super.validateConfig();
 
     const { attributes } = this.config;

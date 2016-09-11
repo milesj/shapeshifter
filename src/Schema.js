@@ -9,6 +9,7 @@ const BELONGS_TO_MANY: string = 'belongsToMany';
 const HAS_ONE: string = 'hasOne';
 const HAS_MANY: string = 'hasMany';
 
+/* eslint-disable no-use-before-define */
 type SchemaMap = { [key: string]: Schema };
 
 type Relation = {
@@ -17,6 +18,7 @@ type Relation = {
   relation: string,
   collection: boolean,
 };
+/* eslint-enable no-use-before-define */
 
 export default class Schema {
   resourceName: string;

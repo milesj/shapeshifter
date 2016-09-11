@@ -4,6 +4,8 @@
  * @flow
  */
 
+/* eslint-disable no-use-before-define */
+
 export type Options = {
   defaultNull: boolean,
   defaultRequired: boolean,

@@ -62,12 +62,12 @@ export default class Renderer {
   /**
    * Triggered after parsing finished.
    */
-  afterParse(): void {}
+  afterParse() {}
 
   /**
    * Triggered before parsing begins.
    */
-  beforeParse(): void {}
+  beforeParse() {}
 
   /**
    * Format a list (or string) of items into an array respecting depth indentation.
@@ -219,7 +219,7 @@ export default class Renderer {
   /**
    * Parse and render all information defined in the schema.
    */
-  parse(): void {
+  parse() {
     this.beforeParse();
     this.parseReferences();
     this.parseImports();
@@ -232,7 +232,7 @@ export default class Renderer {
   /**
    * Parse all constants out of the schema and append to the renderer.
    */
-  parseConstants(): void {
+  parseConstants() {
     const { constants } = this.reader;
 
     Object.keys(constants).forEach(key => {
@@ -243,7 +243,7 @@ export default class Renderer {
   /**
    * Parse all imports out of the schema and append to the renderer.
    */
-  parseImports(): void {
+  parseImports() {
     this.reader.imports.forEach(importStatement => {
       this.imports.push(this.renderImport(importStatement));
     });
@@ -252,7 +252,7 @@ export default class Renderer {
   /**
    * Parse out all reference paths.
    */
-  parseReferences(): void {
+  parseReferences() {
     Object.keys(this.reader.references).forEach(key => {
       this.referencePaths.push(this.reader.references[key]);
     });
@@ -261,7 +261,7 @@ export default class Renderer {
   /**
    * Parse out all schemas.
    */
-  parseSchemas(): void {
+  parseSchemas() {
     if (!this.options.includeSchemas) {
       return;
     }
@@ -283,7 +283,7 @@ export default class Renderer {
   /**
    * Parse all type subsets out of the schema and append to the renderer.
    */
-  parseSets(): void {
+  parseSets() {
     if (!this.options.includeTypes) {
       return;
     }
@@ -592,11 +592,9 @@ export default class Renderer {
       }
 
       // Multiple
-      if (definition instanceof ArrayDefinition) {
-        if (definition.valueType instanceof ReferenceDefinition) {
-          relationDefinition = definition.valueType;
-          relationType = Schema.HAS_MANY;
-        }
+      if (definition.valueType && definition.valueType instanceof ReferenceDefinition) {
+        relationDefinition = definition.valueType;
+        relationType = Schema.HAS_MANY;
       }
 
       // Validate and format template
@@ -608,13 +606,14 @@ export default class Renderer {
         }
 
         const relationConfig: ReferenceConfig = relationDefinition.config;
-        const relationName: string = (relationConfig.self || !relationConfig.reference)
-          ? this.reader.name
-          : references[relationConfig.reference].name;
 
         if (!relationConfig.export) {
           return;
         }
+
+        const relationName: string = (relationConfig.self || !relationConfig.reference)
+          ? this.reader.name
+          : references[relationConfig.reference].name;
 
         relations[relationConfig.relation || relationType].push(this.wrapProperty(
           relationDefinition.attribute,

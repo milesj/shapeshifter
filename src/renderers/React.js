@@ -31,7 +31,7 @@ export default class ReactRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  beforeParse(): void {
+  beforeParse() {
     this.imports.push('import { PropTypes } from \'react\';');
   }
 
@@ -39,10 +39,9 @@ export default class ReactRenderer extends Renderer {
    * {@inheritDoc}
    */
   render(setName: string, attributes: Definition[] = []) {
-    const shape = new ShapeDefinition(this.options, setName);
-    shape.attributes = attributes;
+    const shape = this.formatObject(this.renderObjectProps(attributes, 1), 0);
 
-    return `export const ${setName} = ${this.renderShape(shape, 0)};`;
+    return `export const ${setName} = PropTypes.shape(${shape});`;
   }
 
   /**
@@ -152,23 +151,23 @@ export default class ReactRenderer extends Renderer {
   /**
    * Render a definition into an React PropType representation.
    *
-   * @param {Definition|Object} definition
+   * @param {Definition} definition
    * @param {String} template
    * @returns {String}
    */
-  wrapPropType(definition: Definition, template: string): string {
+  wrapPropType(definition: ?Definition, template: string): string {
     return this.wrapRequired(definition, `PropTypes.${template}`);
   }
 
   /**
    * Wrap a definition template with required if applicable.
    *
-   * @param {Definition|Object} definition
+   * @param {Definition} definition
    * @param {String} template
    * @returns {String}
    */
-  wrapRequired(definition: Definition, template: string): string {
-    if (definition.isRequired && definition.isRequired()) {
+  wrapRequired(definition: ?Definition, template: string): string {
+    if (definition && definition.isRequired && definition.isRequired()) {
       return `${template}.isRequired`;
     }
 
