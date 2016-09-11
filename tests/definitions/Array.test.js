@@ -5,7 +5,7 @@ import StringDefinition from '../../lib/definitions/String';
 
 describe('definitions/Array', () => {
   it('errors if `valueType` is empty', () => {
-    falsyValues.forEach(value => {
+    falsyValues.forEach((value) => {
       expect(() => (
         new ArrayDefinition(options, 'foo', { valueType: value })
       )).to.throw(SyntaxError, 'Array definitions require a "valueType" property.');

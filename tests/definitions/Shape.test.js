@@ -6,7 +6,7 @@ import StringDefinition from '../../lib/definitions/String';
 
 describe('definitions/Shape', () => {
   it('errors if `attributes` is empty', () => {
-    falsyValues.forEach(value => {
+    falsyValues.forEach((value) => {
       expect(() => (
         new ShapeDefinition(options, 'foo', { attributes: value })
       )).to.throw(SyntaxError,

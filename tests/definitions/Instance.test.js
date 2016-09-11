@@ -4,7 +4,7 @@ import InstanceDefinition from '../../lib/definitions/Instance';
 
 describe('definitions/Instance', () => {
   it('errors if `contract` is empty', () => {
-    falsyValues.forEach(value => {
+    falsyValues.forEach((value) => {
       expect(() => (
         new InstanceDefinition(options, 'foo', { contract: value })
       )).to.throw(SyntaxError,
@@ -16,7 +16,7 @@ describe('definitions/Instance', () => {
   it('errors if `contract` is not a string', () => {
     truthyValues
       .filter(value => typeof value !== 'string')
-      .forEach(value => {
+      .forEach((value) => {
         expect(() => (
           new InstanceDefinition(options, 'foo', { contract: value })
         )).to.throw(TypeError, 'Invalid type detected, "contract" property must be a string.');

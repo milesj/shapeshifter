@@ -4,13 +4,13 @@ import isPrimitive from '../../lib/helpers/isPrimitive';
 
 describe('helpers/isPrimitive', () => {
   it('returns false for compound types', () => {
-    COMPOUND_TYPES.forEach(value => {
+    COMPOUND_TYPES.forEach((value) => {
       expect(isPrimitive(value)).to.equal(false);
     });
   });
 
   it('returns true for primitive types', () => {
-    PRIMITIVE_TYPES.forEach(value => {
+    PRIMITIVE_TYPES.forEach((value) => {
       expect(isPrimitive(value)).to.equal(true);
     });
   });

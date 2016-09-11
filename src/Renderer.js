@@ -120,7 +120,7 @@ export default class Renderer {
    * @param {String} [type]
    * @returns {String}
    */
-  formatValue(value: any, type?: string): string {
+  formatValue(value: any, type: string = ''): string {
     if (value === null) {
       return 'null';
     }
@@ -235,7 +235,7 @@ export default class Renderer {
   parseConstants() {
     const { constants } = this.reader;
 
-    Object.keys(constants).forEach(key => {
+    Object.keys(constants).forEach((key) => {
       this.constants.push(this.renderConstant(key, constants[key]));
     });
   }
@@ -244,8 +244,8 @@ export default class Renderer {
    * Parse all imports out of the schema and append to the renderer.
    */
   parseImports() {
-    this.reader.imports.forEach(importStatement => {
-      this.imports.push(this.renderImport(importStatement));
+    this.reader.imports.forEach((statement) => {
+      this.imports.push(this.renderImport(statement));
     });
   }
 
@@ -253,7 +253,7 @@ export default class Renderer {
    * Parse out all reference paths.
    */
   parseReferences() {
-    Object.keys(this.reader.references).forEach(key => {
+    Object.keys(this.reader.references).forEach((key) => {
       this.referencePaths.push(this.reader.references[key]);
     });
   }
@@ -292,7 +292,7 @@ export default class Renderer {
     const { attributes, subsets, name } = this.reader;
 
     // Subsets
-    Object.keys(subsets).forEach(setName => {
+    Object.keys(subsets).forEach((setName) => {
       const setAttributes = [];
       let subset = subsets[setName];
 
@@ -519,7 +519,7 @@ export default class Renderer {
    * @param {String} [valueType]
    * @returns {String}
    */
-  renderOrFormat(value: any | Definition, depth: number, valueType: string): string {
+  renderOrFormat(value: any | Definition, depth: number, valueType: string = ''): string {
     return (value instanceof Definition)
       ? this.renderAttribute(value, depth)
       : this.formatValue(value, valueType);
@@ -532,7 +532,7 @@ export default class Renderer {
    * @returns {String}
    */
   renderReference(definition: ReferenceDefinition): string {
-    const { reference, self, subset } = definition.config;
+    const { reference, self, subset = '' } = definition.config;
     const refReader = self ? this.reader : this.reader.referenceReaders[reference];
 
     if (!refReader) {
@@ -547,7 +547,7 @@ export default class Renderer {
       );
     }
 
-    return this.getObjectName(refReader.name, subset || '', this.suffix);
+    return this.getObjectName(refReader.name, subset, this.suffix);
   }
 
   /**
@@ -611,7 +611,7 @@ export default class Renderer {
           return;
         }
 
-        const relationName: string = (relationConfig.self || !relationConfig.reference)
+        const relationName = relationConfig.self
           ? this.reader.name
           : references[relationConfig.reference].name;
 

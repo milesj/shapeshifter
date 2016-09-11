@@ -90,7 +90,7 @@ export default class Transpiler {
 
         let readers = [];
 
-        filePaths.forEach(filePath => {
+        filePaths.forEach((filePath) => {
           if (filePath.match(/\.(js|json)$/)) {
             readers = [
               ...readers,

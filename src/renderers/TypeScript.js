@@ -162,7 +162,7 @@ export default class TypeScriptRenderer extends Renderer {
    */
   renderUnion(definition: UnionDefinition, depth: number): string {
     return definition.valueTypes
-      .map(item => {
+      .map((item) => {
         const value = this.renderAttribute(item, depth);
 
         // Functions need to be wrapped in parenthesis when used in unions

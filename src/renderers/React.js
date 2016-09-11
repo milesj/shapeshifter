@@ -155,7 +155,7 @@ export default class ReactRenderer extends Renderer {
    * @param {String} template
    * @returns {String}
    */
-  wrapPropType(definition: ?Definition, template: string): string {
+  wrapPropType(definition: Definition, template: string): string {
     return this.wrapRequired(definition, `PropTypes.${template}`);
   }
 
@@ -166,8 +166,8 @@ export default class ReactRenderer extends Renderer {
    * @param {String} template
    * @returns {String}
    */
-  wrapRequired(definition: ?Definition, template: string): string {
-    if (definition && definition.isRequired && definition.isRequired()) {
+  wrapRequired(definition: Definition, template: string): string {
+    if (definition.isRequired && definition.isRequired()) {
       return `${template}.isRequired`;
     }
 
