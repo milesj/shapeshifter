@@ -1,3 +1,6 @@
+# 2.2.1
+* Fixed an issue in which relations were being output multiple times.
+
 # 2.2.0
 * Updated references to toggle schema exporting via the `export` property.
 * Updated references to choose the relation type when schema exporting.

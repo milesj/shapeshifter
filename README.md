@@ -1,11 +1,11 @@
-# Shapeshifter v2.2.0
+# Shapeshifter v2.2.1
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
 Shapeshifter is a command line tool for generating ES2015 compatible
 files that export React prop types, Flow type aliases, or TypeScript
-interfaces from JSON schema files. Schemas can represent database
-tables, API endpoints, data structures, resources, internal shapes,
-and more.
+interfaces, as well as relation schema classes from JSON schema files.
+Schemas can represent database tables, API endpoints, data structures,
+resources, internal shapes, and more.
 
 Take this user schema for example.
 
@@ -62,7 +62,7 @@ export type UserType = {
 };
 ```
 
-Or lastly, TypeScript interfaces.
+Or TypeScript interfaces.
 
 ```javascript
 export interface UserInterface {
@@ -76,6 +76,12 @@ export interface UserInterface {
 }
 ```
 
+And finally, the schema class. Which can define ORM styled relations.
+
+```javascript
+export const UserSchema = new Schema('users', 'id');
+```
+
 ## Requirements
 
 * ES2015
@@ -84,8 +90,18 @@ export interface UserInterface {
 
 ## Installation
 
+Shapeshifter can be used as a dev dependency if you're only generating
+types (shapes, aliases, interfaces, etc).
+
 ```
 npm install shapeshifter --save-dev
+```
+
+If you're generating schema classes, it will need to be a normal
+dependency.
+
+```
+npm install shapeshifter --save
 ```
 
 ## Usage
@@ -106,27 +122,27 @@ will be sent to the console.
 
 ### Options
 
-`--help`, `-h` - Displays a help menu.
+* `--help`, `-h` - Displays a help menu.
 
-`--nullable`, `-n` - Marks all attributes as nullable by default.
+* `--nullable`, `-n` - Marks all attributes as nullable by default.
 Defaults to false. (Flow only)
 
-`--required`, `-r` - Marks all attributes as required by default.
+* `--required`, `-r` - Marks all attributes as required by default.
 Defaults to false. (React and TypeScript only)
 
-`--indent` - Defines the indentation characters to use in the
+* `--indent` - Defines the indentation characters to use in the
 generated output. Defaults to 2 spaces.
 
-`--format` - The format to output to. Accepts "react", "flow", or
+* `--format` - The format to output to. Accepts "react", "flow", or
 "typescript". Defaults to "react".
 
-`--schemas` - Include schema class exports in the output. Defaults to
+* `--schemas` - Include schema class exports in the output. Defaults to
 "false".
 
-`--attributes` - Include an attribute list in the schema class export.
+* `--attributes` - Include an attribute list in the schema class export.
 Defaults to "false".
 
-`--types` - Include type definition exports in the output. Defaults to
+* `--types` - Include type definition exports in the output. Defaults to
 "false".
 
 ## Documentation
@@ -160,8 +176,8 @@ that exports an object (Node.js compatible). JSON is preferred
 as it's a consumable format across many languages.
 
 Every schema requires a `name` and `attributes` property.
-The name is used to denote the name of the export found in the
-ES2015 transpiled output file, while the attributes denote the
+The name denotes the name of the export prefix found in the
+ES2015 transpiled output file, while the attributes denotes the
 available fields in the current schema.
 
 ```json
@@ -172,8 +188,8 @@ available fields in the current schema.
 ```
 
 Furthermore, a schema supports the following optional properties:
-`imports`, `constants`, and `subsets`. Continue reading for more
-information on all the supported schema properties.
+`meta`, `imports`, `constants`, `references`, and `subsets`. Continue
+reading for more information on all the supported schema properties.
 
 #### Attributes
 
@@ -268,7 +284,7 @@ The `imports` array provides a mechanism for defining ES2015 imports,
 which in turn allow re-use of application level structures.
 
 An import object requires a `path` property that maps to a file
-in the application relative to the transpiled schema. Default imports
+in the application, relative to the transpiled schema. Default imports
 can be defined with the `default` property, while named imports
 can be defined with `named` (an array).
 
@@ -396,7 +412,7 @@ messages: string[],
 messages?: string[];
 ```
 
-Alias names: `list`
+Alias names: `arr`, `list`
 
 #### Objects
 
@@ -697,8 +713,8 @@ in the output when `--schemas` is passed to the command line. These
 schemas provide basic attribute and relational support, which in turn
 can be used by consuming libraries through exports.
 
-Using our users example in the intro, and the `--schemas --attributes`
-CLI options, we would get the following output.
+Using our users example from the intro, and the `--schemas` CLI options,
+we would get the following output.
 
 ```javascript
 export const UserSchema = new Schema('users', 'id');
@@ -706,17 +722,17 @@ export const UserSchema = new Schema('users', 'id');
 
 The following properties are available on the `Schema` class instance.
 
-`resourceName` (string) - The resource name of the schema, passed as
+* `resourceName` (string) - The resource name of the schema, passed as
 the first argument to the constructor. This field is based on
 `meta.resourceName` in the JSON schema file.
 
-`primaryKey` (string) - The name of the primary key in the current
+* `primaryKey` (string) - The name of the primary key in the current
 schema, passed as the second argument to the constructor. This field
 is based on `meta.primaryKey` in the JSON schema file. Defaults to "id".
 
-`attributes` (string[]) - List of attribute names in the current schema.
+* `attributes` (string[]) - List of attribute names in the current schema.
 
-`relations` (object[]) - List of relational objects that map specific
+* `relations` (object[]) - List of relational objects that map specific
 attributes to externally referenced schemas. The relational object
 follows this structure:
 
@@ -729,14 +745,14 @@ follows this structure:
 }
 ```
 
-`relationTypes` (object) - Maps attribute names to relation types. A
+* `relationTypes` (object) - Maps attribute names to relation types. A
 relation type is one of the following constants found on the `Schema`
 class: `HAS_ONE`, `HAS_MANY`, `BELONGS_TO`, `BELONGS_TO_MANY`.
 
 ##### Including Attributes
 
 By default, attributes are excluded from the output unless the
-`--attributes` CLI option is passed. One passed, the are defined
+`--attributes` CLI option is passed. Once passed, they are defined
 as a list of strings using `addAttributes()`.
 
 Continuing with our previous example, the output will be.
