@@ -581,6 +581,8 @@ export default class Renderer {
     let relationType: string = '';
 
     attributes.forEach((definition) => {
+      relationDefinition = null;
+
       if (includeAttributes) {
         fields.push(this.wrapItem(this.formatValue(definition.attribute, 'string'), 1));
       }

@@ -225,6 +225,24 @@ describe('Renderer', () => {
       ]);
     });
 
+    it('renders template and avoids duplication by following attributes', () => {
+      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+
+      expect(renderer.renderSchema('QuxSchema', [
+        new ReferenceDefinition(options, 'post', { reference: 'posts' }),
+        new StringDefinition(options, 'first_name'),
+        new StringDefinition(options, 'last_name'),
+      ], {
+        resourceName: 'quxs',
+      })).to.equal('export const QuxSchema = new Schema(\'quxs\');');
+
+      expect(renderer.relations).to.deep.equal([
+        `QuxSchema.hasOne({
+  post: PostsSchema,
+});`,
+      ]);
+    });
+
     it('renders template with many references', () => {
       renderer.reader.referenceReaders.posts = { name: 'Posts' };
 
