@@ -1,3 +1,7 @@
+# 2.2.2
+* Added flowtype definitions to the `libs/` output folder.
+* Updated develop dependency TypeScript to v2.0.
+
 # 2.2.1
 * Fixed an issue in which relations were being output multiple times.
 

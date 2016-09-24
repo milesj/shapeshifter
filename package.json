@@ -79,6 +79,6 @@
     "mocha": "^3.0.2",
     "react": "^15.3.2",
     "rimraf": "^2.5.4",
-    "typescript": "^1.8.10"
+    "typescript": "^2.0.3"
   }
 }
