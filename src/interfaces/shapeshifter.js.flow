@@ -1,7 +1,24 @@
 declare module "shapeshifter" {
-  declare type SchemaMap = {[key: string]: Schema};
+  declare type SchemaMap = { [attribute: string]: Schema };
+
+  declare type Relation = {
+    attribute: string,
+    schema: Schema,
+    relation: string,
+    collection: boolean,
+  };
 
   declare class Schema {
+    resourceName: string;
+    primaryKey: string;
+    attributes: string[];
+    relations: Relation[];
+    relationTypes: { [key: string]: string };
+    static HAS_ONE: string;
+    static HAS_MANY: string;
+    static BELONGS_TO: string;
+    static BELONGS_TO_MANY: string;
+
     addAttributes(attributes: string[]): this;
     addRelation(attribute: string, schema: Schema, relation: string): this;
     addRelations(schemas: SchemaMap, relation: string): this;

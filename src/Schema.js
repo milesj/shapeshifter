@@ -10,7 +10,7 @@ const HAS_ONE: string = 'hasOne';
 const HAS_MANY: string = 'hasMany';
 
 /* eslint-disable no-use-before-define */
-type SchemaMap = { [key: string]: Schema };
+type SchemaMap = { [attribute: string]: Schema };
 
 type Relation = {
   attribute: string,

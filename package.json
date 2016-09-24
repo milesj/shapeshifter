@@ -29,7 +29,8 @@
   ],
   "scripts": {
     "clean": "rimraf ./lib",
-    "build": "babel ./src -d ./lib",
+    "build": "babel ./src -d ./lib && npm run build:flow",
+    "build:flow": "cp ./src/interfaces/shapeshifter.js.flow ./lib",
     "watch": "babel --watch ./src -d ./lib",
     "lint": "eslint ./src ./tests",
     "check": "npm run check:flow && npm run check:typescript",
