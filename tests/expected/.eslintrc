@@ -2,6 +2,7 @@
   "rules": {
     "import/no-unresolved": 0,
     "import/no-duplicates": 0,
+    "import/extensions": 0,
     "no-unused-vars": 0,
     "no-duplicate-imports": 0,
     "new-cap": 0

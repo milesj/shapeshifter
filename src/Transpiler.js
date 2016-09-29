@@ -135,8 +135,10 @@ export default class Transpiler {
         continue;
       }
 
+      /* eslint-disable */
       // $FlowIssue `resolvePath` cannot be a literal string
       const reader = new SchemaReader(resolvePath, require(resolvePath), this.options);
+      /* eslint-enable */
 
       readers.unshift(reader);
 
