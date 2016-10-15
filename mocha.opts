@@ -1,5 +1,8 @@
---compilers js:babel-register
+--require babel-register
+--require chai
+--reporter dot
 --ui bdd
---reporter spec
 --colors
+--check-leaks
+--full-trace
 --recursive
