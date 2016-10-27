@@ -95,6 +95,8 @@ types (shapes, aliases, interfaces, etc).
 
 ```
 npm install shapeshifter --save-dev
+// Or
+yarn add shapeshifter --dev
 ```
 
 If you're generating schema classes, it will need to be a normal
@@ -102,6 +104,8 @@ dependency.
 
 ```
 npm install shapeshifter --save
+// Or
+yarn add shapeshifter
 ```
 
 ## Usage
