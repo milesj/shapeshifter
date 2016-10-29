@@ -36,10 +36,11 @@
     "check": "yarn run check:flow && yarn run check:typescript",
     "check:flow": "flow check",
     "check:typescript": "tsc --noEmit --allowJs ./tests/expected/typescript/*",
-    "mocha": "mocha --opts ./mocha.opts ./tests/*.test.js ./tests/**/*.test.js",
-    "pretest": "yarn run clean && yarn run build && yarn run lint",
+    "mocha": "yarn run mocha:in ./tests/*.test.js ./tests/**/*.test.js",
+    "mocha:in": "mocha --opts ./mocha.opts",
+    "pretest": "yarn run clean && yarn run build",
     "test": "yarn run mocha",
-    "posttest": "yarn run check",
+    "posttest": "yarn run lint && yarn run check",
     "preversion": "yarn test"
   },
   "repository": {
@@ -71,7 +72,7 @@
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "chai-files": "^1.4.0",
-    "eslint": "^3.8.1",
+    "eslint": "3.9.0",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-flowtype": "^2.25.0",
     "eslint-plugin-import": "^1.16.0",
