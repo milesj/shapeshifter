@@ -24,7 +24,7 @@ export default class UnionDefinition extends Definition {
     if (!Array.isArray(valueTypes) || !valueTypes.length) {
       throw new SyntaxError(
         'Union definitions require a "valueTypes" property, ' +
-        'which is a list of type definitions'
+        'which is a list of type definitions',
       );
     }
 

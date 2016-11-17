@@ -82,7 +82,7 @@ export default class Renderer {
     items: string | string[],
     depth: number,
     itemSpacer: string = '\n',
-    indentSpacer: string = '\n'
+    indentSpacer: string = '\n',
   ): string {
     if (Array.isArray(items)) {
       items = items.join(itemSpacer);
@@ -104,7 +104,7 @@ export default class Renderer {
     props: string | string[],
     depth: number,
     propSpacer: string = '\n',
-    indentSpacer: string = '\n'
+    indentSpacer: string = '\n',
   ): string {
     if (Array.isArray(props)) {
       props = props.join(propSpacer);
@@ -276,7 +276,7 @@ export default class Renderer {
     this.schemas.push(this.renderSchema(
       this.getObjectName(name, 'Schema'),
       attributes,
-      metadata
+      metadata,
     ));
   }
 
@@ -537,13 +537,13 @@ export default class Renderer {
 
     if (!refReader) {
       throw new SyntaxError(
-        `The reference "${reference}" does not exist in the "${this.reader.name}" schema.`
+        `The reference "${reference}" does not exist in the "${this.reader.name}" schema.`,
       );
     }
 
     if (subset && !refReader.subsets[subset]) {
       throw new SyntaxError(
-        `The reference "${reference}" does not contain a subset named "${subset}".`
+        `The reference "${reference}" does not contain a subset named "${subset}".`,
       );
     }
 
@@ -573,7 +573,7 @@ export default class Renderer {
     if (!resourceName || typeof resourceName !== 'string') {
       throw new SyntaxError(
         `Schema ${name} requires a "meta.resourceName" property to be defined. ` +
-        'The resource name is a unique key found within a URL.'
+        'The resource name is a unique key found within a URL.',
       );
     }
 
@@ -603,7 +603,7 @@ export default class Renderer {
       if (relationDefinition) {
         if (typeof relations[relationType] === 'undefined') {
           throw new Error(
-            `Invalid relation type for reference attribute "${definition.attribute}".`
+            `Invalid relation type for reference attribute "${definition.attribute}".`,
           );
         }
 
@@ -620,7 +620,7 @@ export default class Renderer {
         relations[relationConfig.relation || relationType].push(this.wrapProperty(
           relationDefinition.attribute,
           this.getObjectName(relationName, 'Schema'),
-          1
+          1,
         ));
       }
     });

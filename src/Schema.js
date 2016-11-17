@@ -71,7 +71,7 @@ export default class Schema {
 
     } else if (this.relationTypes[attribute]) {
       throw new Error(
-        `Relation "${attribute}" has already been mapped as "${this.relationTypes[attribute]}".`
+        `Relation "${attribute}" has already been mapped as "${this.relationTypes[attribute]}".`,
       );
     }
 

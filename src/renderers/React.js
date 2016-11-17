@@ -67,8 +67,8 @@ export default class ReactRenderer extends Renderer {
 
     return this.wrapPropType(definition,
       this.wrapFunction('oneOf',
-        this.formatArray(this.renderArrayItems(values, depth + 1, valueType), depth)
-      )
+        this.formatArray(this.renderArrayItems(values, depth + 1, valueType), depth),
+      ),
     );
   }
 
@@ -125,8 +125,8 @@ export default class ReactRenderer extends Renderer {
   renderShape(definition: ShapeDefinition, depth: number): string {
     return this.wrapPropType(definition,
       this.wrapFunction('shape',
-        this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth)
-      )
+        this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth),
+      ),
     );
   }
 
@@ -143,8 +143,8 @@ export default class ReactRenderer extends Renderer {
   renderUnion(definition: UnionDefinition, depth: number): string {
     return this.wrapPropType(definition,
       this.wrapFunction('oneOfType',
-        this.formatArray(this.renderArrayItems(definition.valueTypes, depth + 1), depth)
-      )
+        this.formatArray(this.renderArrayItems(definition.valueTypes, depth + 1), depth),
+      ),
     );
   }
 

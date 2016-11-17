@@ -25,7 +25,7 @@ export default class ShapeDefinition extends Definition {
     if (!isObject(attributes) || !Object.keys(attributes).length) {
       throw new SyntaxError(
         'Shape definitions require an "attributes" property, ' +
-        'which is an object mapping of attributes to type definitions.'
+        'which is an object mapping of attributes to type definitions.',
       );
     }
 

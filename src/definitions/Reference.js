@@ -35,7 +35,7 @@ export default class ReferenceDefinition extends Definition {
       throw new SyntaxError(
         'Reference definitions require a "reference" property, ' +
         'which points to an external schema to use, ' +
-        'or a "self" property, which uses the current schema.'
+        'or a "self" property, which uses the current schema.',
       );
 
     } else if (reference && typeof reference !== 'string') {

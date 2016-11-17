@@ -22,7 +22,7 @@ export default class InstanceDefinition extends Definition {
     if (!contract) {
       throw new SyntaxError(
         'Instance definitions require a "contract" property, ' +
-        'which is the function or class name to evaluate against.'
+        'which is the function or class name to evaluate against.',
       );
 
     } else if (typeof contract !== 'string') {
