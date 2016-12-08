@@ -1,9 +1,7 @@
 declare module "chalk" {
-  declare type chalk = {
+  declare export default {
     bgRed: {
       white(msg: string): string;
     },
   };
-
-  declare module.exports: () => chalk;
 }

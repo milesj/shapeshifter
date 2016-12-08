@@ -8,7 +8,7 @@ declare module "shapeshifter" {
     collection: boolean,
   };
 
-  declare class Schema {
+  declare export default class Schema {
     resourceName: string;
     primaryKey: string;
     attributes: string[];
@@ -27,6 +27,4 @@ declare module "shapeshifter" {
     belongsTo(relations: SchemaMap): this;
     belongsToMany(relations: SchemaMap): this;
   }
-
-  declare module.exports: () => Schema;
 }

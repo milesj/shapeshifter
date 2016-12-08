@@ -7,7 +7,7 @@
 ./tests/expected/shapeshifter/*.js
 
 [libs]
-./src/interfaces/
+./flow/
 
 [options]
 esproposal.class_instance_fields=enable
