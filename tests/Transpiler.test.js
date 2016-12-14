@@ -40,13 +40,13 @@ describe('Transpiler', function () {
                 const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
                 const expectedPath = `${__dirname}/expected/${renderer.key}/${schema}.${renderer.ext}`;
 
-                return new Transpiler({
+                const output = new Transpiler({
                   ...options,
                   renderer: renderer.key,
                   includeTypes: true,
-                })
-                  .transpileFile(actualPath)
-                  .then(output => expect(output).to.equal(file(expectedPath)));
+                }).transpileFile(actualPath);
+
+                expect(output).to.equal(file(expectedPath));
               });
             });
           });
@@ -55,13 +55,13 @@ describe('Transpiler', function () {
             const actualPath = `${__dirname}/schemas/${format}/`;
             const expectedPath = `${__dirname}/expected/${renderer.key}/all.${renderer.ext}`;
 
-            return new Transpiler({
+            const output = new Transpiler({
               ...options,
               renderer: renderer.key,
               includeTypes: true,
-            })
-              .transpileFolder(actualPath)
-              .then(output => expect(output).to.equal(file(expectedPath)));
+            }).transpileFolder(actualPath);
+
+            expect(output).to.equal(file(expectedPath));
           });
         });
       });
@@ -79,54 +79,60 @@ describe('Transpiler', function () {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/with-types.js`;
 
-      return new Transpiler({ ...otherOptions, includeTypes: true })
-        .transpileFile(actualPath)
-        .then(output => expect(output).to.equal(file(expectedPath)));
+      const output = new Transpiler({ ...otherOptions, includeTypes: true })
+        .transpileFile(actualPath);
+
+      expect(output).to.equal(file(expectedPath));
     });
 
     it('can omit types through configuration', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/no-types.js`;
 
-      return new Transpiler({ ...otherOptions })
-        .transpileFile(actualPath)
-        .then(output => expect(output).to.equal(file(expectedPath)));
+      const output = new Transpiler({ ...otherOptions })
+        .transpileFile(actualPath);
+
+      expect(output).to.equal(file(expectedPath));
     });
 
     it('can include schemas through configuration', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/with-schemas.js`;
 
-      return new Transpiler({ ...otherOptions, includeSchemas: true })
-        .transpileFile(actualPath)
-        .then(output => expect(output).to.equal(file(expectedPath)));
+      const output = new Transpiler({ ...otherOptions, includeSchemas: true })
+        .transpileFile(actualPath);
+
+      expect(output).to.equal(file(expectedPath));
     });
 
     it('can include schemas with attributes through configuration', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/with-schemas-attributes.js`;
 
-      return new Transpiler({ ...otherOptions, includeSchemas: true, includeAttributes: true })
-        .transpileFile(actualPath)
-        .then(output => expect(output).to.equal(file(expectedPath)));
+      const output = new Transpiler({ ...otherOptions, includeSchemas: true, includeAttributes: true })
+        .transpileFile(actualPath);
+
+      expect(output).to.equal(file(expectedPath));
     });
 
     it('can omit schemas through configuration', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/no-schemas.js`;
 
-      return new Transpiler({ ...otherOptions })
-        .transpileFile(actualPath)
-        .then(output => expect(output).to.equal(file(expectedPath)));
+      const output = new Transpiler({ ...otherOptions })
+        .transpileFile(actualPath);
+
+      expect(output).to.equal(file(expectedPath));
     });
 
     it('can include schemas through configuration', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/with-types-schemas.js`;
 
-      return new Transpiler({ ...otherOptions, includeTypes: true, includeSchemas: true })
-        .transpileFile(actualPath)
-        .then(output => expect(output).to.equal(file(expectedPath)));
+      const output = new Transpiler({ ...otherOptions, includeTypes: true, includeSchemas: true })
+        .transpileFile(actualPath);
+
+      expect(output).to.equal(file(expectedPath));
     });
   });
 

@@ -1,3 +1,6 @@
+# 2.3.0
+* Updated the visuals of errors and stack traces on the command line.
+
 # 2.2.2
 * Added flowtype definitions to the `libs/` output folder.
 * Updated develop dependency TypeScript to v2.0.

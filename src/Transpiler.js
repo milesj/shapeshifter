@@ -43,9 +43,37 @@ export default class Transpiler {
    * @param {Error|String} error
    */
   static error(error: Error | string) {
-    const message = (error instanceof Error) ? error.message : error;
+    let message = '';
+    let stack = [];
 
+    if (error instanceof Error) {
+      message = `  ${error.message}  `;
+
+      stack = error.stack.split('\n');
+      stack.shift();
+      stack.pop();
+    } else {
+      message = `  ${error}  `;
+    }
+
+    // Pad the primary message
+    let length = message.length;
+    let padding = '';
+
+    while (length > 0) {
+      padding += ' ';
+      length -= 1;
+    }
+
+    // Output the errors
+    console.error(padding);
+    console.error(chalk.bgRed.white(padding));
     console.error(chalk.bgRed.white(message));
+    console.error(chalk.bgRed.white(padding));
+    console.error(padding);
+    console.error(chalk.gray(stack.join('\n')));
+    console.error(padding);
+
     process.exit(1);
   }
 
@@ -63,12 +91,16 @@ export default class Transpiler {
           return;
         }
 
-        if (stats.isDirectory()) {
-          resolve(this.transpileFolder(target));
-        } else if (stats.isFile()) {
-          resolve(this.transpileFile(target));
-        } else {
-          reject('Unsupported file type.');
+        try {
+          if (stats.isDirectory()) {
+            resolve(this.transpileFolder(target));
+          } else if (stats.isFile()) {
+            resolve(this.transpileFile(target));
+          } else {
+            reject(new Error('Unsupported file type.'));
+          }
+        } catch (e) {
+          reject(e);
         }
       });
     });
@@ -78,39 +110,31 @@ export default class Transpiler {
    * Transpile a folder by looping over all JS and JSON files and rendering them.
    *
    * @param {String} folderPath
-   * @returns {Promise}
+   * @returns {String}
    */
-  transpileFolder(folderPath: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      fs.readdir(folderPath, (error, filePaths) => {
-        if (error) {
-          reject(error);
-          return;
-        }
+  transpileFolder(folderPath: string): string {
+    const filePaths = fs.readdirSync(folderPath);
+    let readers = [];
 
-        let readers = [];
-
-        filePaths.forEach((filePath) => {
-          if (filePath.match(/\.(js|json)$/)) {
-            readers = [
-              ...readers,
-              ...this.extractReaders(path.join(folderPath, filePath)),
-            ];
-          }
-        });
-
-        resolve(this.generateOutput(readers));
-      });
+    filePaths.forEach((filePath) => {
+      if (filePath.match(/\.(js|json)$/)) {
+        readers = [
+          ...readers,
+          ...this.extractReaders(path.join(folderPath, filePath)),
+        ];
+      }
     });
+
+    return this.generateOutput(readers);
   }
 
   /**
    * Transpile a file by rendering the reader at the defined path.
    *
    * @param {String} file
-   * @returns {Promise}
+   * @returns {String}
    */
-  transpileFile(file: string): Promise<string> {
+  transpileFile(file: string): string {
     return this.generateOutput(this.extractReaders(file));
   }
 
@@ -164,72 +188,70 @@ export default class Transpiler {
    * Generate the output by combining all readers into a single output.
    *
    * @param {SchemaReader[]} readers
-   * @returns {Promise}
+   * @returns {String}
    */
-  generateOutput(readers: SchemaReader[]): Promise<string> {
-    return new Promise((resolve) => {
-      const rendered = new Set();
-      let imports = new Set();
-      let constants = new Set();
-      let header = new Set();
-      let schemas = new Set();
-      let relations = new Set();
-      let sets = new Set();
+  generateOutput(readers: SchemaReader[]): string {
+    const rendered = new Set();
+    let imports = new Set();
+    let constants = new Set();
+    let header = new Set();
+    let schemas = new Set();
+    let relations = new Set();
+    let sets = new Set();
 
-      // Wrap in a set to remove duplicates
-      readers.forEach((reader) => {
-        if (rendered.has(reader.path)) {
-          return;
-        }
+    // Wrap in a set to remove duplicates
+    readers.forEach((reader) => {
+      if (rendered.has(reader.path)) {
+        return;
+      }
 
-        const renderer = Factory.renderer(this.options, reader);
+      const renderer = Factory.renderer(this.options, reader);
 
-        renderer.parse();
+      renderer.parse();
 
-        imports = new Set([
-          ...Array.from(imports.values()),
-          ...renderer.getImports(),
-        ]);
+      imports = new Set([
+        ...Array.from(imports.values()),
+        ...renderer.getImports(),
+      ]);
 
-        constants = new Set([
-          ...Array.from(constants.values()),
-          ...renderer.getConstants(),
-        ]);
+      constants = new Set([
+        ...Array.from(constants.values()),
+        ...renderer.getConstants(),
+      ]);
 
-        header = new Set([
-          ...Array.from(header.values()),
-          ...renderer.getHeader(),
-        ]);
+      header = new Set([
+        ...Array.from(header.values()),
+        ...renderer.getHeader(),
+      ]);
 
-        schemas = new Set([
-          ...Array.from(schemas.values()),
-          ...renderer.getSchemas(),
-        ]);
+      schemas = new Set([
+        ...Array.from(schemas.values()),
+        ...renderer.getSchemas(),
+      ]);
 
-        relations = new Set([
-          ...Array.from(relations.values()),
-          ...renderer.getRelations(),
-        ]);
+      relations = new Set([
+        ...Array.from(relations.values()),
+        ...renderer.getRelations(),
+      ]);
 
-        sets = new Set([
-          ...Array.from(sets.values()),
-          ...renderer.getSets(),
-        ]);
+      sets = new Set([
+        ...Array.from(sets.values()),
+        ...renderer.getSets(),
+      ]);
 
-        rendered.add(reader.path);
-      });
-
-      // Combine and filter the chunks
-      const chunks = [];
-
-      chunks.push(Array.from(imports.values()).join('\n'));
-      chunks.push(Array.from(constants.values()).join('\n'));
-      chunks.push(Array.from(header.values()).join('\n\n'));
-      chunks.push(Array.from(schemas.values()).join('\n\n'));
-      chunks.push(Array.from(relations.values()).join('\n\n'));
-      chunks.push(Array.from(sets.values()).join('\n\n'));
-
-      resolve(`${chunks.filter(value => !!value).join('\n\n')}\n`);
+      rendered.add(reader.path);
     });
+
+    // Combine and filter the chunks
+    const chunks = [];
+
+    chunks.push(Array.from(imports.values()).join('\n'));
+    chunks.push(Array.from(constants.values()).join('\n'));
+    chunks.push(Array.from(header.values()).join('\n\n'));
+    chunks.push(Array.from(schemas.values()).join('\n\n'));
+    chunks.push(Array.from(relations.values()).join('\n\n'));
+    chunks.push(Array.from(sets.values()).join('\n\n'));
+
+    return `${chunks.filter(value => !!value).join('\n\n')}\n`;
   }
 }
