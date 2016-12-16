@@ -143,7 +143,7 @@ export default class ReactRenderer extends Renderer {
   renderUnion(definition: UnionDefinition, depth: number): string {
     return this.wrapPropType(definition,
       this.wrapFunction('oneOfType',
-        this.formatArray(this.renderArrayItems(definition.valueTypes, depth + 1), depth),
+        this.formatArray(this.renderArrayDefinitions(definition.valueTypes, depth + 1), depth),
       ),
     );
   }

@@ -120,7 +120,7 @@ export default class Renderer {
    * @param {String} [type]
    * @returns {String}
    */
-  formatValue(value: any, type: string = ''): string {
+  formatValue(value: PrimitiveType, type: string = ''): string {
     if (value === null) {
       return 'null';
     }
@@ -129,11 +129,11 @@ export default class Renderer {
 
     switch (type) {
       case 'string':
-        return `'${value}'`;
+        return `'${String(value)}'`;
 
       case 'function':
       case 'boolean':
-        return `${value}`;
+        return `${String(value)}`;
 
       case 'number':
         return `${parseFloat(value)}`;
@@ -235,7 +235,7 @@ export default class Renderer {
   parseConstants() {
     const { constants } = this.reader;
 
-    Object.keys(constants).forEach((key) => {
+    Object.keys(constants).forEach((key: string) => {
       this.constants.push(this.renderConstant(key, constants[key]));
     });
   }
@@ -244,7 +244,7 @@ export default class Renderer {
    * Parse all imports out of the schema and append to the renderer.
    */
   parseImports() {
-    this.reader.imports.forEach((statement) => {
+    this.reader.imports.forEach((statement: ImportStructure) => {
       this.imports.push(this.renderImport(statement));
     });
   }
@@ -253,7 +253,7 @@ export default class Renderer {
    * Parse out all reference paths.
    */
   parseReferences() {
-    Object.keys(this.reader.references).forEach((key) => {
+    Object.keys(this.reader.references).forEach((key: string) => {
       this.referencePaths.push(this.reader.references[key]);
     });
   }
@@ -292,7 +292,7 @@ export default class Renderer {
     const { attributes, subsets, name } = this.reader;
 
     // Subsets
-    Object.keys(subsets).forEach((setName) => {
+    Object.keys(subsets).forEach((setName: string) => {
       const setAttributes = [];
       let subset = subsets[setName];
 
@@ -303,7 +303,7 @@ export default class Renderer {
       const nullable = subset.null || {};
       const required = subset.required || {};
 
-      subset.attributes.forEach((attribute) => {
+      subset.attributes.forEach((attribute: string) => {
         let setConfig = baseAttributes[attribute];
 
         if (!setConfig) {
@@ -394,15 +394,26 @@ export default class Renderer {
   }
 
   /**
-   * Render an array of items by formatting each value and prepending an indentation.
+   * Render an array of values by formatting each value and prepending an indentation.
    *
    * @param {*[]} items
    * @param {Number} depth
    * @param {String} [valueType]
    * @returns {Array}
    */
-  renderArrayItems(items: any[], depth: number = 0, valueType: string = ''): string[] {
-    return items.map(item => this.wrapItem(this.renderOrFormat(item, depth, valueType), depth));
+  renderArrayItems(items: PrimitiveType[], depth: number = 0, valueType: string = ''): string[] {
+    return items.map(item => this.wrapItem(this.formatValue(item, valueType), depth));
+  }
+
+  /**
+   * Render an array of definitions by formatting each value and prepending an indentation.
+   *
+   * @param {*[]} items
+   * @param {Number} depth
+   * @returns {Array}
+   */
+  renderArrayDefinitions(items: Definition[], depth: number = 0): string[] {
+    return items.map(item => this.wrapItem(this.renderAttribute(item, depth), depth));
   }
 
   /**
@@ -519,7 +530,11 @@ export default class Renderer {
    * @param {String} [valueType]
    * @returns {String}
    */
-  renderOrFormat(value: any | Definition, depth: number, valueType: string = ''): string {
+  renderOrFormat(
+    value: PrimitiveType | Definition,
+    depth: number,
+    valueType: string = '',
+  ): string {
     return (value instanceof Definition)
       ? this.renderAttribute(value, depth)
       : this.formatValue(value, valueType);
@@ -580,7 +595,7 @@ export default class Renderer {
     let relationDefinition: ?ReferenceDefinition = null;
     let relationType: string = '';
 
-    attributes.forEach((definition) => {
+    attributes.forEach((definition: Definition) => {
       relationDefinition = null;
 
       if (includeAttributes) {
@@ -640,7 +655,7 @@ export default class Renderer {
       relationTemplate += `.addAttributes(${this.formatArray(fields, 0)})`;
     }
 
-    Object.keys(relations).forEach((relation) => {
+    Object.keys(relations).forEach((relation: string) => {
       if (relations[relation].length) {
         relationTemplate += `.${relation}(${this.formatObject(relations[relation], 0)})`;
       }

@@ -1,1 +1,1 @@
-./tests/expected/typescript/**/*.js
+tests/expected/**/*.js

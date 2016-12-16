@@ -14,18 +14,18 @@ type SchemaMap = { [attribute: string]: Schema };
 
 type Relation = {
   attribute: string,
-  schema: Schema,
-  relation: string,
   collection: boolean,
+  relation: string,
+  schema: Schema,
 };
 /* eslint-enable no-use-before-define */
 
 export default class Schema {
-  resourceName: string;
-  primaryKey: string;
   attributes: string[];
+  primaryKey: string;
   relations: Relation[];
   relationTypes: { [key: string]: string };
+  resourceName: string;
   static HAS_ONE: string;
   static HAS_MANY: string;
   static BELONGS_TO: string;
@@ -38,11 +38,11 @@ export default class Schema {
    * @param {String} [primaryKey]
    */
   constructor(resourceName: string, primaryKey: string = 'id') {
-    this.resourceName = resourceName;
-    this.primaryKey = primaryKey;
     this.attributes = [];
+    this.primaryKey = primaryKey;
     this.relations = [];
     this.relationTypes = {};
+    this.resourceName = resourceName;
   }
 
   /**
@@ -99,7 +99,7 @@ export default class Schema {
    * @returns {Schema}
    */
   addRelations(schemas: SchemaMap, relation: string): this {
-    Object.keys(schemas).forEach((attribute) => {
+    Object.keys(schemas).forEach((attribute: string) => {
       this.addRelation(attribute, schemas[attribute], relation);
     });
 

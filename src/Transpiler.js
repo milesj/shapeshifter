@@ -15,9 +15,9 @@ import SchemaReader from './SchemaReader';
 import type { Options } from './types';
 
 type ResolveList = {
-  resolvePath: string,
   parentReader?: SchemaReader,
   refKey?: string,
+  resolvePath: string,
 };
 
 export default class Transpiler {
@@ -84,8 +84,11 @@ export default class Transpiler {
    * @returns {Promise}
    */
   transpile(target: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      fs.stat(target, (error, stats) => {
+    return new Promise((
+      resolve: (result: string) => void,
+      reject: (error: Error) => void,
+    ) => {
+      fs.stat(target, (error: ?Error, stats: fs.Stats) => {
         if (error) {
           reject(error);
           return;
@@ -116,7 +119,7 @@ export default class Transpiler {
     const filePaths = fs.readdirSync(folderPath);
     let readers = [];
 
-    filePaths.forEach((filePath) => {
+    filePaths.forEach((filePath: string) => {
       if (filePath.match(/\.(js|json)$/)) {
         readers = [
           ...readers,
@@ -172,7 +175,7 @@ export default class Transpiler {
       }
 
       // Extract child references
-      Object.keys(reader.references).forEach((ref) => {
+      Object.keys(reader.references).forEach((ref: string) => {
         toResolve.push({
           resolvePath: path.normalize(path.join(basePath, reader.references[ref])),
           parentReader: reader,
@@ -200,7 +203,7 @@ export default class Transpiler {
     let sets = new Set();
 
     // Wrap in a set to remove duplicates
-    readers.forEach((reader) => {
+    readers.forEach((reader: SchemaReader) => {
       if (rendered.has(reader.path)) {
         return;
       }

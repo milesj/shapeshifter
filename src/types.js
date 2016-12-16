@@ -9,11 +9,11 @@
 export type Options = {
   defaultNull: boolean,
   defaultRequired: boolean,
+  includeAttributes: boolean,
+  includeSchemas: boolean,
+  includeTypes: boolean,
   indentCharacter: string,
   renderer: string,
-  includeSchemas: boolean,
-  includeAttributes: boolean,
-  includeTypes: boolean,
 };
 
 export type PrimitiveType = string | number | boolean;
@@ -21,90 +21,90 @@ export type PrimitiveType = string | number | boolean;
 // Type Definitions
 
 export type BaseConfig = {
-  type: string,
   null?: boolean,
   required?: boolean,
+  type: string,
 };
 
 export type ArrayConfig = {
-  type: string,
-  valueType: TypeDefinition,
   null?: boolean,
   required?: boolean,
+  type: string,
+  valueType: TypeDefinition,
 };
 
 export type BoolConfig = {
-  type: string,
   null?: boolean,
   required?: boolean,
+  type: string,
 };
 
 export type EnumConfig = {
-  type: string,
-  valueType: string,
-  values: PrimitiveType[],
   null?: boolean,
   required?: boolean,
+  type: string,
+  values: PrimitiveType[],
+  valueType: string,
 };
 
 export type FuncConfig = {
-  type: string,
-  returnType?: TypeDefinition,
   argTypes?: TypeDefinition[],
   null?: boolean,
   required?: boolean,
+  returnType?: TypeDefinition,
+  type: string,
 };
 
 export type InstanceConfig = {
-  type: string,
   contract: string,
   null?: boolean,
   required?: boolean,
+  type: string,
 };
 
 export type NumberConfig = {
-  type: string,
   null?: boolean,
   required?: boolean,
+  type: string,
 };
 
 export type ObjectConfig = {
-  type: string,
   keyType: TypeDefinition,
-  valueType: TypeDefinition,
   null?: boolean,
   required?: boolean,
+  type: string,
+  valueType: TypeDefinition,
 };
 
 export type ReferenceConfig = {
-  type: string,
-  reference: string,
-  self: boolean,
-  subset?: string,
-  relation?: string,
   export?: boolean,
   null?: boolean,
+  reference: string,
+  relation?: string,
   required?: boolean,
+  self: boolean,
+  subset?: string,
+  type: string,
 };
 
 export type ShapeConfig = {
-  type: string,
   attributes: { [key: string]: TypeDefinition },
   null?: boolean,
   required?: boolean,
+  type: string,
 };
 
 export type StringConfig = {
-  type: string,
   null?: boolean,
   required?: boolean,
+  type: string,
 };
 
 export type UnionConfig = {
-  type: string,
-  valueTypes: TypeDefinition[],
   null?: boolean,
   required?: boolean,
+  type: string,
+  valueTypes: TypeDefinition[],
 };
 
 export type TypeDefinition = string |
@@ -147,12 +147,12 @@ export type AttributesField = { [key: string]: TypeDefinition };
 export type ReferencesField = { [key: string]: string };
 
 export type SchemaStructure = {
-  name: string,
   attributes: AttributesField,
-  meta?: MetadataField,
   constants?: ConstantsField,
   imports?: ImportsField,
+  meta?: MetadataField,
+  name: string,
+  references?: ReferencesField,
   shapes?: ShapesField,
   subsets?: SubsetsField,
-  references?: ReferencesField,
 };

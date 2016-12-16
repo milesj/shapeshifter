@@ -10,6 +10,6 @@
  * @param {*} value
  * @returns {Boolean}
  */
-export default function isObject(value: any): boolean {
+export default function isObject(value: mixed): boolean {
   return (typeof value === 'object' && value !== null && !Array.isArray(value));
 }

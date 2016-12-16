@@ -41,7 +41,7 @@ export default class EnumDefinition extends Definition {
    * @param {*} value
    * @returns {Boolean}
    */
-  validateValue(value: any): boolean {
+  validateValue(value: mixed): boolean {
     let valueType = normalizeType(this.config.valueType);
 
     // Function names are defined as strings within the schema

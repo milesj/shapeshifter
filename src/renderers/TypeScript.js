@@ -21,7 +21,7 @@ import indent from '../helpers/indent';
 import isPrimitive from '../helpers/isPrimitive';
 import normalizeType from '../helpers/normalizeType';
 
-import type { Options } from '../types';
+import type { Options, PrimitiveType } from '../types';
 
 export default class TypeScriptRenderer extends Renderer {
   constructor(options: Options, reader: SchemaReader) {
@@ -78,7 +78,7 @@ export default class TypeScriptRenderer extends Renderer {
       // If a string is provided
       // Assign values incrementally starting from 0
       case 'string':
-        values.forEach((value) => {
+        values.forEach((value: PrimitiveType) => {
           members.push(`${indent(1, char)}${String(value)} = ${currentIndex}`);
           currentIndex += 1;
         });
@@ -88,7 +88,7 @@ export default class TypeScriptRenderer extends Renderer {
       // Generate unique keys using the alphabet
       case 'number':
       case 'boolean':
-        values.forEach((value) => {
+        values.forEach((value: PrimitiveType) => {
           members.push(`${indent(1, char)}${String.fromCodePoint(currentChar)} = ${Number(value)}`);
           currentChar += 1;
         });
@@ -162,7 +162,7 @@ export default class TypeScriptRenderer extends Renderer {
    */
   renderUnion(definition: UnionDefinition, depth: number): string {
     return definition.valueTypes
-      .map((item) => {
+      .map((item: Definition) => {
         const value = this.renderAttribute(item, depth);
 
         // Functions need to be wrapped in parenthesis when used in unions

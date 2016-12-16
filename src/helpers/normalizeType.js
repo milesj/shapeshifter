@@ -29,7 +29,7 @@ const ALIAS_MAP = {
  * @param {*} type
  * @returns {String}
  */
-export default function normalizeType(type: any): string {
+export default function normalizeType(type: mixed): string {
   type = String(type).toLowerCase();
 
   return ALIAS_MAP[type] || type;
