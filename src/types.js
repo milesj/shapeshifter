@@ -128,6 +128,12 @@ export type ImportStructure = {
 
 export type ImportsField = ImportStructure[];
 
+export type ShapesField = {
+  [key: string]: {
+    [key: string]: TypeDefinition,
+  },
+};
+
 export type SubsetStructure = {
   attributes: string[],
   null?: { [key: string]: boolean },
@@ -146,6 +152,7 @@ export type SchemaStructure = {
   meta?: MetadataField,
   constants?: ConstantsField,
   imports?: ImportsField,
+  shapes?: ShapesField,
   subsets?: SubsetsField,
   references?: ReferencesField,
 };

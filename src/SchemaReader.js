@@ -16,6 +16,7 @@ import type {
   MetadataField,
   ConstantsField,
   ImportsField,
+  ShapesField,
   SubsetsField,
   ReferencesField,
 } from './types';
@@ -29,6 +30,7 @@ export default class SchemaReader {
   attributes: Definition[];
   constants: ConstantsField;
   imports: ImportsField;
+  shapes: ShapesField;
   subsets: SubsetsField;
   references: ReferencesField;
   referenceReaders: { [key: string]: SchemaReader };
@@ -49,6 +51,7 @@ export default class SchemaReader {
     this.attributes = [];
     this.constants = {};
     this.imports = [];
+    this.shapes = {};
     this.subsets = {};
     this.references = {};
     this.referenceReaders = {};
@@ -88,6 +91,10 @@ export default class SchemaReader {
 
     if (typeof data.references !== 'undefined') {
       this.setReferences(data.references);
+    }
+
+    if (typeof data.shapes !== 'undefined') {
+      this.setShapes(data.shapes);
     }
 
     if (typeof data.subsets !== 'undefined') {
@@ -174,6 +181,19 @@ export default class SchemaReader {
     }
 
     this.references = references;
+  }
+
+  /**
+   * Set shapes for the schema.
+   *
+   * @param {Object} shapes
+   */
+  setShapes(shapes: ShapesField) {
+    if (!isObject(shapes)) {
+      this.throwError('Schema shapes must be an object.');
+    }
+
+    this.shapes = shapes;
   }
 
   /**
