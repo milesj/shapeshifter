@@ -11,22 +11,22 @@ Take this user schema for example.
 
 ```json
 {
-    "name": "User",
-    "attributes": {
-        "id": "number",
-        "username": "string",
-        "email": {
-            "type": "string",
-            "required": true
-        },
-        "location": {
-            "type": "shape",
-            "attributes": {
-                "lat": "number",
-                "long": "number"
-            }
-        }
+  "name": "User",
+  "attributes": {
+    "id": "number",
+    "username": "string",
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "location": {
+      "type": "shape",
+      "attributes": {
+        "lat": "number",
+        "long": "number"
+      }
     }
+  }
 }
 ```
 
@@ -36,13 +36,13 @@ Which transpiles down to the following React prop types.
 import { PropTypes } from 'react';
 
 export const UserShape = PropTypes.shape({
-    id: PropTypes.number,
-    username: PropTypes.string,
-    email: PropTypes.string.isRequired,
-    location: PropTypes.shape({
-        lat: PropTypes.number,
-        long: PropTypes.number,
-    }),
+  id: PropTypes.number,
+  username: PropTypes.string,
+  email: PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    lat: PropTypes.number,
+    long: PropTypes.number,
+  }),
 });
 ```
 
@@ -52,13 +52,13 @@ Or the following Flow type aliases.
 // @flow
 
 export type UserType = {
-    id: number,
-    username: string,
-    email: string,
-    location: {
-        lat: number,
-        long: number,
-    },
+  id: number,
+  username: string,
+  email: string,
+  location: {
+    lat: number,
+    long: number,
+  },
 };
 ```
 
@@ -66,13 +66,13 @@ Or TypeScript interfaces.
 
 ```javascript
 export interface UserInterface {
-    id?: number;
-    username?: string;
-    email: string;
-    location?: {
-        lat?: number;
-        long?: number;
-    };
+  id?: number;
+  username?: string;
+  email: string;
+  location?: {
+    lat?: number;
+    long?: number;
+  };
 }
 ```
 
@@ -152,26 +152,27 @@ Defaults to "false".
 ## Documentation
 
 * [JSON Structure](#json-structure)
-    * [Attributes](#attributes)
-    * [Subsets](#subsets)
-    * [Imports](#imports)
-    * [Constants](#constants)
-    * [Metadata](#metadata)
+  * [Attributes](#attributes)
+  * [Metadata](#metadata)
+  * [Imports](#imports)
+  * [Constants](#constants)
+  * [Subsets](#subsets)
 * [Attribute Types](#attribute-types)
-    * [Primitives](#primitives)
-    * [Arrays](#arrays)
-    * [Objects](#objects)
-    * [Enums](#enums)
-    * [Shapes](#shapes)
-    * [Unions](#unions)
-    * [References](#references)
-        * [Self References](#self-references)
-        * [Exported Schemas](#exported-schemas)
-        * [Relation Type](#relation-type)
-    * [Instance Ofs](#instance-ofs)
+  * [Primitives](#primitives)
+  * [Arrays](#arrays)
+  * [Objects](#objects)
+  * [Enums](#enums)
+  * [Shapes](#shapes)
+    * [Shape References](#shape-references)
+  * [Unions](#unions)
+  * [References](#references)
+    * [Self References](#self-references)
+    * [Exported Schemas](#exported-schemas)
+    * [Relation Type](#relation-type)
+  * [Instance Ofs](#instance-ofs)
 * [Schema Classes](#schema-classes)
-    * [Including Attributes](#including-attributes)
-    * [Including Relations](#including-relations)
+  * [Including Attributes](#including-attributes)
+  * [Including Relations](#including-relations)
 
 ### JSON Structure
 
@@ -186,8 +187,8 @@ available fields in the current schema.
 
 ```json
 {
-    "name": "Users",
-    "attributes": {}
+  "name": "Users",
+  "attributes": {}
 }
 ```
 
@@ -210,12 +211,12 @@ Depending on the type used, additional properties may be required.
 
 ```json
 "attributes": {
-    "primitiveField": "string",
-    "compoundField": {
-        "type": "enum",
-        "valueType": "number",
-        "values": [1, 2, 3]
-    }
+  "primitiveField": "string",
+  "compoundField": {
+    "type": "enum",
+    "valueType": "number",
+    "values": [1, 2, 3]
+  }
 }
 ```
 
@@ -232,9 +233,63 @@ every type alias.
 
 ```json
 "field": {
-    "type": "string",
-    "required": true,
-    "null": false
+  "type": "string",
+  "required": true,
+  "null": false
+}
+```
+
+#### Metadata
+
+The `meta` object allows arbitrary metadata to be defined. Only two
+fields are supported currently, `primaryKey` and `resourceName`, both
+of which are used when generating `Schema` classes using `--schemas`.
+The `primaryKey` defines the unique identifier / primary key of the record,
+usually "id" (default), while `resourceName` is the unique name found in
+a URL path. For example, in the URL "/api/users/123", the "users" path
+part would be the resource name, and "123" would be the primary key.
+
+```json
+"meta": {
+  "primaryKey": "id",
+  "resourceName": "users"
+}
+```
+
+#### Imports
+
+The `imports` array provides a mechanism for defining ES2015 imports,
+which in turn allow re-use of application level structures.
+
+An import object requires a `path` property that maps to a file
+in the application, relative to the transpiled schema. Default imports
+can be defined with the `default` property, while named imports
+can be defined with `named` (an array).
+
+```json
+"imports": [
+  { "path": "./foo.js", "default": "FooClass" },
+  { "path": "../bar.js", "named": ["funcName", "constName"] },
+  { "path": "../baz/qux.js", "default": "BarClass", "named": ["className"] }
+]
+```
+
+#### Constants
+
+The `constants` object is a mapping of a constant to a primitive
+value or an array of primitive values. Constants are transpiled
+down to exported ES2015 `const`s, allowing easy re-use of values.
+
+The primary use case of this feature is to provide constants from a
+backend model layer that can easily be used on the frontend,
+without introducing duplication.
+
+```json
+"constants": {
+  "STATUS_PENDING": 0,
+  "STATUS_ACTIVE": 1,
+  "STATUSES": [0, 1],
+  "ADMIN_FLAG": "admin"
 }
 ```
 
@@ -253,86 +308,32 @@ subset to boolean values, which enable or disable the modifier.
 
 ```json
 "subsets": {
-    "SetA": ["foo", "bar"],
-    "SetB": {
-        "attributes": ["foo", "qux"],
-        "null": {
-            "foo": true
-        }
-    },
-    "SetC": {
-        "attributes": ["bar", "baz"],
-        "required": {
-            "bar": true,
-            "baz": false
-        }
+  "SetA": ["foo", "bar"],
+  "SetB": {
+    "attributes": ["foo", "qux"],
+    "null": {
+      "foo": true
     }
+  },
+  "SetC": {
+    "attributes": ["bar", "baz"],
+    "required": {
+      "bar": true,
+      "baz": false
+    }
+  }
 },
 "attributes": {
-    "foo": "number",
-    "bar": "bool",
-    "baz": {
-        "type": "string",
-        "required": true
-    },
-    "qux": {
-        "type": "string",
-        "null": true
-    }
-}
-```
-
-#### Imports
-
-The `imports` array provides a mechanism for defining ES2015 imports,
-which in turn allow re-use of application level structures.
-
-An import object requires a `path` property that maps to a file
-in the application, relative to the transpiled schema. Default imports
-can be defined with the `default` property, while named imports
-can be defined with `named` (an array).
-
-```json
-"imports": [
-    { "path": "./foo.js", "default": "FooClass" },
-    { "path": "../bar.js", "named": ["funcName", "constName"] },
-    { "path": "../baz/qux.js", "default": "BarClass", "named": ["className"] }
-]
-```
-
-#### Constants
-
-The `constants` object is a mapping of a constant to a primitive
-value or an array of primitive values. Constants are transpiled
-down to exported ES2015 `const`s, allowing easy re-use of values.
-
-The primary use case of this feature is to provide constants from a
-backend model layer that can easily be used on the frontend,
-without introducing duplication.
-
-```json
-"constants": {
-    "STATUS_PENDING": 0,
-    "STATUS_ACTIVE": 1,
-    "STATUSES": [0, 1],
-    "ADMIN_FLAG": "admin"
-}
-```
-
-#### Metadata
-
-The `meta` object allows arbitrary metadata to be defined. Only two
-fields are supported currently, `primaryKey` and `resourceName`, both
-of which are used when generating `Schema` classes using `--schemas`.
-The `primaryKey` defines the unique identifier / primary key of the record,
-usually "id" (default), while `resourceName` is the unique name found in
-a URL path. For example, in the URL "/api/users/123", the "users" path
-part would be the resource name, and "123" would be the primary key.
-
-```json
-"meta": {
-    "primaryKey": "id",
-    "resourceName": "users"
+  "foo": "number",
+  "bar": "bool",
+  "baz": {
+    "type": "string",
+    "required": true
+  },
+  "qux": {
+    "type": "string",
+    "null": true
+  }
 }
 ```
 
@@ -358,13 +359,13 @@ As well as the expanded standard notation.
 
 ```json
 "name": {
-    "type": "string"
+  "type": "string"
 },
 "status": {
-    "type": "number"
+  "type": "number"
 },
 "active": {
-    "type": "boolean"
+  "type": "boolean"
 },
 ```
 
@@ -396,10 +397,10 @@ defined by the `valueType` property.
 
 ```json
 "messages": {
-    "type": "array",
-    "valueType": {
-        "type": "string"
-    }
+  "type": "array",
+  "valueType": {
+    "type": "string"
+  }
 }
 ```
 
@@ -428,11 +429,11 @@ This is equivalent to generics from other languages: `Object<T1, T2>`.
 
 ```json
 "costs": {
-    "type": "object",
-    "keyType": "string",
-    "valueType": {
-        "type": "number"
-    }
+  "type": "object",
+  "keyType": "string",
+  "valueType": {
+    "type": "number"
+  }
 }
 ```
 
@@ -459,9 +460,9 @@ respectively.
 
 ```json
 "words": {
-    "type": "enum",
-    "valueType": "string",
-    "values": ["foo", "bar", "baz"]
+  "type": "enum",
+  "valueType": "string",
+  "values": ["foo", "bar", "baz"]
 }
 ```
 
@@ -495,15 +496,15 @@ A shape is similar to a struct found in the C language.
 
 ```json
 "location": {
-    "type": "shape",
-    "attributes": {
-        "lat": "number",
-        "long": "number",
-        "name": {
-            "type": "string",
-            "required": true
-        }
+  "type": "shape",
+  "attributes": {
+    "lat": "number",
+    "long": "number",
+    "name": {
+      "type": "string",
+      "required": true
     }
+  }
 }
 ```
 
@@ -512,27 +513,75 @@ This transpiles to:
 ```javascript
 // React
 location: PropTypes.shape({
-    lat: PropTypes.number,
-    long: PropTypes.number,
-    name: PropTypes.string.isRequired,
+  lat: PropTypes.number,
+  long: PropTypes.number,
+  name: PropTypes.string.isRequired,
 }),
 
 // Flow
 location: {
-    lat: number,
-    long: number,
-    name: string,
+  lat: number,
+  long: number,
+  name: string,
 },
 
 // TypeScript
 location?: {
-    lat?: number,
-    long?: number,
-    name: string,
+  lat?: number,
+  long?: number,
+  name: string,
 },
 ```
 
 Alias names: `struct`
+
+##### Shape References
+
+Shapes are powerful at defining nested attributes, while
+[references](#references) are great at reusing external schemas.
+Shape references are a combination of both of these patterns --
+it permits a local shape definition to be used throughout
+multiple attributes.
+
+To begin, define a mapping of attributes, under unique name,
+in the top level `shapes` property.
+
+```json
+{
+  "name": "Receipt",
+  "shapes": {
+    "Price": {
+      "amount": "number",
+      "nativeAmount": "number",
+      "exchangeRate": "number"
+    }
+  },
+  "attributes": {}
+}
+```
+
+Once the shape definition exists, we can point out attributes
+to the shape using the `reference` property, like so.
+
+```json
+"attributes": {
+  "fees": {
+    "type": "shape",
+    "reference": "Price"
+  },
+  "taxes": {
+    "type": "shape",
+    "reference": "Price"
+  },
+  "total": {
+    "type": "shape",
+    "reference": "Price"
+  }
+}
+```
+
+With this approach, the `attributes` property is not required
+for each shape type.
 
 #### Unions
 
@@ -542,15 +591,15 @@ this attribute must match one of the types in the list.
 
 ```json
 "error": {
-    "type": "union",
-    "valueTypes": [
-        "string",
-        { "type": "number" },
-        {
-            "type": "instance",
-            "contract": "Error"
-        }
-    ]
+  "type": "union",
+  "valueTypes": [
+    "string",
+    { "type": "number" },
+    {
+      "type": "instance",
+      "contract": "Error"
+    }
+  ]
 }
 ```
 
@@ -559,9 +608,9 @@ This transpiles to:
 ```javascript
 // React
 error: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.instanceOf(Error),
+  PropTypes.string,
+  PropTypes.number,
+  PropTypes.instanceOf(Error),
 ]),
 
 // Flow
@@ -584,11 +633,11 @@ an external schema file.
 
 ```json
 {
-    "name": "Users",
-    "references": {
-        "profile": "./profile.json"
-    },
-    "attributes": {}
+  "name": "Users",
+  "references": {
+    "Profile": "./profile.json"
+  },
+  "attributes": {}
 }
 ```
 
@@ -599,9 +648,9 @@ that points to a subset found in the reference schema file.
 
 ```json
 "profile": {
-    "type": "reference",
-    "reference": "profile",
-    "subset": ""
+  "type": "reference",
+  "reference": "Profile",
+  "subset": ""
 }
 ```
 
@@ -629,8 +678,8 @@ is not required.
 
 ```json
 "node": {
-    "type": "reference",
-    "self": true
+  "type": "reference",
+  "self": true
 }
 ```
 
@@ -643,9 +692,9 @@ from occurring, set `export` to false.
 
 ```json
 "node": {
-    "type": "reference",
-    "reference": "field",
-    "export": false
+  "type": "reference",
+  "reference": "field",
+  "export": false
 }
 ```
 
@@ -661,9 +710,9 @@ The following relation types are supported, which are based on the
 
 ```json
 "node": {
-    "type": "reference",
-    "reference": "field",
-    "relation": "belongsTo"
+  "type": "reference",
+  "reference": "field",
+  "relation": "belongsTo"
 }
 ```
 
@@ -679,8 +728,8 @@ of the object.
 
 ```json
 "model": {
-    "type": "instance",
-    "contract": "UserModel"
+  "type": "instance",
+  "contract": "UserModel"
 }
 ```
 
@@ -689,7 +738,7 @@ For the most part, this feature must be used in unison with
 
 ```json
 "imports": [
-    { "default": "UserModel", "path": "../models/UserModel" }
+  { "default": "UserModel", "path": "../models/UserModel" }
 ]
 ```
 
@@ -742,10 +791,10 @@ follows this structure:
 
 ```javascript
 {
-    attribute: 'foo',           // Field name
-    schema: new Schema(),       // Reference schema class
-    relation: Schema.HAS_ONE,   // Relation type
-    collection: false,          // Is it an array?
+  attribute: 'foo',         // Field name
+  schema: new Schema(),     // Reference schema class
+  relation: Schema.HAS_ONE, // Relation type
+  collection: false,        // Is it an array?
 }
 ```
 
@@ -765,7 +814,7 @@ Continuing with our previous example, the output will be.
 export const UserSchema = new Schema('users', 'id');
 
 UserSchema
-    .addAttributes(['id', 'username', 'email', 'location']);
+  .addAttributes(['id', 'username', 'email', 'location']);
 ```
 
 ##### Including Relations
@@ -788,17 +837,17 @@ export const PostSchema = new Schema('posts');
 export const UserSchema = new Schema('users');
 
 PostSchema
-    .belongsTo({
-        user: UserSchema,
-    });
+  .belongsTo({
+    user: UserSchema,
+  });
 
 UserSchema
-    .hasOne({
-        country: CountrySchema,
-    })
-    .hasMany({
-        posts: PostSchema,
-    });
+  .hasOne({
+    country: CountrySchema,
+  })
+  .hasMany({
+    posts: PostSchema,
+  });
 ```
 
 ## FAQ

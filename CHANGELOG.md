@@ -1,4 +1,5 @@
 # 2.3.0
+* Added a new shape reference feature, which allows for local reusable shapes in a JSON schema.
 * Updated the visuals of errors and stack traces on the command line.
 
 # 2.2.2
