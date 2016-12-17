@@ -90,6 +90,7 @@ export type ReferenceConfig = {
 export type ShapeConfig = {
   attributes: { [key: string]: TypeDefinition },
   null?: boolean,
+  reference?: string,
   required?: boolean,
   type: string,
 };

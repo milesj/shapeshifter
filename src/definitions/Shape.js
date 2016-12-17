@@ -20,17 +20,22 @@ export default class ShapeDefinition extends Definition {
   validateConfig() {
     super.validateConfig();
 
-    const { attributes } = this.config;
+    const { attributes, reference } = this.config;
 
-    if (!isObject(attributes) || !Object.keys(attributes).length) {
-      throw new SyntaxError(
-        'Shape definitions require an "attributes" property, ' +
-        'which is an object mapping of attributes to type definitions.',
-      );
+    if (reference) {
+      if (typeof reference !== 'string') {
+        throw new TypeError('Shape reference must be a string.');
+      }
+    } else if (attributes) {
+      if (!isObject(attributes) || !Object.keys(attributes).length) {
+        throw new TypeError('Shape attributes must be a mapping of type definitions.');
+      }
+
+      this.attributes = Object.keys(attributes).map(attribute => (
+        Factory.definition(this.options, attribute, attributes[attribute])
+      ));
+    } else {
+      throw new SyntaxError('Shape definitions require an "attributes" or "reference" property.');
     }
-
-    this.attributes = Object.keys(attributes).map(attribute => (
-      Factory.definition(this.options, attribute, attributes[attribute])
-    ));
   }
 }

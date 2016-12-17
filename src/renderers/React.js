@@ -123,6 +123,12 @@ export default class ReactRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderShape(definition: ShapeDefinition, depth: number): string {
+    const reference = this.renderShapeReference(definition);
+
+    if (reference) {
+      return this.wrapRequired(definition, reference);
+    }
+
     return this.wrapPropType(definition,
       this.wrapFunction('shape',
         this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth),

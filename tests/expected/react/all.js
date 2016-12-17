@@ -225,6 +225,18 @@ export const SetsShape = PropTypes.shape({
   qux: PropTypes.func,
 });
 
+export const ShapeReferencePriceShape = PropTypes.shape({
+  amount: PropTypes.number,
+  nativeAmount: PropTypes.number,
+  exchangeRate: PropTypes.number,
+});
+
+export const ShapeReferenceShape = PropTypes.shape({
+  fees: ShapeReferencePriceShape,
+  taxes: ShapeReferencePriceShape,
+  total: ShapeReferencePriceShape.isRequired,
+});
+
 export const ShapeShape = PropTypes.shape({
   structAlias: PropTypes.shape({
     foo: PropTypes.string,

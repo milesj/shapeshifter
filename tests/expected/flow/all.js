@@ -169,6 +169,18 @@ export type SetsType = {
   qux: () => void,
 };
 
+export type ShapeReferencePriceType = {
+  amount: number,
+  nativeAmount: number,
+  exchangeRate: number,
+};
+
+export type ShapeReferenceType = {
+  fees: ShapeReferencePriceType,
+  taxes: ?ShapeReferencePriceType,
+  total: ShapeReferencePriceType,
+};
+
 export type ShapeType = {
   structAlias: {
     foo: string,

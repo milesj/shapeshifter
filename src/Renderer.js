@@ -221,11 +221,12 @@ export default class Renderer {
    */
   parse() {
     this.beforeParse();
-    this.parseReferences();
+    this.parseReferences(); // Must be first
+    this.parseShapes();
     this.parseImports();
     this.parseConstants();
     this.parseSchemas();
-    this.parseSets();
+    this.parseSets(); // Must be last
     this.afterParse();
   }
 
@@ -332,6 +333,21 @@ export default class Renderer {
 
     // Default set
     this.sets.push(this.render(this.getObjectName(name, this.suffix), attributes));
+  }
+
+  /**
+   * Render re-usable shapes.
+   */
+  parseShapes() {
+    const { name, shapes } = this.reader;
+
+    Object.keys(shapes).forEach((key: string) => {
+      const attributes = Object.keys(shapes[key]).map(attribute => (
+        Factory.definition(this.options, attribute, shapes[key][attribute])
+      ));
+
+      this.sets.push(this.render(this.getObjectName(name, key, this.suffix), attributes));
+    });
   }
 
   /**
@@ -673,6 +689,22 @@ export default class Renderer {
    */
   renderShape(definition: ShapeDefinition, depth: number): string {
     return this.unsupported('shape');
+  }
+
+  /**
+   * Render a shape reference definition.
+   *
+   * @param {Definition} definition
+   * @returns {String}
+   */
+  renderShapeReference(definition: ShapeDefinition): string {
+    const { reference } = definition.config;
+
+    if (!reference) {
+      return '';
+    }
+
+    return this.getObjectName(this.reader.name, reference, this.suffix);
   }
 
   /**

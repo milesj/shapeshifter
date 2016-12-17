@@ -75,6 +75,13 @@ describe('Schema', () => {
     }, options)).to.throw(SyntaxError, '[Foo] Schema metadata must be an object of strings.');
   });
 
+  it('errors if `shapes` is defined and not an object', () => {
+    expect(() => new SchemaReader('/foo.json', {
+      ...data,
+      shapes: 123,
+    }, options)).to.throw(SyntaxError, '[Foo] Schema shapes must be an object.');
+  });
+
   it('creates an array of `Definition`s for `attributes`', () => {
     const schema = new SchemaReader('/foo.json', data, options);
 

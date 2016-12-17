@@ -147,7 +147,10 @@ export default class TypeScriptRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderShape(definition: ShapeDefinition, depth: number): string {
-    return this.formatObject(this.renderObjectProps(definition.attributes, depth + 1, ';'), depth);
+    return (
+      this.renderShapeReference(definition) ||
+      this.formatObject(this.renderObjectProps(definition.attributes, depth + 1, ';'), depth)
+    );
   }
 
   /**
