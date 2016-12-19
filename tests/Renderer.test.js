@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import Renderer from '../lib/Renderer';
-import SchemaReader from '../lib/SchemaReader';
-import ArrayDefinition from '../lib/definitions/Array';
-import StringDefinition from '../lib/definitions/String';
-import ReferenceDefinition from '../lib/definitions/Reference';
+import Renderer from '../src/Renderer';
+import SchemaReader from '../src/SchemaReader';
+import ArrayDefinition from '../src/definitions/Array';
+import StringDefinition from '../src/definitions/String';
+import ReferenceDefinition from '../src/definitions/Reference';
 import { options } from './mocks';
 
 describe('Renderer', () => {

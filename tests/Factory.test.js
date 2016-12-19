@@ -1,18 +1,18 @@
 import { expect } from 'chai';
-import Factory from '../lib/Factory';
-import ArrayDefinition from '../lib/definitions/Array';
-import BoolDefinition from '../lib/definitions/Bool';
-import EnumDefinition from '../lib/definitions/Enum';
-import FuncDefinition from '../lib/definitions/Func';
-import InstanceDefinition from '../lib/definitions/Instance';
-import NumberDefinition from '../lib/definitions/Number';
-import ObjectDefinition from '../lib/definitions/Object';
-import ShapeDefinition from '../lib/definitions/Shape';
-import StringDefinition from '../lib/definitions/String';
-import UnionDefinition from '../lib/definitions/Union';
-import FlowRenderer from '../lib/renderers/Flow';
-import ReactRenderer from '../lib/renderers/React';
-import TypeScriptRenderer from '../lib/renderers/TypeScript';
+import Factory from '../src/Factory';
+import ArrayDefinition from '../src/definitions/Array';
+import BoolDefinition from '../src/definitions/Bool';
+import EnumDefinition from '../src/definitions/Enum';
+import FuncDefinition from '../src/definitions/Func';
+import InstanceDefinition from '../src/definitions/Instance';
+import NumberDefinition from '../src/definitions/Number';
+import ObjectDefinition from '../src/definitions/Object';
+import ShapeDefinition from '../src/definitions/Shape';
+import StringDefinition from '../src/definitions/String';
+import UnionDefinition from '../src/definitions/Union';
+import FlowRenderer from '../src/renderers/Flow';
+import ReactRenderer from '../src/renderers/React';
+import TypeScriptRenderer from '../src/renderers/TypeScript';
 import { options } from './mocks';
 
 describe('Factory', () => {

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import isObject from '../../lib/helpers/isObject';
+import isObject from '../../src/helpers/isObject';
 import { allValues } from '../mocks';
 
 describe('helpers/isObject', () => {

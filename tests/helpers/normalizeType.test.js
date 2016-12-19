@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { TYPES } from '../../lib/constants';
-import normalizeType from '../../lib/helpers/normalizeType';
+import { TYPES } from '../../src/constants';
+import normalizeType from '../../src/helpers/normalizeType';
 
 describe('helpers/normalizeType', () => {
   it('returns the name of built-in types', () => {

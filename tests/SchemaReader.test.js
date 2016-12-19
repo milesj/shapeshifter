@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { options } from './mocks';
-import SchemaReader from '../lib/SchemaReader';
-import NumberDefinition from '../lib/definitions/Number';
-import StringDefinition from '../lib/definitions/String';
+import SchemaReader from '../src/SchemaReader';
+import NumberDefinition from '../src/definitions/Number';
+import StringDefinition from '../src/definitions/String';
 
 describe('Schema', () => {
   const data = {

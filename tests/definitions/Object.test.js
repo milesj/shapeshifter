@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { options, falsyValues, truthyValues } from '../mocks';
-import ObjectDefinition from '../../lib/definitions/Object';
-import NumberDefinition from '../../lib/definitions/Number';
-import StringDefinition from '../../lib/definitions/String';
+import ObjectDefinition from '../../src/definitions/Object';
+import NumberDefinition from '../../src/definitions/Number';
+import StringDefinition from '../../src/definitions/String';
 
 describe('definitions/Object', () => {
   it('errors if `valueType` is empty', () => {

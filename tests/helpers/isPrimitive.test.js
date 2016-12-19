@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { PRIMITIVE_TYPES, COMPOUND_TYPES } from '../../lib/constants';
-import isPrimitive from '../../lib/helpers/isPrimitive';
+import { PRIMITIVE_TYPES, COMPOUND_TYPES } from '../../src/constants';
+import isPrimitive from '../../src/helpers/isPrimitive';
 
 describe('helpers/isPrimitive', () => {
   it('returns false for compound types', () => {

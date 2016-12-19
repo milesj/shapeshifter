@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import indent from '../../lib/helpers/indent';
+import indent from '../../src/helpers/indent';
 
 describe('helpers/indent', () => {
   it('creates an indentation based on depth', () => {

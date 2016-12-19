@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { options, falsyValues, truthyValues } from '../mocks';
-import InstanceDefinition from '../../lib/definitions/Instance';
+import InstanceDefinition from '../../src/definitions/Instance';
 
 describe('definitions/Instance', () => {
   it('errors if `contract` is empty', () => {

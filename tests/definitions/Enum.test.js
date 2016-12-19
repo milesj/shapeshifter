@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { options, falsyValues } from '../mocks';
-import { COMPOUND_TYPES } from '../../lib/constants';
-import EnumDefinition from '../../lib/definitions/Enum';
+import { COMPOUND_TYPES } from '../../src/constants';
+import EnumDefinition from '../../src/definitions/Enum';
 
 describe('definitions/Enum', () => {
   it('errors if `valueType` is empty', () => {

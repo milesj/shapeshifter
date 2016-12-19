@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { options, falsyValues, truthyValues } from '../mocks';
-import ReferenceDefinition from '../../lib/definitions/Reference';
+import ReferenceDefinition from '../../src/definitions/Reference';
 
 describe('definitions/Reference', () => {
   it('errors if `reference` is empty', () => {

@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import { options, falsyValues } from '../mocks';
-import UnionDefinition from '../../lib/definitions/Union';
-import BoolDefinition from '../../lib/definitions/Bool';
-import NumberDefinition from '../../lib/definitions/Number';
-import StringDefinition from '../../lib/definitions/String';
+import UnionDefinition from '../../src/definitions/Union';
+import BoolDefinition from '../../src/definitions/Bool';
+import NumberDefinition from '../../src/definitions/Number';
+import StringDefinition from '../../src/definitions/String';
 
 describe('definitions/Union', () => {
   it('errors if `valueTypes` is not an array', () => {

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import formatName from '../../lib/helpers/formatName';
+import formatName from '../../src/helpers/formatName';
 
 describe('helpers/formatName', () => {
   it('camel cases the name', () => {

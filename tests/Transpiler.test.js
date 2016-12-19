@@ -2,7 +2,7 @@
 
 import chai, { expect } from 'chai';
 import chaiFiles, { file } from 'chai-files';
-import Transpiler from '../lib/Transpiler';
+import Transpiler from '../src/Transpiler';
 import { options } from './mocks';
 
 chai.use(chaiFiles);

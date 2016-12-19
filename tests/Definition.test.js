@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Definition from '../lib/Definition';
+import Definition from '../src/Definition';
 import { options } from './mocks';
 
 describe('Definition', () => {

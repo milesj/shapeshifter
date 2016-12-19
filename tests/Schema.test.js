@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Schema from '../lib/Schema';
+import Schema from '../src/Schema';
 
 describe('Schema', () => {
   let schema;

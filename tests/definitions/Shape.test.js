@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { options, falsyValues } from '../mocks';
-import ShapeDefinition from '../../lib/definitions/Shape';
-import NumberDefinition from '../../lib/definitions/Number';
-import StringDefinition from '../../lib/definitions/String';
+import ShapeDefinition from '../../src/definitions/Shape';
+import NumberDefinition from '../../src/definitions/Number';
+import StringDefinition from '../../src/definitions/String';
 
 describe('definitions/Shape', () => {
   it('doesnt error if a `reference` is defined', () => {
