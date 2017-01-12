@@ -5,7 +5,7 @@
  */
 
 import Definition from '../Definition';
-import Factory from '../Factory';
+import DefinitionFactory from '../DefinitionFactory';
 
 import type { UnionConfig } from '../types';
 
@@ -29,7 +29,7 @@ export default class UnionDefinition extends Definition {
     }
 
     this.valueTypes = valueTypes.map((type, i) => (
-      Factory.definition(this.options, `${this.attribute}_${i}`, type)
+      DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, type)
     ));
   }
 }

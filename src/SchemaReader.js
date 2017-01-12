@@ -5,8 +5,8 @@
  */
 
 import path from 'path';
-import Factory from './Factory';
 import Definition from './Definition';
+import DefinitionFactory from './DefinitionFactory';
 import isObject from './helpers/isObject';
 
 import type {
@@ -114,7 +114,7 @@ export default class SchemaReader {
 
     // Convert to type definitions
     this.attributes = Object.keys(attributes).map(attribute => (
-      Factory.definition(this.options, attribute, attributes[attribute])
+      DefinitionFactory.factory(this.options, attribute, attributes[attribute])
     ));
   }
 

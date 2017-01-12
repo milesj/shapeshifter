@@ -5,7 +5,7 @@
  */
 
 import Definition from '../Definition';
-import Factory from '../Factory';
+import DefinitionFactory from '../DefinitionFactory';
 
 import type { ArrayConfig } from '../types';
 
@@ -25,6 +25,6 @@ export default class ArrayDefinition extends Definition {
       throw new SyntaxError('Array definitions require a "valueType" property.');
     }
 
-    this.valueType = Factory.definition(this.options, this.attribute, valueType);
+    this.valueType = DefinitionFactory.factory(this.options, this.attribute, valueType);
   }
 }

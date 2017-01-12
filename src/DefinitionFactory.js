@@ -4,9 +4,7 @@
  * @flow
  */
 
-import SchemaReader from './SchemaReader';
 import Definition from './Definition';
-import Renderer from './Renderer';
 import ArrayDefinition from './definitions/Array';
 import BoolDefinition from './definitions/Bool';
 import EnumDefinition from './definitions/Enum';
@@ -18,15 +16,12 @@ import ReferenceDefinition from './definitions/Reference';
 import ShapeDefinition from './definitions/Shape';
 import StringDefinition from './definitions/String';
 import UnionDefinition from './definitions/Union';
-import FlowRenderer from './renderers/Flow';
-import ReactRenderer from './renderers/React';
-import TypeScriptRenderer from './renderers/TypeScript';
 import isPrimitive from './helpers/isPrimitive';
 import normalizeType from './helpers/normalizeType';
 
 import type { Options, BaseConfig } from './types';
 
-export default class Factory {
+export default class DefinitionFactory {
   /**
    * Create a new definition based on the defined attribute configuration.
    *
@@ -35,7 +30,7 @@ export default class Factory {
    * @param {Object} config
    * @returns {Definition}
    */
-  static definition(options: Options, attribute: string, config: string | BaseConfig): Definition {
+  static factory(options: Options, attribute: string, config: string | BaseConfig): Definition {
     // Convert primitives to configuration objects
     if (typeof config === 'string') {
       if (isPrimitive(normalizeType(config))) {
@@ -89,31 +84,6 @@ export default class Factory {
 
       default:
         throw new TypeError(`Type "${config.type || 'unknown'}" not supported.`);
-    }
-  }
-
-  /**
-   * Create a new renderer with the defined reader.
-   *
-   * @param {Object} options
-   * @param {SchemaReader} reader
-   * @returns {Renderer}
-   */
-  static renderer(options: Options, reader: SchemaReader): Renderer {
-    const { renderer } = options;
-
-    switch (renderer.toLowerCase()) {
-      case 'react':
-        return new ReactRenderer(options, reader);
-
-      case 'flow':
-        return new FlowRenderer(options, reader);
-
-      case 'typescript':
-        return new TypeScriptRenderer(options, reader);
-
-      default:
-        throw new Error(`Renderer "${renderer || 'unknown'}" not supported.`);
     }
   }
 }

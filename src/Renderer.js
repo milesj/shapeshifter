@@ -4,8 +4,8 @@
  * @flow
  */
 
-import Factory from './Factory';
 import Definition from './Definition';
+import DefinitionFactory from './DefinitionFactory';
 import Schema from './Schema';
 import SchemaReader from './SchemaReader';
 import ArrayDefinition from './definitions/Array';
@@ -325,7 +325,7 @@ export default class Renderer {
           setConfig.required = required[attribute];
         }
 
-        setAttributes.push(Factory.definition(this.options, attribute, setConfig));
+        setAttributes.push(DefinitionFactory.factory(this.options, attribute, setConfig));
       });
 
       this.sets.push(this.render(this.getObjectName(name, setName, this.suffix), setAttributes));
@@ -343,7 +343,7 @@ export default class Renderer {
 
     Object.keys(shapes).forEach((key: string) => {
       const attributes = Object.keys(shapes[key]).map(attribute => (
-        Factory.definition(this.options, attribute, shapes[key][attribute])
+        DefinitionFactory.factory(this.options, attribute, shapes[key][attribute])
       ));
 
       this.sets.push(this.render(this.getObjectName(name, key, this.suffix), attributes));

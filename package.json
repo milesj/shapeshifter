@@ -35,7 +35,7 @@
     "check:flow": "flow check",
     "check:typescript": "tsc --noEmit --allowJs ./tests/expected/typescript/*",
     "pretest": "yarn run lint",
-    "test": "jest",
+    "test": "jest --config ./jest.json",
     "posttest": "yarn run check",
     "preversion": "yarn test && yarn run clean && yarn run build"
   },

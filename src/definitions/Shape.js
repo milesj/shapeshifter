@@ -5,7 +5,7 @@
  */
 
 import Definition from '../Definition';
-import Factory from '../Factory';
+import DefinitionFactory from '../DefinitionFactory';
 import isObject from '../helpers/isObject';
 
 import type { ShapeConfig } from '../types';
@@ -32,7 +32,7 @@ export default class ShapeDefinition extends Definition {
       }
 
       this.attributes = Object.keys(attributes).map(attribute => (
-        Factory.definition(this.options, attribute, attributes[attribute])
+        DefinitionFactory.factory(this.options, attribute, attributes[attribute])
       ));
     } else {
       throw new SyntaxError('Shape definitions require an "attributes" or "reference" property.');

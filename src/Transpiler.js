@@ -9,7 +9,7 @@
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
-import Factory from './Factory';
+import RendererFactory from './RendererFactory';
 import SchemaReader from './SchemaReader';
 
 import type { Options } from './types';
@@ -208,7 +208,7 @@ export default class Transpiler {
         return;
       }
 
-      const renderer = Factory.renderer(this.options, reader);
+      const renderer = RendererFactory.factory(this.options, reader);
 
       renderer.parse();
 

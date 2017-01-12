@@ -5,7 +5,7 @@
  */
 
 import Definition from '../Definition';
-import Factory from '../Factory';
+import DefinitionFactory from '../DefinitionFactory';
 
 import type { FuncConfig } from '../types';
 
@@ -23,7 +23,7 @@ export default class FuncDefinition extends Definition {
     const { argTypes, returnType } = this.config;
 
     if (typeof returnType !== 'undefined') {
-      this.returnType = Factory.definition(this.options, 'returnType', returnType);
+      this.returnType = DefinitionFactory.factory(this.options, 'returnType', returnType);
     }
 
     if (typeof argTypes !== 'undefined') {
@@ -31,7 +31,7 @@ export default class FuncDefinition extends Definition {
         throw new SyntaxError('Function argument types must be an array of type definitions.');
       } else {
         this.argTypes = argTypes.map((type, i) => (
-          Factory.definition(this.options, `arg${i}`, type)
+          DefinitionFactory.factory(this.options, `arg${i}`, type)
         ));
       }
     }

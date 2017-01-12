@@ -5,7 +5,7 @@
  */
 
 import Definition from '../Definition';
-import Factory from '../Factory';
+import DefinitionFactory from '../DefinitionFactory';
 
 import type { Options, ObjectConfig } from '../types';
 
@@ -42,7 +42,7 @@ export default class ObjectDefinition extends Definition {
       throw new TypeError(`Object key type "${String(keyType) || 'unknown'}" not supported.`);
     }
 
-    this.keyType = Factory.definition(this.options, `${this.attribute}_key`, keyType);
-    this.valueType = Factory.definition(this.options, `${this.attribute}_value`, valueType);
+    this.keyType = DefinitionFactory.factory(this.options, `${this.attribute}_key`, keyType);
+    this.valueType = DefinitionFactory.factory(this.options, `${this.attribute}_value`, valueType);
   }
 }
