@@ -4,7 +4,7 @@
  * @flow
  */
 
-import SchemaReader from './SchemaReader';
+import Schematic from './Schematic';
 import Renderer from './Renderer';
 import FlowRenderer from './renderers/Flow';
 import ReactRenderer from './renderers/React';
@@ -14,24 +14,24 @@ import type { Options } from './types';
 
 export default class RendererFactory {
   /**
-   * Create a new renderer with the defined reader.
+   * Create a new renderer with the defined schematic.
    *
    * @param {Object} options
-   * @param {SchemaReader} reader
+   * @param {Schematic} schematic
    * @returns {Renderer}
    */
-  static factory(options: Options, reader: SchemaReader): Renderer {
+  static factory(options: Options, schematic: Schematic): Renderer {
     const { renderer } = options;
 
     switch (renderer.toLowerCase()) {
       case 'react':
-        return new ReactRenderer(options, reader);
+        return new ReactRenderer(options, schematic);
 
       case 'flow':
-        return new FlowRenderer(options, reader);
+        return new FlowRenderer(options, schematic);
 
       case 'typescript':
-        return new TypeScriptRenderer(options, reader);
+        return new TypeScriptRenderer(options, schematic);
 
       default:
         throw new Error(`Renderer "${renderer || 'unknown'}" not supported.`);

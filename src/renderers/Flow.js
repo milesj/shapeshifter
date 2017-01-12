@@ -5,7 +5,7 @@
  */
 
 import Renderer from '../Renderer';
-import SchemaReader from '../SchemaReader';
+import Schematic from '../Schematic';
 import Definition from '../Definition';
 import ArrayDefinition from '../definitions/Array';
 import BoolDefinition from '../definitions/Bool';
@@ -23,8 +23,8 @@ import isPrimitive from '../helpers/isPrimitive';
 import type { Options } from '../types';
 
 export default class FlowRenderer extends Renderer {
-  constructor(options: Options, reader: SchemaReader) {
-    super(options, reader);
+  constructor(options: Options, schematic: Schematic) {
+    super(options, schematic);
 
     this.suffix = 'Type';
   }

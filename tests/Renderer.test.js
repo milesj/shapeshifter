@@ -1,5 +1,5 @@
 import Renderer from '../src/Renderer';
-import SchemaReader from '../src/SchemaReader';
+import Schematic from '../src/Schematic';
 import ArrayDefinition from '../src/definitions/Array';
 import StringDefinition from '../src/definitions/String';
 import ReferenceDefinition from '../src/definitions/Reference';
@@ -9,7 +9,7 @@ describe('Renderer', () => {
   let renderer;
 
   beforeEach(() => {
-    renderer = new Renderer(options, new SchemaReader('/foo.json', {
+    renderer = new Renderer(options, new Schematic('/foo.json', {
       name: 'foo Bar-Baz',
       attributes: { foo: 'string' },
     }, options));
@@ -207,7 +207,7 @@ describe('Renderer', () => {
     });
 
     it('renders template with one references', () => {
-      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+      renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(renderer.renderSchema('QuxSchema', [
         new StringDefinition(options, 'first_name'),
@@ -225,7 +225,7 @@ describe('Renderer', () => {
     });
 
     it('renders template and avoids duplication by following attributes', () => {
-      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+      renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(renderer.renderSchema('QuxSchema', [
         new ReferenceDefinition(options, 'post', { reference: 'posts' }),
@@ -243,7 +243,7 @@ describe('Renderer', () => {
     });
 
     it('renders template with many references', () => {
-      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+      renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(renderer.renderSchema('QuxSchema', [
         new ArrayDefinition(options, 'posts', {
@@ -264,7 +264,7 @@ describe('Renderer', () => {
     });
 
     it('renders template with one/many references and a custom relation name', () => {
-      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+      renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(renderer.renderSchema('QuxSchema', [
         new ReferenceDefinition(options, 'post', {
@@ -293,7 +293,7 @@ describe('Renderer', () => {
 
     it('renders template with everything', () => {
       renderer.options.includeAttributes = true;
-      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+      renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(renderer.renderSchema('QuxSchema', [
         new StringDefinition(options, 'first_name'),
@@ -329,7 +329,7 @@ describe('Renderer', () => {
     });
 
     it('errors for invalid relation name', () => {
-      renderer.reader.referenceReaders.posts = { name: 'Posts' };
+      renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(() => (
         renderer.renderSchema('QuxSchema', [

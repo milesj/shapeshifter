@@ -1,5 +1,5 @@
 import FlowRenderer from '../../src/renderers/Flow';
-import SchemaReader from '../../src/SchemaReader';
+import Schematic from '../../src/Schematic';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
@@ -16,7 +16,7 @@ describe('FlowRenderer', () => {
   let renderer;
 
   beforeEach(() => {
-    renderer = new FlowRenderer(options, new SchemaReader('/foo.json', {
+    renderer = new FlowRenderer(options, new Schematic('/foo.json', {
       name: 'Foo',
       attributes: { id: 'number' },
     }, options));

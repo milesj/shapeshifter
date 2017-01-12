@@ -21,7 +21,7 @@ import type {
   ReferencesField,
 } from './types';
 
-export default class SchemaReader {
+export default class Schematic {
   data: SchemaStructure;
   path: string;
   name: string;
@@ -33,7 +33,7 @@ export default class SchemaReader {
   shapes: ShapesField;
   subsets: SubsetsField;
   references: ReferencesField;
-  referenceReaders: { [key: string]: SchemaReader };
+  referenceSchematics: { [key: string]: Schematic };
 
   /**
    * Load and parse a schema, either as a JSON string, or as a JS object.
@@ -54,7 +54,7 @@ export default class SchemaReader {
     this.shapes = {};
     this.subsets = {};
     this.references = {};
-    this.referenceReaders = {};
+    this.referenceSchematics = {};
 
     this.setup();
   }

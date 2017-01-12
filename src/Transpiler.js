@@ -10,12 +10,13 @@ import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 import RendererFactory from './RendererFactory';
-import SchemaReader from './SchemaReader';
+import Schematic from './Schematic';
+import readWithNode from './readers/node';
 
 import type { Options } from './types';
 
 type ResolveList = {
-  parentReader?: SchemaReader,
+  parentSchematic?: Schematic,
   refKey?: string,
   resolvePath: string,
 };
@@ -28,7 +29,7 @@ export default class Transpiler {
   }
 
   /**
-   * Output the rendered reader to stdout.
+   * Output the rendered schema to stdout.
    *
    * @param {String} value
    */
@@ -78,7 +79,7 @@ export default class Transpiler {
   }
 
   /**
-   * Transpile either a file or a folder by rendering each reader file.
+   * Transpile either a file or a folder by rendering each schematic file.
    *
    * @param {String} target
    * @returns {Promise}
@@ -117,83 +118,91 @@ export default class Transpiler {
    */
   transpileFolder(folderPath: string): string {
     const filePaths = fs.readdirSync(folderPath);
-    let readers = [];
+    let schematics = [];
 
     filePaths.forEach((filePath: string) => {
       if (filePath.match(/\.(js|json)$/)) {
-        readers = [
-          ...readers,
-          ...this.extractReaders(path.join(folderPath, filePath)),
+        schematics = [
+          ...schematics,
+          ...this.extractSchematics(path.join(folderPath, filePath)),
         ];
       }
     });
 
-    return this.generateOutput(readers);
+    return this.generateOutput(schematics);
   }
 
   /**
-   * Transpile a file by rendering the reader at the defined path.
+   * Transpile a file by rendering the schematic at the defined path.
    *
    * @param {String} file
    * @returns {String}
    */
   transpileFile(file: string): string {
-    return this.generateOutput(this.extractReaders(file));
+    return this.generateOutput(this.extractSchematics(file));
   }
 
   /**
-   * Extract a list of file paths based on references defined within the reader.
+   * Extract a list of file paths based on references defined within the schematic.
    *
    * @param {String} filePath
-   * @returns {SchemaReader[]}
+   * @returns {Schematic[]}
    */
-  extractReaders(filePath: string): SchemaReader[] {
+  extractSchematics(filePath: string): Schematic[] {
     const basePath = path.dirname(filePath);
     const toResolve: ResolveList[] = [{ resolvePath: filePath }];
-    const readers = [];
+    const schematics = [];
 
     // Use `require()` as it handles JSON and JS files easily
     while (toResolve.length) {
-      const { resolvePath, parentReader, refKey } = toResolve.shift();
+      const { resolvePath, parentSchematic, refKey } = toResolve.shift();
+      let data = null;
 
-      // Only support JS and JSON
-      if (!resolvePath.match(/\.(js|json)$/)) {
+      switch (path.extname(resolvePath)) {
+        case '.js':
+        case '.json':
+          data = readWithNode(resolvePath);
+          break;
+
+        default:
+          data = null;
+          break;
+      }
+
+      if (data === null) {
         // eslint-disable-next-line no-continue
         continue;
       }
 
-      /* eslint-disable */
-      // $FlowIssue `resolvePath` cannot be a literal string
-      const reader = new SchemaReader(resolvePath, require(resolvePath), this.options);
-      /* eslint-enable */
+      const schematic = new Schematic(resolvePath, data, this.options);
 
-      readers.unshift(reader);
+      schematics.unshift(schematic);
 
       // Assign to parent
-      if (parentReader && refKey) {
-        parentReader.referenceReaders[refKey] = reader;
+      if (parentSchematic && refKey) {
+        parentSchematic.referenceSchematics[refKey] = schematic;
       }
 
       // Extract child references
-      Object.keys(reader.references).forEach((ref: string) => {
+      Object.keys(schematic.references).forEach((ref: string) => {
         toResolve.push({
-          resolvePath: path.normalize(path.join(basePath, reader.references[ref])),
-          parentReader: reader,
+          resolvePath: path.normalize(path.join(basePath, schematic.references[ref])),
+          parentSchematic: schematic,
           refKey: ref,
         });
       });
     }
 
-    return readers;
+    return schematics;
   }
 
   /**
-   * Generate the output by combining all readers into a single output.
+   * Generate the output by combining all schematics into a single output.
    *
-   * @param {SchemaReader[]} readers
+   * @param {Schematic[]} schematics
    * @returns {String}
    */
-  generateOutput(readers: SchemaReader[]): string {
+  generateOutput(schematics: Schematic[]): string {
     const rendered = new Set();
     let imports = new Set();
     let constants = new Set();
@@ -203,12 +212,12 @@ export default class Transpiler {
     let sets = new Set();
 
     // Wrap in a set to remove duplicates
-    readers.forEach((reader: SchemaReader) => {
-      if (rendered.has(reader.path)) {
+    schematics.forEach((schematic: Schematic) => {
+      if (rendered.has(schematic.path)) {
         return;
       }
 
-      const renderer = RendererFactory.factory(this.options, reader);
+      const renderer = RendererFactory.factory(this.options, schematic);
 
       renderer.parse();
 
@@ -242,7 +251,7 @@ export default class Transpiler {
         ...renderer.getSets(),
       ]);
 
-      rendered.add(reader.path);
+      rendered.add(schematic.path);
     });
 
     // Combine and filter the chunks

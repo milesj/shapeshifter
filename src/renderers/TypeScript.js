@@ -5,7 +5,7 @@
  */
 
 import Renderer from '../Renderer';
-import SchemaReader from '../SchemaReader';
+import Schematic from '../Schematic';
 import Definition from '../Definition';
 import ArrayDefinition from '../definitions/Array';
 import BoolDefinition from '../definitions/Bool';
@@ -24,8 +24,8 @@ import normalizeType from '../helpers/normalizeType';
 import type { Options, PrimitiveType } from '../types';
 
 export default class TypeScriptRenderer extends Renderer {
-  constructor(options: Options, reader: SchemaReader) {
-    super(options, reader);
+  constructor(options: Options, schematic: Schematic) {
+    super(options, schematic);
 
     this.suffix = 'Interface';
   }
@@ -69,7 +69,7 @@ export default class TypeScriptRenderer extends Renderer {
     const { indentCharacter: char } = this.options;
     const { values, valueType } = definition.config;
     const members = [];
-    const enumName = this.getObjectName(this.reader.name, definition.attribute, 'Enum');
+    const enumName = this.getObjectName(this.schematic.name, definition.attribute, 'Enum');
 
     let currentIndex = 0;
     let currentChar = 65;

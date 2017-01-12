@@ -7,7 +7,7 @@
 import Definition from './Definition';
 import DefinitionFactory from './DefinitionFactory';
 import Schema from './Schema';
-import SchemaReader from './SchemaReader';
+import Schematic from './Schematic';
 import ArrayDefinition from './definitions/Array';
 import BoolDefinition from './definitions/Bool';
 import EnumDefinition from './definitions/Enum';
@@ -36,7 +36,7 @@ type TemplateList = string[];
 
 export default class Renderer {
   options: Options;
-  reader: SchemaReader;
+  schematic: Schematic;
   suffix: string;
   imports: TemplateList;
   constants: TemplateList;
@@ -46,9 +46,9 @@ export default class Renderer {
   relations: TemplateList;
   referencePaths: string[];
 
-  constructor(options: Options, reader: SchemaReader) {
+  constructor(options: Options, schematic: Schematic) {
     this.options = options;
-    this.reader = reader;
+    this.schematic = schematic;
     this.suffix = '';
     this.imports = [];
     this.constants = [];
@@ -234,7 +234,7 @@ export default class Renderer {
    * Parse all constants out of the schema and append to the renderer.
    */
   parseConstants() {
-    const { constants } = this.reader;
+    const { constants } = this.schematic;
 
     Object.keys(constants).forEach((key: string) => {
       this.constants.push(this.renderConstant(key, constants[key]));
@@ -245,7 +245,7 @@ export default class Renderer {
    * Parse all imports out of the schema and append to the renderer.
    */
   parseImports() {
-    this.reader.imports.forEach((statement: ImportStructure) => {
+    this.schematic.imports.forEach((statement: ImportStructure) => {
       this.imports.push(this.renderImport(statement));
     });
   }
@@ -254,8 +254,8 @@ export default class Renderer {
    * Parse out all reference paths.
    */
   parseReferences() {
-    Object.keys(this.reader.references).forEach((key: string) => {
-      this.referencePaths.push(this.reader.references[key]);
+    Object.keys(this.schematic.references).forEach((key: string) => {
+      this.referencePaths.push(this.schematic.references[key]);
     });
   }
 
@@ -267,7 +267,7 @@ export default class Renderer {
       return;
     }
 
-    const { attributes, name, metadata } = this.reader;
+    const { attributes, name, metadata } = this.schematic;
 
     this.imports.unshift(this.renderImport({
       default: 'Schema',
@@ -289,8 +289,8 @@ export default class Renderer {
       return;
     }
 
-    const baseAttributes = this.reader.data.attributes;
-    const { attributes, subsets, name } = this.reader;
+    const baseAttributes = this.schematic.data.attributes;
+    const { attributes, subsets, name } = this.schematic;
 
     // Subsets
     Object.keys(subsets).forEach((setName: string) => {
@@ -339,7 +339,7 @@ export default class Renderer {
    * Render re-usable shapes.
    */
   parseShapes() {
-    const { name, shapes } = this.reader;
+    const { name, shapes } = this.schematic;
 
     Object.keys(shapes).forEach((key: string) => {
       const attributes = Object.keys(shapes[key]).map(attribute => (
@@ -564,21 +564,21 @@ export default class Renderer {
    */
   renderReference(definition: ReferenceDefinition): string {
     const { reference, self, subset = '' } = definition.config;
-    const refReader = self ? this.reader : this.reader.referenceReaders[reference];
+    const refSchema = self ? this.schematic : this.schematic.referenceSchematics[reference];
 
-    if (!refReader) {
+    if (!refSchema) {
       throw new SyntaxError(
-        `The reference "${reference}" does not exist in the "${this.reader.name}" schema.`,
+        `The reference "${reference}" does not exist in the "${this.schematic.name}" schema.`,
       );
     }
 
-    if (subset && !refReader.subsets[subset]) {
+    if (subset && !refSchema.subsets[subset]) {
       throw new SyntaxError(
         `The reference "${reference}" does not contain a subset named "${subset}".`,
       );
     }
 
-    return this.getObjectName(refReader.name, subset, this.suffix);
+    return this.getObjectName(refSchema.name, subset, this.suffix);
   }
 
   /**
@@ -592,7 +592,7 @@ export default class Renderer {
   renderSchema(name: string, attributes: Definition[] = [], metadata: MetadataField): string {
     const { primaryKey, resourceName } = metadata;
     const { includeAttributes } = this.options;
-    const references = this.reader.referenceReaders;
+    const references = this.schematic.referenceSchematics;
     const fields = [];
     const relations: { [key: string]: string[] } = {
       [Schema.HAS_ONE]: [],
@@ -645,7 +645,7 @@ export default class Renderer {
         }
 
         const relationName = relationConfig.self
-          ? this.reader.name
+          ? this.schematic.name
           : references[relationConfig.reference].name;
 
         relations[relationConfig.relation || relationType].push(this.wrapProperty(
@@ -704,7 +704,7 @@ export default class Renderer {
       return '';
     }
 
-    return this.getObjectName(this.reader.name, reference, this.suffix);
+    return this.getObjectName(this.schematic.name, reference, this.suffix);
   }
 
   /**
