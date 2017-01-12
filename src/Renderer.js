@@ -292,6 +292,7 @@ export default class Renderer {
       subset.attributes.forEach((attribute: string) => {
         let setConfig = baseAttributes[attribute];
 
+        /* istanbul ignore next Hard to test */
         if (!setConfig) {
           throw new SyntaxError(`Attribute ${attribute} does not exist in the base schema.`);
         }
@@ -617,6 +618,7 @@ export default class Renderer {
 
       // Validate and format template
       if (relationDefinition) {
+        /* istanbul ignore next Hard to test */
         if (typeof relations[relationType] === 'undefined') {
           throw new Error(
             `Invalid relation type for reference attribute "${definition.attribute}".`,

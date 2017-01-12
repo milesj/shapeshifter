@@ -34,8 +34,10 @@
     "check": "yarn run check:flow && yarn run check:typescript",
     "check:flow": "flow check",
     "check:typescript": "tsc --noEmit --allowJs ./tests/expected/typescript/*",
+    "jest": "jest --config ./jest.json",
+    "coverage": "yarn run jest -- --coverage",
     "pretest": "yarn run lint",
-    "test": "jest --config ./jest.json",
+    "test": "yarn run jest",
     "posttest": "yarn run check",
     "preversion": "yarn test && yarn run clean && yarn run build"
   },

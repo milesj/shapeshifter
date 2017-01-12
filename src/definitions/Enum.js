@@ -31,6 +31,7 @@ export default class EnumDefinition extends Definition {
       throw new TypeError('Enum values must be a non-empty array.');
 
     } else if (!values.every(value => this.validateValue(value))) {
+      /* istanbul ignore next This is tested but Istanbul won't pick up */
       throw new TypeError('Enum values do not match the defined value type.');
     }
   }
@@ -45,6 +46,7 @@ export default class EnumDefinition extends Definition {
     let valueType = normalizeType(this.config.valueType);
 
     // Function names are defined as strings within the schema
+    /* istanbul ignore next */
     if (valueType === 'function') {
       valueType = 'string';
     }

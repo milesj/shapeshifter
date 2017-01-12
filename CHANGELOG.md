@@ -1,5 +1,5 @@
 # 2.4.0
-* Replaced Mocha + Chai with Jest and increased code coverage to 98%.
+* Replaced Mocha + Chai with Jest and increased code coverage to 100%.
 * Renamed `SchemaReader` to `Schematic` and all instances of the word reader (like variables).
 * Split `Factory` into `DefinitionFactory` and `RendererFactory`.
 
