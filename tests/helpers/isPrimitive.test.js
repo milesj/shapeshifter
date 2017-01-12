@@ -1,22 +1,21 @@
-import { expect } from 'chai';
 import { PRIMITIVE_TYPES, COMPOUND_TYPES } from '../../src/constants';
 import isPrimitive from '../../src/helpers/isPrimitive';
 
 describe('helpers/isPrimitive', () => {
   it('returns false for compound types', () => {
     COMPOUND_TYPES.forEach((value) => {
-      expect(isPrimitive(value)).to.equal(false);
+      expect(isPrimitive(value)).toBe(false);
     });
   });
 
   it('returns true for primitive types', () => {
     PRIMITIVE_TYPES.forEach((value) => {
-      expect(isPrimitive(value)).to.equal(true);
+      expect(isPrimitive(value)).toBe(true);
     });
   });
 
   it('normalizes type names', () => {
-    expect(isPrimitive('int')).to.equal(true);
-    expect(isPrimitive('struct')).to.equal(false);
+    expect(isPrimitive('int')).toBe(true);
+    expect(isPrimitive('struct')).toBe(false);
   });
 });

@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import Schema from '../src/Schema';
 
 describe('Schema', () => {
@@ -12,15 +11,15 @@ describe('Schema', () => {
 
   describe('addAttributes()', () => {
     it('adds attributes', () => {
-      expect(schema.attributes).to.deep.equal([]);
+      expect(schema.attributes).toEqual([]);
 
       schema.addAttributes(['foo', 'bar']);
 
-      expect(schema.attributes).to.deep.equal(['foo', 'bar']);
+      expect(schema.attributes).toEqual(['foo', 'bar']);
 
       schema.addAttributes(['baz']);
 
-      expect(schema.attributes).to.deep.equal(['foo', 'bar', 'baz']);
+      expect(schema.attributes).toEqual(['foo', 'bar', 'baz']);
     });
   });
 
@@ -28,24 +27,24 @@ describe('Schema', () => {
     it('errors if not a schema', () => {
       expect(() => {
         schema.addRelation('foo', 'bar');
-      }).to.throw(Error, 'Relation "foo" is not a valid schema.');
+      }).toThrowError('Relation "foo" is not a valid schema.');
     });
 
     it('errors if been mapped before', () => {
       expect(() => {
         schema.addRelation('foo', new Schema(), Schema.HAS_ONE);
         schema.addRelation('foo', new Schema(), Schema.HAS_MANY);
-      }).to.throw(Error, 'Relation "foo" has already been mapped as "hasOne".');
+      }).toThrowError('Relation "foo" has already been mapped as "hasOne".');
     });
   });
 
   describe('belongsTo()', () => {
     it('adds a schema and maps the attribute', () => {
-      expect(schema.relations).to.deep.equal([]);
+      expect(schema.relations).toEqual([]);
 
       schema.belongsTo({ qux });
 
-      expect(schema.relations).to.deep.equal([
+      expect(schema.relations).toEqual([
         {
           attribute: 'qux',
           schema: qux,
@@ -53,17 +52,17 @@ describe('Schema', () => {
           collection: false,
         },
       ]);
-      expect(schema.attributes).to.deep.equal(['qux']);
+      expect(schema.attributes).toEqual(['qux']);
     });
   });
 
   describe('belongsToMany()', () => {
     it('adds a schema and maps the attribute', () => {
-      expect(schema.relations).to.deep.equal([]);
+      expect(schema.relations).toEqual([]);
 
       schema.belongsToMany({ qux });
 
-      expect(schema.relations).to.deep.equal([
+      expect(schema.relations).toEqual([
         {
           attribute: 'qux',
           schema: qux,
@@ -71,17 +70,17 @@ describe('Schema', () => {
           collection: true,
         },
       ]);
-      expect(schema.attributes).to.deep.equal(['qux']);
+      expect(schema.attributes).toEqual(['qux']);
     });
   });
 
   describe('hasOne()', () => {
     it('adds a schema and maps the attribute', () => {
-      expect(schema.relations).to.deep.equal([]);
+      expect(schema.relations).toEqual([]);
 
       schema.hasOne({ qux });
 
-      expect(schema.relations).to.deep.equal([
+      expect(schema.relations).toEqual([
         {
           attribute: 'qux',
           schema: qux,
@@ -89,7 +88,7 @@ describe('Schema', () => {
           collection: false,
         },
       ]);
-      expect(schema.attributes).to.deep.equal(['qux']);
+      expect(schema.attributes).toEqual(['qux']);
     });
   });
 
@@ -97,7 +96,7 @@ describe('Schema', () => {
     it('adds a schema and maps the attribute', () => {
       schema.hasMany({ foo, qux });
 
-      expect(schema.relations).to.deep.equal([
+      expect(schema.relations).toEqual([
         {
           attribute: 'foo',
           schema: foo,
@@ -111,7 +110,7 @@ describe('Schema', () => {
           collection: true,
         },
       ]);
-      expect(schema.attributes).to.deep.equal(['foo', 'qux']);
+      expect(schema.attributes).toEqual(['foo', 'qux']);
     });
   });
 });

@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { options, falsyValues, truthyValues } from '../mocks';
 import InstanceDefinition from '../../src/definitions/Instance';
 
@@ -7,8 +6,7 @@ describe('definitions/Instance', () => {
     falsyValues.forEach((value) => {
       expect(() => (
         new InstanceDefinition(options, 'foo', { contract: value })
-      )).to.throw(SyntaxError,
-        'Instance definitions require a "contract" property, ' +
+      )).toThrowError('Instance definitions require a "contract" property, ' +
         'which is the function or class name to evaluate against.');
     });
   });
@@ -19,7 +17,7 @@ describe('definitions/Instance', () => {
       .forEach((value) => {
         expect(() => (
           new InstanceDefinition(options, 'foo', { contract: value })
-        )).to.throw(TypeError, 'Invalid type detected, "contract" property must be a string.');
+        )).toThrowError('Invalid type detected, "contract" property must be a string.');
       });
   });
 });

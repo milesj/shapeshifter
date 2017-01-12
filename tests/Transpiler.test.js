@@ -1,11 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 
-import chai, { expect } from 'chai';
-import chaiFiles, { file } from 'chai-files';
+import fs from 'fs';
 import Transpiler from '../src/Transpiler';
 import { options } from './mocks';
 
-chai.use(chaiFiles);
+function file(path) {
+  return fs.readFileSync(path, 'utf8');
+}
 
 // Supported renderers
 const RENDERERS = [
@@ -26,8 +27,6 @@ const SCHEMA_CASES = [
 ];
 
 describe('Transpiler', function () {
-  this.timeout(0);
-
   describe('transpile()', () => {
     RENDERERS.forEach((renderer) => {
       describe(`outputs ${renderer.name}`, function () {
@@ -46,7 +45,7 @@ describe('Transpiler', function () {
                   includeTypes: true,
                 }).transpileFile(actualPath);
 
-                expect(output).to.equal(file(expectedPath));
+                expect(output).toBe(file(expectedPath));
               });
             });
           });
@@ -61,7 +60,7 @@ describe('Transpiler', function () {
               includeTypes: true,
             }).transpileFolder(actualPath);
 
-            expect(output).to.equal(file(expectedPath));
+            expect(output).toBe(file(expectedPath));
           });
         });
       });
@@ -82,7 +81,7 @@ describe('Transpiler', function () {
       const output = new Transpiler({ ...otherOptions, includeTypes: true })
         .transpileFile(actualPath);
 
-      expect(output).to.equal(file(expectedPath));
+      expect(output).toBe(file(expectedPath));
     });
 
     it('can omit types through configuration', () => {
@@ -92,7 +91,7 @@ describe('Transpiler', function () {
       const output = new Transpiler({ ...otherOptions })
         .transpileFile(actualPath);
 
-      expect(output).to.equal(file(expectedPath));
+      expect(output).toBe(file(expectedPath));
     });
 
     it('can include schemas through configuration', () => {
@@ -102,7 +101,7 @@ describe('Transpiler', function () {
       const output = new Transpiler({ ...otherOptions, includeSchemas: true })
         .transpileFile(actualPath);
 
-      expect(output).to.equal(file(expectedPath));
+      expect(output).toBe(file(expectedPath));
     });
 
     it('can include schemas with attributes through configuration', () => {
@@ -112,7 +111,7 @@ describe('Transpiler', function () {
       const output = new Transpiler({ ...otherOptions, includeSchemas: true, includeAttributes: true })
         .transpileFile(actualPath);
 
-      expect(output).to.equal(file(expectedPath));
+      expect(output).toBe(file(expectedPath));
     });
 
     it('can omit schemas through configuration', () => {
@@ -122,7 +121,7 @@ describe('Transpiler', function () {
       const output = new Transpiler({ ...otherOptions })
         .transpileFile(actualPath);
 
-      expect(output).to.equal(file(expectedPath));
+      expect(output).toBe(file(expectedPath));
     });
 
     it('can include schemas through configuration', () => {
@@ -132,7 +131,7 @@ describe('Transpiler', function () {
       const output = new Transpiler({ ...otherOptions, includeTypes: true, includeSchemas: true })
         .transpileFile(actualPath);
 
-      expect(output).to.equal(file(expectedPath));
+      expect(output).toBe(file(expectedPath));
     });
   });
 
@@ -140,7 +139,7 @@ describe('Transpiler', function () {
     it('handles reference paths correctly', () => {
       const readers = new Transpiler(options).extractReaders(`${__dirname}/schemas/json/reference.json`);
 
-      expect(readers.map(reader => reader.path)).to.deep.equal([
+      expect(readers.map(reader => reader.path)).toEqual([
         `${__dirname}/schemas/json/reference-bar.json`,
         `${__dirname}/schemas/json/reference-set.json`,
         `${__dirname}/schemas/json/reference-foo.json`,

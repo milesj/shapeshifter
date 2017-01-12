@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { options, falsyValues } from '../mocks';
 import UnionDefinition from '../../src/definitions/Union';
 import BoolDefinition from '../../src/definitions/Bool';
@@ -10,8 +9,7 @@ describe('definitions/Union', () => {
     falsyValues.forEach((value) => {
       expect(() => (
         new UnionDefinition(options, 'foo', { valueTypes: value })
-      )).to.throw(SyntaxError,
-        'Union definitions require a "valueTypes" property, ' +
+      )).toThrowError('Union definitions require a "valueTypes" property, ' +
         'which is a list of type definitions');
     });
   });
@@ -19,8 +17,7 @@ describe('definitions/Union', () => {
   it('errors if `valueTypes` has no items', () => {
     expect(() => (
       new UnionDefinition(options, 'foo', { valueTypes: [] })
-    )).to.throw(SyntaxError,
-      'Union definitions require a "valueTypes" property, ' +
+    )).toThrowError('Union definitions require a "valueTypes" property, ' +
       'which is a list of type definitions');
   });
 
@@ -29,8 +26,8 @@ describe('definitions/Union', () => {
       valueTypes: ['bool', 'number', 'string'],
     });
 
-    expect(def.valueTypes[0]).to.be.instanceOf(BoolDefinition);
-    expect(def.valueTypes[1]).to.be.instanceOf(NumberDefinition);
-    expect(def.valueTypes[2]).to.be.instanceOf(StringDefinition);
+    expect(def.valueTypes[0]).toBeInstanceOf(BoolDefinition);
+    expect(def.valueTypes[1]).toBeInstanceOf(NumberDefinition);
+    expect(def.valueTypes[2]).toBeInstanceOf(StringDefinition);
   });
 });

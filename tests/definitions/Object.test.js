@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { options, falsyValues, truthyValues } from '../mocks';
 import ObjectDefinition from '../../src/definitions/Object';
 import NumberDefinition from '../../src/definitions/Number';
@@ -9,7 +8,7 @@ describe('definitions/Object', () => {
     falsyValues.forEach((value) => {
       expect(() => (
         new ObjectDefinition(options, 'foo', { valueType: value })
-      )).to.throw(SyntaxError, 'Object definitions require a "valueType" property.');
+      )).toThrowError('Object definitions require a "valueType" property.');
     });
   });
 
@@ -17,7 +16,7 @@ describe('definitions/Object', () => {
     falsyValues.forEach((value) => {
       expect(() => (
         new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' })
-      )).to.throw(SyntaxError, 'Object definitions require a "keyType" property.');
+      )).toThrowError('Object definitions require a "keyType" property.');
     });
   });
 
@@ -27,19 +26,19 @@ describe('definitions/Object', () => {
       .forEach((value) => {
         expect(() => (
           new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' })
-        )).to.throw(TypeError);
+        )).toThrow();
       });
   });
 
   it('creates a `Definition` for the `valueType`', () => {
     const def = new ObjectDefinition(options, 'foo', { valueType: 'number' });
 
-    expect(def.valueType).to.be.instanceOf(NumberDefinition);
+    expect(def.valueType).toBeInstanceOf(NumberDefinition);
   });
 
   it('creates a `Definition` for the `keyType`', () => {
     const def = new ObjectDefinition(options, 'foo', { valueType: 'number', keyType: 'string' });
 
-    expect(def.keyType).to.be.instanceOf(StringDefinition);
+    expect(def.keyType).toBeInstanceOf(StringDefinition);
   });
 });

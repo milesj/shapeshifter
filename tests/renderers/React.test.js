@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import ReactRenderer from '../../src/renderers/React';
 import SchemaReader from '../../src/SchemaReader';
 import ArrayDefinition from '../../src/definitions/Array';
@@ -27,7 +26,7 @@ describe('ReactRenderer', () => {
     it('adds React import', () => {
       renderer.beforeParse();
 
-      expect(renderer.imports).to.deep.equal(['import { PropTypes } from \'react\';']);
+      expect(renderer.imports).toEqual(['import { PropTypes } from \'react\';']);
     });
   });
 
@@ -36,13 +35,13 @@ describe('ReactRenderer', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
         required: true,
         valueType: 'string',
-      }))).to.equal('PropTypes.arrayOf(PropTypes.string).isRequired');
+      }))).toBe('PropTypes.arrayOf(PropTypes.string).isRequired');
     });
 
     it('renders non-required', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
         valueType: 'string',
-      }))).to.equal('PropTypes.arrayOf(PropTypes.string)');
+      }))).toBe('PropTypes.arrayOf(PropTypes.string)');
     });
 
     it('handles non-primitive', () => {
@@ -51,7 +50,7 @@ describe('ReactRenderer', () => {
           type: 'object',
           valueType: 'string',
         },
-      }))).to.equal('PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))');
+      }))).toBe('PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))');
     });
 
     it('handles instance ofs', () => {
@@ -60,7 +59,7 @@ describe('ReactRenderer', () => {
           type: 'instance',
           contract: 'FooBar',
         },
-      }))).to.equal('PropTypes.arrayOf(PropTypes.instanceOf(FooBar))');
+      }))).toBe('PropTypes.arrayOf(PropTypes.instanceOf(FooBar))');
     });
   });
 
@@ -68,11 +67,11 @@ describe('ReactRenderer', () => {
     it('renders required', () => {
       expect(renderer.renderBool(new BoolDefinition(options, 'foo', {
         required: true,
-      }))).to.equal('PropTypes.bool.isRequired');
+      }))).toBe('PropTypes.bool.isRequired');
     });
 
     it('renders non-required', () => {
-      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).to.equal('PropTypes.bool');
+      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).toBe('PropTypes.bool');
     });
   });
 
@@ -82,7 +81,7 @@ describe('ReactRenderer', () => {
         required: true,
         valueType: 'number',
         values: [1, 23, 164],
-      }))).to.equal(`PropTypes.oneOf([
+      }))).toBe(`PropTypes.oneOf([
 1,
 23,
 164,
@@ -93,7 +92,7 @@ describe('ReactRenderer', () => {
       expect(renderer.renderEnum(new EnumDefinition(options, 'foo', {
         valueType: 'number',
         values: [1, 23, 164],
-      }))).to.equal(`PropTypes.oneOf([
+      }))).toBe(`PropTypes.oneOf([
 1,
 23,
 164,
@@ -105,11 +104,11 @@ describe('ReactRenderer', () => {
     it('renders required', () => {
       expect(renderer.renderFunc(new FuncDefinition(options, 'foo', {
         required: true,
-      }))).to.equal('PropTypes.func.isRequired');
+      }))).toBe('PropTypes.func.isRequired');
     });
 
     it('renders non-required', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo'))).to.equal('PropTypes.func');
+      expect(renderer.renderFunc(new FuncDefinition(options, 'foo'))).toBe('PropTypes.func');
     });
   });
 
@@ -118,13 +117,13 @@ describe('ReactRenderer', () => {
       expect(renderer.renderInstance(new InstanceDefinition(options, 'foo', {
         required: true,
         contract: 'FooBar',
-      }))).to.equal('PropTypes.instanceOf(FooBar).isRequired');
+      }))).toBe('PropTypes.instanceOf(FooBar).isRequired');
     });
 
     it('renders non-required', () => {
       expect(renderer.renderInstance(new InstanceDefinition(options, 'foo', {
         contract: 'FooBar',
-      }))).to.equal('PropTypes.instanceOf(FooBar)');
+      }))).toBe('PropTypes.instanceOf(FooBar)');
     });
   });
 
@@ -132,11 +131,11 @@ describe('ReactRenderer', () => {
     it('renders required', () => {
       expect(renderer.renderNumber(new NumberDefinition(options, 'foo', {
         required: true,
-      }))).to.equal('PropTypes.number.isRequired');
+      }))).toBe('PropTypes.number.isRequired');
     });
 
     it('renders non-required', () => {
-      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).to.equal('PropTypes.number');
+      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).toBe('PropTypes.number');
     });
   });
 
@@ -145,13 +144,13 @@ describe('ReactRenderer', () => {
       expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
         required: true,
         valueType: 'number',
-      }))).to.equal('PropTypes.objectOf(PropTypes.number).isRequired');
+      }))).toBe('PropTypes.objectOf(PropTypes.number).isRequired');
     });
 
     it('renders non-required', () => {
       expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
         valueType: 'number',
-      }))).to.equal('PropTypes.objectOf(PropTypes.number)');
+      }))).toBe('PropTypes.objectOf(PropTypes.number)');
     });
   });
 
@@ -160,13 +159,13 @@ describe('ReactRenderer', () => {
       expect(renderer.renderReference(new ReferenceDefinition(options, 'foo', {
         required: true,
         self: true,
-      }))).to.equal('(...args) => FooShape(...args).isRequired');
+      }))).toBe('(...args) => FooShape(...args).isRequired');
     });
 
     it('renders non-required', () => {
       expect(renderer.renderReference(new ReferenceDefinition(options, 'foo', {
         self: true,
-      }))).to.equal('(...args) => FooShape(...args)');
+      }))).toBe('(...args) => FooShape(...args)');
     });
   });
 
@@ -174,11 +173,11 @@ describe('ReactRenderer', () => {
     it('renders required', () => {
       expect(renderer.renderString(new StringDefinition(options, 'foo', {
         required: true,
-      }))).to.equal('PropTypes.string.isRequired');
+      }))).toBe('PropTypes.string.isRequired');
     });
 
     it('renders non-required', () => {
-      expect(renderer.renderString(new StringDefinition(options, 'foo'))).to.equal('PropTypes.string');
+      expect(renderer.renderString(new StringDefinition(options, 'foo'))).toBe('PropTypes.string');
     });
   });
 
@@ -196,7 +195,7 @@ describe('ReactRenderer', () => {
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         required: true,
         valueTypes,
-      }))).to.equal(`PropTypes.oneOfType([
+      }))).toBe(`PropTypes.oneOfType([
 PropTypes.string,
 PropTypes.bool,
 PropTypes.arrayOf(PropTypes.number),
@@ -206,7 +205,7 @@ PropTypes.arrayOf(PropTypes.number),
     it('renders non-required', () => {
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         valueTypes,
-      }))).to.equal(`PropTypes.oneOfType([
+      }))).toBe(`PropTypes.oneOfType([
 PropTypes.string,
 PropTypes.bool,
 PropTypes.arrayOf(PropTypes.number),
@@ -226,7 +225,7 @@ PropTypes.arrayOf(PropTypes.number),
 
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         valueTypes,
-      }))).to.equal(`PropTypes.oneOfType([
+      }))).toBe(`PropTypes.oneOfType([
 PropTypes.string,
 PropTypes.bool,
 PropTypes.arrayOf(PropTypes.number),
@@ -239,17 +238,17 @@ PropTypes.instanceOf(FooBar),
 
   describe('wrapPropType()', () => {
     it('adds prop type text', () => {
-      expect(renderer.wrapPropType({}, 'foo')).to.equal('PropTypes.foo');
+      expect(renderer.wrapPropType({}, 'foo')).toBe('PropTypes.foo');
     });
   });
 
   describe('wrapRequired()', () => {
     it('renders required', () => {
-      expect(renderer.wrapRequired({ isRequired: () => true }, 'foo')).to.equal('foo.isRequired');
+      expect(renderer.wrapRequired({ isRequired: () => true }, 'foo')).toBe('foo.isRequired');
     });
 
     it('renders non-required', () => {
-      expect(renderer.wrapRequired({}, 'foo')).to.equal('foo');
+      expect(renderer.wrapRequired({}, 'foo')).toBe('foo');
     });
   });
 });

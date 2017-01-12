@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import TypeScriptRenderer from '../../src/renderers/TypeScript';
 import SchemaReader from '../../src/SchemaReader';
 import ArrayDefinition from '../../src/definitions/Array';
@@ -27,7 +26,7 @@ describe('TypeScriptRenderer', () => {
     it('renders', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
         valueType: 'string',
-      }))).to.equal('string[]');
+      }))).toBe('string[]');
     });
 
     it('handles non-primitive', () => {
@@ -36,7 +35,7 @@ describe('TypeScriptRenderer', () => {
           type: 'object',
           valueType: 'string',
         },
-      }))).to.equal('Array<{ [key: string]: string }>');
+      }))).toBe('Array<{ [key: string]: string }>');
     });
 
     it('handles instance ofs', () => {
@@ -45,13 +44,13 @@ describe('TypeScriptRenderer', () => {
           type: 'instance',
           contract: 'FooBar',
         },
-      }))).to.equal('FooBar[]');
+      }))).toBe('FooBar[]');
     });
   });
 
   describe('renderBool()', () => {
     it('renders', () => {
-      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).to.equal('boolean');
+      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).toBe('boolean');
     });
   });
 
@@ -60,19 +59,19 @@ describe('TypeScriptRenderer', () => {
       expect(renderer.renderEnum(new EnumDefinition(options, 'bar', {
         valueType: 'number',
         values: [1, 23, 164],
-      }))).to.equal('FooBarEnum');
+      }))).toBe('FooBarEnum');
     });
   });
 
   describe('renderFunc()', () => {
     it('renders', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo'))).to.equal('() => void');
+      expect(renderer.renderFunc(new FuncDefinition(options, 'foo'))).toBe('() => void');
     });
 
     it('handles return type', () => {
       expect(renderer.renderFunc(new FuncDefinition(options, 'foo', {
         returnType: 'string',
-      }))).to.equal('() => string');
+      }))).toBe('() => string');
     });
 
     it('handles argument types', () => {
@@ -88,7 +87,7 @@ describe('TypeScriptRenderer', () => {
             valueType: 'number',
           },
         ],
-      }))).to.equal('(arg0: string, arg1?: number[]) => string');
+      }))).toBe('(arg0: string, arg1?: number[]) => string');
     });
   });
 
@@ -96,13 +95,13 @@ describe('TypeScriptRenderer', () => {
     it('renders', () => {
       expect(renderer.renderInstance(new InstanceDefinition(options, 'foo', {
         contract: 'FooBar',
-      }))).to.equal('FooBar');
+      }))).toBe('FooBar');
     });
   });
 
   describe('renderNumber()', () => {
     it('renders', () => {
-      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).to.equal('number');
+      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).toBe('number');
     });
   });
 
@@ -110,7 +109,7 @@ describe('TypeScriptRenderer', () => {
     it('renders', () => {
       expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
         valueType: 'number',
-      }))).to.equal('{ [key: string]: number }');
+      }))).toBe('{ [key: string]: number }');
     });
 
     it('handles key type', () => {
@@ -120,7 +119,7 @@ describe('TypeScriptRenderer', () => {
           type: 'array',
           valueType: 'string',
         },
-      }))).to.equal('{ [key: number]: string[] }');
+      }))).toBe('{ [key: number]: string[] }');
     });
   });
 
@@ -128,13 +127,13 @@ describe('TypeScriptRenderer', () => {
     it('renders', () => {
       expect(renderer.renderReference(new ReferenceDefinition(options, 'foo', {
         self: true,
-      }))).to.equal('FooInterface');
+      }))).toBe('FooInterface');
     });
   });
 
   describe('renderString()', () => {
     it('renders', () => {
-      expect(renderer.renderString(new StringDefinition(options, 'foo'))).to.equal('string');
+      expect(renderer.renderString(new StringDefinition(options, 'foo'))).toBe('string');
     });
   });
 
@@ -151,7 +150,7 @@ describe('TypeScriptRenderer', () => {
     it('renders', () => {
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         valueTypes,
-      }))).to.equal('string | boolean | number[]');
+      }))).toBe('string | boolean | number[]');
     });
 
     it('handles nested unions', () => {
@@ -168,7 +167,7 @@ describe('TypeScriptRenderer', () => {
             ],
           },
         ],
-      }))).to.equal('string | boolean | number[] | FooBar');
+      }))).toBe('string | boolean | number[] | FooBar');
     });
 
     it('handles functions', () => {
@@ -180,17 +179,17 @@ describe('TypeScriptRenderer', () => {
             returnType: 'string',
           },
         ],
-      }))).to.equal('string | boolean | number[] | (() => string)');
+      }))).toBe('string | boolean | number[] | (() => string)');
     });
   });
 
   describe('wrapPropertyName()', () => {
     it('renders required', () => {
-      expect(renderer.wrapPropertyName({ attribute: 'foo', isRequired: () => true })).to.equal('foo');
+      expect(renderer.wrapPropertyName({ attribute: 'foo', isRequired: () => true })).toBe('foo');
     });
 
     it('renders non-required', () => {
-      expect(renderer.wrapPropertyName({ attribute: 'foo', isRequired: () => false })).to.equal('foo?');
+      expect(renderer.wrapPropertyName({ attribute: 'foo', isRequired: () => false })).toBe('foo?');
     });
   });
 });

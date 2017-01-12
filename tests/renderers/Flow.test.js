@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import FlowRenderer from '../../src/renderers/Flow';
 import SchemaReader from '../../src/SchemaReader';
 import ArrayDefinition from '../../src/definitions/Array';
@@ -27,7 +26,7 @@ describe('FlowRenderer', () => {
     it('adds flow comment', () => {
       renderer.afterParse();
 
-      expect(renderer.imports).to.deep.equal(['// @flow']);
+      expect(renderer.imports).toEqual(['// @flow']);
     });
   });
 
@@ -36,13 +35,13 @@ describe('FlowRenderer', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
         null: true,
         valueType: 'string',
-      }))).to.equal('?string[]');
+      }))).toBe('?string[]');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
         valueType: 'string',
-      }))).to.equal('string[]');
+      }))).toBe('string[]');
     });
 
     it('handles non-primitive', () => {
@@ -51,7 +50,7 @@ describe('FlowRenderer', () => {
           type: 'object',
           valueType: 'string',
         },
-      }))).to.equal('Array<{ [key: string]: string }>');
+      }))).toBe('Array<{ [key: string]: string }>');
     });
 
     it('handles instance ofs', () => {
@@ -60,7 +59,7 @@ describe('FlowRenderer', () => {
           type: 'instance',
           contract: 'FooBar',
         },
-      }))).to.equal('FooBar[]');
+      }))).toBe('FooBar[]');
     });
   });
 
@@ -68,11 +67,11 @@ describe('FlowRenderer', () => {
     it('renders nullable', () => {
       expect(renderer.renderBool(new BoolDefinition(options, 'foo', {
         null: true,
-      }))).to.equal('?boolean');
+      }))).toBe('?boolean');
     });
 
     it('renders non-nullable', () => {
-      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).to.equal('boolean');
+      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).toBe('boolean');
     });
   });
 
@@ -81,7 +80,7 @@ describe('FlowRenderer', () => {
       expect(renderer.renderEnum(new EnumDefinition(options, 'foo', {
         valueType: 'number',
         values: [1, 23, 164],
-      }))).to.equal('1 | 23 | 164');
+      }))).toBe('1 | 23 | 164');
     });
   });
 
@@ -89,17 +88,17 @@ describe('FlowRenderer', () => {
     it('renders nullable', () => {
       expect(renderer.renderFunc(new FuncDefinition(options, 'foo', {
         null: true,
-      }))).to.equal('?() => void');
+      }))).toBe('?() => void');
     });
 
     it('renders non-nullable', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo'))).to.equal('() => void');
+      expect(renderer.renderFunc(new FuncDefinition(options, 'foo'))).toBe('() => void');
     });
 
     it('handles return type', () => {
       expect(renderer.renderFunc(new FuncDefinition(options, 'foo', {
         returnType: 'string',
-      }))).to.equal('() => string');
+      }))).toBe('() => string');
     });
 
     it('handles argument types', () => {
@@ -112,7 +111,7 @@ describe('FlowRenderer', () => {
             valueType: 'number',
           },
         ],
-      }))).to.equal('(arg0: string, arg1: number[]) => string');
+      }))).toBe('(arg0: string, arg1: number[]) => string');
     });
   });
 
@@ -121,13 +120,13 @@ describe('FlowRenderer', () => {
       expect(renderer.renderInstance(new InstanceDefinition(options, 'foo', {
         null: true,
         contract: 'FooBar',
-      }))).to.equal('?FooBar');
+      }))).toBe('?FooBar');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderInstance(new InstanceDefinition(options, 'foo', {
         contract: 'FooBar',
-      }))).to.equal('FooBar');
+      }))).toBe('FooBar');
     });
   });
 
@@ -135,11 +134,11 @@ describe('FlowRenderer', () => {
     it('renders nullable', () => {
       expect(renderer.renderNumber(new NumberDefinition(options, 'foo', {
         null: true,
-      }))).to.equal('?number');
+      }))).toBe('?number');
     });
 
     it('renders non-nullable', () => {
-      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).to.equal('number');
+      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).toBe('number');
     });
   });
 
@@ -148,13 +147,13 @@ describe('FlowRenderer', () => {
       expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
         null: true,
         valueType: 'number',
-      }))).to.equal('?{ [key: string]: number }');
+      }))).toBe('?{ [key: string]: number }');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
         valueType: 'number',
-      }))).to.equal('{ [key: string]: number }');
+      }))).toBe('{ [key: string]: number }');
     });
 
     it('handles key type', () => {
@@ -164,7 +163,7 @@ describe('FlowRenderer', () => {
           type: 'array',
           valueType: 'string',
         },
-      }))).to.equal('{ [key: number]: string[] }');
+      }))).toBe('{ [key: number]: string[] }');
     });
   });
 
@@ -173,13 +172,13 @@ describe('FlowRenderer', () => {
       expect(renderer.renderReference(new ReferenceDefinition(options, 'foo', {
         null: true,
         self: true,
-      }))).to.equal('?FooType');
+      }))).toBe('?FooType');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderReference(new ReferenceDefinition(options, 'foo', {
         self: true,
-      }))).to.equal('FooType');
+      }))).toBe('FooType');
     });
   });
 
@@ -187,11 +186,11 @@ describe('FlowRenderer', () => {
     it('renders nullable', () => {
       expect(renderer.renderString(new StringDefinition(options, 'foo', {
         null: true,
-      }))).to.equal('?string');
+      }))).toBe('?string');
     });
 
     it('renders non-nullable', () => {
-      expect(renderer.renderString(new StringDefinition(options, 'foo'))).to.equal('string');
+      expect(renderer.renderString(new StringDefinition(options, 'foo'))).toBe('string');
     });
   });
 
@@ -209,13 +208,13 @@ describe('FlowRenderer', () => {
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         null: true,
         valueTypes,
-      }))).to.equal('string | boolean | number[]');
+      }))).toBe('string | boolean | number[]');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         valueTypes,
-      }))).to.equal('string | boolean | number[]');
+      }))).toBe('string | boolean | number[]');
     });
 
     it('handles nested unions', () => {
@@ -231,17 +230,17 @@ describe('FlowRenderer', () => {
 
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         valueTypes,
-      }))).to.equal('string | boolean | number[] | FooBar');
+      }))).toBe('string | boolean | number[] | FooBar');
     });
   });
 
   describe('wrapNullable()', () => {
     it('renders nullable', () => {
-      expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).to.equal('?foo');
+      expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('?foo');
     });
 
     it('renders non-nullable', () => {
-      expect(renderer.wrapNullable({}, 'foo')).to.equal('foo');
+      expect(renderer.wrapNullable({}, 'foo')).toBe('foo');
     });
   });
 });

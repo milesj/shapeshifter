@@ -8,4 +8,4 @@
 ./.travis.yml
 ./tsconfig.json
 ./tslint.json
-./mocha.opts
+./jest.json

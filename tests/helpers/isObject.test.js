@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import isObject from '../../src/helpers/isObject';
 import { allValues } from '../mocks';
 
@@ -7,22 +6,22 @@ describe('helpers/isObject', () => {
     allValues
       .filter(value => typeof value !== 'object')
       .forEach((value) => {
-        expect(isObject(value)).to.equal(false);
+        expect(isObject(value)).toBe(false);
       });
   });
 
   it('returns false for arrays', () => {
-    expect(isObject([])).to.equal(false);
-    expect(isObject([1, 2, 3])).to.equal(false);
+    expect(isObject([])).toBe(false);
+    expect(isObject([1, 2, 3])).toBe(false);
   });
 
   it('returns false for null', () => {
-    expect(isObject(null)).to.equal(false);
+    expect(isObject(null)).toBe(false);
   });
 
   it('returns true for objects', () => {
-    expect(isObject({})).to.equal(true);
-    expect(isObject({ key: 'value' })).to.equal(true);
-    expect(isObject(Object.create(null))).to.equal(true);
+    expect(isObject({})).toBe(true);
+    expect(isObject({ key: 'value' })).toBe(true);
+    expect(isObject(Object.create(null))).toBe(true);
   });
 });
