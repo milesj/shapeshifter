@@ -33,6 +33,7 @@ export default class Transpiler {
    *
    * @param {String} value
    */
+   /* istanbul ignore next */
   static output(value: string) {
     console.log(value);
     process.exit(0);
@@ -43,6 +44,7 @@ export default class Transpiler {
    *
    * @param {Error|String} error
    */
+  /* istanbul ignore next */
   static error(error: Error | string) {
     let message = '';
     let stack = [];
@@ -84,6 +86,7 @@ export default class Transpiler {
    * @param {String} target
    * @returns {Promise}
    */
+  /* istanbul ignore next */
   transpile(target: string): Promise<string> {
     return new Promise((
       resolve: (result: string) => void,
@@ -156,20 +159,13 @@ export default class Transpiler {
     // Use `require()` as it handles JSON and JS files easily
     while (toResolve.length) {
       const { resolvePath, parentSchematic, refKey } = toResolve.shift();
+      const pathExt = path.extname(resolvePath);
       let data = null;
 
-      switch (path.extname(resolvePath)) {
-        case '.js':
-        case '.json':
-          data = readWithNode(resolvePath);
-          break;
-
-        default:
-          data = null;
-          break;
-      }
-
-      if (data === null) {
+      /* istanbul ignore else */
+      if (pathExt === '.js' || pathExt === '.json') {
+        data = readWithNode(resolvePath);
+      } else {
         // eslint-disable-next-line no-continue
         continue;
       }

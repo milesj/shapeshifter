@@ -44,7 +44,6 @@ export default class Renderer {
   sets: TemplateList;
   schemas: TemplateList;
   relations: TemplateList;
-  referencePaths: string[];
 
   constructor(options: Options, schematic: Schematic) {
     this.options = options;
@@ -56,7 +55,6 @@ export default class Renderer {
     this.sets = [];
     this.schemas = [];
     this.relations = [];
-    this.referencePaths = [];
   }
 
   /**
@@ -171,15 +169,6 @@ export default class Renderer {
   }
 
   /**
-   * Return a list of all relative reference paths.
-   *
-   * @returns {String[]}
-   */
-  getReferences(): TemplateList {
-    return this.referencePaths;
-  }
-
-  /**
    * Return the export name to be used as the prop type or type alias name.
    *
    * @param {String...} names
@@ -253,11 +242,7 @@ export default class Renderer {
   /**
    * Parse out all reference paths.
    */
-  parseReferences() {
-    Object.keys(this.schematic.references).forEach((key: string) => {
-      this.referencePaths.push(this.schematic.references[key]);
-    });
-  }
+  parseReferences() {}
 
   /**
    * Parse out all schemas.

@@ -88,6 +88,88 @@ describe('Renderer', () => {
     });
   });
 
+  describe('render()', () => {
+    it('errors if not defined', () => {
+      expect(() => renderer.render()).toThrowError('Renderer not implemented.');
+    });
+  });
+
+  describe('renderArray()', () => {
+    it('errors for not supported', () => {
+      expect(() => renderer.renderArray())
+        .toThrowError('The "array" definition is not supported by Renderer.');
+    });
+  });
+
+  describe('renderBool()', () => {
+    it('errors for not supported', () => {
+      expect(() => renderer.renderBool())
+        .toThrowError('The "boolean" definition is not supported by Renderer.');
+    });
+  });
+
+  describe('renderEnum()', () => {
+    it('errors for not supported', () => {
+      expect(() => renderer.renderEnum())
+        .toThrowError('The "enum" definition is not supported by Renderer.');
+    });
+  });
+
+  describe('renderFunc()', () => {
+    it('errors for not supported', () => {
+      expect(() => renderer.renderFunc())
+        .toThrowError('The "function" definition is not supported by Renderer.');
+    });
+  });
+
+  describe('renderInstance()', () => {
+    it('errors for not supported', () => {
+      expect(() => renderer.renderInstance())
+        .toThrowError('The "instance" definition is not supported by Renderer.');
+    });
+  });
+
+  describe('renderNumber()', () => {
+    it('errors for not supported', () => {
+      expect(() => renderer.renderNumber())
+        .toThrowError('The "number" definition is not supported by Renderer.');
+    });
+  });
+
+  describe('renderObject()', () => {
+    it('errors for not supported', () => {
+      expect(() => renderer.renderObject())
+        .toThrowError('The "object" definition is not supported by Renderer.');
+    });
+  });
+
+  describe('renderShape()', () => {
+    it('errors for not supported', () => {
+      expect(() => renderer.renderShape())
+        .toThrowError('The "shape" definition is not supported by Renderer.');
+    });
+  });
+
+  describe('renderString()', () => {
+    it('errors for not supported', () => {
+      expect(() => renderer.renderString())
+        .toThrowError('The "string" definition is not supported by Renderer.');
+    });
+  });
+
+  describe('renderUnion()', () => {
+    it('errors for not supported', () => {
+      expect(() => renderer.renderUnion())
+        .toThrowError('The "union" definition is not supported by Renderer.');
+    });
+  });
+
+  describe('renderAttribute()', () => {
+    it('returns an empty string for invalid definition', () => {
+      expect(renderer.renderAttribute('foo')).toBe('');
+    });
+  });
+
   describe('renderConstant()', () => {
     it('renders primitive values', () => {
       expect(renderer.renderConstant('FOO', 'bar')).toBe('export const FOO = \'bar\';');
@@ -141,6 +223,32 @@ describe('Renderer', () => {
         default: 'DefaultName',
         named: ['foo', 'bar'],
       })).toBe('import DefaultName, { foo, bar } from \'/\';');
+    });
+  });
+
+  describe('renderReference()', () => {
+    it('errors if reference doesnt exist', () => {
+      renderer.schematic.referenceSchematics = {};
+
+      expect(() => (
+        renderer.renderReference(new ReferenceDefinition(options, 'attr', {
+          reference: 'foo',
+        }))
+      )).toThrowError('The reference "foo" does not exist in the "foo Bar-Baz" schema.');
+    });
+
+    it('errors if subset doesnt exist', () => {
+      renderer.schematic.referenceSchematics.bar = new Schematic('/bar.json', {
+        name: 'bar',
+        attributes: { foo: 'string' },
+      }, options);
+
+      expect(() => (
+        renderer.renderReference(new ReferenceDefinition(options, 'attr', {
+          reference: 'bar',
+          subset: 'sub',
+        }))
+      )).toThrowError('The reference "bar" does not contain a subset named "sub".');
     });
   });
 

@@ -52,7 +52,7 @@ describe('definitions/Enum', () => {
 
     it('for functions (uses strings)', () => {
       expect(() => (
-        new EnumDefinition(options, 'foo', { valueType: 'function', values: ['foo', 123] })
+        new EnumDefinition(options, 'foo', { valueType: 'function', values: [() => {}, 123] })
       )).toThrowError('Enum values do not match the defined value type.');
     });
   });

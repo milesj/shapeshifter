@@ -70,13 +70,13 @@ export default class TypeScriptRenderer extends Renderer {
     const { values, valueType } = definition.config;
     const members = [];
     const enumName = this.getObjectName(this.schematic.name, definition.attribute, 'Enum');
-
     let currentIndex = 0;
     let currentChar = 65;
 
     switch (normalizeType(valueType)) {
       // If a string is provided
       // Assign values incrementally starting from 0
+      default:
       case 'string':
         values.forEach((value: PrimitiveType) => {
           members.push(`${indent(1, char)}${String(value)} = ${currentIndex}`);
@@ -92,9 +92,6 @@ export default class TypeScriptRenderer extends Renderer {
           members.push(`${indent(1, char)}${String.fromCodePoint(currentChar)} = ${Number(value)}`);
           currentChar += 1;
         });
-        break;
-
-      default:
         break;
     }
 

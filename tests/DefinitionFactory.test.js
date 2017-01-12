@@ -17,6 +17,12 @@ describe('DefinitionFactory', () => {
       expect(DefinitionFactory.factory(options, 'foo', 'string')).toBeInstanceOf(StringDefinition);
     });
 
+    it('errors on invalid type', () => {
+      expect(() => (
+        DefinitionFactory.factory(options, 'foo', { type: 'fakedefinition' })
+      )).toThrowError('Type "fakedefinition" not supported.');
+    });
+
     it('errors on invalid primitives', () => {
       expect(() => (
         DefinitionFactory.factory(options, 'foo', 'array')

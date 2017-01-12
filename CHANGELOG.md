@@ -1,3 +1,8 @@
+# 2.4.0
+* Replaced Mocha + Chai with Jest and increased code coverage to 98%.
+* Renamed `SchemaReader` to `Schematic` and all instances of the word reader (like variables).
+* Split `Factory` into `DefinitionFactory` and `RendererFactory`.
+
 # 2.3.0
 * Added a new shape reference feature, which allows for local reusable shapes in a JSON schema.
 * Updated the visuals of errors and stack traces on the command line.
