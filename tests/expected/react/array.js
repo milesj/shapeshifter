@@ -20,7 +20,7 @@ export const ArrayShape = PropTypes.shape({
   })),
   stringField: PropTypes.arrayOf(PropTypes.string),
   unionField: PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.string,
+    PropTypes.string.isRequired,
     PropTypes.oneOf([
       1,
       2,

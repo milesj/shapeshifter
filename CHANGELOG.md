@@ -1,8 +1,11 @@
-# 2.4.0
+# 3.0.0
 * Replaced Mocha + Chai with Jest and increased code coverage to 100%.
+* Merged `null` and `required` flags into a single `nullable` field used by all formats.
+* Updated all attributes to be `nullable` by default.
 * Removed `function` type definition support.
 * Renamed `SchemaReader` to `Schematic` and all instances of the word reader (like variables).
 * Renamed and split `Factory` into `DefinitionFactory` and `RendererFactory`.
+* Fixed an issue in which nullable flags could not be passed to enum value types.
 
 # 2.3.0
 * Added a new shape reference feature, which allows for local reusable shapes in a JSON schema.

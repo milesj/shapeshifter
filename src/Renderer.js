@@ -285,8 +285,7 @@ export default class Renderer {
         subset = { attributes: subset };
       }
 
-      const nullable = subset.null || {};
-      const required = subset.required || {};
+      const nullable = subset.nullable || {};
 
       subset.attributes.forEach((attribute: string) => {
         let setConfig = baseAttributes[attribute];
@@ -303,11 +302,7 @@ export default class Renderer {
         }
 
         if (attribute in nullable) {
-          setConfig.null = nullable[attribute];
-        }
-
-        if (attribute in required) {
-          setConfig.required = required[attribute];
+          setConfig.nullable = nullable[attribute];
         }
 
         setAttributes.push(DefinitionFactory.factory(this.options, attribute, setConfig));

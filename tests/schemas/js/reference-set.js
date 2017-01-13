@@ -3,11 +3,8 @@ module.exports = {
   subsets: {
     OnlyString: {
       attributes: ['stringField'],
-      required: {
-        string: true
-      },
-      null: {
-        string: true
+      nullable: {
+        stringField: false
       }
     }
   },

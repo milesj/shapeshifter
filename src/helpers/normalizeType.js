@@ -4,6 +4,8 @@
  * @flow
  */
 
+import isObject from './isObject';
+
 // Use a hash map for faster lookups
 const ALIAS_MAP = {
   binary: 'boolean',
@@ -29,6 +31,11 @@ const ALIAS_MAP = {
  * @returns {String}
  */
 export default function normalizeType(type: mixed): string {
+  if (isObject(type)) {
+    // $FlowIssue We know its an object
+    type = type.type;
+  }
+
   type = String(type).toLowerCase();
 
   return ALIAS_MAP[type] || type;

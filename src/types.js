@@ -7,8 +7,7 @@
 /* eslint-disable no-use-before-define */
 
 export type Options = {
-  defaultNull: boolean,
-  defaultRequired: boolean,
+  defaultNullable: boolean,
   includeAttributes: boolean,
   includeSchemas: boolean,
   includeTypes: boolean,
@@ -21,27 +20,23 @@ export type PrimitiveType = string | number | boolean;
 // Type Definitions
 
 export type BaseConfig = {
-  null?: boolean,
-  required?: boolean,
+  nullable?: boolean,
   type: string,
 };
 
 export type ArrayConfig = {
-  null?: boolean,
-  required?: boolean,
+  nullable?: boolean,
   type: string,
   valueType: TypeDefinition,
 };
 
 export type BoolConfig = {
-  null?: boolean,
-  required?: boolean,
+  nullable?: boolean,
   type: string,
 };
 
 export type EnumConfig = {
-  null?: boolean,
-  required?: boolean,
+  nullable?: boolean,
   type: string,
   values: PrimitiveType[],
   valueType: string,
@@ -49,31 +44,27 @@ export type EnumConfig = {
 
 export type InstanceConfig = {
   contract: string,
-  null?: boolean,
-  required?: boolean,
+  nullable?: boolean,
   type: string,
 };
 
 export type NumberConfig = {
-  null?: boolean,
-  required?: boolean,
+  nullable?: boolean,
   type: string,
 };
 
 export type ObjectConfig = {
   keyType: TypeDefinition,
-  null?: boolean,
-  required?: boolean,
+  nullable?: boolean,
   type: string,
   valueType: TypeDefinition,
 };
 
 export type ReferenceConfig = {
   export?: boolean,
-  null?: boolean,
+  nullable?: boolean,
   reference: string,
   relation?: string,
-  required?: boolean,
   self: boolean,
   subset?: string,
   type: string,
@@ -81,21 +72,18 @@ export type ReferenceConfig = {
 
 export type ShapeConfig = {
   attributes: { [key: string]: TypeDefinition },
-  null?: boolean,
+  nullable?: boolean,
   reference?: string,
-  required?: boolean,
   type: string,
 };
 
 export type StringConfig = {
-  null?: boolean,
-  required?: boolean,
+  nullable?: boolean,
   type: string,
 };
 
 export type UnionConfig = {
-  null?: boolean,
-  required?: boolean,
+  nullable?: boolean,
   type: string,
   valueTypes: TypeDefinition[],
 };
@@ -129,8 +117,7 @@ export type ShapesField = {
 
 export type SubsetStructure = {
   attributes: string[],
-  null?: { [key: string]: boolean },
-  required?: { [key: string]: boolean },
+  nullable?: { [key: string]: boolean },
 };
 
 export type SubsetsField = { [key: string]: string[] | SubsetStructure };

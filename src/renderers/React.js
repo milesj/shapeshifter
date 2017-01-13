@@ -105,10 +105,10 @@ export default class ReactRenderer extends Renderer {
 
     // Wrap a function as we need to defer the variable reference
     if (self && !subset) {
-      return `(...args) => ${this.wrapRequired(definition, `${reference}(...args)`)}`;
+      return `(...args) => ${this.wrapNullable(definition, `${reference}(...args)`)}`;
     }
 
-    return this.wrapRequired(definition, reference);
+    return this.wrapNullable(definition, reference);
   }
 
   /**
@@ -118,7 +118,7 @@ export default class ReactRenderer extends Renderer {
     const reference = this.renderShapeReference(definition);
 
     if (reference) {
-      return this.wrapRequired(definition, reference);
+      return this.wrapNullable(definition, reference);
     }
 
     return this.wrapPropType(definition,
@@ -154,7 +154,7 @@ export default class ReactRenderer extends Renderer {
    * @returns {String}
    */
   wrapPropType(definition: Definition, template: string): string {
-    return this.wrapRequired(definition, `PropTypes.${template}`);
+    return this.wrapNullable(definition, `PropTypes.${template}`);
   }
 
   /**
@@ -164,8 +164,8 @@ export default class ReactRenderer extends Renderer {
    * @param {String} template
    * @returns {String}
    */
-  wrapRequired(definition: Definition, template: string): string {
-    if (definition.isRequired && definition.isRequired()) {
+  wrapNullable(definition: Definition, template: string): string {
+    if (definition.isNullable && !definition.isNullable()) {
       return `${template}.isRequired`;
     }
 

@@ -13,7 +13,10 @@ module.exports = {
     },
     intField: {
       type: 'enum',
-      valueType: 'int',
+      valueType: {
+        type: 'int',
+        nullable: false
+      },
       values: [123]
     },
     integerField: {

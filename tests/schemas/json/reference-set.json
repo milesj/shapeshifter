@@ -2,7 +2,10 @@
   "name": "ReferenceSet",
   "subsets": {
     "OnlyString": {
-      "attributes": ["stringField"]
+      "attributes": ["stringField"],
+      "nullable": {
+        "stringField": false
+      }
     }
   },
   "attributes": {

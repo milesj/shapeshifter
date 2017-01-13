@@ -57,7 +57,7 @@ export default class FlowRenderer extends Renderer {
       template = this.wrapGenerics('Array', template);
     }
 
-    return this.wrapNullable(definition, template);
+    return template;
   }
 
   /**

@@ -7,7 +7,7 @@ export const ShapeShape = PropTypes.shape({
   }),
   primitiveFields: PropTypes.shape({
     string: PropTypes.string,
-    bool: PropTypes.bool,
+    bool: PropTypes.bool.isRequired,
     number: PropTypes.number.isRequired,
   }),
   arrayFields: PropTypes.shape({

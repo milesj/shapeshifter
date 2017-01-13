@@ -158,7 +158,7 @@ export default class TypeScriptRenderer extends Renderer {
   wrapPropertyName(definition: Definition): string {
     const template = definition.attribute;
 
-    if (!definition.isRequired()) {
+    if (definition.isNullable()) {
       return `${template}?`;
     }
 

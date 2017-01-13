@@ -23,16 +23,9 @@ var optionList = [
   {
     name: 'nullable',
     alias: 'n',
-    description: 'Mark attributes as nullable by default (flow). Default false.',
+    description: 'Mark attributes as nullable by default. Default true.',
     type: Boolean,
-    defaultValue: false,
-  },
-  {
-    name: 'required',
-    alias: 'r',
-    description: 'Mark attributes as required by default (react, typescript). Default false.',
-    type: Boolean,
-    defaultValue: false,
+    defaultValue: true,
   },
   {
     name: 'indent',
@@ -100,8 +93,7 @@ if (options.help || !options.path) {
 // Run transpiler
 } else {
   new Transpiler({
-    defaultNull: options.nullable,
-    defaultRequired: options.required,
+    defaultNullable: options.nullable,
     includeSchemas: options.schemas,
     includeAttributes: options.attributes,
     includeTypes: options.types,

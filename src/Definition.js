@@ -22,8 +22,7 @@ export default class Definition {
     this.options = options;
     this.attribute = attribute;
     this.config = {
-      null: options.defaultNull,
-      required: options.defaultRequired,
+      nullable: options.defaultNullable,
       ...config,
     };
 
@@ -36,16 +35,7 @@ export default class Definition {
    * @returns {Boolean}
    */
   isNullable(): boolean {
-    return this.config.null;
-  }
-
-  /**
-   * Returns true if the attribute is required.
-   *
-   * @returns {Boolean}
-   */
-  isRequired(): boolean {
-    return this.config.required;
+    return this.config.nullable;
   }
 
   /**
@@ -54,12 +44,8 @@ export default class Definition {
   validateConfig() {
     const config = this.config;
 
-    if (typeof config.null !== 'boolean') {
-      throw new TypeError('Invalid type detected, "null" property must be a boolean.');
-    }
-
-    if (typeof config.required !== 'boolean') {
-      throw new TypeError('Invalid type detected, "required" property must be a boolean.');
+    if (typeof config.nullable !== 'boolean') {
+      throw new TypeError('Invalid type detected, "nullable" property must be a boolean.');
     }
   }
 }

@@ -14,7 +14,7 @@ module.exports = {
     boolField: {
       type: 'object',
       valueType: 'bool',
-      required: true
+      nullable: false
     },
     enumField: {
       type: 'object',
@@ -23,7 +23,7 @@ module.exports = {
         valueType: 'string',
         values: ['foo', 'bar', 'baz']
       },
-      null: false
+      nullable: false
     },
     instanceField: {
       type: 'object',

@@ -12,8 +12,7 @@ module.exports = {
     requiredRefField: {
       type: 'ref',
       self: true,
-      required: true,
-      null: true
+      nullable: false
     },
     subsetRefField: {
       type: 'array',

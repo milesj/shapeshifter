@@ -42,7 +42,13 @@ export default class ObjectDefinition extends Definition {
       throw new TypeError(`Object key type "${String(keyType) || 'unknown'}" not supported.`);
     }
 
-    this.keyType = DefinitionFactory.factory(this.options, `${this.attribute}_key`, keyType);
+    // Object keys should never be null
+    this.keyType = DefinitionFactory.factory(this.options, `${this.attribute}_key`, {
+      type: keyType,
+      nullable: false,
+    });
+
+    // Values can be anything
     this.valueType = DefinitionFactory.factory(this.options, `${this.attribute}_value`, valueType);
   }
 }

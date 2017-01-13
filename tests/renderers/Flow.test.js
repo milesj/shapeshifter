@@ -32,14 +32,16 @@ describe('FlowRenderer', () => {
   describe('renderArray()', () => {
     it('renders nullable', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
-        null: true,
         valueType: 'string',
       }))).toBe('?string[]');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
-        valueType: 'string',
+        valueType: {
+          type: 'string',
+          nullable: false,
+        },
       }))).toBe('string[]');
     });
 
@@ -47,9 +49,12 @@ describe('FlowRenderer', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
         valueType: {
           type: 'object',
-          valueType: 'string',
+          valueType: {
+            type: 'string',
+            nullable: false,
+          },
         },
-      }))).toBe('Array<{ [key: string]: string }>');
+      }))).toBe('Array<?{ [key: string]: string }>');
     });
 
     it('handles instance ofs', () => {
@@ -58,19 +63,19 @@ describe('FlowRenderer', () => {
           type: 'instance',
           contract: 'FooBar',
         },
-      }))).toBe('FooBar[]');
+      }))).toBe('?FooBar[]');
     });
   });
 
   describe('renderBool()', () => {
     it('renders nullable', () => {
-      expect(renderer.renderBool(new BoolDefinition(options, 'foo', {
-        null: true,
-      }))).toBe('?boolean');
+      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).toBe('?boolean');
     });
 
     it('renders non-nullable', () => {
-      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).toBe('boolean');
+      expect(renderer.renderBool(new BoolDefinition(options, 'foo', {
+        nullable: false,
+      }))).toBe('boolean');
     });
   });
 
@@ -86,13 +91,13 @@ describe('FlowRenderer', () => {
   describe('renderInstance()', () => {
     it('renders nullable', () => {
       expect(renderer.renderInstance(new InstanceDefinition(options, 'foo', {
-        null: true,
         contract: 'FooBar',
       }))).toBe('?FooBar');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderInstance(new InstanceDefinition(options, 'foo', {
+        nullable: false,
         contract: 'FooBar',
       }))).toBe('FooBar');
     });
@@ -100,51 +105,52 @@ describe('FlowRenderer', () => {
 
   describe('renderNumber()', () => {
     it('renders nullable', () => {
-      expect(renderer.renderNumber(new NumberDefinition(options, 'foo', {
-        null: true,
-      }))).toBe('?number');
+      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).toBe('?number');
     });
 
     it('renders non-nullable', () => {
-      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).toBe('number');
+      expect(renderer.renderNumber(new NumberDefinition(options, 'foo', {
+        nullable: false,
+      }))).toBe('number');
     });
   });
 
   describe('renderObject()', () => {
     it('renders nullable', () => {
       expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
-        null: true,
         valueType: 'number',
-      }))).toBe('?{ [key: string]: number }');
+      }))).toBe('?{ [key: string]: ?number }');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
+        nullable: false,
         valueType: 'number',
-      }))).toBe('{ [key: string]: number }');
+      }))).toBe('{ [key: string]: ?number }');
     });
 
     it('handles key type', () => {
       expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
+        nullable: false,
         keyType: 'number',
         valueType: {
           type: 'array',
           valueType: 'string',
         },
-      }))).toBe('{ [key: number]: string[] }');
+      }))).toBe('{ [key: number]: ?string[] }');
     });
   });
 
   describe('renderReference()', () => {
     it('renders nullable', () => {
       expect(renderer.renderReference(new ReferenceDefinition(options, 'foo', {
-        null: true,
         self: true,
       }))).toBe('?FooType');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderReference(new ReferenceDefinition(options, 'foo', {
+        nullable: false,
         self: true,
       }))).toBe('FooType');
     });
@@ -152,13 +158,13 @@ describe('FlowRenderer', () => {
 
   describe('renderString()', () => {
     it('renders nullable', () => {
-      expect(renderer.renderString(new StringDefinition(options, 'foo', {
-        null: true,
-      }))).toBe('?string');
+      expect(renderer.renderString(new StringDefinition(options, 'foo'))).toBe('?string');
     });
 
     it('renders non-nullable', () => {
-      expect(renderer.renderString(new StringDefinition(options, 'foo'))).toBe('string');
+      expect(renderer.renderString(new StringDefinition(options, 'foo', {
+        nullable: false,
+      }))).toBe('string');
     });
   });
 
@@ -168,21 +174,24 @@ describe('FlowRenderer', () => {
       { type: 'bool' },
       {
         type: 'array',
-        valueType: 'number',
+        valueType: {
+          type: 'number',
+          nullable: false,
+        },
       },
     ];
 
     it('renders nullable', () => {
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
-        null: true,
         valueTypes,
-      }))).toBe('string | boolean | number[]');
+      }))).toBe('?string | ?boolean | number[]');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
+        nullable: false,
         valueTypes,
-      }))).toBe('string | boolean | number[]');
+      }))).toBe('?string | ?boolean | number[]');
     });
 
     it('handles nested unions', () => {
@@ -192,13 +201,14 @@ describe('FlowRenderer', () => {
           {
             type: 'instance',
             contract: 'FooBar',
+            nullable: false,
           },
         ],
       });
 
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         valueTypes,
-      }))).toBe('string | boolean | number[] | FooBar');
+      }))).toBe('?string | ?boolean | number[] | FooBar');
     });
   });
 

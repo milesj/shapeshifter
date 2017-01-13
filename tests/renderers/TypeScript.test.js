@@ -144,11 +144,11 @@ describe('TypeScriptRenderer', () => {
 
   describe('wrapPropertyName()', () => {
     it('renders required', () => {
-      expect(renderer.wrapPropertyName({ attribute: 'foo', isRequired: () => true })).toBe('foo');
+      expect(renderer.wrapPropertyName({ attribute: 'foo', isNullable: () => false })).toBe('foo');
     });
 
     it('renders non-required', () => {
-      expect(renderer.wrapPropertyName({ attribute: 'foo', isRequired: () => false })).toBe('foo?');
+      expect(renderer.wrapPropertyName({ attribute: 'foo', isNullable: () => true })).toBe('foo?');
     });
   });
 });

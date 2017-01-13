@@ -7,26 +7,20 @@ describe('Definition', () => {
 
     expect(def.attribute).toBe('foo');
     expect(def.config).toEqual({
-      null: false,
-      required: false,
+      nullable: true,
       key: 'value',
     });
   });
 
-  it('allows for null and required to be customized', () => {
-    const def = new Definition(options, 'foo', { null: false, required: true });
+  it('allows for nullable to be customized', () => {
+    const def = new Definition(options, 'foo', { nullable: false });
 
     expect(def.isNullable()).toBe(false);
-    expect(def.isRequired()).toBe(true);
   });
 
-  it('validates null and required', () => {
+  it('validates nullable', () => {
     expect(() => (
-      new Definition(options, 'foo', { null: 'string' })
-    )).toThrowError('Invalid type detected, "null" property must be a boolean.');
-
-    expect(() => (
-      new Definition(options, 'foo', { required: 'string' })
-    )).toThrowError('Invalid type detected, "required" property must be a boolean.');
+      new Definition(options, 'foo', { nullable: 'string' })
+    )).toThrowError('Invalid type detected, "nullable" property must be a boolean.');
   });
 });

@@ -24,7 +24,7 @@ export const UnionShape = PropTypes.shape({
   ]),
   instanceField: PropTypes.oneOfType([
     PropTypes.instanceOf(UnionClassName),
-    PropTypes.instanceOf(UnionDefault),
+    PropTypes.instanceOf(UnionDefault).isRequired,
   ]),
   objectField: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.number),

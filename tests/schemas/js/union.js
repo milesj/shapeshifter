@@ -51,7 +51,8 @@ module.exports = {
         },
         {
           type: 'inst',
-          contract: 'UnionDefault'
+          contract: 'UnionDefault',
+          nullable: false
         }
       ]
     },

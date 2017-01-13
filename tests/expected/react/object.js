@@ -8,7 +8,7 @@ export const ObjectShape = PropTypes.shape({
     'foo',
     'bar',
     'baz',
-  ])),
+  ])).isRequired,
   instanceField: PropTypes.objectOf(PropTypes.instanceOf(ObjectDefault)),
   numberField: PropTypes.objectOf(PropTypes.number),
   objectField: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),

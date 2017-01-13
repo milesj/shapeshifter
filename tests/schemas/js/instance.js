@@ -14,7 +14,8 @@ module.exports = {
     },
     instanceField: {
       type: 'instance',
-      contract: 'InstanceDefault'
+      contract: 'InstanceDefault',
+      nullable: false
     }
   }
 };
