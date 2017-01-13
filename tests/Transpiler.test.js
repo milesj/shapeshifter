@@ -11,7 +11,7 @@ function file(path) {
 // Supported renderers
 const RENDERERS = [
   { name: 'React prop types', key: 'react', ext: 'js' },
-  // { name: 'Flow types', key: 'flow', ext: 'js' },
+  { name: 'Flow types', key: 'flow', ext: 'js' },
   // { name: 'TypeScript interfaces', key: 'typescript', ext: 'ts' },
 ];
 
@@ -66,18 +66,18 @@ describe('Transpiler', () => {
             });
           });
 
-          // it('when rendering an entire folder into a single file', () => {
-          //   const actualPath = `${__dirname}/schemas/${format}/`;
-          //   const expectedPath = `${__dirname}/expected/${renderer.key}${expected}/all.${renderer.ext}`;
-          //
-          //   const output = new Transpiler({
-          //     ...options,
-          //     renderer: renderer.key,
-          //     includeTypes: true,
-          //   }).transpileFolder(actualPath);
-          //
-          //   expect(output).toBe(file(expectedPath));
-          // });
+          it('when rendering an entire folder into a single file', () => {
+            const actualPath = `${__dirname}/schemas/${format}/`;
+            const expectedPath = `${__dirname}/expected/${renderer.key}${expected}/all.${renderer.ext}`;
+
+            const output = new Transpiler({
+              ...options,
+              renderer: renderer.key,
+              includeTypes: true,
+            }).transpileFolder(actualPath);
+
+            expect(output).toBe(file(expectedPath));
+          });
         });
       });
     });

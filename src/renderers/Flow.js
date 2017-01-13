@@ -17,7 +17,6 @@ import ReferenceDefinition from '../definitions/Reference';
 import ShapeDefinition from '../definitions/Shape';
 import StringDefinition from '../definitions/String';
 import UnionDefinition from '../definitions/Union';
-import isPrimitive from '../helpers/isPrimitive';
 
 import type { Options } from '../types';
 
@@ -48,16 +47,8 @@ export default class FlowRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderArray(definition: ArrayDefinition, depth: number): string {
-    const configType = definition.valueType.config.type;
-    let template = this.renderAttribute(definition.valueType, depth);
-
-    if (isPrimitive(configType) || configType === 'instance') {
-      template += '[]';
-    } else {
-      template = this.wrapGenerics('Array', template);
-    }
-
-    return template;
+    return this.wrapNullable(definition,
+      this.wrapGenerics('Array', this.renderAttribute(definition.valueType, depth)));
   }
 
   /**

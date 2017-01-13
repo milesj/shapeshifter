@@ -1,12 +1,12 @@
 // @flow
 
 export type ReferenceSelfBasicType = {
-  stringField: string,
+  stringField: ?string,
 };
 
 export type ReferenceSelfType = {
-  stringField: string,
-  referenceField: ReferenceSelfType,
-  requiredRefField: ?ReferenceSelfType,
-  subsetRefField: Array<ReferenceSelfBasicType>,
+  stringField: ?string,
+  referenceField: ?ReferenceSelfType,
+  requiredRefField: ReferenceSelfType,
+  subsetRefField: ?Array<?ReferenceSelfBasicType>,
 };

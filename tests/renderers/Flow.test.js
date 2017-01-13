@@ -33,28 +33,30 @@ describe('FlowRenderer', () => {
     it('renders nullable', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
         valueType: 'string',
-      }))).toBe('?string[]');
+      }))).toBe('?Array<?string>');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
+        nullable: false,
         valueType: {
           type: 'string',
           nullable: false,
         },
-      }))).toBe('string[]');
+      }))).toBe('Array<string>');
     });
 
     it('handles non-primitive', () => {
       expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
         valueType: {
+          nullable: false,
           type: 'object',
           valueType: {
             type: 'string',
             nullable: false,
           },
         },
-      }))).toBe('Array<?{ [key: string]: string }>');
+      }))).toBe('?Array<{ [key: string]: string }>');
     });
 
     it('handles instance ofs', () => {

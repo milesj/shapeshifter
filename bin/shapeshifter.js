@@ -23,9 +23,9 @@ var optionList = [
   {
     name: 'nullable',
     alias: 'n',
-    description: 'Mark attributes as nullable by default. Default true.',
+    description: 'Mark attributes as nullable by default (recommended). Default false.',
     type: Boolean,
-    defaultValue: true,
+    defaultValue: false,
   },
   {
     name: 'indent',

@@ -1,7 +1,7 @@
 // @flow
 
 export type ReferenceBarType = {
-  boolField: boolean,
+  boolField: ?boolean,
 };
 
 export type ReferenceSetOnlyStringType = {
@@ -9,19 +9,19 @@ export type ReferenceSetOnlyStringType = {
 };
 
 export type ReferenceSetType = {
-  boolField: boolean,
-  stringField: string,
-  numberField: number,
+  boolField: ?boolean,
+  stringField: ?string,
+  numberField: ?number,
 };
 
 export type ReferenceFooType = {
-  numberField: number,
+  numberField: ?number,
   refField: ReferenceBarType,
 };
 
 export type ReferenceType = {
-  stringField: string,
-  refField: ?ReferenceFooType,
-  referenceField: ReferenceFooType,
-  subsetRefField: ReferenceSetOnlyStringType,
+  stringField: ?string,
+  refField: ReferenceFooType,
+  referenceField: ?ReferenceFooType,
+  subsetRefField: ?ReferenceSetOnlyStringType,
 };

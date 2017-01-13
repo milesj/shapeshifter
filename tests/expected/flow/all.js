@@ -20,22 +20,22 @@ export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
 export type ArrayType = {
-  arrayField: Array<string[]>,
-  boolField: boolean[],
-  enumField: Array<'foo' | 'bar' | 'baz'>,
-  instanceField: ArrayDefault[],
-  numberField: number[],
-  objectField: Array<{ [key: string]: number }>,
-  shapeField: Array<{
-    foo: string,
-    bar: boolean,
+  arrayField: ?Array<?Array<?string>>,
+  boolField: ?Array<?boolean>,
+  enumField: ?Array<'foo' | 'bar' | 'baz'>,
+  instanceField: ?Array<?ArrayDefault>,
+  numberField: Array<?number>,
+  objectField: ?Array<?{ [key: string]: ?number }>,
+  shapeField: ?Array<?{
+    foo: ?string,
+    bar: ?boolean,
   }>,
-  stringField: string[],
-  unionField: Array<string | 1 | 2 | 3>,
+  stringField: ?Array<?string>,
+  unionField: ?Array<string | 1 | 2 | 3>,
 };
 
 export type ConstantsType = {
-  numberField: number,
+  numberField: ?number,
 };
 
 export type EnumType = {
@@ -51,70 +51,70 @@ export type EnumType = {
 };
 
 export type ImportsType = {
-  stringField: string,
+  stringField: ?string,
 };
 
 export type InstanceType = {
-  instField: InstanceClassName,
+  instField: ?InstanceClassName,
   instanceField: InstanceDefault,
 };
 
 export type ObjectType = {
-  arrayField: { [key: string]: string[] },
-  boolField: { [key: string]: boolean },
+  arrayField: ?{ [key: string]: ?Array<?string> },
+  boolField: { [key: string]: ?boolean },
   enumField: { [key: string]: 'foo' | 'bar' | 'baz' },
-  instanceField: { [key: string]: ObjectDefault },
-  numberField: { [key: string]: number },
-  objectField: { [key: string]: { [key: string]: number } },
-  shapeField: { [key: string]: {
-    foo: string,
-    bar: boolean,
+  instanceField: ?{ [key: string]: ?ObjectDefault },
+  numberField: ?{ [key: string]: ?number },
+  objectField: ?{ [key: string]: ?{ [key: string]: ?number } },
+  shapeField: ?{ [key: string]: ?{
+    foo: ?string,
+    bar: ?boolean,
   } },
-  stringField: { [key: string]: string },
-  unionField: { [key: string]: number | string[] },
-  objShorthandField: { [key: string]: string },
-  objKeyTypeField: { [key: number]: string },
+  stringField: ?{ [key: string]: ?string },
+  unionField: ?{ [key: string]: ?number | ?Array<?string> },
+  objShorthandField: ?{ [key: string]: ?string },
+  objKeyTypeField: ?{ [key: number]: ?string },
 };
 
 export type PrimitiveType = {
-  boolField: boolean,
+  boolField: ?boolean,
   boolFieldExpanded: boolean,
-  booleanField: boolean,
+  booleanField: ?boolean,
   booleanFieldExpanded: boolean,
-  intField: number,
+  intField: ?number,
   intFieldExpanded: number,
-  integerField: number,
+  integerField: ?number,
   integerFieldExpanded: number,
-  numField: number,
-  numFieldExpanded: ?number,
-  numberField: number,
+  numField: ?number,
+  numFieldExpanded: number,
+  numberField: ?number,
   numberFieldExpanded: number,
-  floatField: number,
+  floatField: ?number,
   floatFieldExpanded: number,
-  strField: string,
+  strField: ?string,
   strFieldExpanded: string,
-  stringField: string,
+  stringField: ?string,
   stringFieldExpanded: string,
 };
 
 export type ReferenceBarType = {
-  boolField: boolean,
+  boolField: ?boolean,
 };
 
 export type ReferenceFooType = {
-  numberField: number,
+  numberField: ?number,
   refField: ReferenceBarType,
 };
 
 export type ReferenceSelfBasicType = {
-  stringField: string,
+  stringField: ?string,
 };
 
 export type ReferenceSelfType = {
-  stringField: string,
-  referenceField: ReferenceSelfType,
-  requiredRefField: ?ReferenceSelfType,
-  subsetRefField: Array<ReferenceSelfBasicType>,
+  stringField: ?string,
+  referenceField: ?ReferenceSelfType,
+  requiredRefField: ReferenceSelfType,
+  subsetRefField: ?Array<?ReferenceSelfBasicType>,
 };
 
 export type ReferenceSetOnlyStringType = {
@@ -122,109 +122,98 @@ export type ReferenceSetOnlyStringType = {
 };
 
 export type ReferenceSetType = {
-  boolField: boolean,
-  stringField: string,
-  numberField: number,
+  boolField: ?boolean,
+  stringField: ?string,
+  numberField: ?number,
 };
 
 export type ReferenceType = {
-  stringField: string,
-  refField: ?ReferenceFooType,
-  referenceField: ReferenceFooType,
-  subsetRefField: ReferenceSetOnlyStringType,
+  stringField: ?string,
+  refField: ReferenceFooType,
+  referenceField: ?ReferenceFooType,
+  subsetRefField: ?ReferenceSetOnlyStringType,
 };
 
 export type SetsBasicType = {
-  foo: string,
+  foo: ?string,
   baz: boolean,
-};
-
-export type SetsWithRequiredType = {
-  bar: number,
-  baz: boolean,
-  qux: string,
 };
 
 export type SetsWithNullType = {
-  foo: ?string,
-  qux: ?string,
-};
-
-export type SetsWithBothType = {
-  baz: boolean,
+  foo: string,
   qux: ?string,
 };
 
 export type SetsType = {
-  foo: string,
-  bar: number,
+  foo: ?string,
+  bar: ?number,
   baz: boolean,
   qux: string,
 };
 
 export type ShapeReferencePriceType = {
-  amount: number,
-  nativeAmount: number,
-  exchangeRate: number,
+  amount: ?number,
+  nativeAmount: ?number,
+  exchangeRate: ?number,
 };
 
 export type ShapeReferenceType = {
-  fees: ShapeReferencePriceType,
-  taxes: ?ShapeReferencePriceType,
+  fees: ?ShapeReferencePriceType,
+  taxes: ShapeReferencePriceType,
   total: ShapeReferencePriceType,
 };
 
 export type ShapeType = {
-  structAlias: {
-    foo: string,
+  structAlias: ?{
+    foo: ?string,
   },
-  primitiveFields: {
-    string: string,
+  primitiveFields: ?{
+    string: ?string,
     bool: boolean,
     number: number,
   },
-  arrayFields: {
-    numberArray: number[],
-    stringArray: string[],
-    shapeArray: Array<{
-      foo: string,
+  arrayFields: ?{
+    numberArray: ?Array<?number>,
+    stringArray: ?Array<?string>,
+    shapeArray: ?Array<?{
+      foo: ?string,
     }>,
   },
-  enumFields: {
+  enumFields: ?{
     stringEnum: 'foo' | 'bar' | 'baz',
     intEnum: 1 | 2 | 3,
   },
-  instanceFields: {
-    instOf: ShapeClassName,
-    instanceOf: ShapeDefault,
+  instanceFields: ?{
+    instOf: ?ShapeClassName,
+    instanceOf: ?ShapeDefault,
   },
-  objectFields: {
-    numberObj: { [key: string]: number },
-    boolObject: { [key: string]: boolean },
-    intStringObject: { [key: number]: string },
-    unionObject: { [key: string]: number | string | {
-      foo: string,
+  objectFields: ?{
+    numberObj: ?{ [key: string]: ?number },
+    boolObject: ?{ [key: string]: ?boolean },
+    intStringObject: ?{ [key: number]: ?string },
+    unionObject: ?{ [key: string]: ?number | ?string | ?{
+      foo: ?string,
     } },
   },
-  unionFields: {
-    multiUnion: number | boolean | ShapeClassName | { [key: string]: string } | {
-      string: string,
+  unionFields: ?{
+    multiUnion: ?number | ?boolean | ?ShapeClassName | ?{ [key: string]: ?string } | ?{
+      string: ?string,
       enum: 123 | 456 | 789,
     },
   },
 };
 
 export type UnionType = {
-  arrayField: string[] | Array<{ [key: string]: string }>,
-  primitiveFields: boolean | number,
+  arrayField: ?Array<?string> | ?Array<?{ [key: string]: ?string }>,
+  primitiveFields: ?boolean | ?number,
   enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123,
-  instanceField: UnionClassName | UnionDefault,
-  objectField: { [key: string]: number } | { [key: string]: string[] },
-  shapeField: {
-    foo: string,
-    bar: boolean,
-  } | {
-    qux: string | boolean,
+  instanceField: ?UnionClassName | UnionDefault,
+  objectField: ?{ [key: string]: ?number } | ?{ [key: string]: ?Array<?string> },
+  shapeField: ?{
+    foo: ?string,
+    bar: ?boolean,
+  } | ?{
+    qux: ?string | ?boolean,
   },
-  unionField: string | 1 | 2 | 3 | boolean | number,
+  unionField: ?string | 1 | 2 | 3 | ?boolean | ?number,
 };
