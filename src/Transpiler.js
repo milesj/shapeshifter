@@ -12,6 +12,7 @@ import chalk from 'chalk';
 import RendererFactory from './RendererFactory';
 import Schematic from './Schematic';
 import readWithNode from './readers/node';
+import readWithGraphQL from './readers/graphql';
 
 import type { Options } from './types';
 
@@ -165,6 +166,8 @@ export default class Transpiler {
       /* istanbul ignore else */
       if (pathExt === '.js' || pathExt === '.json') {
         data = readWithNode(resolvePath);
+      } else if (pathExt === '.gql' || pathExt === '.graphql') {
+        data = readWithGraphQL(resolvePath);
       } else {
         // eslint-disable-next-line no-continue
         continue;
