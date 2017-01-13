@@ -3,6 +3,7 @@
 * Replaced Mocha + Chai with Jest and increased code coverage to 100%.
 * Merged `null` and `required` flags into a single `nullable` field used by all formats.
 * Removed `function` type definition support.
+* Removed `nullable` support from TypeScript; use TypeScript's `--strictNullChecks` instead.
 * Renamed `SchemaReader` to `Schematic` and all instances of the word reader (like variables).
 * Renamed and split `Factory` into `DefinitionFactory` and `RendererFactory`.
 * Fixed an issue in which nullable flags could not be passed to enum value types.
@@ -12,7 +13,7 @@
 * Updated the visuals of errors and stack traces on the command line.
 
 # 2.2.2
-* Added flowtype definitions to the `libs/` output folder.
+* Added Flowtype definitions to the `libs/` output folder.
 * Updated develop dependency TypeScript to v2.0.
 
 # 2.2.1
@@ -37,7 +38,7 @@
 * Updated old type definitions to require `--types`.
 * Removed `suffix` customization.
   * React type suffix is now `Shape`.
-  * Flow type suffix is now `Type`.
+  * Flowtype type suffix is now `Type`.
   * TypeScript type suffix is now `Interface`.
 * Removed global `config.js` object file. Configuration options are now
   passed down from the command line to the transpiler.

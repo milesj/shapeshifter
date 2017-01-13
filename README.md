@@ -17,7 +17,7 @@ Take this user schema for example.
     "username": "string",
     "email": {
       "type": "string",
-      "required": true
+      "nullable": true
     },
     "location": {
       "type": "shape",
@@ -36,13 +36,13 @@ Which transpiles down to the following React prop types.
 import { PropTypes } from 'react';
 
 export const UserShape = PropTypes.shape({
-  id: PropTypes.number,
-  username: PropTypes.string,
-  email: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  username: PropTypes.string.isRequired,
+  email: PropTypes.string,
   location: PropTypes.shape({
-    lat: PropTypes.number,
-    long: PropTypes.number,
-  }),
+    lat: PropTypes.number.isRequired,
+    long: PropTypes.number.isRequired,
+  }).isRequired,
 });
 ```
 
@@ -54,7 +54,7 @@ Or the following Flow type aliases.
 export type UserType = {
   id: number,
   username: string,
-  email: string,
+  email: ?string,
   location: {
     lat: number,
     long: number,
@@ -66,12 +66,12 @@ Or TypeScript interfaces.
 
 ```javascript
 export interface UserInterface {
-  id?: number;
-  username?: string;
+  id: number;
+  username: string;
   email: string;
-  location?: {
-    lat?: number;
-    long?: number;
+  location: {
+    lat: number;
+    long: number;
   };
 }
 ```
@@ -99,8 +99,7 @@ npm install shapeshifter --save-dev
 yarn add shapeshifter --dev
 ```
 
-If you're generating schema classes, it will need to be a normal
-dependency.
+If you're generating schema classes, it will need to be a normal dependency.
 
 ```
 npm install shapeshifter --save
@@ -127,27 +126,18 @@ will be sent to the console.
 ### Options
 
 * `--help`, `-h` - Displays a help menu.
-
 * `--nullable`, `-n` - Marks all attributes as nullable by default.
-Defaults to false. (Flow only)
-
-* `--required`, `-r` - Marks all attributes as required by default.
-Defaults to false. (React and TypeScript only)
-
+  Defaults to false.
 * `--indent` - Defines the indentation characters to use in the
-generated output. Defaults to 2 spaces.
-
+  generated output. Defaults to 2 spaces.
 * `--format` - The format to output to. Accepts "react", "flow", or
-"typescript". Defaults to "react".
-
+  "typescript". Defaults to "react".
 * `--schemas` - Include schema class exports in the output. Defaults to
-"false".
-
+  "false".
 * `--attributes` - Include an attribute list in the schema class export.
-Defaults to "false".
-
+  Defaults to "false".
 * `--types` - Include type definition exports in the output. Defaults to
-"false".
+  "false".
 
 ## Documentation
 
@@ -222,20 +212,18 @@ Depending on the type used, additional properties may be required.
 
 ##### Modifiers
 
-All attribute type definitions support two modifier properties,
-`required` and `null`. Both of these values accept a boolean value.
+All attribute type definitions support the `nullable` modifier,
+which accepts a boolean value, and triggers the following:
 
-When `required` is used by React, it will append `isRequired` to all
-prop types. When used by TypeScript, it will omit `?` on every
-property name. Required attributes are not supported by Flow,
-instead it supports `null`. Nullable fields will prepend `?` to
-every type alias.
+* React: Non-nullable fields will append `isRequired` to the prop type.
+* Flowtype: Nullable fields will prepend `?` to each type alias.
+* TypeScript: Does nothing, please use `--strictNullChecks` provided
+  by TypeScript.
 
 ```json
 "field": {
   "type": "string",
-  "required": true,
-  "null": false
+  "nullable": false
 }
 ```
 
@@ -299,27 +287,19 @@ The `subsets` object allows for smaller sets of attributes to be
 defined and exported in the ES2015 output. Each key in the object
 represents a unique name for the subset, while the value of each
 property can either be an array of [attribute names](#attributes),
-or an object of `attributes`, `required` (optional), and `null`
-(optional) properties.
+or an object of `attributes` and `nullable` (optional) properties.
 
-Unlike `required` and `null` properties found on type definitions,
-these properties represent a mapping of attributes in the current
+Unlike `nullable` properties found on type definitions,
+this property represents a mapping of attributes in the current
 subset to boolean values, which enable or disable the modifier.
 
 ```json
 "subsets": {
   "SetA": ["foo", "bar"],
   "SetB": {
-    "attributes": ["foo", "qux"],
-    "null": {
+    "attributes": ["foo", "baz"],
+    "nullable": {
       "foo": true
-    }
-  },
-  "SetC": {
-    "attributes": ["bar", "baz"],
-    "required": {
-      "bar": true,
-      "baz": false
     }
   }
 },
@@ -328,11 +308,7 @@ subset to boolean values, which enable or disable the modifier.
   "bar": "bool",
   "baz": {
     "type": "string",
-    "required": true
-  },
-  "qux": {
-    "type": "string",
-    "null": true
+    "nullable": true
   }
 }
 ```
@@ -502,7 +478,7 @@ A shape is similar to a struct found in the C language.
     "long": "number",
     "name": {
       "type": "string",
-      "required": true
+      "nullable": true
     }
   }
 }
@@ -513,22 +489,22 @@ This transpiles to:
 ```javascript
 // React
 location: PropTypes.shape({
-  lat: PropTypes.number,
-  long: PropTypes.number,
-  name: PropTypes.string.isRequired,
+  lat: PropTypes.number.isRequired,
+  long: PropTypes.number.isRequired,
+  name: PropTypes.string,
 }),
 
 // Flow
 location: {
   lat: number,
   long: number,
-  name: string,
+  name: ?string,
 },
 
 // TypeScript
-location?: {
-  lat?: number,
-  long?: number,
+location: {
+  lat: number,
+  long: number,
   name: string,
 },
 ```
