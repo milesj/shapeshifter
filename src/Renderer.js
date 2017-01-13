@@ -11,7 +11,6 @@ import Schematic from './Schematic';
 import ArrayDefinition from './definitions/Array';
 import BoolDefinition from './definitions/Bool';
 import EnumDefinition from './definitions/Enum';
-import FuncDefinition from './definitions/Func';
 import InstanceDefinition from './definitions/Instance';
 import NumberDefinition from './definitions/Number';
 import ObjectDefinition from './definitions/Object';
@@ -360,9 +359,6 @@ export default class Renderer {
     } else if (definition instanceof EnumDefinition) {
       return this.renderEnum(definition, depth);
 
-    } else if (definition instanceof FuncDefinition) {
-      return this.renderFunc(definition, depth);
-
     } else if (definition instanceof InstanceDefinition) {
       return this.renderInstance(definition, depth);
 
@@ -447,13 +443,6 @@ export default class Renderer {
    */
   renderEnum(definition: EnumDefinition, depth: number): string {
     return this.unsupported('enum');
-  }
-
-  /**
-   * Render a function definition.
-   */
-  renderFunc(definition: FuncDefinition, depth: number): string {
-    return this.unsupported('function');
   }
 
   /**

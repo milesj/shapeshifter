@@ -863,7 +863,3 @@ non-type safe features would defeat the purpose of this library.
 The `node` and `element` types represent DOM elements or React
 structures found within the application. These types don't really
 map to database tables or data structures very well, if at all.
-
-The same could be said for `func` -- however, that is supported.
-I've simply opted out in mentioning it in the documentation, as I'm
-not too sure on its use case. Kind of a hidden feature really.

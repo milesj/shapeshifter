@@ -8,22 +8,22 @@ export type SetsBasicType = {
 export type SetsWithRequiredType = {
   bar: number,
   baz: boolean,
-  qux: () => void,
+  qux: string,
 };
 
 export type SetsWithNullType = {
   foo: ?string,
-  qux: ?() => void,
+  qux: ?string,
 };
 
 export type SetsWithBothType = {
   baz: boolean,
-  qux: ?() => void,
+  qux: ?string,
 };
 
 export type SetsType = {
   foo: string,
   bar: number,
   baz: boolean,
-  qux: () => void,
+  qux: string,
 };

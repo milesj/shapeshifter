@@ -8,7 +8,6 @@ export type ShapeType = {
   primitiveFields: {
     string: string,
     bool: boolean,
-    func: (arg0: boolean) => void,
     number: number,
   },
   arrayFields: {

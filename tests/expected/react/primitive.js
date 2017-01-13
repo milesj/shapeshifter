@@ -8,8 +8,6 @@ export const PrimitiveShape = PropTypes.shape({
   boolFieldExpanded: PropTypes.bool.isRequired,
   booleanField: PropTypes.bool,
   booleanFieldExpanded: PropTypes.bool,
-  funcField: PropTypes.func.isRequired,
-  functionField: PropTypes.func,
   intField: PropTypes.number,
   intFieldExpanded: PropTypes.number,
   integerField: PropTypes.number,

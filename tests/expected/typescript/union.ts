@@ -20,14 +20,13 @@ export enum UnionUnionField01Enum {
 
 export interface UnionInterface {
   arrayField?: string[] | Array<{ [key: string]: string }>;
-  primitiveFields?: boolean | number | (() => void);
+  primitiveFields?: boolean | number;
   enumField?: UnionEnumField0Enum | UnionEnumField1Enum;
   instanceField?: UnionClassName | UnionDefault;
   objectField?: { [key: string]: number } | { [key: string]: string[] };
   shapeField?: {
     foo?: string;
     bar?: boolean;
-    baz: () => void;
   } | {
     qux?: string | boolean;
   };

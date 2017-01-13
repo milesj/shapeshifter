@@ -24,10 +24,7 @@ module.exports = {
       type: 'union',
       valueTypes: [
         'bool',
-        'integer',
-        {
-          type: 'func'
-        }
+        'integer'
       ]
     },
     enumField: {
@@ -81,11 +78,7 @@ module.exports = {
           type: 'shape',
           attributes: {
             foo: 'string',
-            bar: 'bool',
-            baz: {
-              type: 'func',
-              required: true
-            }
+            bar: 'bool'
           }
         },
         {

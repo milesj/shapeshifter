@@ -1,7 +1,6 @@
 import { PropTypes } from 'react';
 import ArrayDefault from '../stub';
 import DefaultName from '../stub';
-import { foo, bar } from '../stub';
 import AnotherDefault, { Baz, Qux } from '../stub';
 import InstanceDefault, { InstanceClassName } from '../stub';
 import ObjectDefault from '../stub';
@@ -28,14 +27,12 @@ export const ArrayShape = PropTypes.shape({
     'bar',
     'baz',
   ])),
-  funcField: PropTypes.arrayOf(PropTypes.func),
   instanceField: PropTypes.arrayOf(PropTypes.instanceOf(ArrayDefault)),
   numberField: PropTypes.arrayOf(PropTypes.number).isRequired,
   objectField: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.number)),
   shapeField: PropTypes.arrayOf(PropTypes.shape({
     foo: PropTypes.string,
     bar: PropTypes.bool,
-    baz: PropTypes.func.isRequired,
   })),
   stringField: PropTypes.arrayOf(PropTypes.string),
   unionField: PropTypes.arrayOf(PropTypes.oneOfType([
@@ -119,14 +116,12 @@ export const ObjectShape = PropTypes.shape({
     'bar',
     'baz',
   ])),
-  funcField: PropTypes.objectOf(PropTypes.func),
   instanceField: PropTypes.objectOf(PropTypes.instanceOf(ObjectDefault)),
   numberField: PropTypes.objectOf(PropTypes.number),
   objectField: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
   shapeField: PropTypes.objectOf(PropTypes.shape({
     foo: PropTypes.string,
     bar: PropTypes.bool,
-    baz: PropTypes.func.isRequired,
   })),
   stringField: PropTypes.objectOf(PropTypes.string),
   unionField: PropTypes.objectOf(PropTypes.oneOfType([
@@ -142,8 +137,6 @@ export const PrimitiveShape = PropTypes.shape({
   boolFieldExpanded: PropTypes.bool.isRequired,
   booleanField: PropTypes.bool,
   booleanFieldExpanded: PropTypes.bool,
-  funcField: PropTypes.func.isRequired,
-  functionField: PropTypes.func,
   intField: PropTypes.number,
   intFieldExpanded: PropTypes.number,
   integerField: PropTypes.number,
@@ -205,24 +198,24 @@ export const SetsBasicShape = PropTypes.shape({
 export const SetsWithRequiredShape = PropTypes.shape({
   bar: PropTypes.number.isRequired,
   baz: PropTypes.bool,
-  qux: PropTypes.func,
+  qux: PropTypes.string,
 });
 
 export const SetsWithNullShape = PropTypes.shape({
   foo: PropTypes.string,
-  qux: PropTypes.func,
+  qux: PropTypes.string,
 });
 
 export const SetsWithBothShape = PropTypes.shape({
   baz: PropTypes.bool.isRequired,
-  qux: PropTypes.func.isRequired,
+  qux: PropTypes.string.isRequired,
 });
 
 export const SetsShape = PropTypes.shape({
   foo: PropTypes.string,
   bar: PropTypes.number,
   baz: PropTypes.bool.isRequired,
-  qux: PropTypes.func,
+  qux: PropTypes.string,
 });
 
 export const ShapeReferencePriceShape = PropTypes.shape({
@@ -244,7 +237,6 @@ export const ShapeShape = PropTypes.shape({
   primitiveFields: PropTypes.shape({
     string: PropTypes.string,
     bool: PropTypes.bool,
-    func: PropTypes.func,
     number: PropTypes.number.isRequired,
   }),
   arrayFields: PropTypes.shape({
@@ -308,7 +300,6 @@ export const UnionShape = PropTypes.shape({
   primitiveFields: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.number,
-    PropTypes.func,
   ]),
   enumField: PropTypes.oneOfType([
     PropTypes.oneOf([
@@ -334,7 +325,6 @@ export const UnionShape = PropTypes.shape({
     PropTypes.shape({
       foo: PropTypes.string,
       bar: PropTypes.bool,
-      baz: PropTypes.func.isRequired,
     }),
     PropTypes.shape({
       qux: PropTypes.oneOfType([

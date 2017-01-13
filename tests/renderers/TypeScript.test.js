@@ -3,7 +3,6 @@ import Schematic from '../../src/Schematic';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
-import FuncDefinition from '../../src/definitions/Func';
 import InstanceDefinition from '../../src/definitions/Instance';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
@@ -60,34 +59,6 @@ describe('TypeScriptRenderer', () => {
         valueType: 'number',
         values: [1, 23, 164],
       }))).toBe('FooBarEnum');
-    });
-  });
-
-  describe('renderFunc()', () => {
-    it('renders', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo'))).toBe('() => void');
-    });
-
-    it('handles return type', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo', {
-        returnType: 'string',
-      }))).toBe('() => string');
-    });
-
-    it('handles argument types', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo', {
-        returnType: 'string',
-        argTypes: [
-          {
-            type: 'string',
-            required: true,
-          },
-          {
-            type: 'array',
-            valueType: 'number',
-          },
-        ],
-      }))).toBe('(arg0: string, arg1?: number[]) => string');
     });
   });
 
@@ -168,18 +139,6 @@ describe('TypeScriptRenderer', () => {
           },
         ],
       }))).toBe('string | boolean | number[] | FooBar');
-    });
-
-    it('handles functions', () => {
-      expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
-        valueTypes: [
-          ...valueTypes,
-          {
-            type: 'function',
-            returnType: 'string',
-          },
-        ],
-      }))).toBe('string | boolean | number[] | (() => string)');
     });
   });
 

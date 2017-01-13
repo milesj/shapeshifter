@@ -9,7 +9,6 @@ export const UnionShape = PropTypes.shape({
   primitiveFields: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.number,
-    PropTypes.func,
   ]),
   enumField: PropTypes.oneOfType([
     PropTypes.oneOf([
@@ -35,7 +34,6 @@ export const UnionShape = PropTypes.shape({
     PropTypes.shape({
       foo: PropTypes.string,
       bar: PropTypes.bool,
-      baz: PropTypes.func.isRequired,
     }),
     PropTypes.shape({
       qux: PropTypes.oneOfType([

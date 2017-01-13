@@ -8,7 +8,6 @@ import Definition from './Definition';
 import ArrayDefinition from './definitions/Array';
 import BoolDefinition from './definitions/Bool';
 import EnumDefinition from './definitions/Enum';
-import FuncDefinition from './definitions/Func';
 import InstanceDefinition from './definitions/Instance';
 import NumberDefinition from './definitions/Number';
 import ObjectDefinition from './definitions/Object';
@@ -57,9 +56,6 @@ export default class DefinitionFactory {
 
       case 'enum':
         return new EnumDefinition(options, attribute, config);
-
-      case 'function':
-        return new FuncDefinition(options, attribute, config);
 
       case 'instance':
         return new InstanceDefinition(options, attribute, config);

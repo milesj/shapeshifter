@@ -115,13 +115,6 @@ describe('Renderer', () => {
     });
   });
 
-  describe('renderFunc()', () => {
-    it('errors for not supported', () => {
-      expect(() => renderer.renderFunc())
-        .toThrowError('The "function" definition is not supported by Renderer.');
-    });
-  });
-
   describe('renderInstance()', () => {
     it('errors for not supported', () => {
       expect(() => renderer.renderInstance())

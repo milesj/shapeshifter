@@ -3,7 +3,6 @@ import Schematic from '../../src/Schematic';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
-import FuncDefinition from '../../src/definitions/Func';
 import InstanceDefinition from '../../src/definitions/Instance';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
@@ -81,37 +80,6 @@ describe('FlowRenderer', () => {
         valueType: 'number',
         values: [1, 23, 164],
       }))).toBe('1 | 23 | 164');
-    });
-  });
-
-  describe('renderFunc()', () => {
-    it('renders nullable', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo', {
-        null: true,
-      }))).toBe('?() => void');
-    });
-
-    it('renders non-nullable', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo'))).toBe('() => void');
-    });
-
-    it('handles return type', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo', {
-        returnType: 'string',
-      }))).toBe('() => string');
-    });
-
-    it('handles argument types', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo', {
-        returnType: 'string',
-        argTypes: [
-          'string',
-          {
-            type: 'array',
-            valueType: 'number',
-          },
-        ],
-      }))).toBe('(arg0: string, arg1: number[]) => string');
     });
   });
 

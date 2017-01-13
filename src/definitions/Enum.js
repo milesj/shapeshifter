@@ -43,15 +43,7 @@ export default class EnumDefinition extends Definition {
    * @returns {Boolean}
    */
   validateValue(value: mixed): boolean {
-    let valueType = normalizeType(this.config.valueType);
-
-    // Function names are defined as strings within the schema
-    /* istanbul ignore next */
-    if (valueType === 'function') {
-      valueType = 'string';
-    }
-
     // eslint-disable-next-line valid-typeof
-    return (typeof value === valueType);
+    return (typeof value === normalizeType(this.config.valueType));
   }
 }

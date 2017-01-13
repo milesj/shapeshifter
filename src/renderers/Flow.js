@@ -10,7 +10,6 @@ import Definition from '../Definition';
 import ArrayDefinition from '../definitions/Array';
 import BoolDefinition from '../definitions/Bool';
 import EnumDefinition from '../definitions/Enum';
-import FuncDefinition from '../definitions/Func';
 import InstanceDefinition from '../definitions/Instance';
 import NumberDefinition from '../definitions/Number';
 import ObjectDefinition from '../definitions/Object';
@@ -77,22 +76,6 @@ export default class FlowRenderer extends Renderer {
     return values
       .map(item => this.renderOrFormat(item, depth, valueType))
       .join(' | ');
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  renderFunc(definition: FuncDefinition, depth: number): string {
-    const returnType = definition.returnType
-        ? this.renderAttribute(definition.returnType, depth + 1)
-        : 'void';
-
-    const argTypes = definition.argTypes
-        // eslint-disable-next-line newline-per-chained-call
-        ? this.renderObjectProps(definition.argTypes).join(' ').trim().replace(/,$/, '')
-        : '';
-
-    return this.wrapNullable(definition, `(${argTypes}) => ${returnType}`);
   }
 
   /**

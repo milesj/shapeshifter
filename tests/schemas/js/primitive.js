@@ -15,20 +15,6 @@ module.exports = {
       type: 'boolean',
       null: false
     },
-    funcField: {
-      type: 'func',
-      required: true
-    },
-    functionField: {
-      type: 'function',
-      null: true,
-      argTypes: [
-        {
-          type: 'string',
-          null: true
-        }
-      ]
-    },
     intField: 'int',
     intFieldExpanded: {
       type: 'int'

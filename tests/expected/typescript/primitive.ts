@@ -6,8 +6,6 @@ export interface PrimitiveInterface {
   boolFieldExpanded: boolean;
   booleanField?: boolean;
   booleanFieldExpanded?: boolean;
-  funcField: () => void;
-  functionField?: (arg0?: string) => void;
   intField?: number;
   intFieldExpanded?: number;
   integerField?: number;

@@ -10,7 +10,6 @@ import Definition from '../Definition';
 import ArrayDefinition from '../definitions/Array';
 import BoolDefinition from '../definitions/Bool';
 import EnumDefinition from '../definitions/Enum';
-import FuncDefinition from '../definitions/Func';
 import InstanceDefinition from '../definitions/Instance';
 import NumberDefinition from '../definitions/Number';
 import ObjectDefinition from '../definitions/Object';
@@ -103,22 +102,6 @@ export default class TypeScriptRenderer extends Renderer {
   /**
    * {@inheritDoc}
    */
-  renderFunc(definition: FuncDefinition, depth: number): string {
-    const returnType = definition.returnType
-      ? this.renderAttribute(definition.returnType, depth + 1)
-      : 'void';
-
-    const argTypes = definition.argTypes
-      // eslint-disable-next-line newline-per-chained-call
-      ? this.renderObjectProps(definition.argTypes).join(' ').replace(/,$/, '')
-      : '';
-
-    return `(${argTypes}) => ${returnType}`;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   renderInstance(definition: InstanceDefinition): string {
     return this.formatValue(definition.config.contract, 'function');
   }
@@ -162,12 +145,7 @@ export default class TypeScriptRenderer extends Renderer {
    */
   renderUnion(definition: UnionDefinition, depth: number): string {
     return definition.valueTypes
-      .map((item: Definition) => {
-        const value = this.renderAttribute(item, depth);
-
-        // Functions need to be wrapped in parenthesis when used in unions
-        return (item instanceof FuncDefinition) ? `(${value})` : value;
-      })
+      .map(item => this.renderAttribute(item, depth))
       .join(' | ');
   }
 

@@ -42,16 +42,16 @@ const SUPPORTED_FORMATS = [
   }, */
 ];
 
-describe('Transpiler', function () {
+describe('Transpiler', () => {
   describe('transpile()', () => {
     RENDERERS.forEach((renderer) => {
-      describe(`outputs ${renderer.name}`, function () {
+      describe(`outputs ${renderer.name}`, () => {
 
         SUPPORTED_FORMATS.forEach(({ format, expected, cases }) => {
-          describe(`from ${format.toUpperCase()} files`, function () {
+          describe(`from ${format.toUpperCase()} files`, () => {
 
             cases.forEach((schema) => {
-              it(`when rendering schema case "${schema}"`, function () {
+              it(`when rendering schema case "${schema}"`, () => {
                 const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
                 const expectedPath = `${__dirname}/expected/${renderer.key}${expected}/${schema}.${renderer.ext}`;
 
@@ -66,7 +66,7 @@ describe('Transpiler', function () {
             });
           });
 
-          it('when rendering an entire folder into a single file', function () {
+          it('when rendering an entire folder into a single file', () => {
             const actualPath = `${__dirname}/schemas/${format}/`;
             const expectedPath = `${__dirname}/expected/${renderer.key}${expected}/all.${renderer.ext}`;
 

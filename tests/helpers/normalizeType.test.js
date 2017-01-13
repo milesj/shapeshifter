@@ -15,7 +15,6 @@ describe('helpers/normalizeType', () => {
 
   it('handles aliases', () => {
     expect(normalizeType('bool')).toBe('boolean');
-    expect(normalizeType('func')).toBe('function');
     expect(normalizeType('inst')).toBe('instance');
     expect(normalizeType('int')).toBe('number');
     expect(normalizeType('integer')).toBe('number');

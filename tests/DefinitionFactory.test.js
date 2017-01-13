@@ -2,7 +2,6 @@ import DefinitionFactory from '../src/DefinitionFactory';
 import ArrayDefinition from '../src/definitions/Array';
 import BoolDefinition from '../src/definitions/Bool';
 import EnumDefinition from '../src/definitions/Enum';
-import FuncDefinition from '../src/definitions/Func';
 import InstanceDefinition from '../src/definitions/Instance';
 import NumberDefinition from '../src/definitions/Number';
 import ObjectDefinition from '../src/definitions/Object';
@@ -57,8 +56,6 @@ describe('DefinitionFactory', () => {
         values: ['foo'],
       })).toBeInstanceOf(EnumDefinition);
 
-      expect(DefinitionFactory.factory(options, 'foo', { type: 'function' })).toBeInstanceOf(FuncDefinition);
-
       expect(DefinitionFactory.factory(options, 'foo', {
         type: 'instance',
         contract: 'foo',
@@ -87,8 +84,6 @@ describe('DefinitionFactory', () => {
 
     it('factories definition objects using aliases', () => {
       expect(DefinitionFactory.factory(options, 'foo', { type: 'bool' })).toBeInstanceOf(BoolDefinition);
-
-      expect(DefinitionFactory.factory(options, 'foo', { type: 'func' })).toBeInstanceOf(FuncDefinition);
 
       expect(DefinitionFactory.factory(options, 'foo', {
         type: 'inst',

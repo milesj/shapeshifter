@@ -47,14 +47,6 @@ export type EnumConfig = {
   valueType: string,
 };
 
-export type FuncConfig = {
-  argTypes?: TypeDefinition[],
-  null?: boolean,
-  required?: boolean,
-  returnType?: TypeDefinition,
-  type: string,
-};
-
 export type InstanceConfig = {
   contract: string,
   null?: boolean,
@@ -109,7 +101,7 @@ export type UnionConfig = {
 };
 
 export type TypeDefinition = string |
-  ArrayConfig | BoolConfig | EnumConfig | FuncConfig | InstanceConfig | NumberConfig |
+  ArrayConfig | BoolConfig | EnumConfig | InstanceConfig | NumberConfig |
   ObjectConfig | ReferenceConfig | ShapeConfig | StringConfig | UnionConfig;
 
 // JSON Structure

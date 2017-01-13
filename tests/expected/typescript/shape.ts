@@ -25,7 +25,6 @@ export interface ShapeInterface {
   primitiveFields?: {
     string?: string;
     bool?: boolean;
-    func?: (arg0?: boolean) => void;
     number: number;
   };
   arrayFields?: {

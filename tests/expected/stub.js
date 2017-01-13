@@ -9,6 +9,3 @@ export const Foo = {};
 export const Bar = {};
 export const Baz = {};
 export const Qux = {};
-
-export function foo() {}
-export function bar() {}

@@ -6,22 +6,22 @@ export interface SetsBasicInterface {
 export interface SetsWithRequiredInterface {
   bar: number;
   baz?: boolean;
-  qux?: () => void;
+  qux?: string;
 }
 
 export interface SetsWithNullInterface {
   foo?: string;
-  qux?: () => void;
+  qux?: string;
 }
 
 export interface SetsWithBothInterface {
   baz: boolean;
-  qux: () => void;
+  qux: string;
 }
 
 export interface SetsInterface {
   foo?: string;
   bar?: number;
   baz: boolean;
-  qux?: () => void;
+  qux?: string;
 }

@@ -18,10 +18,6 @@ module.exports = {
           type: 'bool',
           null: false
         },
-        func: {
-          type: 'function',
-          argTypes: ['bool']
-        },
         number: {
           type: 'number',
           required: true

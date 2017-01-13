@@ -49,12 +49,6 @@ describe('definitions/Enum', () => {
         new EnumDefinition(options, 'foo', { valueType: 'number', values: [123, 'foo'] })
       )).toThrowError('Enum values do not match the defined value type.');
     });
-
-    it('for functions (uses strings)', () => {
-      expect(() => (
-        new EnumDefinition(options, 'foo', { valueType: 'function', values: [() => {}, 123] })
-      )).toThrowError('Enum values do not match the defined value type.');
-    });
   });
 
   it('does not error if `values` match the type in `valueType`', () => {
@@ -73,12 +67,6 @@ describe('definitions/Enum', () => {
     it('for numbers', () => {
       expect(() => (
         new EnumDefinition(options, 'foo', { valueType: 'number', values: [123, 456.789] })
-      )).not.toThrowError();
-    });
-
-    it('for functions (uses strings)', () => {
-      expect(() => (
-        new EnumDefinition(options, 'foo', { valueType: 'function', values: ['foo', 'namespace.bar'] })
       )).not.toThrowError();
     });
   });

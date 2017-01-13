@@ -34,7 +34,7 @@ module.exports = {
       required: true
     },
     qux: {
-      type: 'function',
+      type: 'string',
       null: false
     }
   }

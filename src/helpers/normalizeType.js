@@ -8,7 +8,6 @@
 const ALIAS_MAP = {
   binary: 'boolean',
   bool: 'boolean',
-  func: 'function',
   inst: 'instance',
   int: 'number',
   integer: 'number',

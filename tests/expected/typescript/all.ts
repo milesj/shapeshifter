@@ -1,6 +1,5 @@
 import ArrayDefault from '../stub';
 import DefaultName from '../stub';
-import { foo, bar } from '../stub';
 import AnotherDefault, { Baz, Qux } from '../stub';
 import InstanceDefault, { InstanceClassName } from '../stub';
 import ObjectDefault from '../stub';
@@ -133,14 +132,12 @@ export interface ArrayInterface {
   arrayField?: Array<string[]>;
   boolField?: boolean[];
   enumField?: Array<ArrayEnumFieldEnum>;
-  funcField?: Array<(arg0?: string, arg1?: number) => number>;
   instanceField?: ArrayDefault[];
   numberField: number[];
   objectField?: Array<{ [key: string]: number }>;
   shapeField?: Array<{
     foo?: string;
     bar?: boolean;
-    baz: () => void;
   }>;
   stringField?: string[];
   unionField?: Array<string | ArrayUnionField1Enum>;
@@ -175,14 +172,12 @@ export interface ObjectInterface {
   arrayField?: { [key: string]: string[] };
   boolField: { [key: string]: boolean };
   enumField?: { [key: string]: ObjectEnumFieldValueEnum };
-  funcField?: { [key: string]: () => string };
   instanceField?: { [key: string]: ObjectDefault };
   numberField?: { [key: string]: number };
   objectField?: { [key: string]: { [key: string]: number } };
   shapeField?: { [key: string]: {
     foo?: string;
     bar?: boolean;
-    baz: () => void;
   } };
   stringField?: { [key: string]: string };
   unionField?: { [key: string]: number | string[] };
@@ -195,8 +190,6 @@ export interface PrimitiveInterface {
   boolFieldExpanded: boolean;
   booleanField?: boolean;
   booleanFieldExpanded?: boolean;
-  funcField: () => void;
-  functionField?: (arg0?: string) => void;
   intField?: number;
   intFieldExpanded?: number;
   integerField?: number;
@@ -258,24 +251,24 @@ export interface SetsBasicInterface {
 export interface SetsWithRequiredInterface {
   bar: number;
   baz?: boolean;
-  qux?: () => void;
+  qux?: string;
 }
 
 export interface SetsWithNullInterface {
   foo?: string;
-  qux?: () => void;
+  qux?: string;
 }
 
 export interface SetsWithBothInterface {
   baz: boolean;
-  qux: () => void;
+  qux: string;
 }
 
 export interface SetsInterface {
   foo?: string;
   bar?: number;
   baz: boolean;
-  qux?: () => void;
+  qux?: string;
 }
 
 export interface ShapeReferencePriceInterface {
@@ -297,7 +290,6 @@ export interface ShapeInterface {
   primitiveFields?: {
     string?: string;
     bool?: boolean;
-    func?: (arg0?: boolean) => void;
     number: number;
   };
   arrayFields?: {
@@ -333,14 +325,13 @@ export interface ShapeInterface {
 
 export interface UnionInterface {
   arrayField?: string[] | Array<{ [key: string]: string }>;
-  primitiveFields?: boolean | number | (() => void);
+  primitiveFields?: boolean | number;
   enumField?: UnionEnumField0Enum | UnionEnumField1Enum;
   instanceField?: UnionClassName | UnionDefault;
   objectField?: { [key: string]: number } | { [key: string]: string[] };
   shapeField?: {
     foo?: string;
     bar?: boolean;
-    baz: () => void;
   } | {
     qux?: string | boolean;
   };

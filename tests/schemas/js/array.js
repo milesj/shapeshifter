@@ -26,20 +26,6 @@ module.exports = {
         values: ['foo', 'bar', 'baz']
       }
     },
-    funcField: {
-      type: 'array',
-      valueType: {
-        type: 'func',
-        returnType: 'number',
-        argTypes: [
-          'string',
-          {
-            type: 'number'
-          }
-        ]
-      },
-      null: false
-    },
     instanceField: {
       type: 'array',
       valueType: {
@@ -65,11 +51,7 @@ module.exports = {
         type: 'shape',
         attributes: {
           foo: 'string',
-          bar: 'bool',
-          baz: {
-            type: 'func',
-            required: true
-          }
+          bar: 'bool'
         }
       }
     },

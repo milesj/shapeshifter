@@ -25,13 +25,6 @@ module.exports = {
       },
       null: false
     },
-    funcField: {
-      type: 'object',
-      valueType: {
-        type: 'func',
-        returnType: 'string'
-      }
-    },
     instanceField: {
       type: 'object',
       valueType: {
@@ -56,11 +49,7 @@ module.exports = {
         type: 'shape',
         attributes: {
           foo: 'string',
-          bar: 'bool',
-          baz: {
-            type: 'func',
-            required: true
-          }
+          bar: 'bool'
         }
       }
     },

@@ -3,7 +3,6 @@ import Schematic from '../../src/Schematic';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
-import FuncDefinition from '../../src/definitions/Func';
 import InstanceDefinition from '../../src/definitions/Instance';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
@@ -97,18 +96,6 @@ describe('ReactRenderer', () => {
 23,
 164,
 ])`);
-    });
-  });
-
-  describe('renderFunc()', () => {
-    it('renders required', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo', {
-        required: true,
-      }))).toBe('PropTypes.func.isRequired');
-    });
-
-    it('renders non-required', () => {
-      expect(renderer.renderFunc(new FuncDefinition(options, 'foo'))).toBe('PropTypes.func');
     });
   });
 

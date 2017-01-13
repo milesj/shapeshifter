@@ -9,14 +9,12 @@ export const ObjectShape = PropTypes.shape({
     'bar',
     'baz',
   ])),
-  funcField: PropTypes.objectOf(PropTypes.func),
   instanceField: PropTypes.objectOf(PropTypes.instanceOf(ObjectDefault)),
   numberField: PropTypes.objectOf(PropTypes.number),
   objectField: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
   shapeField: PropTypes.objectOf(PropTypes.shape({
     foo: PropTypes.string,
     bar: PropTypes.bool,
-    baz: PropTypes.func.isRequired,
   })),
   stringField: PropTypes.objectOf(PropTypes.string),
   unionField: PropTypes.objectOf(PropTypes.oneOfType([

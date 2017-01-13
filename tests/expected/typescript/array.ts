@@ -18,14 +18,12 @@ export interface ArrayInterface {
   arrayField?: Array<string[]>;
   boolField?: boolean[];
   enumField?: Array<ArrayEnumFieldEnum>;
-  funcField?: Array<(arg0?: string, arg1?: number) => number>;
   instanceField?: ArrayDefault[];
   numberField: number[];
   objectField?: Array<{ [key: string]: number }>;
   shapeField?: Array<{
     foo?: string;
     bar?: boolean;
-    baz: () => void;
   }>;
   stringField?: string[];
   unionField?: Array<string | ArrayUnionField1Enum>;
