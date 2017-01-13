@@ -86,7 +86,7 @@ export const UserSchema = new Schema('users', 'id');
 
 * ES2015
 * Node 4+
-* React 0.14+ / Flow 0.20+ / TypeScript 1.6+
+* React 0.14+ / Flow 0.30+ / TypeScript 2.0+
 
 ## Installation
 

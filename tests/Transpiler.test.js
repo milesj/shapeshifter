@@ -12,11 +12,11 @@ function file(path) {
 const RENDERERS = [
   { name: 'React prop types', key: 'react', ext: 'js' },
   { name: 'Flow types', key: 'flow', ext: 'js' },
-  // { name: 'TypeScript interfaces', key: 'typescript', ext: 'ts' },
+  { name: 'TypeScript interfaces', key: 'typescript', ext: 'ts' },
 ];
 
 // Supported schema file formats
-const SUPPORTED_FORMATS = [
+const FORMATS = [
   {
     format: 'js',
     expected: '',
@@ -47,7 +47,7 @@ describe('Transpiler', () => {
     RENDERERS.forEach((renderer) => {
       describe(`outputs ${renderer.name}`, () => {
 
-        SUPPORTED_FORMATS.forEach(({ format, expected, cases }) => {
+        FORMATS.forEach(({ format, expected, cases }) => {
           describe(`from ${format.toUpperCase()} files`, () => {
 
             cases.forEach((schema) => {
@@ -82,7 +82,6 @@ describe('Transpiler', () => {
       });
     });
 
-    /*
     // We only need to test functionality, not renderers here
     const otherOptions = {
       ...options,
@@ -150,7 +149,6 @@ describe('Transpiler', () => {
 
       expect(output).toBe(file(expectedPath));
     });
-    */
   });
 
   describe('extractSchematics()', () => {

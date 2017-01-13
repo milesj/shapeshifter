@@ -65,7 +65,7 @@ describe('FlowRenderer', () => {
           type: 'instance',
           contract: 'FooBar',
         },
-      }))).toBe('?FooBar[]');
+      }))).toBe('?Array<?FooBar>');
     });
   });
 
@@ -139,7 +139,7 @@ describe('FlowRenderer', () => {
           type: 'array',
           valueType: 'string',
         },
-      }))).toBe('{ [key: number]: ?string[] }');
+      }))).toBe('{ [key: number]: ?Array<?string> }');
     });
   });
 
@@ -186,14 +186,14 @@ describe('FlowRenderer', () => {
     it('renders nullable', () => {
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         valueTypes,
-      }))).toBe('?string | ?boolean | number[]');
+      }))).toBe('?string | ?boolean | ?Array<number>');
     });
 
     it('renders non-nullable', () => {
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         nullable: false,
         valueTypes,
-      }))).toBe('?string | ?boolean | number[]');
+      }))).toBe('?string | ?boolean | ?Array<number>');
     });
 
     it('handles nested unions', () => {
@@ -210,7 +210,7 @@ describe('FlowRenderer', () => {
 
       expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
         valueTypes,
-      }))).toBe('?string | ?boolean | number[] | FooBar');
+      }))).toBe('?string | ?boolean | ?Array<number> | FooBar');
     });
   });
 

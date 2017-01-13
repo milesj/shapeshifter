@@ -19,16 +19,16 @@ export enum UnionUnionField01Enum {
 }
 
 export interface UnionInterface {
-  arrayField?: string[] | Array<{ [key: string]: string }>;
-  primitiveFields?: boolean | number;
-  enumField?: UnionEnumField0Enum | UnionEnumField1Enum;
-  instanceField?: UnionClassName | UnionDefault;
-  objectField?: { [key: string]: number } | { [key: string]: string[] };
-  shapeField?: {
-    foo?: string;
-    bar?: boolean;
+  arrayField: string[] | Array<{ [key: string]: string }>;
+  primitiveFields: boolean | number;
+  enumField: UnionEnumField0Enum | UnionEnumField1Enum;
+  instanceField: UnionClassName | UnionDefault;
+  objectField: { [key: string]: number } | { [key: string]: string[] };
+  shapeField: {
+    foo: string;
+    bar: boolean;
   } | {
-    qux?: string | boolean;
+    qux: string | boolean;
   };
-  unionField?: string | UnionUnionField01Enum | boolean | number;
+  unionField: string | UnionUnionField01Enum | boolean | number;
 }

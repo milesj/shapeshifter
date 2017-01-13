@@ -19,41 +19,41 @@ export enum ShapeEnumEnum {
 }
 
 export interface ShapeInterface {
-  structAlias?: {
-    foo?: string;
+  structAlias: {
+    foo: string;
   };
-  primitiveFields?: {
-    string?: string;
-    bool?: boolean;
+  primitiveFields: {
+    string: string;
+    bool: boolean;
     number: number;
   };
-  arrayFields?: {
-    numberArray?: number[];
-    stringArray?: string[];
-    shapeArray?: Array<{
-      foo?: string;
+  arrayFields: {
+    numberArray: number[];
+    stringArray: string[];
+    shapeArray: Array<{
+      foo: string;
     }>;
   };
-  enumFields?: {
-    stringEnum?: ShapeStringEnumEnum;
-    intEnum?: ShapeIntEnumEnum;
+  enumFields: {
+    stringEnum: ShapeStringEnumEnum;
+    intEnum: ShapeIntEnumEnum;
   };
-  instanceFields?: {
-    instOf?: ShapeClassName;
-    instanceOf?: ShapeDefault;
+  instanceFields: {
+    instOf: ShapeClassName;
+    instanceOf: ShapeDefault;
   };
-  objectFields?: {
-    numberObj?: { [key: string]: number };
-    boolObject?: { [key: string]: boolean };
-    intStringObject?: { [key: number]: string };
-    unionObject?: { [key: string]: number | string | {
-      foo?: string;
+  objectFields: {
+    numberObj: { [key: string]: number };
+    boolObject: { [key: string]: boolean };
+    intStringObject: { [key: number]: string };
+    unionObject: { [key: string]: number | string | {
+      foo: string;
     } };
   };
-  unionFields?: {
-    multiUnion?: number | boolean | ShapeClassName | { [key: string]: string } | {
-      string?: string;
-      enum?: ShapeEnumEnum;
+  unionFields: {
+    multiUnion: number | boolean | ShapeClassName | { [key: string]: string } | {
+      string: string;
+      enum: ShapeEnumEnum;
     };
   };
 }

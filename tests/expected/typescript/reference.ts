@@ -1,25 +1,25 @@
 export interface ReferenceBarInterface {
-  boolField?: boolean;
+  boolField: boolean;
 }
 
 export interface ReferenceSetOnlyStringInterface {
-  stringField?: string;
+  stringField: string;
 }
 
 export interface ReferenceSetInterface {
-  boolField?: boolean;
-  stringField?: string;
-  numberField?: number;
+  boolField: boolean;
+  stringField: string;
+  numberField: number;
 }
 
 export interface ReferenceFooInterface {
-  numberField?: number;
+  numberField: number;
   refField: ReferenceBarInterface;
 }
 
 export interface ReferenceInterface {
-  stringField?: string;
-  refField?: ReferenceFooInterface;
-  referenceField?: ReferenceFooInterface;
-  subsetRefField?: ReferenceSetOnlyStringInterface;
+  stringField: string;
+  refField: ReferenceFooInterface;
+  referenceField: ReferenceFooInterface;
+  subsetRefField: ReferenceSetOnlyStringInterface;
 }

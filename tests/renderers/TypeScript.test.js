@@ -141,14 +141,4 @@ describe('TypeScriptRenderer', () => {
       }))).toBe('string | boolean | number[] | FooBar');
     });
   });
-
-  describe('wrapPropertyName()', () => {
-    it('renders required', () => {
-      expect(renderer.wrapPropertyName({ attribute: 'foo', isNullable: () => false })).toBe('foo');
-    });
-
-    it('renders non-required', () => {
-      expect(renderer.wrapPropertyName({ attribute: 'foo', isNullable: () => true })).toBe('foo?');
-    });
-  });
 });

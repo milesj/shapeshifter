@@ -148,20 +148,4 @@ export default class TypeScriptRenderer extends Renderer {
       .map(item => this.renderAttribute(item, depth))
       .join(' | ');
   }
-
-  /**
-   * Mark as optional.
-   *
-   * @param {Definition} definition
-   * @returns {String}
-   */
-  wrapPropertyName(definition: Definition): string {
-    const template = definition.attribute;
-
-    if (definition.isNullable()) {
-      return `${template}?`;
-    }
-
-    return template;
-  }
 }
