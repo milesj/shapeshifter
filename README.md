@@ -359,9 +359,9 @@ status: number,
 active: boolean,
 
 // TypeScript
-name?: string;
-status?: number;
-active?: boolean;
+name: string;
+status: number;
+active: boolean;
 ```
 
 Alias names: `str`, `num`, `int`, `integer`, `float`, `bool`, `binary`
@@ -390,7 +390,7 @@ messages: PropTypes.arrayOf(PropTypes.string),
 messages: string[],
 
 // TypeScript
-messages?: string[];
+messages: string[];
 ```
 
 Alias names: `arr`, `list`
@@ -423,7 +423,7 @@ costs: PropTypes.objectOf(PropTypes.number),
 costs: { [key: string]: number },
 
 // TypeScript
-costs?: { [key: string]: number };
+costs: { [key: string]: number };
 ```
 
 Alias names: `obj`, `map`
@@ -458,7 +458,7 @@ export enum SchemaWordsEnum {
   baz = 2
 }
 
-words?: SchemaWordsEnum;
+words: SchemaWordsEnum;
 ```
 
 #### Shapes
@@ -593,7 +593,7 @@ error: PropTypes.oneOfType([
 error: string | number | Error,
 
 // TypeScript
-error?: string | number | Error;
+error: string | number | Error;
 ```
 
 #### References
@@ -640,7 +640,7 @@ profile: ProfileShape,
 profile: ProfileType,
 
 // TypeScript
-profile?: ProfileInterface;
+profile: ProfileInterface;
 ```
 
 Alias names: `ref`

@@ -1,0 +1,11 @@
+type Array {
+  arrayField: [[String]]
+  boolField: [Boolean]
+  # enumField: ['foo' | 'bar' | 'baz']
+  # instanceField: [ArrayDefault]
+  numberField: [Int]!
+  # objectField:
+  # shapeField:
+  stringField: [String]
+  # unionField: []
+}

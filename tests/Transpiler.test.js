@@ -11,35 +11,35 @@ function file(path) {
 // Supported renderers
 const RENDERERS = [
   { name: 'React prop types', key: 'react', ext: 'js' },
-  { name: 'Flow types', key: 'flow', ext: 'js' },
-  { name: 'TypeScript interfaces', key: 'typescript', ext: 'ts' },
+  // { name: 'Flow types', key: 'flow', ext: 'js' },
+  // { name: 'TypeScript interfaces', key: 'typescript', ext: 'ts' },
 ];
 
 // Supported schema file formats
 const FORMATS = [
+  // {
+  //   format: 'js',
+  //   expected: '',
+  //   cases: [
+  //     'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
+  //     'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
+  //   ],
+  // },
+  // {
+  //   format: 'json',
+  //   expected: '',
+  //   cases: [
+  //     'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
+  //     'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
+  //   ],
+  // },
   {
-    format: 'js',
-    expected: '',
-    cases: [
-      'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
-      'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
-    ],
-  },
-  {
-    format: 'json',
-    expected: '',
-    cases: [
-      'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
-      'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
-    ],
-  },
-  /* {
     format: 'gql',
     expected: '-gql',
     cases: [
-      'primitive',
+      'array', 'enum', 'primitive',
     ],
-  }, */
+  },
 ];
 
 describe('Transpiler', () => {
@@ -66,6 +66,7 @@ describe('Transpiler', () => {
             });
           });
 
+          /*
           it('when rendering an entire folder into a single file', () => {
             const actualPath = `${__dirname}/schemas/${format}/`;
             const expectedPath = `${__dirname}/expected/${renderer.key}${expected}/all.${renderer.ext}`;
@@ -78,6 +79,7 @@ describe('Transpiler', () => {
 
             expect(output).toBe(file(expectedPath));
           });
+          */
         });
       });
     });

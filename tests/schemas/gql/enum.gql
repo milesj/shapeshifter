@@ -1,0 +1,12 @@
+enum ExampleEnum {
+  FOO
+  BAR
+  BAZ
+  QUX
+}
+
+type Enum {
+  firstField: FOO
+  secondField: BAR
+  thirdField: BAZ
+}
