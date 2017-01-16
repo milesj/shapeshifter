@@ -1,4 +1,5 @@
 # 3.0.0
+* Added GraphQL support through the use of `.gql` files to read from (instead of JSON).
 * Updated TypeScript requirement to v2.0 and Flowtype to v0.30.
 * Replaced Mocha + Chai with Jest and increased code coverage to 100%.
 * Merged `null` and `required` flags into a single `nullable` field used by all formats.

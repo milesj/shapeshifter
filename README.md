@@ -1,13 +1,13 @@
-# Shapeshifter v2.3.0
+# Shapeshifter v3.0.0
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
 Shapeshifter is a command line tool for generating ES2015 compatible
 files that export React prop types, Flow type aliases, or TypeScript
-interfaces, as well as relation schema classes from JSON schema files.
-Schemas can represent database tables, API endpoints, data structures,
-resources, internal shapes, and more.
+interfaces, as well as relation schema classes from JSON or GraphQL
+schematic files. Schematics can represent database tables, API endpoints,
+data structures, resources, internal shapes, and more.
 
-Take this user schema for example.
+Take this user schematic for example.
 
 ```json
 {

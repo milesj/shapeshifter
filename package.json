@@ -1,10 +1,11 @@
 {
   "name": "shapeshifter",
   "version": "2.3.0",
-  "description": "Generate relational schemas, React prop types, Flow type aliases, or TypeScript interfaces from JSON schema files.",
+  "description": "Generate relational schemas, React prop types, Flow type aliases, or TypeScript interfaces from JSON or GraphQL schematic files.",
   "keywords": [
     "generate",
     "schema",
+    "schematic",
     "react",
     "prop",
     "flow",
@@ -18,7 +19,8 @@
     "shift",
     "shifter",
     "transpile",
-    "entity"
+    "entity",
+    "graphql"
   ],
   "main": "./lib/index.js",
   "bin": "./bin/shapeshifter.js",
