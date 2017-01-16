@@ -115,8 +115,8 @@ Shapeshifter is provided as a binary which can be executed like so.
 shapeshifter [options] [input] > [output]
 ```
 
-The binary input accepts either a single schema file or a directory of
-schema files. If a directory is provided, they will be combined into
+The binary input accepts either a single schematic file or a directory of
+schematic files. If a directory is provided, they will be combined into
 a single output.
 
 By default, the binary will send output to stdout, which can then be
@@ -127,7 +127,7 @@ will be sent to the console.
 
 * `--help`, `-h` - Displays a help menu.
 * `--nullable`, `-n` - Marks all attributes as nullable by default.
-  Defaults to false.
+  Not applicable to GraphQL. Defaults to false.
 * `--indent` - Defines the indentation characters to use in the
   generated output. Defaults to 2 spaces.
 * `--format` - The format to output to. Accepts "react", "flow", or
@@ -141,12 +141,13 @@ will be sent to the console.
 
 ## Documentation
 
-* [JSON Structure](#json-structure)
+* [Schematic Structure](#schematic-structure)
   * [Attributes](#attributes)
   * [Metadata](#metadata)
   * [Imports](#imports)
   * [Constants](#constants)
   * [Subsets](#subsets)
+* [GraphQL Support](#graphql-support)
 * [Attribute Types](#attribute-types)
   * [Primitives](#primitives)
   * [Arrays](#arrays)
@@ -164,27 +165,38 @@ will be sent to the console.
   * [Including Attributes](#including-attributes)
   * [Including Relations](#including-relations)
 
-### JSON Structure
+### Schematic Structure
 
-A schema can either be a JSON file, or a JavaScript file
-that exports an object (Node.js compatible). JSON is preferred
-as it's a consumable format across many languages.
-
-Every schema requires a `name` and `attributes` property.
-The name denotes the name of the export prefix found in the
-ES2015 transpiled output file, while the attributes denotes the
-available fields in the current schema.
+Shapeshifter is powered by files known as schematics, which can
+be a JSON (`.json`), JavaScript (`.js`), or GraphQL file (`.gql`).
+Schematics must define a name, used to denote the name of the
+ES2015 export, and set of attributes, used as as fields in which
+the schematic is defining.
 
 ```json
 {
-  "name": "Users",
-  "attributes": {}
+  "name": "User",
+  "attributes": {
+    "id": "number"
+  }
+}
+```
+```javascript
+module.exports = {
+  name: 'User',
+  attributes: {
+    id: 'number'
+  }
+};
+```
+```graphql
+type User {
+  id: ID
 }
 ```
 
-Furthermore, a schema supports the following optional properties:
-`meta`, `imports`, `constants`, `references`, and `subsets`. Continue
-reading for more information on all the supported schema properties.
+> GraphQL has limited functionality compared to JSON or JavaScript.
+> Jump to the section on [GraphQL](#graphql-support) for more information.
 
 #### Attributes
 
@@ -210,7 +222,9 @@ Depending on the type used, additional properties may be required.
 }
 ```
 
-##### Modifiers
+> Attributes are analogous to [fields for GraphQL](https://facebook.github.io/graphql/#sec-Language.Fields).
+
+##### Nullable
 
 All attribute type definitions support the `nullable` modifier,
 which accepts a boolean value, and triggers the following:
@@ -227,6 +241,13 @@ which accepts a boolean value, and triggers the following:
 }
 ```
 
+If using GraphQL, all attributes are nullable to default. To make a field
+as non-nullable, append an exclamation mark (`!`) to the end of the type.
+
+```graphql
+field: String!
+```
+
 #### Metadata
 
 The `meta` object allows arbitrary metadata to be defined. Only two
@@ -241,6 +262,14 @@ part would be the resource name, and "123" would be the primary key.
 "meta": {
   "primaryKey": "id",
   "resourceName": "users"
+}
+```
+
+If using GraphQL, the `ID` type can be used to denote a primary key.
+
+```graphql
+type User {
+  id: ID
 }
 ```
 
@@ -262,6 +291,8 @@ can be defined with `named` (an array).
 ]
 ```
 
+> Imports are not supported by GraphQL.
+
 #### Constants
 
 The `constants` object is a mapping of a constant to a primitive
@@ -280,6 +311,8 @@ without introducing duplication.
   "ADMIN_FLAG": "admin"
 }
 ```
+
+> Constants are not supported by GraphQL.
 
 #### Subsets
 
@@ -313,9 +346,27 @@ subset to boolean values, which enable or disable the modifier.
 }
 ```
 
+> Subsets are not supported by GraphQL.
+
+### GraphQL Support
+
+Shapeshifter supports reading from GraphQL (`.gql`) type files -- if you
+prefer GraphQL over JavaScript/JSON. However, since GraphQL is a rather strict
+and direct representation of a data model, only a small subset of Shapeshifter
+functionality is available.
+
+When defining a GraphQL schematic, multiple definitions (`type`, `enum`, `union`, etc)
+can exist in a single schematic, with the last `type` definition being
+used as the schematic representation. All prior definitions will be used
+as internal shapes, references, enums, and unions.
+
+For more guidance, [take a look at our test cases.](./tests/schemas/gql/)
+
+> Introspection support being looked into!
+
 ### Attribute Types
 
-For every attribute defined in a JSON schema, a type definition is required.
+For every attribute defined in a schematic, a type definition is required.
 Types will be generated when the `--types` CLI option is passed. The
 following types are supported.
 
@@ -329,6 +380,11 @@ are the only types that support shorthand notation.
 "name": "string",
 "status": "number",
 "active": "boolean",
+```
+```graphql
+name: String
+status: Int
+active: Boolean
 ```
 
 As well as the expanded standard notation.
@@ -379,6 +435,9 @@ defined by the `valueType` property.
   }
 }
 ```
+```graphql
+messages: [String]
+```
 
 This transpiles down to:
 
@@ -428,6 +487,8 @@ costs: { [key: string]: number };
 
 Alias names: `obj`, `map`
 
+> Objects are not supported by GraphQL. Use shapes instead.
+
 #### Enums
 
 An `enum` is a fixed list of values, with both the values and the value
@@ -440,6 +501,15 @@ respectively.
   "valueType": "string",
   "values": ["foo", "bar", "baz"]
 }
+```
+```graphql
+enum WordsEnum {
+  FOO
+  BAR
+  BAZ
+}
+
+words: WordsEnum
 ```
 
 This transpiles down to:
@@ -461,12 +531,14 @@ export enum SchemaWordsEnum {
 words: SchemaWordsEnum;
 ```
 
+> Transpilation output slightly differs when using GraphQL.
+
 #### Shapes
 
 A `shape` is a key-value object with its own set of attributes and
 types. A shape differs from an object in that an object defines the
 type for all keys and values, while a shape defines individual
-attributes. This provides nested structures within a schema.
+attributes. This provides nested structures within a schematic.
 
 A shape is similar to a struct found in the C language.
 
@@ -482,6 +554,15 @@ A shape is similar to a struct found in the C language.
     }
   }
 }
+```
+```graphql
+type LocationStruct {
+  lat: Number
+  long: Number
+  name: String!
+}
+
+location: LocationStruct
 ```
 
 This transpiles to:
@@ -514,7 +595,7 @@ Alias names: `struct`
 ##### Shape References
 
 Shapes are powerful at defining nested attributes, while
-[references](#references) are great at reusing external schemas.
+[references](#references) are great at reusing external schematics.
 Shape references are a combination of both of these patterns --
 it permits a local shape definition to be used throughout
 multiple attributes.
@@ -559,6 +640,9 @@ to the shape using the `reference` property, like so.
 With this approach, the `attributes` property is not required
 for each shape type.
 
+> If an additional `type` definition exists within a GraphQL schematic,
+> it will be treated as a shape reference, otherwise, a normal reference.
+
 #### Unions
 
 The `union` type provides a logical OR operation against a list of
@@ -577,6 +661,11 @@ this attribute must match one of the types in the list.
     }
   ]
 }
+```
+```graphql
+union PrimitiveUnion = String | Int
+
+error: PrimitiveUnion
 ```
 
 This transpiles to:
@@ -599,19 +688,19 @@ error: string | number | Error;
 #### References
 
 The final type, `reference`, is the most powerful and versatile type.
-A reference provides a link to an external schema file, permitting
-easy re-use and extensibility, while avoiding schema structure
+A reference provides a link to an external schematic file, permitting
+easy re-use and extensibility, while avoiding schematic structure
 duplication across files.
 
 To make use of references, a `references` map must be defined in
-the root of the schema. Each value in the map is a relative path to
-an external schema file.
+the root of the schematic. Each value in the map is a relative path to
+an external schematic file.
 
 ```json
 {
-  "name": "Users",
+  "name": "User",
   "references": {
-    "Profile": "./profile.json"
+    "Profile": "./Profile.json"
   },
   "attributes": {}
 }
@@ -620,7 +709,7 @@ an external schema file.
 Once the reference map exists, we can define the attribute type,
 which requires the `reference` property to point to a key found in
 the references map. An optional `subset` property can be defined
-that points to a subset found in the reference schema file.
+that points to a subset found in the reference schematic file.
 
 ```json
 "profile": {
@@ -628,6 +717,9 @@ that points to a subset found in the reference schema file.
   "reference": "Profile",
   "subset": ""
 }
+```
+```graphql
+profile: Profile
 ```
 
 This transpiles to:
@@ -645,10 +737,14 @@ profile: ProfileInterface;
 
 Alias names: `ref`
 
+> If a `type` definition does not exist in a GraphQL schematic,
+> it will assume to be a reference in a relative file of the same name.
+> For example, `./Profile.gql`, using the code block mentioned previously.
+
 ##### Self References
 
 It's possible to create recursive structures using the `self`
-property, which refers to the current schema in which it was defined.
+property, which refers to the current schematic in which it was defined.
 When using self, the `reference` property and the `references` map
 is not required.
 
@@ -658,11 +754,16 @@ is not required.
   "self": true
 }
 ```
+```graphql
+type Schema {
+  node: Schema
+}
+```
 
 ##### Exported Schemas
 
 When generating schema classes using the `--schemas` CLI option,
-all references defined in a schema are considered a relation (ORM style),
+all references defined in a schematic are considered a relation (ORM style),
 and in turn, will generate schemas as well. To disable this export
 from occurring, set `export` to false.
 
@@ -673,6 +774,8 @@ from occurring, set `export` to false.
   "export": false
 }
 ```
+
+> Disabling exports are not supported by GraphQL.
 
 ##### Relation Type
 
@@ -691,6 +794,8 @@ The following relation types are supported, which are based on the
   "relation": "belongsTo"
 }
 ```
+
+> Customizing the relation type is not supported by GraphQL.
 
 #### Instance Ofs
 
@@ -735,7 +840,9 @@ model: UserModel;
 
 Alias names: `inst`
 
-#### Schema Classes
+> Instance Ofs are not supported by GraphQL.
+
+### Schema Classes
 
 Schema classes are ES2015 based classes that are generated and included
 in the output when `--schemas` is passed to the command line. These
@@ -753,11 +860,11 @@ The following properties are available on the `Schema` class instance.
 
 * `resourceName` (string) - The resource name of the schema, passed as
 the first argument to the constructor. This field is based on
-`meta.resourceName` in the JSON schema file.
+`meta.resourceName` in the schematic file.
 
 * `primaryKey` (string) - The name of the primary key in the current
 schema, passed as the second argument to the constructor. This field
-is based on `meta.primaryKey` in the JSON schema file. Defaults to "id".
+is based on `meta.primaryKey` in the JSON schematic file. Defaults to "id".
 
 * `attributes` (string[]) - List of attribute names in the current schema.
 
@@ -778,7 +885,9 @@ follows this structure:
 relation type is one of the following constants found on the `Schema`
 class: `HAS_ONE`, `HAS_MANY`, `BELONGS_TO`, `BELONGS_TO_MANY`.
 
-##### Including Attributes
+> Schemas are not supported by GraphQL.
+
+#### Including Attributes
 
 By default, attributes are excluded from the output unless the
 `--attributes` CLI option is passed. Once passed, they are defined
@@ -793,7 +902,7 @@ UserSchema
   .addAttributes(['id', 'username', 'email', 'location']);
 ```
 
-##### Including Relations
+#### Including Relations
 
 Unlike attributes, relations are always included in the output, as
 relations between entities (via schemas) are highly informational.
