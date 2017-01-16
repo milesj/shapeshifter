@@ -1,11 +1,23 @@
+enum ExampleEnum {
+  FOO
+  BAR
+  BAZ
+  QUX
+}
+
+type ShapeObject {
+  foo: String
+  bar: Boolean
+}
+
+union PrimitiveUnion = String | Int
+
 type Array {
   arrayField: [[String]]
   boolField: [Boolean]
-  # enumField: ['foo' | 'bar' | 'baz']
-  # instanceField: [ArrayDefault]
+  enumField: BAZ
   numberField: [Int]!
-  # objectField:
-  # shapeField:
+  shapeField: [ShapeObject]
   stringField: [String]
-  # unionField: []
+  unionField: [PrimitiveUnion!]
 }

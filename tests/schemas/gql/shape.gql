@@ -1,0 +1,40 @@
+type BasicStruct {
+  foo: String
+}
+
+type PrimitiveStruct {
+  string: String
+  bool: Boolean!
+  number: Number!
+}
+
+type ArrayStruct {
+  numberArray: [Number]
+  stringArray: [String]
+  shapeArray: [BasicStruct]
+}
+
+enum ExampleEnum {
+  FOO
+  BAR
+  BAZ
+  QUX
+}
+
+type EnumStruct {
+  stringEnum: FOO
+}
+
+union MultiUnion = Int | Boolean | EnumStruct
+
+type UnionStruct {
+  multiUnion: MultiUnion
+}
+
+type Shape {
+  structAlias(test: String): BasicStruct
+  primitiveFields: PrimitiveStruct
+  arrayFields: ArrayStruct
+  enumFields: EnumStruct
+  unionFields: UnionStruct
+}

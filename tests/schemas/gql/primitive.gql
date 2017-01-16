@@ -1,20 +1,10 @@
 type Primitive {
   boolField: Boolean
   boolFieldExpanded: Boolean!
-  booleanField: Boolean
-  booleanFieldExpanded: Boolean!
-  intField: Int
-  intFieldExpanded: Int!
-  integerField: Int
-  integerFieldExpanded: Int!
-  numField: Int
-  numFieldExpanded: Int!
   numberField: Int
   numberFieldExpanded: Int!
-  floatField: Int
-  floatFieldExpanded: Int!
-  strField: String
-  strFieldExpanded: String!
+  floatField: Float
+  floatFieldExpanded: Float!
   stringField: String
   stringFieldExpanded: String!
 }

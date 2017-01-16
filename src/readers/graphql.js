@@ -20,77 +20,99 @@ class GraphQLReader {
     this.references = {};
     this.enums = {};
     this.shapes = {};
+    this.unions = {};
 
     this.parseDefinitions();
     this.parseAttributes();
   }
 
   buildAttribute(field, type, nullable = true) {
-    switch (type.kind) {
-      // Non-nullable
-      case Kind.NON_NULL_TYPE:
-        return this.buildAttribute(field, type.type, false);
+    // Non-nullable
+    if (type.kind === Kind.NON_NULL_TYPE) {
+      return this.buildAttribute(field, type.type, false);
 
-      // Primitive
-      case Kind.NAMED_TYPE: {
-        const value = type.name.value;
+    // List
+    } else if (type.kind === Kind.LIST_TYPE) {
+      return {
+        type: 'array',
+        valueType: this.buildAttribute(field, type.type),
+        nullable,
+      };
 
-        switch (value) {
-          case 'ID':
-            if (this.primaryKey) {
-              throw new SyntaxError(`A primary key for ${this.name} has already been defined.`);
-            }
+    // Named
+    } else if (type.kind === Kind.NAMED_TYPE) {
+      const value = type.name.value;
 
-            this.primaryKey = field.name.value;
+      switch (value) {
+        case 'ID':
+          if (this.primaryKey) {
+            throw new SyntaxError(`A primary key for ${this.name} has already been defined.`);
+          }
 
-            // GQL denotes ID fields as strings,
-            // but we should accept integers as well.
+          this.primaryKey = field.name.value;
+
+          // GQL denotes ID fields as strings,
+          // but we should accept integers as well.
+          return {
+            type: 'union',
+            valueTypes: ['number', 'string'],
+            nullable,
+          };
+
+        case 'Int':
+        case 'Float':
+        case 'Number':
+        case 'String':
+        case 'Boolean':
+          return {
+            type: value.toLowerCase(),
+            nullable,
+          };
+
+        default:
+          // Enum
+          if (this.enums[value]) {
+            return {
+              type: 'enum',
+              valueType: 'number',
+              values: this.enums[value],
+              nullable,
+            };
+          }
+
+          // Shapes
+          if (this.shapes[value]) {
+            return {
+              type: 'shape',
+              reference: value,
+              nullable,
+            };
+          }
+
+          // Unions
+          if (this.unions[value]) {
             return {
               type: 'union',
-              valueTypes: ['number', 'string'],
+              valueTypes: this.unions[value],
               nullable,
             };
+          }
 
-          case 'Int':
-          case 'Float':
-          case 'Number':
-          case 'String':
-          case 'Boolean':
-            return {
-              type: value.toLowerCase(),
-              nullable,
-            };
+          console.log(this);
 
-          default:
-            // Enum
-            if (this.enums[value]) {
-              return {
-                type: 'enum',
-                valueType: 'number',
-                values: this.enums[value],
-              };
-            }
-
-            // TODO Log?
-            return {};
-        }
+          // References
+          return {
+            type: 'reference',
+            reference: value,
+            nullable,
+          };
       }
-
-      // Array
-      case Kind.LIST_TYPE:
-        return {
-          type: 'array',
-          valueType: this.buildAttribute(field, type.type),
-          nullable,
-        };
-
-      default:
-        console.log('UNSUPPORTED TYPE');
-        console.log(field);
-        break;
     }
 
-    return {};
+    console.error('UNSUPPORTED ATTRIBUTE TYPE');
+    console.log(field);
+
+    return null;
   }
 
   extractEnum(definition) {
@@ -100,6 +122,26 @@ class GraphQLReader {
       this.enums[value.name.value] = values;
       values.push(i);
     });
+  }
+
+  extractShape(definition) {
+    const attributes = {};
+
+    definition.fields.forEach((field) => {
+      attributes[field.name.value] = this.buildAttribute(field, field.type);
+    });
+
+    this.shapes[definition.name.value] = attributes;
+  }
+
+  extractUnion(definition) {
+    const values = [];
+
+    definition.types.forEach((type) => {
+      values.push(this.buildAttribute(definition, type));
+    });
+
+    this.unions[definition.name.value] = values;
   }
 
   parseAttributes() {
@@ -127,8 +169,16 @@ class GraphQLReader {
           this.extractEnum(definition);
           break;
 
+        case Kind.OBJECT_TYPE_DEFINITION:
+          this.extractShape(definition);
+          break;
+
+        case Kind.UNION_TYPE_DEFINITION:
+          this.extractUnion(definition);
+          break;
+
         default:
-          console.log('UNKNOWN DEFINITION');
+          console.error('UNKNOWN DEFINITION');
           console.log(definition);
           break;
       }
@@ -143,6 +193,7 @@ class GraphQLReader {
       },
       attributes: this.attributes,
       references: this.references,
+      shapes: this.shapes,
     };
   }
 }

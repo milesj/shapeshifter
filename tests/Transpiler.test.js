@@ -37,7 +37,7 @@ const FORMATS = [
     format: 'gql',
     expected: '-gql',
     cases: [
-      'array', 'enum', 'primitive',
+      'array', 'enum', 'primitive', 'shape'
     ],
   },
 ];
