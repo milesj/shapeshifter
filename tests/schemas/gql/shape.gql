@@ -32,7 +32,7 @@ type UnionStruct {
 }
 
 type Shape {
-  structAlias(test: String): BasicStruct
+  structAlias: BasicStruct
   primitiveFields: PrimitiveStruct
   arrayFields: ArrayStruct
   enumFields: EnumStruct

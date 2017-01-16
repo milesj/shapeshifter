@@ -15,6 +15,7 @@ class GraphQLReader {
   constructor(doc, ext) {
     this.document = doc;
     this.fileExt = ext;
+    this.name = '';
     this.primaryKey = '';
     this.attributes = {};
     this.references = {};
@@ -26,16 +27,16 @@ class GraphQLReader {
     this.parseAttributes();
   }
 
-  buildAttribute(field, type, nullable = true) {
+  buildAttribute(field, type, nullable = true, schematic = false) {
     // Non-nullable
     if (type.kind === Kind.NON_NULL_TYPE) {
-      return this.buildAttribute(field, type.type, false);
+      return this.buildAttribute(field, type.type, false, schematic);
 
     // List
     } else if (type.kind === Kind.LIST_TYPE) {
       return {
         type: 'array',
-        valueType: this.buildAttribute(field, type.type),
+        valueType: this.buildAttribute(field, type.type, true, schematic),
         nullable,
       };
 
@@ -45,11 +46,14 @@ class GraphQLReader {
 
       switch (value) {
         case 'ID':
-          if (this.primaryKey) {
-            throw new SyntaxError(`A primary key for ${this.name} has already been defined.`);
-          }
+          if (schematic) {
+            if (this.primaryKey) {
+              /* istanbul ignore next Hard to test */
+              throw new SyntaxError(`A primary key for ${this.name} has already been defined.`);
+            }
 
-          this.primaryKey = field.name.value;
+            this.primaryKey = field.name.value;
+          }
 
           // GQL denotes ID fields as strings,
           // but we should accept integers as well.
@@ -109,6 +113,7 @@ class GraphQLReader {
       }
     }
 
+    /* istanbul ignore next No need to cover */
     throw new TypeError(`Unsupported GraphQL attribute type "${field.name.value}".`);
   }
 
@@ -146,6 +151,8 @@ class GraphQLReader {
       this.attributes[fieldDefinition.name.value] = this.buildAttribute(
         fieldDefinition,
         fieldDefinition.type,
+        true,
+        true,
       );
     });
   }
@@ -154,11 +161,15 @@ class GraphQLReader {
     this.schematic = this.document.definitions.pop();
 
     if (!this.schematic) {
+      /* istanbul ignore next No need to cover */
       throw new SyntaxError('The schematic must be defined as the last GraphQL type.');
 
     } else if (this.schematic.kind !== Kind.OBJECT_TYPE_DEFINITION) {
+      /* istanbul ignore next No need to cover */
       throw new TypeError('The schematic must be an object type.');
     }
+
+    this.name = this.schematic.name.value;
 
     this.document.definitions.forEach((definition) => {
       switch (definition.kind) {
@@ -174,7 +185,12 @@ class GraphQLReader {
           this.extractUnion(definition);
           break;
 
+        case Kind.INTERFACE_TYPE_DEFINITION:
+          // Ignore interfaces
+          break;
+
         default:
+          /* istanbul ignore next No need to cover */
           throw new TypeError(`Unsupported GraphQL definition "${definition.name.value}".`);
       }
     });
@@ -182,7 +198,7 @@ class GraphQLReader {
 
   toSchematic() {
     return {
-      name: this.schematic.name.value,
+      name: this.name,
       meta: {
         primaryKey: this.primaryKey || 'id',
       },

@@ -1,0 +1,27 @@
+# This is testing core GQL functionality
+
+interface Entity {
+  id: ID
+  name: String
+}
+
+type Foo implements Entity {
+  id: ID
+  name: String
+  foo: String
+}
+
+type Bar implements Entity {
+  id: ID
+  name: String
+  bar: Int
+}
+
+type Core implements Entity {
+  id: ID
+  name: String
+  foo: Foo
+  fooWithArg(test: String): Foo!
+  bar: Bar
+  barWithArg(test: Int!): Bar!
+}
