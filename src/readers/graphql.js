@@ -1,6 +1,7 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 /* eslint-disable import/no-extraneous-dependencies, no-console */
@@ -9,31 +10,55 @@ import fs from 'fs';
 import { extname } from 'path';
 import { parse, Kind } from 'graphql';
 
-import type { SchemaStructure } from '../types';
+import type {
+  DocumentNode,
+  DefinitionNode,
+  TypeDefinitionNode,
+  EnumValueDefinitionNode,
+  FieldDefinitionNode,
+  NamedTypeNode,
+} from 'graphql';
+import type {
+  SchemaStructure,
+  TypeDefinition,
+  AttributesField,
+  ReferencesField,
+  ShapesField,
+} from '../types';
 
 class GraphQLReader {
-  constructor(doc, ext) {
+  document: DocumentNode = null;
+  schematic: DefinitionNode = null;
+  fileExt: string = '';
+  name: string = '';
+  primaryKey: string = '';
+  attributes: AttributesField = {};
+  references: ReferencesField = {};
+  enums: { [key: string]: number[] } = {};
+  shapes: ShapesField = {};
+  unions: { [key: string]: TypeDefinition[] } = {};
+
+  constructor(doc: DocumentNode, ext: string) {
     this.document = doc;
     this.fileExt = ext;
-    this.name = '';
-    this.primaryKey = '';
-    this.attributes = {};
-    this.references = {};
-    this.enums = {};
-    this.shapes = {};
-    this.unions = {};
 
     this.parseDefinitions();
     this.parseAttributes();
   }
 
-  buildAttribute(field, type, nullable = true, schematic = false) {
+  buildAttribute(
+    field: DefinitionNode,
+    type: TypeDefinitionNode,
+    nullable: boolean = true,
+    schematic: boolean = false,
+  ): TypeDefinition {
     // Non-nullable
     if (type.kind === Kind.NON_NULL_TYPE) {
       return this.buildAttribute(field, type.type, false, schematic);
 
     // List
     } else if (type.kind === Kind.LIST_TYPE) {
+      // $FlowIssue We know what this will be
       return {
         type: 'array',
         valueType: this.buildAttribute(field, type.type, true, schematic),
@@ -117,29 +142,29 @@ class GraphQLReader {
     throw new TypeError(`Unsupported GraphQL attribute type "${field.name.value}".`);
   }
 
-  extractEnum(definition) {
+  extractEnum(definition: DefinitionNode) {
     const values = [];
 
-    definition.values.forEach((value, i) => {
+    definition.values.forEach((value: EnumValueDefinitionNode, i: number) => {
       this.enums[value.name.value] = values;
       values.push(i);
     });
   }
 
-  extractShape(definition) {
+  extractShape(definition: DefinitionNode) {
     const attributes = {};
 
-    definition.fields.forEach((field) => {
+    definition.fields.forEach((field: FieldDefinitionNode) => {
       attributes[field.name.value] = this.buildAttribute(field, field.type);
     });
 
     this.shapes[definition.name.value] = attributes;
   }
 
-  extractUnion(definition) {
+  extractUnion(definition: DefinitionNode) {
     const values = [];
 
-    definition.types.forEach((type) => {
+    definition.types.forEach((type: NamedTypeNode) => {
       values.push(this.buildAttribute(definition, type));
     });
 
@@ -147,7 +172,7 @@ class GraphQLReader {
   }
 
   parseAttributes() {
-    this.schematic.fields.forEach((fieldDefinition) => {
+    this.schematic.fields.forEach((fieldDefinition: DefinitionNode) => {
       this.attributes[fieldDefinition.name.value] = this.buildAttribute(
         fieldDefinition,
         fieldDefinition.type,
@@ -171,7 +196,7 @@ class GraphQLReader {
 
     this.name = this.schematic.name.value;
 
-    this.document.definitions.forEach((definition) => {
+    this.document.definitions.forEach((definition: DefinitionNode) => {
       switch (definition.kind) {
         case Kind.ENUM_TYPE_DEFINITION:
           this.extractEnum(definition);
@@ -196,7 +221,7 @@ class GraphQLReader {
     });
   }
 
-  toSchematic() {
+  toSchematic(): SchemaStructure {
     return {
       name: this.name,
       meta: {
