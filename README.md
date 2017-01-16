@@ -196,7 +196,8 @@ type User {
 ```
 
 > GraphQL has limited functionality compared to JSON or JavaScript.
-> Jump to the section on [GraphQL](#graphql-support) for more information.
+> Jump to the section on [GraphQL](#graphql-support), and read the
+> documentation thoroughly, for more information.
 
 #### Attributes
 
@@ -222,7 +223,7 @@ Depending on the type used, additional properties may be required.
 }
 ```
 
-> Attributes are analogous to [fields for GraphQL](https://facebook.github.io/graphql/#sec-Language.Fields).
+> For GraphQL, attributes are analogous to [fields](https://facebook.github.io/graphql/#sec-Language.Fields).
 
 ##### Nullable
 
@@ -241,8 +242,8 @@ which accepts a boolean value, and triggers the following:
 }
 ```
 
-If using GraphQL, all attributes are nullable to default. To make a field
-as non-nullable, append an exclamation mark (`!`) to the end of the type.
+If using GraphQL, all attributes are nullable by default. To mark a field
+as non-nullable, append an exclamation mark (`!`) to the type.
 
 ```graphql
 field: String!
@@ -738,8 +739,8 @@ profile: ProfileInterface;
 Alias names: `ref`
 
 > If a `type` definition does not exist in a GraphQL schematic,
-> it will assume to be a reference in a relative file of the same name.
-> For example, `./Profile.gql`, using the code block mentioned previously.
+> Shapeshifter will assume it to be a reference to a relative file of the same name.
+> For example, using the code block mentioned previously, `./Profile.gql`.
 
 ##### Self References
 
