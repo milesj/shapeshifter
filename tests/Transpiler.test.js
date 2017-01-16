@@ -10,7 +10,11 @@ function file(path) {
 
 // Supported renderers
 const RENDERERS = [
-  { name: 'React prop types', key: 'react', ext: 'js' },
+  {
+    name: 'React prop types',
+    key: 'react',
+    ext: 'js',
+  },
   // { name: 'Flow types', key: 'flow', ext: 'js' },
   // { name: 'TypeScript interfaces', key: 'typescript', ext: 'ts' },
 ];
@@ -19,7 +23,7 @@ const RENDERERS = [
 const FORMATS = [
   // {
   //   format: 'js',
-  //   expected: '',
+  //   reader: 'node',
   //   cases: [
   //     'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
   //     'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
@@ -27,7 +31,7 @@ const FORMATS = [
   // },
   // {
   //   format: 'json',
-  //   expected: '',
+  //   reader: 'node',
   //   cases: [
   //     'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
   //     'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
@@ -35,29 +39,29 @@ const FORMATS = [
   // },
   {
     format: 'gql',
-    expected: '-gql',
+    reader: 'gql',
     cases: [
-      'array', 'enum', 'primitive', 'shape'
+      'array', 'enum', 'primitive', 'shape',
     ],
   },
 ];
 
 describe('Transpiler', () => {
   describe('transpile()', () => {
-    RENDERERS.forEach((renderer) => {
-      describe(`outputs ${renderer.name}`, () => {
+    RENDERERS.forEach(({ name, key, ext }) => {
+      describe(`outputs ${name}`, () => {
 
-        FORMATS.forEach(({ format, expected, cases }) => {
+        FORMATS.forEach(({ format, reader, cases }) => {
           describe(`from ${format.toUpperCase()} files`, () => {
 
             cases.forEach((schema) => {
               it(`when rendering schema case "${schema}"`, () => {
                 const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
-                const expectedPath = `${__dirname}/expected/${renderer.key}${expected}/${schema}.${renderer.ext}`;
+                const expectedPath = `${__dirname}/expected/${reader}/${key}/${schema}.${ext}`;
 
                 const output = new Transpiler({
                   ...options,
-                  renderer: renderer.key,
+                  renderer: key,
                   includeTypes: true,
                 }).transpileFile(actualPath);
 
@@ -69,11 +73,11 @@ describe('Transpiler', () => {
           /*
           it('when rendering an entire folder into a single file', () => {
             const actualPath = `${__dirname}/schemas/${format}/`;
-            const expectedPath = `${__dirname}/expected/${renderer.key}${expected}/all.${renderer.ext}`;
+            const expectedPath = `${__dirname}/expected/${reader}/${key}/all.${ext}`;
 
             const output = new Transpiler({
               ...options,
-              renderer: renderer.key,
+              renderer: key,
               includeTypes: true,
             }).transpileFolder(actualPath);
 
@@ -96,8 +100,10 @@ describe('Transpiler', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/with-types.js`;
 
-      const output = new Transpiler({ ...otherOptions, includeTypes: true })
-        .transpileFile(actualPath);
+      const output = new Transpiler({
+        ...otherOptions,
+        includeTypes: true,
+      }).transpileFile(actualPath);
 
       expect(output).toBe(file(expectedPath));
     });
@@ -116,8 +122,10 @@ describe('Transpiler', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/with-schemas.js`;
 
-      const output = new Transpiler({ ...otherOptions, includeSchemas: true })
-        .transpileFile(actualPath);
+      const output = new Transpiler({
+        ...otherOptions,
+        includeSchemas: true,
+      }).transpileFile(actualPath);
 
       expect(output).toBe(file(expectedPath));
     });
@@ -126,8 +134,11 @@ describe('Transpiler', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/with-schemas-attributes.js`;
 
-      const output = new Transpiler({ ...otherOptions, includeSchemas: true, includeAttributes: true })
-        .transpileFile(actualPath);
+      const output = new Transpiler({
+        ...otherOptions,
+        includeSchemas: true,
+        includeAttributes: true,
+      }).transpileFile(actualPath);
 
       expect(output).toBe(file(expectedPath));
     });
@@ -146,8 +157,11 @@ describe('Transpiler', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/with-types-schemas.js`;
 
-      const output = new Transpiler({ ...otherOptions, includeTypes: true, includeSchemas: true })
-        .transpileFile(actualPath);
+      const output = new Transpiler({
+        ...otherOptions,
+        includeTypes: true,
+        includeSchemas: true,
+      }).transpileFile(actualPath);
 
       expect(output).toBe(file(expectedPath));
     });
@@ -155,7 +169,8 @@ describe('Transpiler', () => {
 
   describe('extractSchematics()', () => {
     it('handles reference paths correctly', () => {
-      const schematics = new Transpiler(options).extractSchematics(`${__dirname}/schemas/json/reference.json`);
+      const schematics = new Transpiler(options)
+        .extractSchematics(`${__dirname}/schemas/json/reference.json`);
 
       expect(schematics.map(schematic => schematic.path)).toEqual([
         `${__dirname}/schemas/json/reference-bar.json`,

@@ -33,7 +33,7 @@
     "lint": "eslint ./src ./tests",
     "check": "yarn run check:flow && yarn run check:typescript",
     "check:flow": "flow check",
-    "check:typescript": "tsc --noEmit --allowJs ./tests/expected/typescript/*",
+    "check:typescript": "tsc --noEmit --allowJs './tests/expected/**/typescript/*'",
     "jest": "jest --config ./jest.json",
     "coverage": "yarn run jest -- --coverage",
     "pretest": "yarn run lint",

@@ -4,7 +4,8 @@
 .*\.test\.js
 
 [include]
-./tests/expected/flow/*.js
+./tests/expected/gql/flow/*.js
+./tests/expected/node/flow/*.js
 ./tests/expected/shapeshifter/*.js
 
 [libs]
