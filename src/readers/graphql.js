@@ -6,15 +6,15 @@
 /* eslint-disable import/no-extraneous-dependencies, no-console */
 
 import fs from 'fs';
+import { extname } from 'path';
 import { parse, Kind } from 'graphql';
 
 import type { SchemaStructure } from '../types';
 
-console.log(Kind);
-
 class GraphQLReader {
-  constructor(doc) {
+  constructor(doc, ext) {
     this.document = doc;
+    this.fileExt = ext;
     this.primaryKey = '';
     this.attributes = {};
     this.references = {};
@@ -98,9 +98,9 @@ class GraphQLReader {
             };
           }
 
-          console.log(this);
-
           // References
+          this.references[value] = `./${value}${this.fileExt}`;
+
           return {
             type: 'reference',
             reference: value,
@@ -109,10 +109,7 @@ class GraphQLReader {
       }
     }
 
-    console.error('UNSUPPORTED ATTRIBUTE TYPE');
-    console.log(field);
-
-    return null;
+    throw new TypeError(`Unsupported GraphQL attribute type "${field.name.value}".`);
   }
 
   extractEnum(definition) {
@@ -178,9 +175,7 @@ class GraphQLReader {
           break;
 
         default:
-          console.error('UNKNOWN DEFINITION');
-          console.log(definition);
-          break;
+          throw new TypeError(`Unsupported GraphQL definition "${definition.name.value}".`);
       }
     });
   }
@@ -199,5 +194,8 @@ class GraphQLReader {
 }
 
 export default function readWithGraphQL(path: string): SchemaStructure {
-  return new GraphQLReader(parse(fs.readFileSync(path, 'utf8'))).toSchematic();
+  return new GraphQLReader(
+    parse(fs.readFileSync(path, 'utf8')),
+    extname(path),
+  ).toSchematic();
 }

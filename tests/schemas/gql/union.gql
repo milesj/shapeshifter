@@ -1,0 +1,33 @@
+union PrimitiveUnion = Boolean | Int
+
+enum ExampleEnum {
+  FOO
+  BAR
+  BAZ
+  QUX
+}
+
+union EnumUnion = FOO | BAZ
+
+type FooStruct {
+  foo: String
+}
+
+type BarStruct {
+  bar: Boolean
+}
+
+type BazStruct {
+  baz: PrimitiveUnion
+}
+
+union ShapeUnion = FooStruct | BarStruct | BazStruct
+
+union ComplexUnion = PrimitiveUnion | EnumUnion | ShapeUnion
+
+type Union {
+  primitiveField: PrimitiveUnion
+  enumField: EnumUnion
+  shapeField: ShapeUnion
+  unionField: ComplexUnion
+}

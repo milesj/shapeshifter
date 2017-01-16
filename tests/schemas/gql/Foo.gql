@@ -1,0 +1,4 @@
+type ReferenceFoo {
+  numberField: Number
+  refField: Bar!
+}

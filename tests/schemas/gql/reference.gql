@@ -1,0 +1,5 @@
+type Reference {
+  stringField: String
+  refField: Foo!
+  referenceField: Foo
+}
