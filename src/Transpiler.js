@@ -125,12 +125,10 @@ export default class Transpiler {
     let schematics = [];
 
     filePaths.forEach((filePath: string) => {
-      if (filePath.match(/\.(js|json)$/)) {
-        schematics = [
-          ...schematics,
-          ...this.extractSchematics(path.join(folderPath, filePath)),
-        ];
-      }
+      schematics = [
+        ...schematics,
+        ...this.extractSchematics(path.join(folderPath, filePath)),
+      ];
     });
 
     return this.generateOutput(schematics);

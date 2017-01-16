@@ -8,12 +8,12 @@ export const ArrayShapeObjectShape = PropTypes.shape({
 export const ArrayShape = PropTypes.shape({
   arrayField: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
   boolField: PropTypes.arrayOf(PropTypes.bool),
-  enumField: PropTypes.oneOf([
+  enumField: PropTypes.arrayOf(PropTypes.oneOf([
     0,
     1,
     2,
     3,
-  ]),
+  ])),
   numberField: PropTypes.arrayOf(PropTypes.number).isRequired,
   shapeField: PropTypes.arrayOf(ArrayShapeObjectShape),
   stringField: PropTypes.arrayOf(PropTypes.string),

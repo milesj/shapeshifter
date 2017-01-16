@@ -15,28 +15,36 @@ const RENDERERS = [
     key: 'react',
     ext: 'js',
   },
-  // { name: 'Flow types', key: 'flow', ext: 'js' },
-  // { name: 'TypeScript interfaces', key: 'typescript', ext: 'ts' },
+  {
+    name: 'Flow types',
+    key: 'flow',
+    ext: 'js',
+  },
+  {
+    name: 'TypeScript interfaces',
+    key: 'typescript',
+    ext: 'ts',
+  },
 ];
 
 // Supported schema file formats
 const FORMATS = [
-  // {
-  //   format: 'js',
-  //   reader: 'node',
-  //   cases: [
-  //     'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
-  //     'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
-  //   ],
-  // },
-  // {
-  //   format: 'json',
-  //   reader: 'node',
-  //   cases: [
-  //     'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
-  //     'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
-  //   ],
-  // },
+  {
+    format: 'js',
+    reader: 'node',
+    cases: [
+      'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
+      'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
+    ],
+  },
+  {
+    format: 'json',
+    reader: 'node',
+    cases: [
+      'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
+      'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
+    ],
+  },
   {
     format: 'gql',
     reader: 'gql',
@@ -70,7 +78,6 @@ describe('Transpiler', () => {
             });
           });
 
-          /*
           it('when rendering an entire folder into a single file', () => {
             const actualPath = `${__dirname}/schemas/${format}/`;
             const expectedPath = `${__dirname}/expected/${reader}/${key}/all.${ext}`;
@@ -83,7 +90,6 @@ describe('Transpiler', () => {
 
             expect(output).toBe(file(expectedPath));
           });
-          */
         });
       });
     });

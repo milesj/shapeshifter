@@ -15,7 +15,7 @@ union PrimitiveUnion = String | Int
 type Array {
   arrayField: [[String]]
   boolField: [Boolean]
-  enumField: BAZ
+  enumField: [BAZ]
   numberField: [Int]!
   shapeField: [ShapeObject]
   stringField: [String]
