@@ -49,7 +49,7 @@ const FORMATS = [
     format: 'gql',
     reader: 'gql',
     cases: [
-      'array', 'enum', 'primitive', 'shape', 'union', 'reference', 'core',
+      'array', 'enum', 'primitive', 'shape', 'union', 'reference', 'reference-self', 'core',
     ],
   },
 ];

@@ -17,7 +17,7 @@ export type ArrayShapeObjectType = {
 export type ArrayType = {
   arrayField: ?Array<?Array<?string>>,
   boolField: ?Array<?boolean>,
-  enumField: ?Array<0 | 1 | 2 | 3>,
+  enumField: ?Array<'FOO' | 'BAR' | 'BAZ' | 'QUX'>,
   numberField: Array<?number>,
   shapeField: ?Array<?ArrayShapeObjectType>,
   stringField: ?Array<?string>,
@@ -46,9 +46,7 @@ export type CoreType = {
 };
 
 export type EnumType = {
-  firstField: 0 | 1 | 2 | 3,
-  secondField: 0 | 1 | 2 | 3,
-  thirdField: 0 | 1 | 2 | 3,
+  field: 'FOO' | 'BAR' | 'BAZ' | 'QUX',
 };
 
 export type PrimitiveType = {
@@ -60,6 +58,12 @@ export type PrimitiveType = {
   floatFieldExpanded: number,
   stringField: ?string,
   stringFieldExpanded: string,
+};
+
+export type ReferenceSelfType = {
+  stringField: ?string,
+  referenceField: ?ReferenceSelfType,
+  requiredRefField: ReferenceSelfType,
 };
 
 export type ReferenceType = {
@@ -85,7 +89,7 @@ export type ShapeArrayStructType = {
 };
 
 export type ShapeEnumStructType = {
-  stringEnum: 0 | 1 | 2 | 3,
+  stringEnum: 'FOO' | 'BAR' | 'BAZ' | 'QUX',
 };
 
 export type ShapeUnionStructType = {
@@ -114,7 +118,7 @@ export type UnionBazStructType = {
 
 export type UnionType = {
   primitiveField: ?boolean | ?number,
-  enumField: 0 | 1 | 2 | 3 | 0 | 1 | 2 | 3,
+  enumField: 'FOO' | 'BAR' | 'BAZ' | 'QUX',
   shapeField: ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType,
-  unionField: ?boolean | ?number | 0 | 1 | 2 | 3 | 0 | 1 | 2 | 3 | ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType,
+  unionField: ?boolean | ?number | 'FOO' | 'BAR' | 'BAZ' | 'QUX' | ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType,
 };

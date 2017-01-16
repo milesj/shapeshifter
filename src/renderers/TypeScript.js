@@ -144,8 +144,8 @@ export default class TypeScriptRenderer extends Renderer {
    * {@inheritDoc}
    */
   renderUnion(definition: UnionDefinition, depth: number): string {
-    return definition.valueTypes
-      .map(item => this.renderAttribute(item, depth))
-      .join(' | ');
+    const set = new Set(definition.valueTypes.map(item => this.renderAttribute(item, depth)));
+
+    return Array.from(set.values()).join(' | ');
   }
 }

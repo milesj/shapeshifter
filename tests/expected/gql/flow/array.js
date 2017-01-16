@@ -8,7 +8,7 @@ export type ArrayShapeObjectType = {
 export type ArrayType = {
   arrayField: ?Array<?Array<?string>>,
   boolField: ?Array<?boolean>,
-  enumField: ?Array<0 | 1 | 2 | 3>,
+  enumField: ?Array<'FOO' | 'BAR' | 'BAZ' | 'QUX'>,
   numberField: Array<?number>,
   shapeField: ?Array<?ArrayShapeObjectType>,
   stringField: ?Array<?string>,

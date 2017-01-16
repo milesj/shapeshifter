@@ -1,29 +1,21 @@
 export enum UnionEnumField0Enum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  FOO = 0,
+  BAR = 1
 }
 
 export enum UnionEnumField1Enum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  BAZ = 0,
+  QUX = 1
 }
 
 export enum UnionUnionField10Enum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  FOO = 0,
+  BAR = 1
 }
 
 export enum UnionUnionField11Enum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  BAZ = 0,
+  QUX = 1
 }
 
 export interface UnionFooStructInterface {

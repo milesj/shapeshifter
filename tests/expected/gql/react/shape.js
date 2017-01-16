@@ -18,10 +18,10 @@ export const ShapeArrayStructShape = PropTypes.shape({
 
 export const ShapeEnumStructShape = PropTypes.shape({
   stringEnum: PropTypes.oneOf([
-    0,
-    1,
-    2,
-    3,
+    'FOO',
+    'BAR',
+    'BAZ',
+    'QUX',
   ]),
 });
 

@@ -17,7 +17,7 @@ export type ShapeArrayStructType = {
 };
 
 export type ShapeEnumStructType = {
-  stringEnum: 0 | 1 | 2 | 3,
+  stringEnum: 'FOO' | 'BAR' | 'BAZ' | 'QUX',
 };
 
 export type ShapeUnionStructType = {

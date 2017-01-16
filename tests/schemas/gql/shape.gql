@@ -22,7 +22,7 @@ enum ExampleEnum {
 }
 
 type EnumStruct {
-  stringEnum: FOO
+  stringEnum: ExampleEnum
 }
 
 union MultiUnion = Int | Boolean | EnumStruct

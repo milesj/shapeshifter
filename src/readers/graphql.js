@@ -14,7 +14,6 @@ import type {
   DocumentNode,
   DefinitionNode,
   TypeDefinitionNode,
-  EnumValueDefinitionNode,
   FieldDefinitionNode,
   NamedTypeNode,
 } from 'graphql';
@@ -103,7 +102,7 @@ class GraphQLReader {
           if (this.enums[value]) {
             return {
               type: 'enum',
-              valueType: 'number',
+              valueType: (typeof this.enums[value][0]),
               values: this.enums[value],
               nullable,
             };
@@ -127,6 +126,15 @@ class GraphQLReader {
             };
           }
 
+          // Self references
+          if (value === this.name) {
+            return {
+              type: 'reference',
+              self: true,
+              nullable,
+            };
+          }
+
           // References
           this.references[value] = `./${value}${this.fileExt}`;
 
@@ -143,12 +151,7 @@ class GraphQLReader {
   }
 
   extractEnum(definition: DefinitionNode) {
-    const values = [];
-
-    definition.values.forEach((value: EnumValueDefinitionNode, i: number) => {
-      this.enums[value.name.value] = values;
-      values.push(i);
-    });
+    this.enums[definition.name.value] = definition.values.map(value => value.name.value);
   }
 
   extractShape(definition: DefinitionNode) {

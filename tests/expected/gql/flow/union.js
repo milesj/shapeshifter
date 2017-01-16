@@ -14,7 +14,7 @@ export type UnionBazStructType = {
 
 export type UnionType = {
   primitiveField: ?boolean | ?number,
-  enumField: 0 | 1 | 2 | 3 | 0 | 1 | 2 | 3,
+  enumField: 'FOO' | 'BAR' | 'BAZ' | 'QUX',
   shapeField: ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType,
-  unionField: ?boolean | ?number | 0 | 1 | 2 | 3 | 0 | 1 | 2 | 3 | ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType,
+  unionField: ?boolean | ?number | 'FOO' | 'BAR' | 'BAZ' | 'QUX' | ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType,
 };

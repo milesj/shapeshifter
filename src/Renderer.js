@@ -406,7 +406,11 @@ export default class Renderer {
    * @returns {Array}
    */
   renderArrayDefinitions(items: Definition[], depth: number = 0): string[] {
-    return items.map(item => this.wrapItem(this.renderAttribute(item, depth), depth));
+    const set = new Set(
+      items.map(item => this.wrapItem(this.renderAttribute(item, depth), depth)),
+    );
+
+    return Array.from(set.values());
   }
 
   /**

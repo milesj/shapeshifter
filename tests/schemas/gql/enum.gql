@@ -6,7 +6,5 @@ enum ExampleEnum {
 }
 
 type Enum {
-  firstField: FOO
-  secondField: BAR
-  thirdField: BAZ
+  field: ExampleEnum
 }

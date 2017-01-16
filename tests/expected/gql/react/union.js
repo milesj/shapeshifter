@@ -22,16 +22,12 @@ export const UnionShape = PropTypes.shape({
   ]),
   enumField: PropTypes.oneOfType([
     PropTypes.oneOf([
-      0,
-      1,
-      2,
-      3,
+      'FOO',
+      'BAR',
     ]),
     PropTypes.oneOf([
-      0,
-      1,
-      2,
-      3,
+      'BAZ',
+      'QUX',
     ]),
   ]),
   shapeField: PropTypes.oneOfType([
@@ -46,16 +42,12 @@ export const UnionShape = PropTypes.shape({
     ]),
     PropTypes.oneOfType([
       PropTypes.oneOf([
-        0,
-        1,
-        2,
-        3,
+        'FOO',
+        'BAR',
       ]),
       PropTypes.oneOf([
-        0,
-        1,
-        2,
-        3,
+        'BAZ',
+        'QUX',
       ]),
     ]),
     PropTypes.oneOfType([

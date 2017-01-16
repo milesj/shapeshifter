@@ -1,8 +1,8 @@
 export enum ShapeStringEnumEnum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  FOO = 0,
+  BAR = 1,
+  BAZ = 2,
+  QUX = 3
 }
 
 export interface ShapeBasicStructInterface {

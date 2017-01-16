@@ -1,0 +1,5 @@
+type ReferenceSelf {
+  stringField: String
+  referenceField: ReferenceSelf
+  requiredRefField: ReferenceSelf!
+}

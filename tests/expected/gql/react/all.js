@@ -18,10 +18,10 @@ export const ArrayShape = PropTypes.shape({
   arrayField: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
   boolField: PropTypes.arrayOf(PropTypes.bool),
   enumField: PropTypes.arrayOf(PropTypes.oneOf([
-    0,
-    1,
-    2,
-    3,
+    'FOO',
+    'BAR',
+    'BAZ',
+    'QUX',
   ])),
   numberField: PropTypes.arrayOf(PropTypes.number).isRequired,
   shapeField: PropTypes.arrayOf(ArrayShapeObjectShape),
@@ -63,23 +63,11 @@ export const CoreShape = PropTypes.shape({
 });
 
 export const EnumShape = PropTypes.shape({
-  firstField: PropTypes.oneOf([
-    0,
-    1,
-    2,
-    3,
-  ]),
-  secondField: PropTypes.oneOf([
-    0,
-    1,
-    2,
-    3,
-  ]),
-  thirdField: PropTypes.oneOf([
-    0,
-    1,
-    2,
-    3,
+  field: PropTypes.oneOf([
+    'FOO',
+    'BAR',
+    'BAZ',
+    'QUX',
   ]),
 });
 
@@ -92,6 +80,12 @@ export const PrimitiveShape = PropTypes.shape({
   floatFieldExpanded: PropTypes.number.isRequired,
   stringField: PropTypes.string,
   stringFieldExpanded: PropTypes.string.isRequired,
+});
+
+export const ReferenceSelfShape = PropTypes.shape({
+  stringField: PropTypes.string,
+  referenceField: (...args) => ReferenceSelfShape(...args),
+  requiredRefField: (...args) => ReferenceSelfShape(...args).isRequired,
 });
 
 export const ReferenceShape = PropTypes.shape({
@@ -118,10 +112,10 @@ export const ShapeArrayStructShape = PropTypes.shape({
 
 export const ShapeEnumStructShape = PropTypes.shape({
   stringEnum: PropTypes.oneOf([
-    0,
-    1,
-    2,
-    3,
+    'FOO',
+    'BAR',
+    'BAZ',
+    'QUX',
   ]),
 });
 
@@ -163,16 +157,12 @@ export const UnionShape = PropTypes.shape({
   ]),
   enumField: PropTypes.oneOfType([
     PropTypes.oneOf([
-      0,
-      1,
-      2,
-      3,
+      'FOO',
+      'BAR',
     ]),
     PropTypes.oneOf([
-      0,
-      1,
-      2,
-      3,
+      'BAZ',
+      'QUX',
     ]),
   ]),
   shapeField: PropTypes.oneOfType([
@@ -187,16 +177,12 @@ export const UnionShape = PropTypes.shape({
     ]),
     PropTypes.oneOfType([
       PropTypes.oneOf([
-        0,
-        1,
-        2,
-        3,
+        'FOO',
+        'BAR',
       ]),
       PropTypes.oneOf([
-        0,
-        1,
-        2,
-        3,
+        'BAZ',
+        'QUX',
       ]),
     ]),
     PropTypes.oneOfType([

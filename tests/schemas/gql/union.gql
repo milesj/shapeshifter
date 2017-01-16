@@ -1,13 +1,16 @@
 union PrimitiveUnion = Boolean | Int
 
-enum ExampleEnum {
+enum FirstEnum {
   FOO
   BAR
+}
+
+enum SecondEnum {
   BAZ
   QUX
 }
 
-union EnumUnion = FOO | BAZ
+union EnumUnion = FirstEnum | SecondEnum
 
 type FooStruct {
   foo: String

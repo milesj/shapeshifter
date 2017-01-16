@@ -1,64 +1,42 @@
 export enum ArrayEnumFieldEnum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  FOO = 0,
+  BAR = 1,
+  BAZ = 2,
+  QUX = 3
 }
 
-export enum EnumFirstFieldEnum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
-}
-
-export enum EnumSecondFieldEnum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
-}
-
-export enum EnumThirdFieldEnum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+export enum EnumFieldEnum {
+  FOO = 0,
+  BAR = 1,
+  BAZ = 2,
+  QUX = 3
 }
 
 export enum ShapeStringEnumEnum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  FOO = 0,
+  BAR = 1,
+  BAZ = 2,
+  QUX = 3
 }
 
 export enum UnionEnumField0Enum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  FOO = 0,
+  BAR = 1
 }
 
 export enum UnionEnumField1Enum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  BAZ = 0,
+  QUX = 1
 }
 
 export enum UnionUnionField10Enum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  FOO = 0,
+  BAR = 1
 }
 
 export enum UnionUnionField11Enum {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3
+  BAZ = 0,
+  QUX = 1
 }
 
 export interface ReferenceBarInterface {
@@ -107,9 +85,7 @@ export interface CoreInterface {
 }
 
 export interface EnumInterface {
-  firstField: EnumFirstFieldEnum;
-  secondField: EnumSecondFieldEnum;
-  thirdField: EnumThirdFieldEnum;
+  field: EnumFieldEnum;
 }
 
 export interface PrimitiveInterface {
@@ -121,6 +97,12 @@ export interface PrimitiveInterface {
   floatFieldExpanded: number;
   stringField: string;
   stringFieldExpanded: string;
+}
+
+export interface ReferenceSelfInterface {
+  stringField: string;
+  referenceField: ReferenceSelfInterface;
+  requiredRefField: ReferenceSelfInterface;
 }
 
 export interface ReferenceInterface {
