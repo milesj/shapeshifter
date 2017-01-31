@@ -171,6 +171,18 @@ describe('Transpiler', () => {
 
       expect(output).toBe(file(expectedPath));
     });
+
+    it('can include extra metadata', () => {
+      const actualPath = `${__dirname}/schemas/extra-metadata.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/with-extra-metadata.js`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeSchemas: true,
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
   });
 
   describe('extractSchematics()', () => {

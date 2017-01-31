@@ -1,6 +1,7 @@
 import Renderer from '../src/Renderer';
 import Schematic from '../src/Schematic';
 import ArrayDefinition from '../src/definitions/Array';
+import ShapeDefinition from '../src/definitions/Shape';
 import StringDefinition from '../src/definitions/String';
 import ReferenceDefinition from '../src/definitions/Reference';
 import { options } from './mocks';
@@ -216,6 +217,44 @@ describe('Renderer', () => {
         default: 'DefaultName',
         named: ['foo', 'bar'],
       })).toBe('import DefaultName, { foo, bar } from \'/\';');
+    });
+  });
+
+  describe('renderPlainObject()', () => {
+    it('renders correctly', () => {
+      expect(renderer.renderPlainObject({
+        string: 'foo',
+        number: 123,
+        boolean: true,
+      })).toBe(`{
+  string: 'foo',
+  number: 123,
+  boolean: true,
+}`);
+    });
+
+    it('supports arrays', () => {
+      expect(renderer.renderPlainObject({
+        values: ['foo', 123, true],
+      })).toBe(`{
+  values: [
+    'foo',
+    123,
+    true,
+  ],
+}`);
+    });
+  });
+
+  describe('renderShapeReference()', () => {
+    it('errors if reference doesnt exist', () => {
+      renderer.schematic.shapes = {};
+
+      expect(() => (
+        renderer.renderShapeReference(new ShapeDefinition(options, 'attr', {
+          reference: 'foo',
+        }))
+      )).toThrowError('The shape reference "foo" does not exist in the "foo Bar-Baz" schema.');
     });
   });
 

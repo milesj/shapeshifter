@@ -22,6 +22,7 @@ type Relation = {
 
 export default class Schema {
   attributes: string[];
+  metadata: Object;
   primaryKey: string;
   relations: Relation[];
   relationTypes: { [key: string]: string };
@@ -36,9 +37,16 @@ export default class Schema {
    *
    * @param {String} resourceName
    * @param {String} [primaryKey]
+   * @param {Object} [metadata]
    */
-  constructor(resourceName: string, primaryKey: string = 'id') {
+  constructor(resourceName: string, primaryKey: string = 'id', metadata: Object = {}) {
+    if (typeof primaryKey === 'object') {
+      metadata = primaryKey;
+      primaryKey = metadata.primaryKey || 'id';
+    }
+
     this.attributes = [];
+    this.metadata = metadata;
     this.primaryKey = primaryKey;
     this.relations = [];
     this.relationTypes = {};

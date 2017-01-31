@@ -19,6 +19,7 @@ import ShapeDefinition from './definitions/Shape';
 import StringDefinition from './definitions/String';
 import UnionDefinition from './definitions/Union';
 import indent from './helpers/indent';
+import isObject from './helpers/isObject';
 import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
 
@@ -531,6 +532,29 @@ export default class Renderer {
   }
 
   /**
+   * Render a plain JS object.
+   *
+   * @param {Object} object
+   * @param {Number} depth
+   * @returns {String}
+   */
+  renderPlainObject(object: Object, depth: number = 0): string {
+    return this.formatObject(Object.keys(object).map((key: string) => {
+      let value = object[key];
+
+      if (Array.isArray(value)) {
+        value = this.formatArray(value.map(v => (
+          this.wrapItem(this.formatValue(v), depth + 2)
+        )), depth + 1);
+      } else {
+        value = this.formatValue(value);
+      }
+
+      return this.wrapProperty(key, value, depth + 1);
+    }), depth);
+  }
+
+  /**
    * Render a reference definition.
    *
    * @param {Definition} definition
@@ -564,7 +588,7 @@ export default class Renderer {
    * @returns {string}
    */
   renderSchema(name: string, attributes: Definition[] = [], metadata: MetadataField): string {
-    const { primaryKey, resourceName } = metadata;
+    const { primaryKey, resourceName, ...meta } = metadata;
     const { includeAttributes } = this.options;
     const references = this.schematic.referenceSchematics;
     const fields = [];
@@ -637,6 +661,10 @@ export default class Renderer {
       args.push(this.formatValue(primaryKey, 'string'));
     }
 
+    if (isObject(meta) && Object.keys(meta).length) {
+      args.push(this.renderPlainObject(meta));
+    }
+
     const schemaTemplate = `export const ${name} = new Schema(${args.join(', ')});`;
 
     // Generate relations separately so that we avoid circular references
@@ -674,12 +702,18 @@ export default class Renderer {
    */
   renderShapeReference(definition: ShapeDefinition): string {
     const { reference } = definition.config;
+    const { name, shapes } = this.schematic;
 
     if (!reference) {
       return '';
+
+    } else if (!shapes[reference]) {
+      throw new SyntaxError(
+        `The shape reference "${reference}" does not exist in the "${name}" schema.`,
+      );
     }
 
-    return this.getObjectName(this.schematic.name, reference, this.suffix);
+    return this.getObjectName(name, reference, this.suffix);
   }
 
   /**

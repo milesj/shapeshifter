@@ -1,0 +1,13 @@
+{
+  "name": "ExtraMeta",
+  "meta": {
+    "resourceName": "extra",
+    "compoundKey": ["id", "date"],
+    "extraThing": 123,
+    "something": true
+  },
+  "attributes": {
+    "id": "number",
+    "date": "string"
+  }
+}

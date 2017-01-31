@@ -9,6 +9,29 @@ describe('Schema', () => {
     schema = new Schema('bars');
   });
 
+  describe('constructor()', () => {
+    it('inherits primary key and metadata', () => {
+      schema = new Schema('bars', 'uuid', { foo: 'bar' });
+
+      expect(schema.primaryKey).toBe('uuid');
+      expect(schema.metadata).toEqual({ foo: 'bar' });
+    });
+
+    it('allows metadata as 2nd argument', () => {
+      schema = new Schema('bars', { foo: 'bar' });
+
+      expect(schema.primaryKey).toBe('id');
+      expect(schema.metadata).toEqual({ foo: 'bar' });
+    });
+
+    it('can pass primary key through metadata', () => {
+      schema = new Schema('bars', { primaryKey: 'uuid', foo: 'bar' });
+
+      expect(schema.primaryKey).toBe('uuid');
+      expect(schema.metadata).toEqual({ primaryKey: 'uuid', foo: 'bar' });
+    });
+  });
+
   describe('addAttributes()', () => {
     it('adds attributes', () => {
       expect(schema.attributes).toEqual([]);
