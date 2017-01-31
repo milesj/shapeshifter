@@ -1,3 +1,9 @@
+# 3.1.0
+* Extra metadata in the schematic `meta` field will now be passed to the `Schema` instance.
+* Added `Schema#metadata` to hold the extra metadata object.
+* Added `Renderer#renderPlainObject` for rendering plain JS objects.
+* Updated shape references to throw an error if the shape definition does not exist.
+
 # 3.0.0
 * Added GraphQL support through the use of `.gql` files to read from (instead of JSON).
 * Updated TypeScript requirement to v2.0 and Flowtype to v0.30.

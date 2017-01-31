@@ -9,11 +9,12 @@ declare module "shapeshifter" {
   };
 
   declare export default class Schema {
-    resourceName: string;
-    primaryKey: string;
     attributes: string[];
+    metadata: Object;
+    primaryKey: string;
     relations: Relation[];
     relationTypes: { [key: string]: string };
+    resourceName: string;
     static HAS_ONE: string;
     static HAS_MANY: string;
     static BELONGS_TO: string;

@@ -1,4 +1,4 @@
-# Shapeshifter v3.0.0
+# Shapeshifter v3.1.0
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
 Shapeshifter is a command line tool for generating ES2015 compatible
@@ -273,6 +273,9 @@ type User {
   id: ID
 }
 ```
+
+> Extra metadata will be passed as an object to the `Schema` instance,
+> if `--schemas` is passed on the command line.
 
 #### Imports
 
@@ -868,6 +871,8 @@ schema, passed as the second argument to the constructor. This field
 is based on `meta.primaryKey` in the JSON schematic file. Defaults to "id".
 
 * `attributes` (string[]) - List of attribute names in the current schema.
+
+* `metadata` (object) - Extra metadata defined in the current schema.
 
 * `relations` (object[]) - List of relational objects that map specific
 attributes to externally referenced schemas. The relational object
