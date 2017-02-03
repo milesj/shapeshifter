@@ -60,6 +60,11 @@ describe('Renderer', () => {
       expect(renderer.formatValue('foo', 'string')).toBe('\'foo\'');
     });
 
+    it('handles array of values', () => {
+      expect(renderer.formatValue(['foo'])).toBe('[\'foo\']');
+      expect(renderer.formatValue(['foo', 123])).toBe('[\'foo\', 123]');
+    });
+
     it('passes functions and booleans as is', () => {
       expect(renderer.formatValue('functionName', 'function')).toBe('functionName');
       expect(renderer.formatValue(true, 'bool')).toBe('true');
@@ -237,11 +242,7 @@ describe('Renderer', () => {
       expect(renderer.renderPlainObject({
         values: ['foo', 123, true],
       })).toBe(`{
-  values: [
-    'foo',
-    123,
-    true,
-  ],
+  values: ['foo', 123, true],
 }`);
     });
   });

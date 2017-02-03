@@ -1,3 +1,6 @@
+# 3.2.0
+* Updated `Renderer#formatValue` to accept an array of values, which internally calls `formatArray`.
+
 # 3.1.0
 * Extra metadata in the schematic `meta` field will now be passed to the `Schema` instance.
 * Added `Schema#metadata` to hold the extra metadata object.

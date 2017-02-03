@@ -114,13 +114,16 @@ export default class Renderer {
   /**
    * Format a primitive value to it's visual representation.
    *
-   * @param {*} value
+   * @param {*|*[]} value
    * @param {String} [type]
    * @returns {String}
    */
-  formatValue(value: PrimitiveType, type: string = ''): string {
+  formatValue(value: PrimitiveType | PrimitiveType[], type: string = ''): string {
     if (value === null) {
       return 'null';
+
+    } else if (Array.isArray(value)) {
+      return this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
     }
 
     type = normalizeType(type || typeof value);
@@ -539,19 +542,9 @@ export default class Renderer {
    * @returns {String}
    */
   renderPlainObject(object: Object, depth: number = 0): string {
-    return this.formatObject(Object.keys(object).map((key: string) => {
-      let value = object[key];
-
-      if (Array.isArray(value)) {
-        value = this.formatArray(value.map(v => (
-          this.wrapItem(this.formatValue(v), depth + 2)
-        )), depth + 1);
-      } else {
-        value = this.formatValue(value);
-      }
-
-      return this.wrapProperty(key, value, depth + 1);
-    }), depth);
+    return this.formatObject(Object.keys(object).map((key: string) => (
+      this.wrapProperty(key, this.formatValue(object[key]), depth + 1)
+    )), depth);
   }
 
   /**
@@ -658,7 +651,7 @@ export default class Renderer {
     const args = [this.formatValue(resourceName, 'string')];
 
     if (primaryKey) {
-      args.push(this.formatValue(primaryKey, 'string'));
+      args.push(this.formatValue(primaryKey));
     }
 
     if (isObject(meta) && Object.keys(meta).length) {
