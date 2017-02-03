@@ -1,0 +1,13 @@
+{
+  "name": "CompoundSupport",
+  "meta": {
+    "resourceName": "compounds",
+    "primaryKey": ["start_date", "end_date", "user_id"]
+  },
+  "attributes": {
+    "status": "number",
+    "user_id": "number",
+    "start_date": "string",
+    "end_date": "string"
+  }
+}

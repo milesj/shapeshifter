@@ -11,7 +11,7 @@ const HAS_MANY: string = 'hasMany';
 
 /* eslint-disable no-use-before-define */
 type SchemaMap = { [attribute: string]: Schema };
-
+type PrimaryKey = string | string[];
 type Relation = {
   attribute: string,
   collection: boolean,
@@ -23,7 +23,7 @@ type Relation = {
 export default class Schema {
   attributes: string[];
   metadata: Object;
-  primaryKey: string;
+  primaryKey: PrimaryKey;
   relations: Relation[];
   relationTypes: { [key: string]: string };
   resourceName: string;
@@ -36,11 +36,15 @@ export default class Schema {
    * Represents a basic relational schema for an entity.
    *
    * @param {String} resourceName
-   * @param {String} [primaryKey]
+   * @param {String|String[]|Object} [primaryKey]
    * @param {Object} [metadata]
    */
-  constructor(resourceName: string, primaryKey: string = 'id', metadata: Object = {}) {
-    if (typeof primaryKey === 'object') {
+  constructor(
+    resourceName: string,
+    primaryKey: PrimaryKey | Object = 'id',
+    metadata: Object = {},
+  ) {
+    if (typeof primaryKey === 'object' && !Array.isArray(primaryKey)) {
       metadata = primaryKey;
       primaryKey = metadata.primaryKey || 'id';
     }

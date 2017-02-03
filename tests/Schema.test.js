@@ -30,6 +30,13 @@ describe('Schema', () => {
       expect(schema.primaryKey).toBe('uuid');
       expect(schema.metadata).toEqual({ primaryKey: 'uuid', foo: 'bar' });
     });
+
+    it('supports compound keys', () => {
+      schema = new Schema('bars', ['start_date', 'end_date']);
+
+      expect(schema.primaryKey).toEqual(['start_date', 'end_date']);
+      expect(schema.metadata).toEqual({});
+    });
   });
 
   describe('addAttributes()', () => {

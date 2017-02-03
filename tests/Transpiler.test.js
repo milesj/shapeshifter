@@ -183,6 +183,19 @@ describe('Transpiler', () => {
 
       expect(output).toBe(file(expectedPath));
     });
+
+    it('supports compound keys through the primary key metadata', () => {
+      const actualPath = `${__dirname}/schemas/compound-key.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/compound-key.js`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeTypes: true,
+        includeSchemas: true,
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
   });
 
   describe('extractSchematics()', () => {

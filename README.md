@@ -266,6 +266,15 @@ part would be the resource name, and "123" would be the primary key.
 }
 ```
 
+Compound keys are supported by passing an array of attribute names.
+
+```json
+"meta": {
+  "primaryKey": ["start_date", "end_date"],
+  "resourceName": "calendar"
+}
+```
+
 If using GraphQL, the `ID` type can be used to denote a primary key.
 
 ```graphql
@@ -866,9 +875,10 @@ The following properties are available on the `Schema` class instance.
 the first argument to the constructor. This field is based on
 `meta.resourceName` in the schematic file.
 
-* `primaryKey` (string) - The name of the primary key in the current
-schema, passed as the second argument to the constructor. This field
-is based on `meta.primaryKey` in the JSON schematic file. Defaults to "id".
+* `primaryKey` (string|string[]) - The name of the primary key in the current
+schema, passed as the second argument to the constructor. Compound keys can be
+supported by passing an array of attribute names. This field is based on
+`meta.primaryKey` in the JSON schematic file. Defaults to "id".
 
 * `attributes` (string[]) - List of attribute names in the current schema.
 
