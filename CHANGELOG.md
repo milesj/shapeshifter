@@ -1,3 +1,6 @@
+# 3.2.1
+* Fixed an issue with the `graphql` dependency not being listed.
+
 # 3.2.0
 * Added compound key support. Simply pass an array of attribute names to `meta.primaryKey`.
 * Updated `Renderer#formatValue` to accept an array of values, which internally calls `formatArray`.
