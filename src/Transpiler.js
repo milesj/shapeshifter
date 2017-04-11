@@ -8,7 +8,6 @@
 
 import fs from 'fs';
 import path from 'path';
-import chalk from 'chalk';
 import RendererFactory from './RendererFactory';
 import Schematic from './Schematic';
 import readWithNode from './readers/node';
@@ -27,54 +26,6 @@ export default class Transpiler {
 
   constructor(options: Options) {
     this.options = options;
-  }
-
-  /**
-   * Output the rendered schema to stdout.
-   */
-   /* istanbul ignore next */
-  static output(value: string) {
-    console.log(value);
-    process.exit(0);
-  }
-
-  /**
-   * Output any caught errors to stderr.
-   */
-  /* istanbul ignore next */
-  static error(error: Error | string) {
-    let message = '';
-    let stack = [];
-
-    if (error instanceof Error) {
-      message = `  ${error.message}  `;
-
-      stack = error.stack.split('\n');
-      stack.shift();
-      stack.pop();
-    } else {
-      message = `  ${error}  `;
-    }
-
-    // Pad the primary message
-    let length = message.length;
-    let padding = '';
-
-    while (length > 0) {
-      padding += ' ';
-      length -= 1;
-    }
-
-    // Output the errors
-    console.error(padding);
-    console.error(chalk.bgRed.white(padding));
-    console.error(chalk.bgRed.white(message));
-    console.error(chalk.bgRed.white(padding));
-    console.error(padding);
-    console.error(chalk.gray(stack.join('\n')));
-    console.error(padding);
-
-    process.exit(1);
   }
 
   /**
