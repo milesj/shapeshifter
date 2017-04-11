@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -29,18 +29,12 @@ export default class TypeScriptRenderer extends Renderer {
     this.suffix = 'Interface';
   }
 
-  /**
-   * {@inheritDoc}
-   */
   render(setName: string, attributes: Definition[] = []) {
     const shape = this.formatObject(this.renderObjectProps(attributes, 1, ';'), 0);
 
     return `export interface ${setName} ${shape}`;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderArray(definition: ArrayDefinition, depth: number): string {
     const configType = definition.valueType.config.type;
     let template = this.renderAttribute(definition.valueType, depth);
@@ -54,16 +48,10 @@ export default class TypeScriptRenderer extends Renderer {
     return template;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderBool(definition: BoolDefinition): string {
     return 'boolean';
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderEnum(definition: EnumDefinition, depth: number): string {
     const { indentCharacter: char } = this.options;
     const { values, valueType } = definition.config;
@@ -99,23 +87,14 @@ export default class TypeScriptRenderer extends Renderer {
     return enumName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderInstance(definition: InstanceDefinition): string {
     return this.formatValue(definition.config.contract, 'function');
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderNumber(definition: NumberDefinition): string {
     return 'number';
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderObject(definition: ObjectDefinition, depth: number): string {
     const key = this.renderAttribute(definition.keyType, depth);
     const value = this.renderAttribute(definition.valueType, depth);
@@ -123,9 +102,6 @@ export default class TypeScriptRenderer extends Renderer {
     return this.formatObject(`[key: ${key}]: ${value}`, 0, ' ', ' ');
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderShape(definition: ShapeDefinition, depth: number): string {
     return (
       this.renderShapeReference(definition) ||
@@ -133,16 +109,10 @@ export default class TypeScriptRenderer extends Renderer {
     );
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderString(definition: StringDefinition): string {
     return 'string';
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderUnion(definition: UnionDefinition, depth: number): string {
     const set = new Set(definition.valueTypes.map(item => this.renderAttribute(item, depth)));
 

@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -69,12 +69,6 @@ export default class Renderer {
 
   /**
    * Format a list (or string) of items into an array respecting depth indentation.
-   *
-   * @param {String|Array} items
-   * @param {Number} depth
-   * @param {String} itemSpacer
-   * @param {String} indentSpacer
-   * @returns {String}
    */
   formatArray(
     items: string | string[],
@@ -91,12 +85,6 @@ export default class Renderer {
 
   /**
    * Format a list (or string) of properties into an object respecting depth indentation.
-   *
-   * @param {String|Array} props
-   * @param {Number} depth
-   * @param {String} propSpacer
-   * @param {String} indentSpacer
-   * @returns {String}
    */
   formatObject(
     props: string | string[],
@@ -113,10 +101,6 @@ export default class Renderer {
 
   /**
    * Format a primitive value to it's visual representation.
-   *
-   * @param {*|*[]} value
-   * @param {String} [type]
-   * @returns {String}
    */
   formatValue(value: PrimitiveType | PrimitiveType[], type: string = ''): string {
     if (value === null) {
@@ -146,8 +130,6 @@ export default class Renderer {
 
   /**
    * Return a rendered list of constants to place at the top of the file.
-   *
-   * @returns {String[]}
    */
   getConstants(): TemplateList {
     return this.constants;
@@ -155,8 +137,6 @@ export default class Renderer {
 
   /**
    * Return a header template to place at the top of the file after constants.
-   *
-   * @returns {String[]}
    */
   getHeader(): TemplateList {
     return this.header;
@@ -164,8 +144,6 @@ export default class Renderer {
 
   /**
    * Return a rendered list of imports to place at the top of the file.
-   *
-   * @returns {String[]}
    */
   getImports(): TemplateList {
     return this.imports;
@@ -173,9 +151,6 @@ export default class Renderer {
 
   /**
    * Return the export name to be used as the prop type or type alias name.
-   *
-   * @param {String...} names
-   * @returns {String}
    */
   getObjectName(...names: string[]): string {
     return names.map(formatName).join('');
@@ -183,8 +158,6 @@ export default class Renderer {
 
   /**
    * Return a list of schema relations.
-   *
-   * @returns {String[]}
    */
   getRelations(): TemplateList {
     return this.relations;
@@ -192,8 +165,6 @@ export default class Renderer {
 
   /**
    * Return a list of schema class definitions.
-   *
-   * @returns {String[]}
    */
   getSchemas(): TemplateList {
     return this.schemas;
@@ -201,8 +172,6 @@ export default class Renderer {
 
   /**
    * Return a list of the primary set and all subsets.
-   *
-   * @returns {String[]}
    */
   getSets(): TemplateList {
     return this.sets;
@@ -343,10 +312,6 @@ export default class Renderer {
 
   /**
    * Render a definition to it's visual representation.
-   *
-   * @param {Definition} definition
-   * @param {Number} depth
-   * @returns {String}
    */
   renderAttribute(definition: Definition, depth: number = 0): string {
     if (definition instanceof ArrayDefinition) {
@@ -392,11 +357,6 @@ export default class Renderer {
 
   /**
    * Render an array of values by formatting each value and prepending an indentation.
-   *
-   * @param {*[]} items
-   * @param {Number} depth
-   * @param {String} [valueType]
-   * @returns {Array}
    */
   renderArrayItems(items: PrimitiveType[], depth: number = 0, valueType: string = ''): string[] {
     return items.map(item => this.wrapItem(this.formatValue(item, valueType), depth));
@@ -404,10 +364,6 @@ export default class Renderer {
 
   /**
    * Render an array of definitions by formatting each value and prepending an indentation.
-   *
-   * @param {*[]} items
-   * @param {Number} depth
-   * @returns {Array}
    */
   renderArrayDefinitions(items: Definition[], depth: number = 0): string[] {
     const set = new Set(
@@ -426,10 +382,6 @@ export default class Renderer {
 
   /**
    * Render a constant.
-   *
-   * @param {String} name
-   * @param {*} value
-   * @returns {String}
    */
   renderConstant(name: string, value: PrimitiveType | PrimitiveType[]): string {
     if (Array.isArray(value)) {
@@ -450,9 +402,6 @@ export default class Renderer {
 
   /**
    * Render an import statement.
-   *
-   * @param {Object} statement
-   * @returns {String}
    */
   renderImport(statement: ImportStructure): string {
     const { default: defaultName, named = [], path } = statement;
@@ -504,11 +453,6 @@ export default class Renderer {
 
   /**
    * Render a mapping of properties by formatting each value and prepending an indentation.
-   *
-   * @param {Definition[]} props
-   * @param {Number} depth
-   * @param {String} sep
-   * @returns {Array}
    */
   renderObjectProps(props: Definition[], depth: number = 0, sep: string = ','): string[] {
     return props.map(prop => (
@@ -518,11 +462,6 @@ export default class Renderer {
 
   /**
    * Either render a definition or format a value.
-   *
-   * @param {*|Definition} value
-   * @param {Number} depth
-   * @param {String} [valueType]
-   * @returns {String}
    */
   renderOrFormat(
     value: PrimitiveType | Definition,
@@ -536,10 +475,6 @@ export default class Renderer {
 
   /**
    * Render a plain JS object.
-   *
-   * @param {Object} object
-   * @param {Number} depth
-   * @returns {String}
    */
   renderPlainObject(object: Object, depth: number = 0): string {
     return this.formatObject(Object.keys(object).map((key: string) => (
@@ -549,9 +484,6 @@ export default class Renderer {
 
   /**
    * Render a reference definition.
-   *
-   * @param {Definition} definition
-   * @returns {String}
    */
   renderReference(definition: ReferenceDefinition): string {
     const { reference, self, subset = '' } = definition.config;
@@ -574,11 +506,6 @@ export default class Renderer {
 
   /**
    * Render a class schema.
-   *
-   * @param {String} name
-   * @param {Definition[]} attributes
-   * @param {Object} metadata
-   * @returns {string}
    */
   renderSchema(name: string, attributes: Definition[] = [], metadata: MetadataField): string {
     const { primaryKey, resourceName, ...meta } = metadata;
@@ -689,9 +616,6 @@ export default class Renderer {
 
   /**
    * Render a shape reference definition.
-   *
-   * @param {Definition} definition
-   * @returns {String}
    */
   renderShapeReference(definition: ShapeDefinition): string {
     const { reference } = definition.config;
@@ -725,8 +649,6 @@ export default class Renderer {
 
   /**
    * Throws an error if a definition is not supported.
-   *
-   * @param {String} definition
    */
   unsupported(definition: string): string {
     throw new Error(`The "${definition}" definition is not supported by ${this.constructor.name}.`);
@@ -734,10 +656,6 @@ export default class Renderer {
 
   /**
    * Render a name and optional arguments into an function representation.
-   *
-   * @param {String} name
-   * @param {String} [args]
-   * @returns {String}
    */
   wrapFunction(name: string, args: string = ''): string {
     return `${name}(${args})`;
@@ -745,10 +663,6 @@ export default class Renderer {
 
   /**
    * Render a generics alias with optional type arguments.
-   *
-   * @param {String} alias
-   * @param {String[]} types
-   * @returns {String}
      */
   wrapGenerics(alias: string, ...types: string[]): string {
     return `${alias}<${types.join(', ')}>`;
@@ -756,9 +670,6 @@ export default class Renderer {
 
   /**
    * Return a piece of code wrapped in an IIFE.
-   *
-   * @param {String} code
-   * @returns {String}
    */
   wrapIIFE(code: string): string {
     return `(function () { return ${code}; }())`;
@@ -766,10 +677,6 @@ export default class Renderer {
 
   /**
    * Render a value into an array item representation.
-   *
-   * @param {String} value
-   * @param {Number} depth
-   * @returns {String}
    */
   wrapItem(value: string, depth: number = 0): string {
     return `${indent(depth, this.options.indentCharacter)}${value},`;
@@ -777,12 +684,6 @@ export default class Renderer {
 
   /**
    * Render a key and value into an object property representation.
-   *
-   * @param {String} key
-   * @param {String} value
-   * @param {Number} depth
-   * @param {String} sep
-   * @returns {String}
    */
   wrapProperty(key: string, value: string, depth: number = 0, sep: string = ','): string {
     return `${indent(depth, this.options.indentCharacter)}${key}: ${value}${sep || ','}`;
@@ -790,9 +691,6 @@ export default class Renderer {
 
   /**
    * Return the property name as is.
-   *
-   * @param {Definition} definition
-   * @returns {String}
    */
   wrapPropertyName(definition: Definition): string {
     return definition.attribute;

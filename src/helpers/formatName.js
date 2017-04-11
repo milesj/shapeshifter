@@ -1,14 +1,11 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
 
 /**
  * Format a name by converting to pascal case.
- *
- * @param {String} value
- * @returns {String}
  */
 export default function formatName(value: string): string {
   if (!value) {

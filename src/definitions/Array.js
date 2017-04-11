@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -13,9 +13,6 @@ export default class ArrayDefinition extends Definition {
   config: ArrayConfig;
   valueType: Definition;
 
-  /**
-   * {@inheritDoc}
-   */
   validateConfig() {
     super.validateConfig();
 

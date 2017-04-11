@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -13,10 +13,6 @@ export default class Definition {
 
   /**
    * Represents a type definition for an attribute.
-   *
-   * @param {Object} options
-   * @param {String} attribute
-   * @param {Object} config
    */
   constructor(options: Options, attribute: string, config: Object = {}) {
     this.options = options;
@@ -31,8 +27,6 @@ export default class Definition {
 
   /**
    * Returns true if the attribute allows nulls.
-   *
-   * @returns {Boolean}
    */
   isNullable(): boolean {
     return this.config.nullable;

@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -13,12 +13,9 @@ import TypeScriptRenderer from './renderers/TypeScript';
 import type { Options } from './types';
 
 export default class RendererFactory {
+
   /**
    * Create a new renderer with the defined schematic.
-   *
-   * @param {Object} options
-   * @param {Schematic} schematic
-   * @returns {Renderer}
    */
   static factory(options: Options, schematic: Schematic): Renderer {
     const { renderer } = options;

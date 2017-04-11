@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -27,40 +27,25 @@ export default class ReactRenderer extends Renderer {
     this.suffix = 'Shape';
   }
 
-  /**
-   * {@inheritDoc}
-   */
   beforeParse() {
     this.imports.push('import PropTypes from \'prop-types\';');
   }
 
-  /**
-   * {@inheritDoc}
-   */
   render(setName: string, attributes: Definition[] = []) {
     const shape = this.formatObject(this.renderObjectProps(attributes, 1), 0);
 
     return `export const ${setName} = PropTypes.shape(${shape});`;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderArray(definition: ArrayDefinition, depth: number): string {
     return this.wrapPropType(definition,
       this.wrapFunction('arrayOf', this.renderAttribute(definition.valueType, depth)));
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderBool(definition: BoolDefinition): string {
     return this.wrapPropType(definition, 'bool');
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderEnum(definition: EnumDefinition, depth: number): string {
     const { values, valueType } = definition.config;
 
@@ -71,9 +56,6 @@ export default class ReactRenderer extends Renderer {
     );
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderInstance(definition: InstanceDefinition): string {
     const { contract } = definition.config;
 
@@ -81,24 +63,15 @@ export default class ReactRenderer extends Renderer {
       this.wrapFunction('instanceOf', this.formatValue(contract, 'function')));
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderNumber(definition: NumberDefinition): string {
     return this.wrapPropType(definition, 'number');
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderObject(definition: ObjectDefinition, depth: number): string {
     return this.wrapPropType(definition,
       this.wrapFunction('objectOf', this.renderAttribute(definition.valueType, depth)));
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderReference(definition: ReferenceDefinition): string {
     const { self, subset } = definition.config;
     const reference = super.renderReference(definition);
@@ -111,9 +84,6 @@ export default class ReactRenderer extends Renderer {
     return this.wrapNullable(definition, reference);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderShape(definition: ShapeDefinition, depth: number): string {
     const reference = this.renderShapeReference(definition);
 
@@ -128,16 +98,10 @@ export default class ReactRenderer extends Renderer {
     );
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderString(definition: StringDefinition): string {
     return this.wrapPropType(definition, 'string');
   }
 
-  /**
-   * {@inheritDoc}
-   */
   renderUnion(definition: UnionDefinition, depth: number): string {
     return this.wrapPropType(definition,
       this.wrapFunction('oneOfType',
@@ -148,10 +112,6 @@ export default class ReactRenderer extends Renderer {
 
   /**
    * Render a definition into an React PropType representation.
-   *
-   * @param {Definition} definition
-   * @param {String} template
-   * @returns {String}
    */
   wrapPropType(definition: Definition, template: string): string {
     return this.wrapNullable(definition, `PropTypes.${template}`);
@@ -159,10 +119,6 @@ export default class ReactRenderer extends Renderer {
 
   /**
    * Wrap a definition template with required if applicable.
-   *
-   * @param {Definition} definition
-   * @param {String} template
-   * @returns {String}
    */
   wrapNullable(definition: Definition, template: string): string {
     if (definition.isNullable && !definition.isNullable()) {

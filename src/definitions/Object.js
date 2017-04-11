@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -14,9 +14,6 @@ export default class ObjectDefinition extends Definition {
   keyType: Definition;
   valueType: Definition;
 
-  /**
-   * {@inheritDoc}
-   */
   constructor(options: Options, attribute: string, config: Object) {
     super(options, attribute, {
       keyType: 'string',
@@ -24,9 +21,6 @@ export default class ObjectDefinition extends Definition {
     });
   }
 
-  /**
-   * {@inheritDoc}
-   */
   validateConfig() {
     super.validateConfig();
 

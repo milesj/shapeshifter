@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -21,13 +21,9 @@ import normalizeType from './helpers/normalizeType';
 import type { Options, BaseConfig } from './types';
 
 export default class DefinitionFactory {
+
   /**
    * Create a new definition based on the defined attribute configuration.
-   *
-   * @param {Object} options
-   * @param {String} attribute
-   * @param {Object} config
-   * @returns {Definition}
    */
   static factory(options: Options, attribute: string, config: string | BaseConfig): Definition {
     // Convert primitives to configuration objects

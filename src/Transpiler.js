@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -31,8 +31,6 @@ export default class Transpiler {
 
   /**
    * Output the rendered schema to stdout.
-   *
-   * @param {String} value
    */
    /* istanbul ignore next */
   static output(value: string) {
@@ -42,8 +40,6 @@ export default class Transpiler {
 
   /**
    * Output any caught errors to stderr.
-   *
-   * @param {Error|String} error
    */
   /* istanbul ignore next */
   static error(error: Error | string) {
@@ -83,9 +79,6 @@ export default class Transpiler {
 
   /**
    * Transpile either a file or a folder by rendering each schematic file.
-   *
-   * @param {String} target
-   * @returns {Promise}
    */
   /* istanbul ignore next */
   transpile(target: string): Promise<string> {
@@ -116,9 +109,6 @@ export default class Transpiler {
 
   /**
    * Transpile a folder by looping over all JS and JSON files and rendering them.
-   *
-   * @param {String} folderPath
-   * @returns {String}
    */
   transpileFolder(folderPath: string): string {
     const filePaths = fs.readdirSync(folderPath);
@@ -136,9 +126,6 @@ export default class Transpiler {
 
   /**
    * Transpile a file by rendering the schematic at the defined path.
-   *
-   * @param {String} file
-   * @returns {String}
    */
   transpileFile(file: string): string {
     return this.generateOutput(this.extractSchematics(file));
@@ -146,9 +133,6 @@ export default class Transpiler {
 
   /**
    * Extract a list of file paths based on references defined within the schematic.
-   *
-   * @param {String} filePath
-   * @returns {Schematic[]}
    */
   extractSchematics(filePath: string): Schematic[] {
     const basePath = path.dirname(filePath);
@@ -195,9 +179,6 @@ export default class Transpiler {
 
   /**
    * Generate the output by combining all schematics into a single output.
-   *
-   * @param {Schematic[]} schematics
-   * @returns {String}
    */
   generateOutput(schematics: Schematic[]): string {
     const rendered = new Set();

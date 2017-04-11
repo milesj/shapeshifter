@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -13,9 +13,6 @@ import type { EnumConfig } from '../types';
 export default class EnumDefinition extends Definition {
   config: EnumConfig;
 
-  /**
-   * {@inheritDoc}
-   */
   validateConfig() {
     super.validateConfig();
 
@@ -38,9 +35,6 @@ export default class EnumDefinition extends Definition {
 
   /**
    * Validate a value matches the type in `valueType`.
-   *
-   * @param {*} value
-   * @returns {Boolean}
    */
   validateValue(value: mixed): boolean {
     // eslint-disable-next-line valid-typeof

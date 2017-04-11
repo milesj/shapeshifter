@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -27,17 +27,13 @@ export default class Schema {
   relations: Relation[];
   relationTypes: { [key: string]: string };
   resourceName: string;
-  static HAS_ONE: string;
-  static HAS_MANY: string;
-  static BELONGS_TO: string;
-  static BELONGS_TO_MANY: string;
+  static HAS_ONE: string = HAS_ONE;
+  static HAS_MANY: string = HAS_MANY;
+  static BELONGS_TO: string = BELONGS_TO;
+  static BELONGS_TO_MANY: string = BELONGS_TO_MANY;
 
   /**
    * Represents a basic relational schema for an entity.
-   *
-   * @param {String} resourceName
-   * @param {String|String[]|Object} [primaryKey]
-   * @param {Object} [metadata]
    */
   constructor(
     resourceName: string,
@@ -59,9 +55,6 @@ export default class Schema {
 
   /**
    * Map a list of attribute names.
-   *
-   * @param {String[]} attributes
-   * @returns {Schema}
    */
   addAttributes(attributes: string[]): this {
     this.attributes = this.attributes.concat(attributes);
@@ -71,11 +64,6 @@ export default class Schema {
 
   /**
    * Map a one/many relational schema to the current schema.
-   *
-   * @param {String} attribute
-   * @param {Schema} schema
-   * @param {String} relation
-   * @returns {Schema}
    */
   addRelation(attribute: string, schema: Schema, relation: string): this {
     if (!(schema instanceof Schema)) {
@@ -105,10 +93,6 @@ export default class Schema {
 
   /**
    * Map multiple relations for a specific type.
-   *
-   * @param {Object} schemas
-   * @param {String} relation
-   * @returns {Schema}
    */
   addRelations(schemas: SchemaMap, relation: string): this {
     Object.keys(schemas).forEach((attribute: string) => {
@@ -120,9 +104,6 @@ export default class Schema {
 
   /**
    * Map belongs-to nested entities by attribute name.
-   *
-   * @param {Object} relations
-   * @returns {Schema}
    */
   belongsTo(relations: SchemaMap): this {
     return this.addRelations(relations, BELONGS_TO);
@@ -130,9 +111,6 @@ export default class Schema {
 
   /**
    * Map belongs-to-many nested entities by attribute name.
-   *
-   * @param {Object} relations
-   * @returns {Schema}
    */
   belongsToMany(relations: SchemaMap): this {
     return this.addRelations(relations, BELONGS_TO_MANY);
@@ -140,9 +118,6 @@ export default class Schema {
 
   /**
    * Map has-one nested entities by attribute name.
-   *
-   * @param {Object} relations
-   * @returns {Schema}
    */
   hasOne(relations: SchemaMap): this {
     return this.addRelations(relations, HAS_ONE);
@@ -150,16 +125,8 @@ export default class Schema {
 
   /**
    * Map has-many nested entities by attribute name.
-   *
-   * @param {Object} relations
-   * @returns {Schema}
    */
   hasMany(relations: SchemaMap): this {
     return this.addRelations(relations, HAS_MANY);
   }
 }
-
-Schema.BELONGS_TO = BELONGS_TO;
-Schema.BELONGS_TO_MANY = BELONGS_TO_MANY;
-Schema.HAS_ONE = HAS_ONE;
-Schema.HAS_MANY = HAS_MANY;

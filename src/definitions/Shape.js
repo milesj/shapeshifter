@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -14,9 +14,6 @@ export default class ShapeDefinition extends Definition {
   config: ShapeConfig;
   attributes: Definition[];
 
-  /**
-   * {@inheritDoc}
-   */
   validateConfig() {
     super.validateConfig();
 

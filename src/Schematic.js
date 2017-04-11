@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -37,10 +37,6 @@ export default class Schematic {
 
   /**
    * Load and parse a schema, either as a JSON string, or as a JS object.
-   *
-   * @param {String} filePath
-   * @param {Object} data
-   * @param {Object} options
    */
   constructor(filePath: string, data: SchemaStructure, options: Options) {
     this.path = filePath;
@@ -61,8 +57,6 @@ export default class Schematic {
 
   /**
    * Throw an error prefixed with the schema name.
-   *
-   * @param {String} error
    */
   throwError(error: string) {
     throw new SyntaxError(`[${this.name}] ${error}`);
@@ -104,8 +98,6 @@ export default class Schematic {
 
   /**
    * Set schema attributes.
-   *
-   * @param {Object} attributes
    */
   setAttributes(attributes: AttributesField) {
     if (!isObject(attributes) || !Object.keys(attributes).length) {
@@ -120,8 +112,6 @@ export default class Schematic {
 
   /**
    * Set schema constants.
-   *
-   * @param {Object} constants
    */
   setConstants(constants: ConstantsField) {
     if (!isObject(constants)) {
@@ -133,8 +123,6 @@ export default class Schematic {
 
   /**
    * Set schema imports.
-   *
-   * @param {Object[]} imports
    */
   setImports(imports: ImportsField) {
     if (!Array.isArray(imports)) {
@@ -146,8 +134,6 @@ export default class Schematic {
 
   /**
    * Set schema metadata.
-   *
-   * @param {Object} metadata
    */
   setMeta(metadata: MetadataField) {
     if (!isObject(metadata)) {
@@ -159,8 +145,6 @@ export default class Schematic {
 
   /**
    * Set the name of the schema.
-   *
-   * @param {String} name
    */
   setName(name: string) {
     if (!name || typeof name !== 'string') {
@@ -172,8 +156,6 @@ export default class Schematic {
 
   /**
    * Set reference schemas.
-   *
-   * @param {Object} references
    */
   setReferences(references: ReferencesField) {
     if (!isObject(references)) {
@@ -185,8 +167,6 @@ export default class Schematic {
 
   /**
    * Set shapes for the schema.
-   *
-   * @param {Object} shapes
    */
   setShapes(shapes: ShapesField) {
     if (!isObject(shapes)) {
@@ -198,8 +178,6 @@ export default class Schematic {
 
   /**
    * Set subsets of the schema.
-   *
-   * @param {Object} subsets
    */
   setSubsets(subsets: SubsetsField) {
     if (!isObject(subsets)) {

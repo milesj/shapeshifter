@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -26,9 +26,6 @@ const ALIAS_MAP = {
 
 /**
  * Expand and return the valid type name for all aliases and shorthands.
- *
- * @param {*} type
- * @returns {String}
  */
 export default function normalizeType(type: mixed): string {
   if (isObject(type)) {

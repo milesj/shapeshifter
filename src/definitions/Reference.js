@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
@@ -11,9 +11,6 @@ import type { Options, ReferenceConfig } from '../types';
 export default class ReferenceDefinition extends Definition {
   config: ReferenceConfig;
 
-  /**
-   * {@inheritDoc}
-   */
   constructor(options: Options, attribute: string, config: Object) {
     super(options, attribute, {
       reference: '',
@@ -23,9 +20,6 @@ export default class ReferenceDefinition extends Definition {
     });
   }
 
-  /**
-   * {@inheritDoc}
-   */
   validateConfig() {
     super.validateConfig();
 

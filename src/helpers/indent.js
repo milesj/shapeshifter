@@ -1,15 +1,11 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  * @flow
  */
 
 /**
  * Create a string that represents indentation using the defined depth.
- *
- * @param {Number} depth
- * @param {String} character
- * @returns {String}
  */
 export default function indent(depth: number, character: string = '  '): string {
   let response = '';
