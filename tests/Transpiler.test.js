@@ -196,6 +196,19 @@ describe('Transpiler', () => {
 
       expect(output).toBe(file(expectedPath));
     });
+
+    it('supports a compact view', () => {
+      const actualPath = `${__dirname}/schemas/types-schemas.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/with-schemas-compact.js`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeSchemas: true,
+        compact: true,
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
   });
 
   describe('extractSchematics()', () => {

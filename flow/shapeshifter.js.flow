@@ -1,5 +1,6 @@
 declare module "shapeshifter" {
   declare type SchemaMap = { [attribute: string]: Schema };
+  declare type SchemaExtendedMap = { [attribute: string]: Schema | Schema[] };
   declare type PrimaryKey = string | string[];
   declare type Relation = {
     attribute: string,
@@ -24,9 +25,10 @@ declare module "shapeshifter" {
     addAttributes(attributes: string[]): this;
     addRelation(attribute: string, schema: Schema, relation: string): this;
     addRelations(schemas: SchemaMap, relation: string): this;
-    hasOne(relations: SchemaMap): this;
-    hasMany(relations: SchemaMap): this;
     belongsTo(relations: SchemaMap): this;
     belongsToMany(relations: SchemaMap): this;
+    define(relations: SchemaExtendedMap): this;
+    hasOne(relations: SchemaMap): this;
+    hasMany(relations: SchemaMap): this;
   }
 }

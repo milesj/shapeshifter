@@ -6,7 +6,10 @@
 
 /* eslint-disable no-use-before-define */
 
+import Schema from './Schema';
+
 export type Options = {
+  compact: boolean,
   defaultNullable: boolean,
   includeAttributes: boolean,
   includeSchemas: boolean,
@@ -16,6 +19,19 @@ export type Options = {
 };
 
 export type PrimitiveType = string | number | boolean;
+
+export type SchemaMap = { [attribute: string]: Schema };
+
+export type SchemaExpandedMap = { [attribute: string]: Schema | Schema[] };
+
+export type PrimaryKey = string | string[];
+
+export type Relation = {
+  attribute: string,
+  collection: boolean,
+  relation: string,
+  schema: Schema,
+};
 
 // Type Definitions
 

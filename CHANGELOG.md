@@ -2,6 +2,8 @@
 * Updated React requirement to v15.5.
 * Updated PropTypes to use the new `prop-types` package.
 * Added an "Automatically generated" comment to the top of the output file.
+* Added `Schema#define`, allowing relations to be mapped using GraphQL styled syntax.
+* Added a `--compact` flag that will use `define()` during transpilation.
 
 # 3.2.1
 * Fixed an issue with the `graphql` dependency not being listed.

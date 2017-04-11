@@ -469,6 +469,34 @@ describe('Renderer', () => {
       renderer.options.includeAttributes = false;
     });
 
+    it('renders template using compact define syntax', () => {
+      renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
+      renderer.options.compact = true;
+
+      expect(renderer.renderSchema('QuxSchema', [
+        new ReferenceDefinition(options, 'post', {
+          reference: 'posts',
+          relation: 'belongsTo',
+        }),
+        new ArrayDefinition(options, 'posts', {
+          valueType: {
+            type: 'reference',
+            reference: 'posts',
+            relation: 'belongsToMany',
+          },
+        }),
+      ], {
+        resourceName: 'quxs',
+      })).toBe('export const QuxSchema = new Schema(\'quxs\');');
+
+      expect(renderer.relations).toEqual([
+        `QuxSchema.define({
+  post: PostsSchema,
+  posts: [PostsSchema],
+});`,
+      ]);
+    });
+
     it('errors for invalid relation name', () => {
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 

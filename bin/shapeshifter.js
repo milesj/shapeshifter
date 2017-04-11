@@ -28,6 +28,13 @@ var optionList = [
     defaultValue: false,
   },
   {
+    name: 'compact',
+    alias: 'c',
+    description: 'Compact the output by using Schema#define(). Defaults to false.',
+    type: Boolean,
+    defaultValue: false,
+  },
+  {
     name: 'indent',
     description: 'The indentation characters to use. Defaults to 2 space indent.',
     typeLabel: '[underline]{char}',
@@ -93,6 +100,7 @@ if (options.help || !options.path) {
 // Run transpiler
 } else {
   new Transpiler({
+    compact: options.compact,
     defaultNullable: options.nullable,
     includeSchemas: options.schemas,
     includeAttributes: options.attributes,

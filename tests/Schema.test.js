@@ -104,6 +104,48 @@ describe('Schema', () => {
     });
   });
 
+  describe('define()', () => {
+    it('adds a has one relation for a single schema', () => {
+      expect(schema.relations).toEqual([]);
+
+      schema.define({ foo });
+
+      expect(schema.relations).toEqual([
+        {
+          attribute: 'foo',
+          schema: foo,
+          relation: 'hasOne',
+          collection: false,
+        },
+      ]);
+    });
+
+    it('adds a has many relation for an array of schemas', () => {
+      expect(schema.relations).toEqual([]);
+
+      schema.define({ qux: [qux] });
+
+      expect(schema.relations).toEqual([
+        {
+          attribute: 'qux',
+          schema: qux,
+          relation: 'hasMany',
+          collection: true,
+        },
+      ]);
+    });
+
+    it('errors if schema array is not valid', () => {
+      expect(() => {
+        schema.define({ foo: [] });
+      }).toThrowError('Relation "foo" is not a valid schema.');
+
+      expect(() => {
+        schema.define({ foo: [123] });
+      }).toThrowError('Relation "foo" is not a valid schema.');
+    });
+  });
+
   describe('hasOne()', () => {
     it('adds a schema and maps the attribute', () => {
       expect(schema.relations).toEqual([]);

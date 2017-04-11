@@ -509,7 +509,7 @@ export default class Renderer {
    */
   renderSchema(name: string, attributes: Definition[] = [], metadata: MetadataField): string {
     const { primaryKey, resourceName, ...meta } = metadata;
-    const { includeAttributes } = this.options;
+    const { includeAttributes, compact } = this.options;
     const references = this.schematic.referenceSchematics;
     const fields = [];
     const relations: { [key: string]: string[] } = {
@@ -563,13 +563,19 @@ export default class Renderer {
           return;
         }
 
+        // Format the output
         const relationName = relationConfig.self
           ? this.schematic.name
           : references[relationConfig.reference].name;
+        const schemaName = this.getObjectName(relationName, 'Schema');
+        const isCollection = (
+          relationType === Schema.HAS_MANY ||
+          relationType === Schema.BELONGS_TO_MANY
+        );
 
         relations[relationConfig.relation || relationType].push(this.wrapProperty(
           relationDefinition.attribute,
-          this.getObjectName(relationName, 'Schema'),
+          (compact && isCollection) ? `[${schemaName}]` : schemaName,
           1,
         ));
       }
@@ -594,11 +600,22 @@ export default class Renderer {
       relationTemplate += `.addAttributes(${this.formatArray(fields, 0)})`;
     }
 
-    Object.keys(relations).forEach((relation: string) => {
-      if (relations[relation].length) {
-        relationTemplate += `.${relation}(${this.formatObject(relations[relation], 0)})`;
+    if (compact) {
+      const compactList = Object.keys(relations).reduce((joined: string[], relation: string) => ([
+        ...joined,
+        ...relations[relation],
+      ]), []);
+
+      if (compactList.length) {
+        relationTemplate += `.define(${this.formatObject(compactList, 0)})`;
       }
-    });
+    } else {
+      Object.keys(relations).forEach((relation: string) => {
+        if (relations[relation].length) {
+          relationTemplate += `.${relation}(${this.formatObject(relations[relation], 0)})`;
+        }
+      });
+    }
 
     if (relationTemplate) {
       this.relations.push(`${name}${relationTemplate};`);

@@ -4,21 +4,12 @@
  * @flow
  */
 
+import type { SchemaMap, SchemaExpandedMap, PrimaryKey, Relation } from './types';
+
 const BELONGS_TO: string = 'belongsTo';
 const BELONGS_TO_MANY: string = 'belongsToMany';
 const HAS_ONE: string = 'hasOne';
 const HAS_MANY: string = 'hasMany';
-
-/* eslint-disable no-use-before-define */
-type SchemaMap = { [attribute: string]: Schema };
-type PrimaryKey = string | string[];
-type Relation = {
-  attribute: string,
-  collection: boolean,
-  relation: string,
-  schema: Schema,
-};
-/* eslint-enable no-use-before-define */
 
 export default class Schema {
   attributes: string[];
@@ -114,6 +105,23 @@ export default class Schema {
    */
   belongsToMany(relations: SchemaMap): this {
     return this.addRelations(relations, BELONGS_TO_MANY);
+  }
+
+  /**
+   * Define multiple relationships used a compact syntax.
+   */
+  define(relations: SchemaExpandedMap): this {
+    Object.keys(relations).forEach((attribute: string) => {
+      const schema = relations[attribute];
+
+      if (Array.isArray(schema)) {
+        this.addRelation(attribute, schema[0], HAS_MANY);
+      } else {
+        this.addRelation(attribute, schema, HAS_ONE);
+      }
+    });
+
+    return this;
   }
 
   /**
