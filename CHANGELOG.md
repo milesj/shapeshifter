@@ -1,6 +1,7 @@
 # 4.0.0
 * Updated React requirement to v15.5.
 * Updated PropTypes to use the new `prop-types` package.
+* Added an "Automatically generated" comment to the top of the output file.
 
 # 3.2.1
 * Fixed an issue with the `graphql` dependency not being listed.
