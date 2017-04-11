@@ -31,7 +31,7 @@ export default class ReactRenderer extends Renderer {
    * {@inheritDoc}
    */
   beforeParse() {
-    this.imports.push('import { PropTypes } from \'react\';');
+    this.imports.push('import PropTypes from \'prop-types\';');
   }
 
   /**

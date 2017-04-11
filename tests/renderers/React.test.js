@@ -25,7 +25,7 @@ describe('ReactRenderer', () => {
     it('adds React import', () => {
       renderer.beforeParse();
 
-      expect(renderer.imports).toEqual(['import { PropTypes } from \'react\';']);
+      expect(renderer.imports).toEqual(['import PropTypes from \'prop-types\';']);
     });
   });
 

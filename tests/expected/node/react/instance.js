@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 import InstanceDefault, { InstanceClassName } from '../stub';
 
 export const INST_STR = 'foobar';

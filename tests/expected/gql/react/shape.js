@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 
 export const ShapeBasicStructShape = PropTypes.shape({
   foo: PropTypes.string,

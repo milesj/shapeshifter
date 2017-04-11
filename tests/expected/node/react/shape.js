@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 import ShapeDefault, { ShapeClassName } from '../stub';
 
 export const ShapeShape = PropTypes.shape({

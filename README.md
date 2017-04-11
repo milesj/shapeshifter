@@ -33,7 +33,7 @@ Take this user schematic for example.
 Which transpiles down to the following React prop types.
 
 ```javascript
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 
 export const UserShape = PropTypes.shape({
   id: PropTypes.number.isRequired,

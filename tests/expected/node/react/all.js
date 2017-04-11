@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 import ArrayDefault from '../stub';
 import DefaultName from '../stub';
 import AnotherDefault, { Baz, Qux } from '../stub';
