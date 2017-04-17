@@ -16,6 +16,7 @@ export type Options = {
   includeTypes: boolean,
   indentCharacter: string,
   renderer: string,
+  stripPropTypes: boolean,
 };
 
 export type PrimitiveType = string | number | boolean;

@@ -27,6 +27,17 @@ describe('ReactRenderer', () => {
 
       expect(renderer.imports).toEqual(['import PropTypes from \'prop-types\';']);
     });
+
+    it('adds production noop when stripPropTypes is true', () => {
+      const prodRenderer = new ReactRenderer({ ...options, stripPropTypes: true }, new Schematic('./foo.json', {
+        name: 'Foo',
+        attributes: { id: 'number' },
+      }, options));
+
+      prodRenderer.beforeParse();
+
+      expect(prodRenderer.header).toEqual(['const __productionShape__ = () => {}']);
+    });
   });
 
   describe('renderArray()', () => {
