@@ -58,12 +58,12 @@
   "homepage": "https://github.com/milesj/shapeshifter#readme",
   "dependencies": {
     "babel-runtime": "^6.23.0",
-    "graphql": "^0.9.2",
+    "graphql": "^0.9.0",
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.1",
+    "babel-eslint": "^7.2.2",
     "babel-jest": "^19.0.0",
     "babel-plugin-transform-flow-comments": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -75,10 +75,10 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
-    "flow-bin": "^0.43.1",
+    "flow-bin": "^0.44.2",
     "jest": "^19.0.2",
-    "prop-types": "^15.5.6",
-    "react": "^15.5.3",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
     "rimraf": "^2.6.1",
     "typescript": "^2.2.2"
   }
