@@ -29,10 +29,17 @@ export default class ReactRenderer extends Renderer {
 
   beforeParse() {
     this.imports.push('import PropTypes from \'prop-types\';');
+    if (this.options.stripPropTypes) {
+      this.header.push('const __productionShape__ = () => {}');
+    }
   }
 
   render(setName: string, attributes: Definition[] = []) {
     const shape = this.formatObject(this.renderObjectProps(attributes, 1), 0);
+
+    if (this.options.stripPropTypes) {
+      return `export const ${setName} = process.env.NODE_ENV === 'production' ? __productionShape__ : PropTypes.shape(${shape});`;
+    }
 
     return `export const ${setName} = PropTypes.shape(${shape});`;
   }

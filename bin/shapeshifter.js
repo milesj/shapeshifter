@@ -20,6 +20,7 @@ shapeshifter
   .option('--schemas', 'Include schema class exports in the output. Defaults to false.')
   .option('--attributes', 'Include an attribute list in the schema class export. Defaults to false.')
   .option('--types', 'Include type definition exports in the output. Defaults to false.')
+  .option('--stripPropTypes', 'Strip PropTypes shapes in production. Defaults to false.')
   .action(function({ options, source }) {
     return new Transpiler({
       compact: options.compact || false,
@@ -29,6 +30,7 @@ shapeshifter
       includeTypes: options.types || false,
       indentCharacter: options.indent || '  ',
       renderer: options.format || 'react',
+      stripPropTypes: options.stripPropTypes || false,
     })
       .transpile(path.normalize(path.join(process.cwd(), source)))
       .then((output) => {
