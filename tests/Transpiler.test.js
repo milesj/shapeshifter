@@ -209,6 +209,20 @@ describe('Transpiler', () => {
 
       expect(output).toBe(file(expectedPath));
     });
+
+    it('wraps prop types when in production', () => {
+      const actualPath = `${__dirname}/schemas/types-schemas.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/wrapped-prop-types.js`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeTypes: true,
+        stripPropTypes: true,
+        renderer: 'react',
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
   });
 
   describe('extractSchematics()', () => {

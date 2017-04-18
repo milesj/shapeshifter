@@ -138,6 +138,10 @@ will be sent to the console.
   Defaults to "false".
 * `--types` - Include type definition exports in the output. Defaults to
   "false".
+* `--compact` - Update all relations to use `Schema#define`.
+* `--stripPropTypes` - Wrap PropType definitions in
+  `process.env.NODE_ENV !== 'production'` expressions, so that they
+  can be removed during minification.
 
 ## Documentation
 
@@ -949,6 +953,20 @@ UserSchema
   .hasMany({
     posts: PostSchema,
   });
+```
+
+If `--compact` is passed on the command line, the relation output will
+be modified to the following:
+
+```javascript
+PostSchema.define({
+  user: UserSchema,
+});
+
+UserSchema.define({
+  country: CountrySchema,
+  posts: [PostSchema],
+});
 ```
 
 ## FAQ

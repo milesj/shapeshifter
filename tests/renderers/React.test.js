@@ -36,7 +36,7 @@ describe('ReactRenderer', () => {
 
       prodRenderer.beforeParse();
 
-      expect(prodRenderer.header).toEqual(['const __productionShape__ = () => {}']);
+      expect(prodRenderer.header).toEqual(['const PropTypePolyfill = () => {};']);
     });
   });
 

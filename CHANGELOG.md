@@ -6,6 +6,7 @@
 * Added an "Automatically generated" comment to the top of the output file.
 * Added `Schema#define`, allowing relations to be mapped using GraphQL styled syntax.
 * Added a `--compact` flag that will use `define()` during transpilation.
+* Added a `--stripPropTypes` flag that will wrap PropType definitions in `process.env.NODE_ENV`.
 
 # 3.2.1
 * Fixed an issue with the `graphql` dependency not being listed.
