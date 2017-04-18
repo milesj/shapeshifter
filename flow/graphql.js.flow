@@ -1,4 +1,4 @@
-// GraphQL provides flowtype files, but I cannot get them to work.
+// GraphQL provides flowtype files, but I cannot get them to work
 import { parse, Kind } from 'graphql';
 import type {
   DocumentNode,

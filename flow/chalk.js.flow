@@ -1,4 +1,4 @@
-declare module "chalk" {
+declare module 'chalk' {
   declare export default {
     gray(msg: string): string,
     bgRed: {

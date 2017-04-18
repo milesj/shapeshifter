@@ -1,8 +1,8 @@
-declare module "shapeshifter" {
-  declare type SchemaMap = { [attribute: string]: Schema };
-  declare type SchemaExtendedMap = { [attribute: string]: Schema | Schema[] };
-  declare type PrimaryKey = string | string[];
-  declare type Relation = {
+declare module 'shapeshifter' {
+  declare export type SchemaMap = { [attribute: string]: Schema };
+  declare export type SchemaExtendedMap = { [attribute: string]: Schema | Schema[] };
+  declare export type PrimaryKey = string | string[];
+  declare export type Relation = {
     attribute: string,
     schema: Schema,
     relation: string,
