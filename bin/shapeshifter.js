@@ -12,7 +12,7 @@ var Transpiler = require('../lib/Transpiler').default;
 var shapeshifter = new Vorpal();
 
 shapeshifter
-  .command('build <source>', 'Transpile source files or folder.')
+  .command('build <paths...>', 'Transpile source files or folder.')
   .option('-n, --nullable', 'Mark attributes as nullable by default (recommended). Defaults to false.')
   .option('-c, --compact', 'Reduce the output of schema ORM definitions. Defaults to false.')
   .option('--indent <char>', 'The indentation characters to use. Defaults to 2 space indent.')
@@ -21,7 +21,7 @@ shapeshifter
   .option('--attributes', 'Include an attribute list in the schema class export. Defaults to false.')
   .option('--types', 'Include type definition exports in the output. Defaults to false.')
   .option('--stripPropTypes', 'Strip PropTypes shapes in production. Defaults to false.')
-  .action(function({ options, source }) {
+  .action(function({ options, paths }) {
     return new Transpiler({
       compact: options.compact || false,
       defaultNullable: options.nullable || false,
@@ -32,7 +32,7 @@ shapeshifter
       renderer: options.format || 'react',
       stripPropTypes: options.stripPropTypes || false,
     })
-      .transpile(path.normalize(path.join(process.cwd(), source)))
+      .transpile(paths)
       .then((output) => {
         // We need to log the output so that it can be piped
         this.log(output);

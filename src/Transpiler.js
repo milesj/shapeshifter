@@ -32,54 +32,56 @@ export default class Transpiler {
    * Transpile either a file or a folder by rendering each schematic file.
    */
   /* istanbul ignore next */
-  transpile(target: string): Promise<string> {
-    return new Promise((
-      resolve: (result: string) => void,
-      reject: (error: Error) => void,
-    ) => {
-      fs.stat(target, (error: ?Error, stats: fs.Stats) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-
-        try {
-          if (stats.isDirectory()) {
-            resolve(this.transpileFolder(target));
-          } else if (stats.isFile()) {
-            resolve(this.transpileFile(target));
-          } else {
-            reject(new Error('Unsupported file type.'));
+  transpile(targets: string[]): Promise<string> {
+    return Promise.all(targets.map(target => (
+      new Promise((resolve: *, reject: *) => {
+        fs.stat(target, (error: ?Error, stats: fs.Stats) => {
+          if (error) {
+            reject(error);
+            return;
           }
-        } catch (e) {
-          reject(e);
-        }
-      });
-    });
+
+          const paths = [];
+
+          try {
+            if (stats.isDirectory()) {
+              paths.push(
+                ...fs.readdirSync(target).map(file => path.join(process.cwd(), target, file)),
+              );
+
+            } else if (stats.isFile()) {
+              paths.push(path.join(process.cwd(), target));
+
+            } else {
+              throw new Error(`Unsupported file type: ${target}.`);
+            }
+          } catch (e) {
+            reject(e);
+          }
+
+          resolve(paths);
+        });
+      })
+    ))).then((targetPaths: string[][]) => (
+      this.generate(targetPaths.reduce((paths: string[], target: string[]) => ([
+        ...paths,
+        ...target,
+      ]), []))
+    ));
   }
 
   /**
    * Transpile a folder by looping over all JS and JSON files and rendering them.
    */
   transpileFolder(folderPath: string): string {
-    const filePaths = fs.readdirSync(folderPath);
-    let schematics = [];
-
-    filePaths.forEach((filePath: string) => {
-      schematics = [
-        ...schematics,
-        ...this.extractSchematics(path.join(folderPath, filePath)),
-      ];
-    });
-
-    return this.generateOutput(schematics);
+    return this.generate(fs.readdirSync(folderPath).map(file => path.join(folderPath, file)));
   }
 
   /**
    * Transpile a file by rendering the schematic at the defined path.
    */
-  transpileFile(file: string): string {
-    return this.generateOutput(this.extractSchematics(file));
+  transpileFile(filePath: string): string {
+    return this.generate([filePath]);
   }
 
   /**
@@ -126,6 +128,16 @@ export default class Transpiler {
     }
 
     return schematics;
+  }
+
+  /**
+   * Generate the output by locating a schematic for every defined file path.
+   */
+  generate(filePaths: string[]): string {
+    return this.generateOutput(filePaths.reduce((schematics, filePath) => ([
+      ...schematics,
+      ...this.extractSchematics(filePath),
+    ]), []));
   }
 
   /**

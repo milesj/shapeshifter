@@ -1,8 +1,8 @@
 # 4.0.0
 * Updated React requirement to v15.5.
 * Updated PropTypes to use the new `prop-types` package.
-* Updated the CLI to use Vorpal.
-* Updated CLI execution from `shapeshifter` to `shapeshifter build`.
+* Updated CLI to use Vorpal. Renamed script from `shapeshifter` to `shapeshifter build`.
+* Updated `shapeshifter build` to accept multiple file paths when executing (will be concatenated).
 * Added an "Automatically generated" comment to the top of the output file.
 * Added `Schema#define`, allowing relations to be mapped using GraphQL styled syntax.
 * Added a `--compact` flag that will use `define()` during transpilation.
