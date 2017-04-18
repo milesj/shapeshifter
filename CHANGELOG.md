@@ -3,6 +3,7 @@
 * Updated PropTypes to use the new `prop-types` package.
 * Updated CLI to use Vorpal. Renamed script from `shapeshifter` to `shapeshifter build`.
 * Updated `shapeshifter build` to accept multiple file paths when executing (will be concatenated).
+* Updated the renderer to not throw errors when generating `Schema`s without a `meta.resourceName`.
 * Added an "Automatically generated" comment to the top of the output file.
 * Added `Schema#define`, allowing relations to be mapped using GraphQL styled syntax.
 * Added a `--compact` flag that will use `define()` during transpilation.

@@ -226,16 +226,22 @@ export default class Renderer {
 
     const { attributes, name, metadata } = this.schematic;
 
-    this.imports.unshift(this.renderImport({
-      default: 'Schema',
-      path: 'shapeshifter',
-    }));
+    // Allow schematics to not require a Schema
+    if (metadata.resourceName) {
+      this.schemas.push(this.renderSchema(
+        this.getObjectName(name, 'Schema'),
+        attributes,
+        metadata,
+      ));
+    }
 
-    this.schemas.push(this.renderSchema(
-      this.getObjectName(name, 'Schema'),
-      attributes,
-      metadata,
-    ));
+    // Only add the import if schemas exist
+    if (this.schemas.length) {
+      this.imports.unshift(this.renderImport({
+        default: 'Schema',
+        path: 'shapeshifter',
+      }));
+    }
   }
 
   /**

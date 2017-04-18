@@ -184,6 +184,19 @@ describe('Transpiler', () => {
       expect(output).toBe(file(expectedPath));
     });
 
+    it('will omit schemas if no resource name is defined', () => {
+      const actualPath = `${__dirname}/schemas/optional-schema.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/optional-schema.js`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeSchemas: true,
+        includeTypes: true,
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
+
     it('supports compound keys through the primary key metadata', () => {
       const actualPath = `${__dirname}/schemas/compound-key.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/compound-key.js`;

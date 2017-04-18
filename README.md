@@ -140,8 +140,8 @@ will be sent to the console.
   "false".
 * `--compact` - Update all relations to use `Schema#define`.
 * `--stripPropTypes` - Wrap PropType definitions in
-  `process.env.NODE_ENV !== 'production'` expressions, so that they
-  can be removed during minification.
+  `process.env.NODE_ENV !== 'production'` expressions, allowing them to be
+  removed with dead code elimination (through minification).
 
 ## Documentation
 
@@ -289,6 +289,8 @@ type User {
 
 > Extra metadata will be passed as an object to the `Schema` instance,
 > if `--schemas` is passed on the command line.
+
+> Schematics with no `resourceName` defined will be omitted from the final output.
 
 #### Imports
 
