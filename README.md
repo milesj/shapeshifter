@@ -109,15 +109,15 @@ yarn add shapeshifter
 
 ## Usage
 
-Shapeshifter is provided as a binary which can be executed like so.
+Shapeshifter is provided as a binary which can be executed and piped like so.
 
 ```
-shapeshifter [options] [input] > [output]
+shapeshifter build [options] <input> > <output>
 ```
 
-The binary input accepts either a single schematic file or a directory of
-schematic files. If a directory is provided, they will be combined into
-a single output.
+The binary input accepts either a single schematic file, a directory of
+schematic files, or multiple files. If a directory is provided,
+they will be combined into a single output.
 
 By default, the binary will send output to stdout, which can then be
 redirected to a destination of your choosing, otherwise the output
@@ -125,7 +125,6 @@ will be sent to the console.
 
 ### Options
 
-* `--help`, `-h` - Displays a help menu.
 * `--nullable`, `-n` - Marks all attributes as nullable by default.
   Not applicable to GraphQL. Defaults to false.
 * `--indent` - Defines the indentation characters to use in the
@@ -138,7 +137,7 @@ will be sent to the console.
   Defaults to "false".
 * `--types` - Include type definition exports in the output. Defaults to
   "false".
-* `--compact` - Update all relations to use `Schema#define`.
+* `--useDefine` - Update all schema relations to use `Schema#define`.
 * `--stripPropTypes` - Wrap PropType definitions in
   `process.env.NODE_ENV !== 'production'` expressions, allowing them to be
   removed with dead code elimination (through minification).
@@ -957,7 +956,7 @@ UserSchema
   });
 ```
 
-If `--compact` is passed on the command line, the relation output will
+If `--useDefine` is passed on the command line, the relation output will
 be modified to the following:
 
 ```javascript

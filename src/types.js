@@ -9,7 +9,6 @@
 import Schema from './Schema';
 
 export type Options = {
-  compact: boolean,
   defaultNullable: boolean,
   includeAttributes: boolean,
   includeSchemas: boolean,
@@ -17,6 +16,7 @@ export type Options = {
   indentCharacter: string,
   renderer: string,
   stripPropTypes: boolean,
+  useDefine: boolean,
 };
 
 export type PrimitiveType = string | number | boolean;

@@ -108,7 +108,7 @@ export default class Schema {
   }
 
   /**
-   * Define multiple relationships used a compact syntax.
+   * Define multiple relationships using a compact syntax.
    */
   define(relations: SchemaExpandedMap): this {
     Object.keys(relations).forEach((attribute: string) => {

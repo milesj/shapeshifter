@@ -515,7 +515,7 @@ export default class Renderer {
    */
   renderSchema(name: string, attributes: Definition[] = [], metadata: MetadataField): string {
     const { primaryKey, resourceName, ...meta } = metadata;
-    const { includeAttributes, compact } = this.options;
+    const { includeAttributes, useDefine } = this.options;
     const references = this.schematic.referenceSchematics;
     const fields = [];
     const relations: { [key: string]: string[] } = {
@@ -581,7 +581,7 @@ export default class Renderer {
 
         relations[relationConfig.relation || relationType].push(this.wrapProperty(
           relationDefinition.attribute,
-          (compact && isCollection) ? `[${schemaName}]` : schemaName,
+          (useDefine && isCollection) ? `[${schemaName}]` : schemaName,
           1,
         ));
       }
@@ -606,14 +606,14 @@ export default class Renderer {
       relationTemplate += `.addAttributes(${this.formatArray(fields, 0)})`;
     }
 
-    if (compact) {
-      const compactList = Object.keys(relations).reduce((joined: string[], relation: string) => ([
+    if (useDefine) {
+      const useDefineList = Object.keys(relations).reduce((joined: string[], relation: string) => ([
         ...joined,
         ...relations[relation],
       ]), []);
 
-      if (compactList.length) {
-        relationTemplate += `.define(${this.formatObject(compactList, 0)})`;
+      if (useDefineList.length) {
+        relationTemplate += `.define(${this.formatObject(useDefineList, 0)})`;
       }
     } else {
       Object.keys(relations).forEach((relation: string) => {

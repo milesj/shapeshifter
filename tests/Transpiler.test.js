@@ -217,7 +217,7 @@ describe('Transpiler', () => {
       const output = new Transpiler({
         ...otherOptions,
         includeSchemas: true,
-        compact: true,
+        useDefine: true,
       }).transpileFile(actualPath);
 
       expect(output).toBe(file(expectedPath));

@@ -469,9 +469,9 @@ describe('Renderer', () => {
       renderer.options.includeAttributes = false;
     });
 
-    it('renders template using compact define syntax', () => {
+    it('renders template using useDefine define syntax', () => {
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
-      renderer.options.compact = true;
+      renderer.options.useDefine = true;
 
       expect(renderer.renderSchema('QuxSchema', [
         new ReferenceDefinition(options, 'post', {

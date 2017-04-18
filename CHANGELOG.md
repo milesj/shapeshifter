@@ -6,7 +6,7 @@
 * Updated the renderer to not throw errors when generating `Schema`s without a `meta.resourceName`.
 * Added an "Automatically generated" comment to the top of the output file.
 * Added `Schema#define`, allowing relations to be mapped using GraphQL styled syntax.
-* Added a `--compact` flag that will use `define()` during transpilation.
+* Added a `--useDefine` flag that will use `Schema#define` while rendering.
 * Added a `--stripPropTypes` flag that will wrap PropType definitions in `process.env.NODE_ENV`.
 
 # 3.2.1
