@@ -25,18 +25,17 @@
   "main": "./lib/index.js",
   "bin": "./bin/shapeshifter.js",
   "scripts": {
-    "clean": "rimraf ./lib",
-    "build": "babel ./src -d ./lib && cp ./flow/shapeshifter.js.flow ./lib",
-    "lint": "eslint ./src ./tests",
+    "babel": "build-lib ./src -d ./lib && cp ./flow/shapeshifter.js.flow ./lib",
     "check": "yarn run check:flow && yarn run check:typescript",
-    "check:flow": "flow check",
+    "check:flow": "type-check",
     "check:typescript": "tsc --noEmit --allowJs ./tests/expected/gql/typescript/* ./tests/expected/node/typescript/*",
-    "jest": "jest --config ./jest.json",
     "coverage": "yarn run jest -- --coverage",
-    "pretest": "yarn run lint",
-    "test": "yarn run jest",
+    "eslint": "run-linter ./bin ./src ./tests",
+    "jest": "run-tests",
+    "pretest": "yarn run eslint",
     "posttest": "yarn run check",
-    "preversion": "yarn test && yarn run clean && yarn run build"
+    "preversion": "yarn test && yarn run clean && yarn run build",
+    "test": "yarn run jest"
   },
   "repository": {
     "type": "git",
@@ -57,24 +56,12 @@
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.2",
-    "babel-jest": "^19.0.0",
-    "babel-plugin-transform-flow-comments": "^6.22.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-latest": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^14.1.0",
-    "eslint-plugin-flowtype": "^2.20.4",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
-    "flow-bin": "^0.44.2",
-    "jest": "^19.0.2",
+    "@milesj/build-tool-config": "^0.0.7",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "rimraf": "^2.6.1",
     "typescript": "^2.2.2"
+  },
+  "babel": {
+    "extends": "./node_modules/@milesj/build-tool-config/babel.json5"
   }
 }

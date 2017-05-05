@@ -1,17 +1,21 @@
+[include]
+./src
+
 [ignore]
-.*/bin/.*
 .*/node_modules/.*
+.*/tests/.*
 .*\.test\.js
 
-[include]
-./tests/expected/gql/flow/*.js
-./tests/expected/node/flow/*.js
-./tests/expected/shapeshifter/*.js
-
 [libs]
-./flow/
+./flow
 
 [options]
+emoji=true
 esproposal.class_instance_fields=enable
 esproposal.class_static_fields=enable
-suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
+esproposal.export_star_as=enable
+module.ignore_non_literal_requires=true
+suppress_comment=\\(.\\|\n\\)*\\$FlowIgnore
+
+[version]
+0.45.0

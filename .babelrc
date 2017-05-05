@@ -1,4 +1,0 @@
-{
-  "presets": ["latest", "stage-2"],
-  "plugins": ["transform-flow-comments", "transform-runtime"]
-}
