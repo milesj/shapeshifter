@@ -1,7 +1,7 @@
-import { options } from './mocks';
-import Schematic from '../src/Schematic';
 import NumberDefinition from '../src/definitions/Number';
+import Schematic from '../src/Schematic';
 import StringDefinition from '../src/definitions/String';
+import { options } from './mocks';
 
 describe('Schematic', () => {
   const data = {

@@ -5,11 +5,12 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-var path = require('path');
-var Vorpal = require('vorpal');
-var Transpiler = require('../lib/Transpiler').default;
+/* eslint-disable no-invalid-this, prefer-arrow-callback */
 
-var shapeshifter = new Vorpal();
+const Vorpal = require('vorpal');
+const Transpiler = require('../lib/Transpiler').default;
+
+const shapeshifter = new Vorpal();
 
 shapeshifter
   .command('build <paths...>', 'Transpile source files or folder.')
@@ -21,7 +22,9 @@ shapeshifter
   .option('--types', 'Include type definition exports in the output. Defaults to false.')
   .option('--useDefine', 'Reduce the output of schema ORM definitions. Defaults to false.')
   .option('--stripPropTypes', 'Strip PropTypes shapes in production. Defaults to false.')
-  .action(function({ options, paths }) {
+  .action(function run({ options, paths }) {
+    const action = this;
+
     return new Transpiler({
       defaultNullable: options.nullable || false,
       includeSchemas: options.schemas || false,
@@ -33,15 +36,15 @@ shapeshifter
       useDefine: options.useDefine || false,
     })
       .transpile(paths)
-      .then((output) => {
+      .then(function success(output) {
         // We need to log the output so that it can be piped
-        this.log(output);
+        action.log(output);
 
         return output;
       })
-      .catch((error) => {
+      .catch(function failure(error) {
         // Rudimentary error handling and styling
-        this.log(shapeshifter.chalk.red(error.message));
+        action.log(shapeshifter.chalk.red(error.message));
       });
   });
 

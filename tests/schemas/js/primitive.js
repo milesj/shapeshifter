@@ -2,53 +2,53 @@ module.exports = {
   name: 'Primitive',
   constants: {
     PRIMITIVE_VALUES: ['string', 123, true],
-    PRIMITIVE_STR: 'primitive'
+    PRIMITIVE_STR: 'primitive',
   },
   attributes: {
     boolField: 'bool',
     boolFieldExpanded: {
       type: 'bool',
-      nullable: false
+      nullable: false,
     },
     booleanField: 'boolean',
     booleanFieldExpanded: {
       type: 'boolean',
-      nullable: false
+      nullable: false,
     },
     intField: 'int',
     intFieldExpanded: {
       type: 'int',
-      nullable: false
+      nullable: false,
     },
     integerField: 'integer',
     integerFieldExpanded: {
       type: 'integer',
-      nullable: false
+      nullable: false,
     },
     numField: 'num',
     numFieldExpanded: {
       type: 'num',
-      nullable: false
+      nullable: false,
     },
     numberField: 'number',
     numberFieldExpanded: {
       type: 'number',
-      nullable: false
+      nullable: false,
     },
     floatField: 'float',
     floatFieldExpanded: {
       type: 'float',
-      nullable: false
+      nullable: false,
     },
     strField: 'str',
     strFieldExpanded: {
       type: 'str',
-      nullable: false
+      nullable: false,
     },
     stringField: 'string',
     stringFieldExpanded: {
       type: 'string',
-      nullable: false
-    }
-  }
+      nullable: false,
+    },
+  },
 };

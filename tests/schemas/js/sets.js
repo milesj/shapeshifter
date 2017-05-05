@@ -6,20 +6,20 @@ module.exports = {
       attributes: ['foo', 'qux'],
       nullable: {
         foo: false,
-        qux: true
-      }
-    }
+        qux: true,
+      },
+    },
   },
   attributes: {
     foo: 'string',
     bar: 'number',
     baz: {
       type: 'boolean',
-      nullable: false
+      nullable: false,
     },
     qux: {
       type: 'string',
-      nullable: false
-    }
-  }
+      nullable: false,
+    },
+  },
 };

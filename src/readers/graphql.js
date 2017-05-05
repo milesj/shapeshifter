@@ -4,25 +4,25 @@
  * @flow
  */
 
-/* eslint-disable import/no-extraneous-dependencies, no-console */
+/* eslint-disable import/no-extraneous-dependencies, no-console, complexity */
 
 import fs from 'fs';
 import { extname } from 'path';
-import { parse, Kind } from 'graphql';
+import { Kind, parse } from 'graphql';
 
 import type {
-  DocumentNode,
   DefinitionNode,
-  TypeDefinitionNode,
+  DocumentNode,
   FieldDefinitionNode,
   NamedTypeNode,
+  TypeDefinitionNode,
 } from 'graphql';
 import type {
-  SchemaStructure,
-  TypeDefinition,
   AttributesField,
   ReferencesField,
+  SchemaStructure,
   ShapesField,
+  TypeDefinition,
 } from '../types';
 
 class GraphQLReader {
@@ -66,7 +66,7 @@ class GraphQLReader {
 
     // Named
     } else if (type.kind === Kind.NAMED_TYPE) {
-      const value = type.name.value;
+      const { value } = type.name;
 
       switch (value) {
         case 'ID':

@@ -1,4 +1,4 @@
-import { options, falsyValues } from '../mocks';
+import { falsyValues, options } from '../mocks';
 import { COMPOUND_TYPES } from '../../src/constants';
 import EnumDefinition from '../../src/definitions/Enum';
 

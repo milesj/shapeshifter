@@ -7,8 +7,9 @@
 /**
  * Create a string that represents indentation using the defined depth.
  */
-export default function indent(depth: number, character: string = '  '): string {
+export default function indent(startingDepth: number, character: string = '  '): string {
   let response = '';
+  let depth = startingDepth;
 
   while (depth > 0) {
     response += character;

@@ -24,12 +24,12 @@ import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
 
 import type {
-  Options,
   BaseConfig,
-  ReferenceConfig,
-  PrimitiveType,
-  MetadataField,
   ImportStructure,
+  MetadataField,
+  Options,
+  PrimitiveType,
+  ReferenceConfig,
 } from './types';
 
 type TemplateList = string[];
@@ -76,11 +76,9 @@ export default class Renderer {
     itemSpacer: string = '\n',
     indentSpacer: string = '\n',
   ): string {
-    if (Array.isArray(items)) {
-      items = items.join(itemSpacer);
-    }
+    const value = Array.isArray(items) ? items.join(itemSpacer) : items;
 
-    return `[${indentSpacer}${items}${indentSpacer}${indent(depth, this.options.indentCharacter)}]`;
+    return `[${indentSpacer}${value}${indentSpacer}${indent(depth, this.options.indentCharacter)}]`;
   }
 
   /**
@@ -92,11 +90,9 @@ export default class Renderer {
     propSpacer: string = '\n',
     indentSpacer: string = '\n',
   ): string {
-    if (Array.isArray(props)) {
-      props = props.join(propSpacer);
-    }
+    const value = Array.isArray(props) ? props.join(propSpacer) : props;
 
-    return `{${indentSpacer}${props}${indentSpacer}${indent(depth, this.options.indentCharacter)}}`;
+    return `{${indentSpacer}${value}${indentSpacer}${indent(depth, this.options.indentCharacter)}}`;
   }
 
   /**
@@ -110,9 +106,9 @@ export default class Renderer {
       return this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
     }
 
-    type = normalizeType(type || typeof value);
+    const actualType = normalizeType(type || typeof value);
 
-    switch (type) {
+    switch (actualType) {
       case 'string':
         return `'${String(value)}'`;
 
@@ -124,7 +120,7 @@ export default class Renderer {
         return `${parseFloat(value)}`;
 
       default:
-        throw new TypeError(`Unknown type "${type}" passed to formatValue().`);
+        throw new TypeError(`Unknown type "${actualType}" passed to formatValue().`);
     }
   }
 
@@ -390,13 +386,15 @@ export default class Renderer {
    * Render a constant.
    */
   renderConstant(name: string, value: PrimitiveType | PrimitiveType[]): string {
+    let constValue;
+
     if (Array.isArray(value)) {
-      value = this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
+      constValue = this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
     } else {
-      value = this.formatValue(value);
+      constValue = this.formatValue(value);
     }
 
-    return `export const ${name} = ${value};`;
+    return `export const ${name} = ${constValue};`;
   }
 
   /**

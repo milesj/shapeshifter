@@ -1,5 +1,3 @@
-import TypeScriptRenderer from '../../src/renderers/TypeScript';
-import Schematic from '../../src/Schematic';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
@@ -7,7 +5,9 @@ import InstanceDefinition from '../../src/definitions/Instance';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
 import ReferenceDefinition from '../../src/definitions/Reference';
+import Schematic from '../../src/Schematic';
 import StringDefinition from '../../src/definitions/String';
+import TypeScriptRenderer from '../../src/renderers/TypeScript';
 import UnionDefinition from '../../src/definitions/Union';
 import { options } from '../mocks';
 

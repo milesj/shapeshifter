@@ -12,10 +12,10 @@ export default function formatName(value: string): string {
     return '';
   }
 
-  value = value
+  const name = value
     .replace(/[^a-zA-Z0-9]+/g, ' ')
     .replace(/\W+(.)/g, match => match[1].toUpperCase())
     .trim();
 
-  return value.charAt(0).toUpperCase() + value.slice(1);
+  return name.charAt(0).toUpperCase() + name.slice(1);
 }

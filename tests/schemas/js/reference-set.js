@@ -4,13 +4,13 @@ module.exports = {
     OnlyString: {
       attributes: ['stringField'],
       nullable: {
-        stringField: false
-      }
-    }
+        stringField: false,
+      },
+    },
   },
   attributes: {
     boolField: 'bool',
     stringField: 'string',
-    numberField: 'number'
-  }
+    numberField: 'number',
+  },
 };

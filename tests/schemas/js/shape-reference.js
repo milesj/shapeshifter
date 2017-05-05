@@ -4,23 +4,23 @@ module.exports = {
     price: {
       amount: 'number',
       nativeAmount: 'number',
-      exchangeRate: 'number'
-    }
+      exchangeRate: 'number',
+    },
   },
   attributes: {
     fees: {
       type: 'shape',
-      reference: 'price'
+      reference: 'price',
     },
     taxes: {
       type: 'shape',
       reference: 'price',
-      nullable: false
+      nullable: false,
     },
     total: {
       type: 'shape',
       reference: 'price',
-      nullable: false
-    }
-  }
+      nullable: false,
+    },
+  },
 };

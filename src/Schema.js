@@ -4,7 +4,7 @@
  * @flow
  */
 
-import type { SchemaMap, SchemaExpandedMap, PrimaryKey, Relation } from './types';
+import type { PrimaryKey, Relation, SchemaExpandedMap, SchemaMap } from './types';
 
 const BELONGS_TO: string = 'belongsTo';
 const BELONGS_TO_MANY: string = 'belongsToMany';
@@ -31,10 +31,12 @@ export default class Schema {
     primaryKey: PrimaryKey | Object = 'id',
     metadata: Object = {},
   ) {
+    /* eslint-disable no-param-reassign */
     if (typeof primaryKey === 'object' && !Array.isArray(primaryKey)) {
       metadata = primaryKey;
       primaryKey = metadata.primaryKey || 'id';
     }
+    /* eslint-enable no-param-reassign */
 
     this.attributes = [];
     this.metadata = metadata;

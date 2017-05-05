@@ -1,49 +1,49 @@
 module.exports = {
   name: 'Array',
   imports: [
-    { default: 'ArrayDefault', path: '../stub' }
+    { default: 'ArrayDefault', path: '../stub' },
   ],
   constants: {
-    ARRAY_NUM: 123
+    ARRAY_NUM: 123,
   },
   attributes: {
     arrayField: {
       type: 'array',
       valueType: {
         type: 'array',
-        valueType: 'string'
-      }
+        valueType: 'string',
+      },
     },
     boolField: {
       type: 'array',
-      valueType: 'bool'
+      valueType: 'bool',
     },
     enumField: {
       type: 'array',
       valueType: {
         type: 'enum',
         valueType: 'string',
-        values: ['foo', 'bar', 'baz']
-      }
+        values: ['foo', 'bar', 'baz'],
+      },
     },
     instanceField: {
       type: 'array',
       valueType: {
         type: 'instance',
-        contract: 'ArrayDefault'
-      }
+        contract: 'ArrayDefault',
+      },
     },
     numberField: {
       type: 'array',
       valueType: 'number',
-      nullable: false
+      nullable: false,
     },
     objectField: {
       type: 'array',
       valueType: {
         type: 'object',
-        valueType: 'number'
-      }
+        valueType: 'number',
+      },
     },
     shapeField: {
       type: 'array',
@@ -51,13 +51,13 @@ module.exports = {
         type: 'shape',
         attributes: {
           foo: 'string',
-          bar: 'bool'
-        }
-      }
+          bar: 'bool',
+        },
+      },
     },
     stringField: {
       type: 'array',
-      valueType: 'string'
+      valueType: 'string',
     },
     unionField: {
       type: 'array',
@@ -66,15 +66,15 @@ module.exports = {
         valueTypes: [
           {
             type: 'string',
-            nullable: false
+            nullable: false,
           },
           {
             type: 'enum',
             valueType: 'number',
-            values: [1, 2, 3]
-          }
-        ]
-      }
-    }
-  }
+            values: [1, 2, 3],
+          },
+        ],
+      },
+    },
+  },
 };

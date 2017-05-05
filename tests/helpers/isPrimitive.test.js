@@ -1,5 +1,5 @@
-import { PRIMITIVE_TYPES, COMPOUND_TYPES } from '../../src/constants';
 import isPrimitive from '../../src/helpers/isPrimitive';
+import { COMPOUND_TYPES, PRIMITIVE_TYPES } from '../../src/constants';
 
 describe('helpers/isPrimitive', () => {
   it('returns false for compound types', () => {

@@ -6,9 +6,9 @@ module.exports = {
     MAGIC_FLOAT: 456.78,
     IS_ENABLED: true,
     EMPTY_VALUE: null,
-    PRIMITIVE_LIST: ['foo', 123, 456.78, false]
+    PRIMITIVE_LIST: ['foo', 123, 456.78, false],
   },
   attributes: {
-    numberField: 'number'
-  }
+    numberField: 'number',
+  },
 };

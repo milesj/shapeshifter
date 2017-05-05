@@ -7,7 +7,7 @@
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 
-import type { Options, ObjectConfig } from '../types';
+import type { ObjectConfig, Options } from '../types';
 
 export default class ObjectDefinition extends Definition {
   config: ObjectConfig;

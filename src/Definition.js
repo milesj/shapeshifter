@@ -36,7 +36,7 @@ export default class Definition {
    * Validate the definition configuration.
    */
   validateConfig() {
-    const config = this.config;
+    const { config } = this;
 
     if (typeof config.nullable !== 'boolean') {
       throw new TypeError('Invalid type detected, "nullable" property must be a boolean.');

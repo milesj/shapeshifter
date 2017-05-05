@@ -10,15 +10,15 @@ import DefinitionFactory from './DefinitionFactory';
 import isObject from './helpers/isObject';
 
 import type {
-  Options,
-  SchemaStructure,
   AttributesField,
-  MetadataField,
   ConstantsField,
   ImportsField,
+  MetadataField,
+  Options,
+  ReferencesField,
+  SchemaStructure,
   ShapesField,
   SubsetsField,
-  ReferencesField,
 } from './types';
 
 export default class Schematic {
@@ -66,7 +66,7 @@ export default class Schematic {
    * Setup the state of the schema.
    */
   setup() {
-    const data = this.data;
+    const { data } = this;
 
     this.setName(data.name);
     this.setAttributes(data.attributes);

@@ -1,4 +1,4 @@
-import { options, falsyValues, truthyValues } from '../mocks';
+import { falsyValues, options, truthyValues } from '../mocks';
 import ObjectDefinition from '../../src/definitions/Object';
 import NumberDefinition from '../../src/definitions/Number';
 import StringDefinition from '../../src/definitions/String';

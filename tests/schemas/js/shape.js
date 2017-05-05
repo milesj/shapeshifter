@@ -1,14 +1,14 @@
 module.exports = {
   name: 'Shape',
   imports: [
-    { default: 'ShapeDefault', named: ['ShapeClassName'], path: '../stub' }
+    { default: 'ShapeDefault', named: ['ShapeClassName'], path: '../stub' },
   ],
   attributes: {
     structAlias: {
       type: 'struct',
       attributes: {
-        foo: 'string'
-      }
+        foo: 'string',
+      },
     },
     primitiveFields: {
       type: 'shape',
@@ -16,35 +16,35 @@ module.exports = {
         string: 'string',
         bool: {
           type: 'bool',
-          nullable: false
+          nullable: false,
         },
         number: {
           type: 'number',
-          nullable: false
-        }
-      }
+          nullable: false,
+        },
+      },
     },
     arrayFields: {
       type: 'shape',
       attributes: {
         numberArray: {
           type: 'array',
-          valueType: 'number'
+          valueType: 'number',
         },
         stringArray: {
           type: 'array',
-          valueType: 'str'
+          valueType: 'str',
         },
         shapeArray: {
           type: 'array',
           valueType: {
             type: 'struct',
             attributes: {
-              foo: 'string'
-            }
-          }
-        }
-      }
+              foo: 'string',
+            },
+          },
+        },
+      },
     },
     enumFields: {
       type: 'shape',
@@ -52,43 +52,43 @@ module.exports = {
         stringEnum: {
           type: 'enum',
           valueType: 'str',
-          values: ['foo', 'bar', 'baz']
+          values: ['foo', 'bar', 'baz'],
         },
         intEnum: {
           type: 'enum',
           valueType: 'int',
-          values: [1, 2, 3]
-        }
-      }
+          values: [1, 2, 3],
+        },
+      },
     },
     instanceFields: {
       type: 'shape',
       attributes: {
         instOf: {
           type: 'inst',
-          contract: 'ShapeClassName'
+          contract: 'ShapeClassName',
         },
         instanceOf: {
           type: 'instance',
-          contract: 'ShapeDefault'
-        }
-      }
+          contract: 'ShapeDefault',
+        },
+      },
     },
     objectFields: {
       type: 'shape',
       attributes: {
         numberObj: {
           type: 'obj',
-          valueType: 'number'
+          valueType: 'number',
         },
         boolObject: {
           type: 'object',
-          valueType: 'bool'
+          valueType: 'bool',
         },
         intStringObject: {
           type: 'object',
           valueType: 'string',
-          keyType: 'int'
+          keyType: 'int',
         },
         unionObject: {
           type: 'object',
@@ -96,19 +96,19 @@ module.exports = {
             type: 'union',
             valueTypes: [
               {
-                type: 'number'
+                type: 'number',
               },
               'string',
               {
                 type: 'struct',
                 attributes: {
-                  foo: 'string'
-                }
-              }
-            ]
-          }
-        }
-      }
+                  foo: 'string',
+                },
+              },
+            ],
+          },
+        },
+      },
     },
     unionFields: {
       type: 'shape',
@@ -120,11 +120,11 @@ module.exports = {
             'boolean',
             {
               type: 'instance',
-              contract: 'ShapeClassName'
+              contract: 'ShapeClassName',
             },
             {
               type: 'object',
-              valueType: 'string'
+              valueType: 'string',
             },
             {
               type: 'shape',
@@ -133,13 +133,13 @@ module.exports = {
                 enum: {
                   type: 'enum',
                   valueType: 'number',
-                  values: [123, 456, 789]
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  }
+                  values: [123, 456, 789],
+                },
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
 };

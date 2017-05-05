@@ -1,6 +1,6 @@
-import RendererFactory from '../src/RendererFactory';
 import FlowRenderer from '../src/renderers/Flow';
 import ReactRenderer from '../src/renderers/React';
+import RendererFactory from '../src/RendererFactory';
 import TypeScriptRenderer from '../src/renderers/TypeScript';
 import { options } from './mocks';
 

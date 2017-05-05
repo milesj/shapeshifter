@@ -4,42 +4,48 @@
  * @flow
  */
 
-import Definition from './Definition';
+/* eslint-disable complexity */
+
 import ArrayDefinition from './definitions/Array';
 import BoolDefinition from './definitions/Bool';
+import Definition from './Definition';
 import EnumDefinition from './definitions/Enum';
 import InstanceDefinition from './definitions/Instance';
+import isPrimitive from './helpers/isPrimitive';
 import NumberDefinition from './definitions/Number';
+import normalizeType from './helpers/normalizeType';
 import ObjectDefinition from './definitions/Object';
 import ReferenceDefinition from './definitions/Reference';
 import ShapeDefinition from './definitions/Shape';
 import StringDefinition from './definitions/String';
 import UnionDefinition from './definitions/Union';
-import isPrimitive from './helpers/isPrimitive';
-import normalizeType from './helpers/normalizeType';
 
-import type { Options, BaseConfig } from './types';
+import type { BaseConfig, Options } from './types';
 
 export default class DefinitionFactory {
 
   /**
    * Create a new definition based on the defined attribute configuration.
    */
-  static factory(options: Options, attribute: string, config: string | BaseConfig): Definition {
+  static factory(options: Options, attribute: string, baseConfig: string | BaseConfig): Definition {
+    let config = {};
+
     // Convert primitives to configuration objects
-    if (typeof config === 'string') {
-      if (isPrimitive(normalizeType(config))) {
-        config = ({ type: config }: BaseConfig);
+    if (typeof baseConfig === 'string') {
+      if (isPrimitive(normalizeType(baseConfig))) {
+        config = ({ type: baseConfig }: BaseConfig);
       } else {
-        throw new TypeError(`Invalid primitive type "${config}".`);
+        throw new TypeError(`Invalid primitive type "${baseConfig}".`);
       }
+    } else {
+      config = baseConfig;
     }
 
     // Check if a type exists
-    if (!config.type) {
-      throw new SyntaxError('Definitions require a "type" property.');
-    } else {
+    if (config.type) {
       config.type = normalizeType(config.type);
+    } else {
+      throw new SyntaxError('Definitions require a "type" property.');
     }
 
     // Instantiate definition classes

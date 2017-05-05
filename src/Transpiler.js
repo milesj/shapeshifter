@@ -38,6 +38,7 @@ export default class Transpiler {
         fs.stat(target, (error: ?Error, stats: fs.Stats) => {
           if (error) {
             reject(error);
+
             return;
           }
 

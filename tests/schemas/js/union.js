@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Union',
   imports: [
-    { default: 'UnionDefault', named: ['UnionClassName'], path: '../stub' }
+    { default: 'UnionDefault', named: ['UnionClassName'], path: '../stub' },
   ],
   attributes: {
     arrayField: {
@@ -9,23 +9,23 @@ module.exports = {
       valueTypes: [
         {
           type: 'array',
-          valueType: 'string'
+          valueType: 'string',
         },
         {
           type: 'array',
           valueType: {
             type: 'object',
-            valueType: 'string'
-          }
-        }
-      ]
+            valueType: 'string',
+          },
+        },
+      ],
     },
     primitiveFields: {
       type: 'union',
       valueTypes: [
         'bool',
-        'integer'
-      ]
+        'integer',
+      ],
     },
     enumField: {
       type: 'union',
@@ -33,44 +33,44 @@ module.exports = {
         {
           type: 'enum',
           valueType: 'string',
-          values: ['foo', 'bar', 'baz']
+          values: ['foo', 'bar', 'baz'],
         },
         {
           type: 'enum',
           valueType: 'number',
-          values: [789, 456, 123]
-        }
-      ]
+          values: [789, 456, 123],
+        },
+      ],
     },
     instanceField: {
       type: 'union',
       valueTypes: [
         {
           type: 'instance',
-          contract: 'UnionClassName'
+          contract: 'UnionClassName',
         },
         {
           type: 'inst',
           contract: 'UnionDefault',
-          nullable: false
-        }
-      ]
+          nullable: false,
+        },
+      ],
     },
     objectField: {
       type: 'union',
       valueTypes: [
         {
           type: 'object',
-          valueType: 'number'
+          valueType: 'number',
         },
         {
           type: 'obj',
           valueType: {
             type: 'array',
-            valueType: 'str'
-          }
-        }
-      ]
+            valueType: 'str',
+          },
+        },
+      ],
     },
     shapeField: {
       type: 'union',
@@ -79,19 +79,19 @@ module.exports = {
           type: 'shape',
           attributes: {
             foo: 'string',
-            bar: 'bool'
-          }
+            bar: 'bool',
+          },
         },
         {
           type: 'struct',
           attributes: {
             qux: {
               type: 'union',
-              valueTypes: ['string', 'bool']
-            }
-          }
-        }
-      ]
+              valueTypes: ['string', 'bool'],
+            },
+          },
+        },
+      ],
     },
     unionField: {
       type: 'union',
@@ -100,23 +100,23 @@ module.exports = {
           type: 'union',
           valueTypes: [
             {
-              type: 'string'
+              type: 'string',
             },
             {
               type: 'enum',
               valueType: 'number',
-              values: [1, 2, 3]
-            }
-          ]
+              values: [1, 2, 3],
+            },
+          ],
         },
         {
           type: 'union',
           valueTypes: [
             'bool',
-            'int'
-          ]
-        }
-      ]
-    }
-  }
+            'int',
+          ],
+        },
+      ],
+    },
+  },
 };

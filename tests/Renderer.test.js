@@ -1,9 +1,9 @@
+import ArrayDefinition from '../src/definitions/Array';
+import ReferenceDefinition from '../src/definitions/Reference';
 import Renderer from '../src/Renderer';
 import Schematic from '../src/Schematic';
-import ArrayDefinition from '../src/definitions/Array';
 import ShapeDefinition from '../src/definitions/Shape';
 import StringDefinition from '../src/definitions/String';
-import ReferenceDefinition from '../src/definitions/Reference';
 import { options } from './mocks';
 
 describe('Renderer', () => {
