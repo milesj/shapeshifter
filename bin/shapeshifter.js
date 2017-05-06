@@ -5,7 +5,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable no-invalid-this, prefer-arrow-callback */
+/* eslint-disable import/no-unresolved, no-invalid-this, prefer-arrow-callback */
 
 const Vorpal = require('vorpal');
 const Transpiler = require('../lib/Transpiler').default;
