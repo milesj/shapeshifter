@@ -56,12 +56,18 @@
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.0.9",
+    "@milesj/build-tool-config": "^0.0.10",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "typescript": "^2.3.2"
   },
   "babel": {
     "extends": "./node_modules/@milesj/build-tool-config/babel.json5"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/@milesj/build-tool-config/eslint.json5"
+  },
+  "jest": {
+    "preset": "@milesj/build-tool-config"
   }
 }

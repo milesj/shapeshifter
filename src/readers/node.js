@@ -9,6 +9,5 @@
 import type { SchemaStructure } from '../types';
 
 export default function readWithNode(path: string): SchemaStructure {
-  // $FlowIssue Ignore
   return require(path);
 }

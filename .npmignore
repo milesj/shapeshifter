@@ -1,6 +1,5 @@
 flow/
 flow-typed/
-src/
 tests/
 .babelrc
 .eslintignore

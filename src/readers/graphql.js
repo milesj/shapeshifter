@@ -57,7 +57,7 @@ class GraphQLReader {
 
     // List
     } else if (type.kind === Kind.LIST_TYPE) {
-      // $FlowIssue We know what this will be
+      // $FlowIgnore We know what this will be
       return {
         type: 'array',
         valueType: this.buildAttribute(field, type.type, true, schematic),
