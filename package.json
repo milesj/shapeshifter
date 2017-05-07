@@ -56,7 +56,7 @@
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.0.10",
+    "@milesj/build-tool-config": "^0.1.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "typescript": "^2.3.2"

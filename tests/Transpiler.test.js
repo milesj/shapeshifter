@@ -159,7 +159,7 @@ describe('Transpiler', () => {
       expect(output).toBe(file(expectedPath));
     });
 
-    it('can include schemas through configuration', () => {
+    it('can include types and schemas through configuration', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/with-types-schemas.js`;
 

@@ -51,7 +51,7 @@ describe('definitions/Enum', () => {
     });
   });
 
-  it('does not error if `values` match the type in `valueType`', () => {
+  describe('does not error if `values` match the type in `valueType`', () => {
     it('for strings', () => {
       expect(() => (
         new EnumDefinition(options, 'foo', { valueType: 'string', values: ['foo', 'bar'] })
