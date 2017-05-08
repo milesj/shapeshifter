@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@milesj/build-tool-config@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.1.0.tgz#7fe28c8952b968500533906829af9ba19a7d2c6a"
+"@milesj/build-tool-config@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.1.2.tgz#56ea4453016d7962a61dfaa80ed7f3ba21ebd58b"
   dependencies:
     babel-cli "^6.24.1"
     babel-eslint "^7.2.0"
