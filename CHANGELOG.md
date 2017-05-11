@@ -1,3 +1,8 @@
+# 4.1.0
+* Updated to include src/ files in the published package.
+* Updated `Relation.schema` Flowtype definition to be covariant and allow subclasses.
+* Moved Flowtype definition to root of project.
+
 # 4.0.0
 * Updated React requirement to v15.5.
 * Updated PropTypes to use the new `prop-types` package.

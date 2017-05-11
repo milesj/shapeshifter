@@ -4,9 +4,9 @@ declare module 'shapeshifter' {
   declare export type PrimaryKey = string | string[];
   declare export type Relation = {
     attribute: string,
-    schema: Schema,
-    relation: string,
     collection: boolean,
+    relation: string,
+    +schema: Schema,
   };
 
   declare export default class Schema {
