@@ -25,16 +25,14 @@
   "main": "./lib/index.js",
   "bin": "./bin/shapeshifter.js",
   "scripts": {
-    "babel": "build-lib ./src -d ./lib && cp ./flow/shapeshifter.js.flow ./lib",
-    "check": "yarn run check:flow && yarn run check:typescript",
-    "check:flow": "type-check",
-    "check:typescript": "tsc --noEmit --allowJs ./tests/expected/gql/typescript/* ./tests/expected/node/typescript/*",
-    "coverage": "yarn run jest -- --coverage",
+    "babel": "build-lib ./src -d ./lib",
+    "check": "type-check && tsc --noEmit --allowJs ./tests/expected/gql/typescript/* ./tests/expected/node/typescript/*",
+    "coverage": "run-coverage",
     "eslint": "run-linter ./bin ./src ./tests",
     "jest": "run-tests",
-    "pretest": "yarn run eslint",
     "posttest": "yarn run check",
-    "preversion": "yarn test && yarn run clean && yarn run build",
+    "pretest": "yarn run eslint",
+    "preversion": "yarn test && yarn run babel",
     "test": "yarn run jest"
   },
   "repository": {
@@ -56,8 +54,8 @@
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.1.2",
-    "prop-types": "^15.5.8",
+    "@milesj/build-tool-config": "^0.3.1",
+    "prop-types": "^15.5.9",
     "react": "^15.5.4",
     "typescript": "^2.3.2"
   },
