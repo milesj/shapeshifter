@@ -1,4 +1,5 @@
 # 4.1.0
+* Updated IE requirement to 11+.
 * Updated to include src/ files in the published package.
 * Updated `Relation.schema` Flowtype definition to be covariant and allow subclasses.
 * Moved Flowtype definition to root of project.

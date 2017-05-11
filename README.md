@@ -1,4 +1,4 @@
-# Shapeshifter v4.0.0
+# Shapeshifter v4.1.0
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
 Shapeshifter is a command line tool for generating ES2015 compatible
@@ -87,6 +87,7 @@ export const UserSchema = new Schema('users', 'id');
 * ES2015
 * Node 4+
 * React 0.14+ / Flow 0.30+ / TypeScript 2.0+
+* IE 11+
 
 ## Installation
 
