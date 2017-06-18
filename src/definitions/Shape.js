@@ -24,7 +24,7 @@ export default class ShapeDefinition extends Definition {
         throw new TypeError('Shape reference must be a string.');
       }
     } else if (attributes) {
-      if (!isObject(attributes) || !Object.keys(attributes).length) {
+      if (!isObject(attributes) || Object.keys(attributes).length === 0) {
         throw new TypeError('Shape attributes must be a mapping of type definitions.');
       }
 

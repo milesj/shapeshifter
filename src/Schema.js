@@ -60,7 +60,7 @@ export default class Schema {
    */
   addRelation(attribute: string, schema: Schema, relation: string): this {
     if (!(schema instanceof Schema)) {
-      throw new Error(`Relation "${attribute}" is not a valid schema.`);
+      throw new TypeError(`Relation "${attribute}" is not a valid schema.`);
 
     } else if (this.relationTypes[attribute]) {
       throw new Error(

@@ -18,7 +18,7 @@ export default class UnionDefinition extends Definition {
 
     const { valueTypes } = this.config;
 
-    if (!Array.isArray(valueTypes) || !valueTypes.length) {
+    if (!Array.isArray(valueTypes) || valueTypes.length === 0) {
       throw new SyntaxError(
         'Union definitions require a "valueTypes" property, ' +
         'which is a list of type definitions',

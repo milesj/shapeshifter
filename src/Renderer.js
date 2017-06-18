@@ -232,7 +232,7 @@ export default class Renderer {
     }
 
     // Only add the import if schemas exist
-    if (this.schemas.length) {
+    if (this.schemas.length > 0) {
       this.imports.unshift(this.renderImport({
         default: 'Schema',
         path: 'shapeshifter',
@@ -320,28 +320,28 @@ export default class Renderer {
       return this.renderArray(definition, depth);
 
     } else if (definition instanceof BoolDefinition) {
-      return this.renderBool(definition, depth);
+      return this.renderBool(definition);
 
     } else if (definition instanceof EnumDefinition) {
       return this.renderEnum(definition, depth);
 
     } else if (definition instanceof InstanceDefinition) {
-      return this.renderInstance(definition, depth);
+      return this.renderInstance(definition);
 
     } else if (definition instanceof NumberDefinition) {
-      return this.renderNumber(definition, depth);
+      return this.renderNumber(definition);
 
     } else if (definition instanceof ObjectDefinition) {
       return this.renderObject(definition, depth);
 
     } else if (definition instanceof ReferenceDefinition) {
-      return this.renderReference(definition, depth);
+      return this.renderReference(definition);
 
     } else if (definition instanceof ShapeDefinition) {
       return this.renderShape(definition, depth);
 
     } else if (definition instanceof StringDefinition) {
-      return this.renderString(definition, depth);
+      return this.renderString(definition);
 
     } else if (definition instanceof UnionDefinition) {
       return this.renderUnion(definition, depth);
@@ -423,11 +423,11 @@ export default class Renderer {
       imports.push(defaultName);
     }
 
-    if (named.length) {
+    if (named.length > 0) {
       imports.push(this.formatObject(named, 0, ', ', ' '));
     }
 
-    if (!imports.length) {
+    if (imports.length === 0) {
       throw new Error('Import statements require either a default export or named exports.');
     }
 
@@ -556,7 +556,7 @@ export default class Renderer {
       if (relationDefinition) {
         /* istanbul ignore next Hard to test */
         if (typeof relations[relationType] === 'undefined') {
-          throw new Error(
+          throw new TypeError(
             `Invalid relation type for reference attribute "${definition.attribute}".`,
           );
         }
@@ -591,7 +591,7 @@ export default class Renderer {
       args.push(this.formatValue(primaryKey));
     }
 
-    if (isObject(meta) && Object.keys(meta).length) {
+    if (isObject(meta) && Object.keys(meta).length > 0) {
       args.push(this.renderPlainObject(meta));
     }
 
@@ -600,7 +600,7 @@ export default class Renderer {
     // Generate relations separately so that we avoid circular references
     let relationTemplate = '';
 
-    if (fields.length) {
+    if (fields.length > 0) {
       relationTemplate += `.addAttributes(${this.formatArray(fields, 0)})`;
     }
 
@@ -610,12 +610,12 @@ export default class Renderer {
         ...relations[relation],
       ]), []);
 
-      if (useDefineList.length) {
+      if (useDefineList.length > 0) {
         relationTemplate += `.define(${this.formatObject(useDefineList, 0)})`;
       }
     } else {
       Object.keys(relations).forEach((relation: string) => {
-        if (relations[relation].length) {
+        if (relations[relation].length > 0) {
           relationTemplate += `.${relation}(${this.formatObject(relations[relation], 0)})`;
         }
       });

@@ -35,9 +35,9 @@ export default class Transpiler {
   transpile(targets: string[]): Promise<string> {
     return Promise.all(targets.map(target => (
       new Promise((resolve: *, reject: *) => {
-        fs.stat(target, (error: ?Error, stats: fs.Stats) => {
-          if (error) {
-            reject(error);
+        fs.stat(target, (statError: ?Error, stats: fs.Stats) => {
+          if (statError) {
+            reject(statError);
 
             return;
           }
@@ -56,8 +56,8 @@ export default class Transpiler {
             } else {
               throw new Error(`Unsupported file type: ${target}.`);
             }
-          } catch (e) {
-            reject(e);
+          } catch (error) {
+            reject(error);
           }
 
           resolve(paths);

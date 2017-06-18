@@ -100,7 +100,7 @@ export default class Schematic {
    * Set schema attributes.
    */
   setAttributes(attributes: AttributesField) {
-    if (!isObject(attributes) || !Object.keys(attributes).length) {
+    if (!isObject(attributes) || Object.keys(attributes).length === 0) {
       this.throwError('No attributes found in schema.');
     }
 
