@@ -57,7 +57,7 @@ export default class WebpackResolvePlugin {
 
     // Delete the temporary file
     compiler.plugin('compilation', (compilation) => {
-      compilation.plugin('succeed-module', async (result) => {
+      compilation.plugin('succeed-module', (result) => {
         if (result.request === TEMP_RESOLVER_FILE) {
           fs.unlinkSync(TEMP_RESOLVER_FILE);
         }

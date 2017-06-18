@@ -25,7 +25,7 @@ type ResolveList = {
 export default class Transpiler {
   options: Options;
 
-  constructor(options: Options = {}) {
+  constructor(options: Options) {
     this.options = {
       ...DEFAULT_OPTIONS,
       ...options,

@@ -31,7 +31,8 @@ module.exports = {
       renderer: 'flow',
     }),
   ],
-  // Overwrite our local import so that webpack can resolve it
+  // The shapeshifter import won't work from within shapeshifter itself,
+  // so overwrite the exported value for testing purposes.
   externals: {
     shapeshifter: '{}',
   },
