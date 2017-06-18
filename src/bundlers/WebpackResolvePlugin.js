@@ -2,14 +2,11 @@
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  */
-/* eslint-disable no-param-reassign, no-underscore-dangle */
+/* eslint-disable no-param-reassign, promise/always-return, promise/no-callback-in-promise */
 
-import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import Transpiler from '../Transpiler';
-
-const TEMP_RESOLVER_FILE = path.join(os.tmpdir(), 'shapeshifter.js');
 
 export default class WebpackResolvePlugin {
   constructor(options = {}) {
@@ -37,33 +34,47 @@ export default class WebpackResolvePlugin {
   }
 
   apply(compiler) {
-    // Start transpiling the schematics and write the output to a temporary file
-    this.transpiler.transpile(this.schematicsPath)
-      .then(source => fs.writeFileSync(TEMP_RESOLVER_FILE, source))
-      .catch((error) => {
-        throw error;
-      });
+    const tempFile = path.join(os.tmpdir(), 'shapeshifter.js');
+
+    // Create a function that we can use to delete the temporary file
+    function cleanupTempFile(arg) {
+      if (arg && (arg instanceof Error || arg.rawRequest === tempFile)) {
+        compiler.outputFileSystem.unlink(tempFile);
+      }
+
+      return arg;
+    }
 
     // Overwrite the webpack module file with the temporary file
     compiler.plugin('normal-module-factory', (nmf) => {
       nmf.plugin('before-resolve', (result, callback) => {
-        if (result.request === this.importPath) {
-          result.request = TEMP_RESOLVER_FILE;
+        if (!result || result.request !== this.importPath) {
+          callback(null, result);
+
+          return;
         }
 
-        return callback(null, result);
+        // Tell webpack to read from the temporary file
+        result.request = tempFile;
+
+        // Start transpiling the schematics and write the output to the temporary file
+        this.transpiler.transpile(this.schematicsPath)
+          .then((source) => {
+            compiler.outputFileSystem.writeFile(tempFile, source, (error) => {
+              callback(error, result);
+            });
+          })
+          .catch((error) => {
+            callback(error, result);
+          });
       });
     });
 
-    // Delete the temporary file
+    // Cleanup and delete the temporary file
+    compiler.plugin('failed', cleanupTempFile);
     compiler.plugin('compilation', (compilation) => {
-      compilation.plugin('succeed-module', (result) => {
-        if (result.request === TEMP_RESOLVER_FILE) {
-          fs.unlinkSync(TEMP_RESOLVER_FILE);
-        }
-
-        return result;
-      });
+      compilation.plugin('failed-module', cleanupTempFile);
+      compilation.plugin('succeed-module', cleanupTempFile);
     });
   }
 }
