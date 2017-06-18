@@ -1,20 +1,38 @@
-var path = require('path');
-var ShapeshifterResolverPlugin = require('./lib/bundlers/WebpackResolvePlugin').default;
+const path = require('path');
+const SchematicResolverPlugin = require('./lib/bundlers/WebpackResolvePlugin').default;
 
 module.exports = {
-  entry: path.join(__dirname, 'tests/bundle-entry.js'),
+  entry: path.join(__dirname, 'tests/bundle.js'),
   output: {
-    filename: 'bundle.js',
-    path: __dirname,
+    filename: 'bundle.min.js',
+    path: path.join(__dirname, 'tests'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            extends: path.join(__dirname, 'node_modules/@milesj/build-tool-config/babel.node.json5'),
+          },
+        },
+      },
+    ],
   },
   plugins: [
-    new ShapeshifterResolverPlugin({
-      path: path.join(__dirname, 'tests/schemas'),
-      nullable: true,
-      attributes: true,
-      schemas: true,
-      types: true,
-      format: 'flow',
+    new SchematicResolverPlugin({
+      schematicsPath: path.join(__dirname, 'tests/schemas'),
+      defaultNullable: true,
+      includeAttributes: true,
+      includeSchemas: true,
+      includeTypes: true,
+      renderer: 'flow',
     }),
   ],
+  // Overwrite our local import so that webpack can resolve it
+  externals: {
+    shapeshifter: '{}',
+  },
 };

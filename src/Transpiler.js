@@ -12,6 +12,7 @@ import RendererFactory from './RendererFactory';
 import Schematic from './Schematic';
 import readWithNode from './readers/node';
 import readWithGraphQL from './readers/graphql';
+import { DEFAULT_OPTIONS } from './constants';
 
 import type { Options } from './types';
 
@@ -24,8 +25,11 @@ type ResolveList = {
 export default class Transpiler {
   options: Options;
 
-  constructor(options: Options) {
-    this.options = options;
+  constructor(options: Options = {}) {
+    this.options = {
+      ...DEFAULT_OPTIONS,
+      ...options,
+    };
   }
 
   /**
@@ -33,6 +37,11 @@ export default class Transpiler {
    */
   /* istanbul ignore next */
   transpile(targets: string[]): Promise<string> {
+    if (!Array.isArray(targets)) {
+      // eslint-disable-next-line no-param-reassign
+      targets = [targets];
+    }
+
     return Promise.all(targets.map(target => (
       new Promise((resolve: *, reject: *) => {
         fs.stat(target, (statError: ?Error, stats: fs.Stats) => {
@@ -47,11 +56,11 @@ export default class Transpiler {
           try {
             if (stats.isDirectory()) {
               paths.push(
-                ...fs.readdirSync(target).map(file => path.join(process.cwd(), target, file)),
+                ...fs.readdirSync(target).map(file => path.resolve(target, file)),
               );
 
             } else if (stats.isFile()) {
-              paths.push(path.join(process.cwd(), target));
+              paths.push(path.resolve(target));
 
             } else {
               throw new Error(`Unsupported file type: ${target}.`);
