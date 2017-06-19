@@ -1,1 +1,1 @@
-throw new Error("Oops, it looks like you're using auto-transpilation without the webpack plugin.");
+throw new Error("Oops, it looks like you're trying to use auto-transpilation without the appropriate build plugin.");
