@@ -8,7 +8,7 @@ import os from 'os';
 import path from 'path';
 import Transpiler from '../Transpiler';
 
-export default class WebpackResolvePlugin {
+export default class WebpackTranspilePlugin {
   constructor(options = {}) {
     const {
       importPath = 'shapeshifter/schematics',
@@ -29,7 +29,7 @@ export default class WebpackResolvePlugin {
     }
 
     this.importPath = importPath;
-    this.schematicsPath = schematicsPath;
+    this.schematicsPath = Array.isArray(schematicsPath) ? schematicsPath : [schematicsPath];
     this.transpiler = new Transpiler(opts);
   }
 

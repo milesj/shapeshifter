@@ -37,11 +37,6 @@ export default class Transpiler {
    */
   /* istanbul ignore next */
   transpile(targets: string[]): Promise<string> {
-    if (!Array.isArray(targets)) {
-      // eslint-disable-next-line no-param-reassign
-      targets = [targets];
-    }
-
     return Promise.all(targets.map(target => (
       new Promise((resolve: *, reject: *) => {
         fs.stat(target, (statError: ?Error, stats: fs.Stats) => {

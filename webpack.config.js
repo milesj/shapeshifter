@@ -1,5 +1,5 @@
 const path = require('path');
-const SchematicResolverPlugin = require('./lib/bundlers/WebpackResolvePlugin').default;
+const ShapeshifterTranspilePlugin = require('./lib/bundlers/WebpackTranspilePlugin').default;
 
 module.exports = {
   entry: path.join(__dirname, 'tests/bundle.js'),
@@ -22,7 +22,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new SchematicResolverPlugin({
+    new ShapeshifterTranspilePlugin({
       schematicsPath: path.join(__dirname, 'tests/schemas'),
       defaultNullable: true,
       includeAttributes: true,
