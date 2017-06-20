@@ -39,7 +39,11 @@ export default class WebpackTranspilePlugin {
     // Create a function that we can use to delete the temporary file
     function cleanupTempFile(arg) {
       if (arg && (arg instanceof Error || arg.rawRequest === tempFile)) {
-        compiler.outputFileSystem.unlink(tempFile);
+        compiler.outputFileSystem.unlink(tempFile, (error) => {
+          if (error) {
+            throw error;
+          }
+        });
       }
 
       return arg;

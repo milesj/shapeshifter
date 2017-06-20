@@ -59,7 +59,7 @@
     "babel-loader": "^7.0.0",
     "prop-types": "^15.5.10",
     "typescript": "^2.3.4",
-    "webpack": "^2.6.1"
+    "webpack": "^3.0.0"
   },
   "babel": {
     "extends": "./node_modules/@milesj/build-tool-config/babel.node.json5"
