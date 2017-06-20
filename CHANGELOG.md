@@ -1,3 +1,7 @@
+# 4.2.0
+* Schematics can now be auto-transpiled through a build or bundle process.
+* Added a new `WebpackTranspilePlugin`.
+
 # 4.1.0
 * Updated IE requirement to 11+.
 * Updated to include src/ files in the published package.
