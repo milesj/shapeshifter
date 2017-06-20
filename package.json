@@ -33,7 +33,8 @@
     "posttest": "yarn run check",
     "pretest": "yarn run eslint",
     "preversion": "yarn test && yarn run babel",
-    "test": "yarn run jest"
+    "test": "yarn run jest",
+    "test:webpack": "yarn run babel && webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -55,8 +56,10 @@
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.9.0",
+    "babel-loader": "^7.0.0",
     "prop-types": "^15.5.10",
-    "typescript": "^2.3.4"
+    "typescript": "^2.3.4",
+    "webpack": "^3.0.0"
   },
   "babel": {
     "extends": "./node_modules/@milesj/build-tool-config/babel.node.json5"

@@ -86,7 +86,7 @@ export const UserSchema = new Schema('users', 'id');
 
 * ES2015
 * Node 4+
-* React 0.14+ / Flow 0.30+ / TypeScript 2.0+
+* React 15+ / Flow 0.30+ / TypeScript 2.0+
 * IE 11+
 
 ## Installation
@@ -126,20 +126,20 @@ will be sent to the console.
 
 ### Options
 
-* `--nullable`, `-n` - Marks all attributes as nullable by default.
+* `--nullable`, `-n` (bool) - Marks all attributes as nullable by default.
   Not applicable to GraphQL. Defaults to false.
-* `--indent` - Defines the indentation characters to use in the
+* `--indent` (string) - Defines the indentation characters to use in the
   generated output. Defaults to 2 spaces.
-* `--format` - The format to output to. Accepts "react", "flow", or
+* `--format` (string) - The format to output to. Accepts "react", "flow", or
   "typescript". Defaults to "react".
-* `--schemas` - Include schema class exports in the output. Defaults to
+* `--schemas` (bool) - Include schema class exports in the output. Defaults to
   "false".
-* `--attributes` - Include an attribute list in the schema class export.
+* `--attributes` (bool) - Include an attribute list in the schema class export.
   Defaults to "false".
-* `--types` - Include type definition exports in the output. Defaults to
+* `--types` (bool) - Include type definition exports in the output. Defaults to
   "false".
-* `--useDefine` - Update all schema relations to use `Schema#define`.
-* `--stripPropTypes` - Wrap PropType definitions in
+* `--useDefine` (bool) - Update all schema relations to use `Schema#define`.
+* `--stripPropTypes` (bool) - Wrap PropType definitions in
   `process.env.NODE_ENV !== 'production'` expressions, allowing them to be
   removed with dead code elimination (through minification).
 
@@ -168,6 +168,8 @@ will be sent to the console.
 * [Schema Classes](#schema-classes)
   * [Including Attributes](#including-attributes)
   * [Including Relations](#including-relations)
+* [Auto-Transpilation](#auto-transpilation)
+  * [Webpack](#webpack)
 
 ### Schematic Structure
 
@@ -878,21 +880,17 @@ export const UserSchema = new Schema('users', 'id');
 The following properties are available on the `Schema` class instance.
 
 * `resourceName` (string) - The resource name of the schema, passed as
-the first argument to the constructor. This field is based on
-`meta.resourceName` in the schematic file.
-
+  the first argument to the constructor. This field is based on
+  `meta.resourceName` in the schematic file.
 * `primaryKey` (string|string[]) - The name of the primary key in the current
-schema, passed as the second argument to the constructor. Compound keys can be
-supported by passing an array of attribute names. This field is based on
-`meta.primaryKey` in the JSON schematic file. Defaults to "id".
-
+  schema, passed as the second argument to the constructor. Compound keys can be
+  supported by passing an array of attribute names. This field is based on
+  `meta.primaryKey` in the JSON schematic file. Defaults to "id".
 * `attributes` (string[]) - List of attribute names in the current schema.
-
 * `metadata` (object) - Extra metadata defined in the current schema.
-
 * `relations` (object[]) - List of relational objects that map specific
-attributes to externally referenced schemas. The relational object
-follows this structure:
+  attributes to externally referenced schemas. The relational object
+  follows this structure:
 
 ```javascript
 {
@@ -904,8 +902,8 @@ follows this structure:
 ```
 
 * `relationTypes` (object) - Maps attribute names to relation types. A
-relation type is one of the following constants found on the `Schema`
-class: `HAS_ONE`, `HAS_MANY`, `BELONGS_TO`, `BELONGS_TO_MANY`.
+  relation type is one of the following constants found on the `Schema`
+  class: `HAS_ONE`, `HAS_MANY`, `BELONGS_TO`, `BELONGS_TO_MANY`.
 
 > Schemas are not supported by GraphQL.
 
@@ -970,6 +968,54 @@ UserSchema.define({
   posts: [PostSchema],
 });
 ```
+
+### Auto-Transpilation
+
+By default, Shapeshifter transpiles schematics to a target folder through a manual
+CLI script. This can be problematic, as the command may incur VCS conflicts,
+or simply, developers will forget to run the command.
+
+To mitigate this issue, an auto-transpilation plugin can be added to your build/bundle process.
+This plugin will intercept a custom import path and replace the source code with the
+transpiled Shapeshifter output.
+
+```javascript
+import { UserSchema } from 'shapeshifter/schematics';
+```
+
+The plugin accepts an object with the following options -- with most of them being based on the
+[options passed to the command line](#options).
+
+* `schematicsPath` (string|string[]) - Absolute file system path to schematics folder. *Required.*
+* `importPath` (string) - The fake import path to intercept. Defaults to `shapeshifter/schematics`.
+* `defaultNullable`
+* `indentCharacter`
+* `format`
+* `includeSchemas`
+* `includeAttributes`
+* `includeTypes`
+* `useDefine`
+* `stripPropTypes`
+
+#### Webpack
+
+To automatically transpile Shapeshifter during Webpack's build process, add
+the `WebpackTranspilePlugin`.
+
+```javascript
+const ShapeshifterTranspilePlugin = require('shapeshifter/lib/bundlers/WebpackTranspilePlugin');
+
+// Webpack config
+plugins: [
+  new ShapeshifterTranspilePlugin({
+    schematicsPath: path.join(__dirname, 'src/schemas'),
+  }),
+],
+```
+
+#### Browserify, Gulp, Grunt
+
+Looking into...
 
 ## FAQ
 

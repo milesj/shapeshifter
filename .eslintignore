@@ -1,3 +1,4 @@
 lib/
 tests/expected/**/*
+tests/bundle.js
 *.min.js
