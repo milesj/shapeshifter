@@ -1,4 +1,4 @@
 // Fake import path to trigger automatic shapeshifter transpilation
-require('shapeshifter/schematics');
+const { ParentSchema, ExtraMetaSchema } = require('shapeshifter/schematics');
 // Lets include some other stuff too
-require('prop-types');
+// const PropTypes = require('prop-types');

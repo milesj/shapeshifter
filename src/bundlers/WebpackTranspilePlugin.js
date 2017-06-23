@@ -34,12 +34,10 @@ export default class WebpackTranspilePlugin {
   }
 
   apply(compiler) {
-    const tempFile = path.join(os.tmpdir(), 'shapeshifter.js');
-
     // Create a function that we can use to delete the temporary file
     function cleanupTempFile(arg) {
-      if (arg && (arg instanceof Error || arg.rawRequest === tempFile)) {
-        compiler.outputFileSystem.unlink(tempFile, (error) => {
+      if (arg && arg.shapeshifterFile) {
+        compiler.outputFileSystem.unlink(arg.shapeshifterFile, (error) => {
           if (error) {
             throw error;
           }
@@ -48,6 +46,8 @@ export default class WebpackTranspilePlugin {
 
       return arg;
     }
+
+    console.log('COMPILER', compiler);
 
     // Overwrite the webpack module file with the temporary file
     compiler.plugin('normal-module-factory', (nmf) => {
@@ -58,17 +58,39 @@ export default class WebpackTranspilePlugin {
           return;
         }
 
+        let tempFile = path.join(os.tmpdir(), 'shapeshifter.js');
+
+        // Temp directory causes issues for webpack-dev-server
+        if (compiler.outputFileSystem.constructor.name === 'MemoryFileSystem') {
+          tempFile = path.join(result.context, 'shapeshifter.js');
+
+          // We need to create the context folder as it most likely does not exist
+          compiler.outputFileSystem.mkdirp(result.context, (error) => {
+            if (error) {
+              callback(error, result);
+            }
+          });
+        }
+
         // Tell webpack to read from the temporary file
         result.request = tempFile;
+        result.shapeshifterFile = tempFile;
 
-        // Start transpiling the schematics and write the output to the temporary file
+        console.log('RESULT', result);
+
+        // Start transpiling the schematics
         this.transpiler.transpile(this.schematicsPath)
           .then((source) => {
-            compiler.outputFileSystem.writeFile(tempFile, source, (error) => {
-              callback(error, result);
+            console.log('SOURCE', source);
+
+            // Write the output to the temporary file
+            compiler.outputFileSystem.writeFile(tempFile, source, 'utf8', (writeError) => {
+              console.log('WRITE', writeError);
+              callback(writeError, result);
             });
           })
           .catch((error) => {
+            console.log('TRANSPILE ERROR', error);
             callback(error, result);
           });
       });

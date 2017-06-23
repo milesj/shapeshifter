@@ -34,7 +34,8 @@
     "pretest": "yarn run eslint",
     "preversion": "yarn test && yarn run babel",
     "test": "yarn run jest",
-    "test:webpack": "yarn run babel && webpack --config webpack.config.js"
+    "test:webpack": "yarn run babel && webpack --config webpack.config.js",
+    "test:webpack:dev": "yarn run babel && webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -51,7 +52,7 @@
   "homepage": "https://github.com/milesj/shapeshifter#readme",
   "dependencies": {
     "babel-runtime": "^6.23.0",
-    "graphql": "^0.10.1",
+    "graphql": "^0.10.3",
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
@@ -59,7 +60,8 @@
     "babel-loader": "^7.0.0",
     "prop-types": "^15.5.10",
     "typescript": "^2.3.4",
-    "webpack": "^3.0.0"
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.5.0"
   },
   "babel": {
     "extends": "./node_modules/@milesj/build-tool-config/babel.node.json5"
