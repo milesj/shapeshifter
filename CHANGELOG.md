@@ -1,6 +1,8 @@
 # 4.2.0
 * Schematics can now be auto-transpiled through a build or bundle process.
-* Added a new `WebpackTranspilePlugin`.
+* Added a new `WebpackPlugin` plugin for auto-transpilation.
+* Added a new `importPath` option, allowing the output import to be customized.
+* Added an `eslint-disable` comment to the top of the output.
 
 # 4.1.0
 * Updated IE requirement to 11+.
