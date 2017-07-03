@@ -236,6 +236,19 @@ describe('Transpiler', () => {
 
       expect(output).toBe(file(expectedPath));
     });
+
+    it('can customize the import path through configuration', () => {
+      const actualPath = `${__dirname}/schemas/types-schemas.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/import-path.js`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeSchemas: true,
+        importPath: 'some-other-schema-library',
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
   });
 
   describe('extractSchematics()', () => {

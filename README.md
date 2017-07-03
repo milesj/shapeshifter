@@ -130,6 +130,8 @@ will be sent to the console.
   Not applicable to GraphQL. Defaults to false.
 * `--indent` (string) - Defines the indentation characters to use in the
   generated output. Defaults to 2 spaces.
+* `--import` (string) - The import path to a `Schema` class, inserted at the top
+  of every output file. Defaults to "shapeshifter".
 * `--format` (string) - The format to output to. Accepts "react", "flow", or
   "typescript". Defaults to "react".
 * `--schemas` (bool) - Include schema class exports in the output. Defaults to
@@ -989,13 +991,14 @@ The plugin accepts an object with the following options -- with most of them bei
 * `schematicsSource` (string|string[]) - Absolute file system path to schematics source folder. *Required.*
 * `schematicsImportPath` (string) - The fake import path to intercept. Defaults to `shapeshifter/schematics`.
 * `defaultNullable`
-* `indentCharacter`
 * `format`
-* `includeSchemas`
+* `importPath`
 * `includeAttributes`
+* `includeSchemas`
 * `includeTypes`
-* `useDefine`
+* `indentCharacter`
 * `stripPropTypes`
+* `useDefine`
 
 #### Webpack
 

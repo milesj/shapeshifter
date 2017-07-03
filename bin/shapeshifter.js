@@ -16,6 +16,7 @@ shapeshifter
   .command('build <paths...>', 'Transpile source files or folder.')
   .option('-n, --nullable', 'Mark attributes as nullable by default (recommended). Defaults to false.')
   .option('--indent <char>', 'The indentation characters to use. Defaults to 2 space indent.')
+  .option('--import <name>', 'The import path to a Schema class. Defaults to "shapeshifter".')
   .option('--format <name>', 'The format to generate. Accepts react, flow, or typescript. Defaults to react.', ['react', 'flow', 'typescript'])
   .option('--schemas', 'Include schema class exports in the output. Defaults to false.')
   .option('--attributes', 'Include an attribute list in the schema class export. Defaults to false.')
@@ -27,6 +28,7 @@ shapeshifter
 
     return new Transpiler({
       defaultNullable: options.nullable || false,
+      importPath: options.import || 'shapeshifter',
       includeSchemas: options.schemas || false,
       includeAttributes: options.attributes || false,
       includeTypes: options.types || false,

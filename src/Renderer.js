@@ -235,7 +235,7 @@ export default class Renderer {
     if (this.schemas.length > 0) {
       this.imports.unshift(this.renderImport({
         default: 'Schema',
-        path: 'shapeshifter',
+        path: this.options.importPath,
       }));
     }
   }

@@ -10,6 +10,7 @@ import Schema from './Schema';
 
 export type Options = {
   defaultNullable: boolean,
+  importPath: string,
   includeAttributes: boolean,
   includeSchemas: boolean,
   includeTypes: boolean,

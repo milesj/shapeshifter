@@ -17,6 +17,7 @@ export const TYPES: string[] = PRIMITIVE_TYPES.concat(COMPOUND_TYPES);
 
 export const DEFAULT_OPTIONS: Options = {
   defaultNullable: false,
+  importPath: 'shapeshifter',
   includeSchemas: false,
   includeAttributes: false,
   includeTypes: false,
