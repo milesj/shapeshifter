@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@milesj/build-tool-config@0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.11.1.tgz#e3437bb4c902de7944d1ff98d7a58edc93f46a82"
+"@milesj/build-tool-config@^0.11.1":
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.11.3.tgz#d7686b113a2e3ec9f47f7c9e3aef47d48b8bc9aa"
   dependencies:
     babel-cli "^6.24.1"
     babel-eslint "^7.2.0"
@@ -17,17 +17,17 @@
     babel-preset-stage-2 "^6.24.1"
     babel-runtime "^6.23.0"
     copy "^0.3.0"
-    enzyme "^2.9.0"
+    enzyme "^2.9.1"
     eslint "^3.19.0"
     eslint-config-airbnb "^15.0.1"
-    eslint-plugin-flowtype "^2.34.0"
-    eslint-plugin-import "^2.6.0"
+    eslint-plugin-flowtype "^2.34.1"
+    eslint-plugin-import "^2.6.1"
     eslint-plugin-jest "^20.0.3"
-    eslint-plugin-jsx-a11y "^5.0.3"
+    eslint-plugin-jsx-a11y "^5.0.1"
     eslint-plugin-promise "^3.5.0"
     eslint-plugin-react "^7.1.0"
     eslint-plugin-unicorn "^2.1.2"
-    flow-bin "^0.48.0"
+    flow-bin "^0.49.1"
     jest "^20.0.4"
     json5 "^0.5.1"
     react "^15.6.1"
@@ -1829,7 +1829,7 @@ entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
-enzyme@^2.9.0:
+enzyme@^2.9.1:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-2.9.1.tgz#07d5ce691241240fb817bf2c4b18d6e530240df6"
   dependencies:
@@ -1977,13 +1977,13 @@ eslint-module-utils@^2.0.0:
     debug "2.2.0"
     pkg-dir "^1.0.0"
 
-eslint-plugin-flowtype@^2.34.0:
-  version "2.34.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.34.0.tgz#b9875f314652e5081623c9d2b18a346bbb759c09"
+eslint-plugin-flowtype@^2.34.1:
+  version "2.34.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.34.1.tgz#ea109175645b05d37baeac53b9b65066d79b9446"
   dependencies:
     lodash "^4.15.0"
 
-eslint-plugin-import@^2.6.0:
+eslint-plugin-import@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.6.1.tgz#f580be62bb809421d46e338372764afcc9f59bf6"
   dependencies:
@@ -2002,7 +2002,7 @@ eslint-plugin-jest@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-20.0.3.tgz#ec15eba6ac0ab44a67ebf6e02672ca9d7e7cba29"
 
-eslint-plugin-jsx-a11y@^5.0.3:
+eslint-plugin-jsx-a11y@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-5.1.0.tgz#4a829634344e7a90391a9fb0fbd19810737d79c5"
   dependencies:
@@ -2403,9 +2403,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flow-bin@^0.48.0:
-  version "0.48.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.48.0.tgz#72d075143524358db8901525e3c784dc13a7c7ee"
+flow-bin@^0.49.1:
+  version "0.49.1"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.49.1.tgz#c9e456b3173a7535a4ffaf28956352c63bb8e3e9"
 
 for-in@^1.0.1:
   version "1.0.2"

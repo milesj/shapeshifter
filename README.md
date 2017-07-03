@@ -1,4 +1,4 @@
-# Shapeshifter v4.2.0
+# Shapeshifter v4.2.1
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
 Shapeshifter is a command line tool for generating ES2015 compatible
