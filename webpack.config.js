@@ -1,5 +1,5 @@
 const path = require('path');
-const ShapeshifterTranspilePlugin = require('./lib/bundlers/WebpackTranspilePlugin').default;
+const ShapeshifterPlugin = require('./lib/bundlers/WebpackPlugin').default;
 
 module.exports = {
   entry: path.join(__dirname, 'tests/bundle.js'),
@@ -22,13 +22,15 @@ module.exports = {
     ],
   },
   plugins: [
-    new ShapeshifterTranspilePlugin({
-      schematicsPath: path.join(__dirname, 'tests/schemas'),
+    new ShapeshifterPlugin({
+      // Overwrite "shapeshifter/schematics" for local testing
+      schematicsImportPath: './bundle-schematics',
+      schematicsSource: path.join(__dirname, 'tests/schemas'),
       defaultNullable: true,
       includeAttributes: true,
       includeSchemas: true,
       includeTypes: true,
-      renderer: 'flow',
+      format: 'flow',
     }),
   ],
   // The shapeshifter import won't work from within shapeshifter itself,

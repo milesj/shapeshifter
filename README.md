@@ -986,8 +986,8 @@ import { UserSchema } from 'shapeshifter/schematics';
 The plugin accepts an object with the following options -- with most of them being based on the
 [options passed to the command line](#options).
 
-* `schematicsPath` (string|string[]) - Absolute file system path to schematics folder. *Required.*
-* `importPath` (string) - The fake import path to intercept. Defaults to `shapeshifter/schematics`.
+* `schematicsSource` (string|string[]) - Absolute file system path to schematics source folder. *Required.*
+* `schematicsImportPath` (string) - The fake import path to intercept. Defaults to `shapeshifter/schematics`.
 * `defaultNullable`
 * `indentCharacter`
 * `format`
@@ -999,16 +999,15 @@ The plugin accepts an object with the following options -- with most of them bei
 
 #### Webpack
 
-To automatically transpile Shapeshifter during Webpack's build process, add
-the `WebpackTranspilePlugin`.
+To automatically transpile Shapeshifter during Webpack's build process, add the `WebpackPlugin`.
 
 ```javascript
-const ShapeshifterTranspilePlugin = require('shapeshifter/lib/bundlers/WebpackTranspilePlugin');
+const ShapeshifterPlugin = require('shapeshifter/lib/bundlers/WebpackPlugin');
 
 // Webpack config
 plugins: [
-  new ShapeshifterTranspilePlugin({
-    schematicsPath: path.join(__dirname, 'src/schemas'),
+  new ShapeshifterPlugin({
+    schematicsSource: path.join(__dirname, 'src/schemas'),
   }),
 ],
 ```
