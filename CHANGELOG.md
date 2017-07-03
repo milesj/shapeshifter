@@ -1,3 +1,6 @@
+# 4.2.1
+* Fixed an issue with the lib/ build.
+
 # 4.2.0
 * Schematics can now be auto-transpiled through a build or bundle process.
 * Added a new `WebpackPlugin` plugin for auto-transpilation.
