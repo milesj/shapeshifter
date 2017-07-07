@@ -7,8 +7,8 @@
 .*\.test\.js
 
 [libs]
-./flow
-./shapeshifter.js.flow
+./shapeshifter.flow.js
+./node_modules/optimal/optimal.flow.js
 
 [options]
 emoji=true

@@ -1,3 +1,7 @@
+# 5.0.0
+* Moved flow definitions to flow-typed/ folder.
+* Renamed `shapeshifter.js.flow` to `shapeshifter.flow.js`.
+
 # 4.2.1
 * Fixed an issue with the lib/ build.
 
