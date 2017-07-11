@@ -1,14 +1,17 @@
-import { falsyValues, options, truthyValues } from '../mocks';
+import { options, truthyValues } from '../mocks';
 import InstanceDefinition from '../../src/definitions/Instance';
 
 describe('definitions/Instance', () => {
+  it('errors if `contract` is missing', () => {
+    expect(() => (
+      new InstanceDefinition(options, 'foo', {})
+    )).toThrowError('Invalid InstanceDefinition option "contract". Field is required and must be defined.');
+  });
+
   it('errors if `contract` is empty', () => {
-    falsyValues.forEach((value) => {
-      expect(() => (
-        new InstanceDefinition(options, 'foo', { contract: value })
-      )).toThrowError('Instance definitions require a "contract" property, ' +
-        'which is the function or class name to evaluate against.');
-    });
+    expect(() => (
+      new InstanceDefinition(options, 'foo', { contract: '' })
+    )).toThrowError('Invalid InstanceDefinition option "contract". String cannot be empty.');
   });
 
   it('errors if `contract` is not a string', () => {
@@ -17,7 +20,7 @@ describe('definitions/Instance', () => {
       .forEach((value) => {
         expect(() => (
           new InstanceDefinition(options, 'foo', { contract: value })
-        )).toThrowError('Invalid type detected, "contract" property must be a string.');
+        )).toThrowError('Invalid InstanceDefinition option "contract". Must be a string.');
       });
   });
 });

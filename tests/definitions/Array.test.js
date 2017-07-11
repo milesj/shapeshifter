@@ -1,14 +1,24 @@
-import { falsyValues, options } from '../mocks';
+import { options } from '../mocks';
 import ArrayDefinition from '../../src/definitions/Array';
 import StringDefinition from '../../src/definitions/String';
 
 describe('definitions/Array', () => {
+  it('errors if `valueType` is missing', () => {
+    expect(() => (
+      new ArrayDefinition(options, 'foo', {})
+    )).toThrowError('Invalid ArrayDefinition option "valueType". Field is required and must be defined.');
+  });
+
   it('errors if `valueType` is empty', () => {
-    falsyValues.forEach((value) => {
-      expect(() => (
-        new ArrayDefinition(options, 'foo', { valueType: value })
-      )).toThrowError('Array definitions require a "valueType" property.');
-    });
+    expect(() => (
+      new ArrayDefinition(options, 'foo', { valueType: '' })
+    )).toThrowError('Invalid ArrayDefinition option "valueType". String cannot be empty.');
+  });
+
+  it('errors if `valueType` is the wrong type', () => {
+    expect(() => (
+      new ArrayDefinition(options, 'foo', { valueType: 123 })
+    )).toThrowError('Invalid ArrayDefinition option "valueType". Type must be one of: string, shape.');
   });
 
   it('creates a `Definition` for the `valueType`', () => {

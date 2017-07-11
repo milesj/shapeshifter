@@ -4,9 +4,9 @@
  * @flow
  */
 
+import Config from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
-import isObject from '../helpers/isObject';
 
 import type { ShapeConfig } from '../types';
 
@@ -15,24 +15,22 @@ export default class ShapeDefinition extends Definition {
   attributes: Definition[];
 
   validateConfig() {
-    super.validateConfig();
+    this.config = new Config(this.config, opt => ({
+      attributes: opt.object(this.createValueType(opt), null).nullable().xor('reference').notEmpty(),
+      nullable: opt.bool(),
+      reference: opt.string().xor('attributes').empty(),
+      type: opt.string('shape'),
+    }), {
+      name: 'ShapeDefinition',
+      unknown: true,
+    });
 
-    const { attributes, reference } = this.config;
+    const { attributes } = this.config;
 
-    if (reference) {
-      if (typeof reference !== 'string') {
-        throw new TypeError('Shape reference must be a string.');
-      }
-    } else if (attributes) {
-      if (!isObject(attributes) || Object.keys(attributes).length === 0) {
-        throw new TypeError('Shape attributes must be a mapping of type definitions.');
-      }
-
+    if (attributes) {
       this.attributes = Object.keys(attributes).map(attribute => (
         DefinitionFactory.factory(this.options, attribute, attributes[attribute])
       ));
-    } else {
-      throw new SyntaxError('Shape definitions require an "attributes" or "reference" property.');
     }
   }
 }

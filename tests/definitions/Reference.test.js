@@ -1,15 +1,17 @@
-import { falsyValues, options, truthyValues } from '../mocks';
+import { options, truthyValues } from '../mocks';
 import ReferenceDefinition from '../../src/definitions/Reference';
 
 describe('definitions/Reference', () => {
-  it('errors if `reference` is empty', () => {
-    falsyValues.forEach((value) => {
-      expect(() => (
-        new ReferenceDefinition(options, 'foo', { reference: value })
-      )).toThrowError('Reference definitions require a "reference" property, ' +
-        'which points to an external schema to use, ' +
-        'or a "self" property, which uses the current schema.');
-    });
+  it('errors if `reference` and `self` are neither defined', () => {
+    expect(() => (
+      new ReferenceDefinition(options, 'foo', {})
+    )).toThrowError('Invalid ReferenceDefinition option "reference". Only one of these options may be defined: reference, self');
+  });
+
+  it('errors if `reference` and `self` are both defined', () => {
+    expect(() => (
+      new ReferenceDefinition(options, 'foo', { reference: '', self: false })
+    )).toThrowError('Invalid ReferenceDefinition option "reference". Only one of these options may be defined: reference, self');
   });
 
   it('errors if `reference` is not a string', () => {
@@ -18,7 +20,7 @@ describe('definitions/Reference', () => {
       .forEach((value) => {
         expect(() => (
           new ReferenceDefinition(options, 'foo', { reference: value })
-        )).toThrowError('Invalid type detected, "reference" property must be a string.');
+        )).toThrowError('Invalid ReferenceDefinition option "reference". Must be a string.');
       });
   });
 
@@ -28,7 +30,7 @@ describe('definitions/Reference', () => {
       .forEach((value) => {
         expect(() => (
           new ReferenceDefinition(options, 'foo', { self: value })
-        )).toThrowError('Invalid type detected, "self" property must be a boolean.');
+        )).toThrowError('Invalid ReferenceDefinition option "self". Must be a boolean.');
       });
   });
 
@@ -38,7 +40,7 @@ describe('definitions/Reference', () => {
       .forEach((value) => {
         expect(() => (
           new ReferenceDefinition(options, 'foo', { reference: 'foo', subset: value })
-        )).toThrowError('Invalid type detected, "subset" property must be a string.');
+        )).toThrowError('Invalid ReferenceDefinition option "subset". Must be a string.');
       });
   });
 
@@ -48,7 +50,7 @@ describe('definitions/Reference', () => {
       .forEach((value) => {
         expect(() => (
           new ReferenceDefinition(options, 'foo', { reference: 'foo', export: value })
-        )).toThrowError('Invalid type detected, "export" property must be a boolean.');
+        )).toThrowError('Invalid ReferenceDefinition option "export". Must be a boolean.');
       });
   });
 });

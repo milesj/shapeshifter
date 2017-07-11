@@ -1,23 +1,25 @@
-import { falsyValues, options, truthyValues } from '../mocks';
+import { options, truthyValues } from '../mocks';
 import ObjectDefinition from '../../src/definitions/Object';
 import NumberDefinition from '../../src/definitions/Number';
 import StringDefinition from '../../src/definitions/String';
 
 describe('definitions/Object', () => {
+  it('errors if `valueType` is missing', () => {
+    expect(() => (
+      new ObjectDefinition(options, 'foo', {})
+    )).toThrowError('Invalid ObjectDefinition option "valueType". Field is required and must be defined.');
+  });
+
   it('errors if `valueType` is empty', () => {
-    falsyValues.forEach((value) => {
-      expect(() => (
-        new ObjectDefinition(options, 'foo', { valueType: value })
-      )).toThrowError('Object definitions require a "valueType" property.');
-    });
+    expect(() => (
+      new ObjectDefinition(options, 'foo', { valueType: '' })
+    )).toThrowError('Invalid ObjectDefinition option "valueType". String cannot be empty.');
   });
 
   it('errors if `keyType` is empty', () => {
-    falsyValues.forEach((value) => {
-      expect(() => (
-        new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' })
-      )).toThrowError('Object definitions require a "keyType" property.');
-    });
+    expect(() => (
+      new ObjectDefinition(options, 'foo', { keyType: '', valueType: 'string' })
+    )).toThrowError('Invalid ObjectDefinition option "keyType". String cannot be empty.');
   });
 
   it('errors if `keyType` is not a string', () => {
@@ -26,7 +28,7 @@ describe('definitions/Object', () => {
       .forEach((value) => {
         expect(() => (
           new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' })
-        )).toThrow();
+        )).toThrowError('Invalid ObjectDefinition option "keyType". Must be a string.');
       });
   });
 

@@ -4,6 +4,10 @@
  * @flow
  */
 
+import Config from 'optimal';
+import normalizeType from './helpers/normalizeType';
+
+import type { Builders, UnionBuilder } from 'optimal'; // eslint-disable-line
 import type { Options } from './types';
 
 export default class Definition {
@@ -26,6 +30,20 @@ export default class Definition {
   }
 
   /**
+   * Create an option for our `valueType` type definition.
+   */
+  createValueType(builders: Builders): UnionBuilder {
+    const { shape, string, union } = builders;
+
+    return union([
+      string(),
+      shape({
+        type: string().required(),
+      }),
+    ]).required();
+  }
+
+  /**
    * Returns true if the attribute allows nulls.
    */
   isNullable(): boolean {
@@ -36,10 +54,14 @@ export default class Definition {
    * Validate the definition configuration.
    */
   validateConfig() {
-    const { config } = this;
+    const { name } = this.constructor;
 
-    if (typeof config.nullable !== 'boolean') {
-      throw new TypeError('Invalid type detected, "nullable" property must be a boolean.');
-    }
+    this.config = new Config(this.config, opt => ({
+      nullable: opt.bool(),
+      type: opt.string(normalizeType(name.toLowerCase())),
+    }), {
+      name: name || 'Definition',
+      unknown: true,
+    });
   }
 }

@@ -4,8 +4,6 @@
  * @flow
  */
 
-import type { Options } from './types';
-
 export const PRIMITIVE_TYPES: string[] = ['boolean', 'number', 'string'];
 
 export const COMPOUND_TYPES: string[] = [
@@ -14,15 +12,3 @@ export const COMPOUND_TYPES: string[] = [
 ];
 
 export const TYPES: string[] = PRIMITIVE_TYPES.concat(COMPOUND_TYPES);
-
-export const DEFAULT_OPTIONS: Options = {
-  defaultNullable: false,
-  importPath: 'shapeshifter',
-  includeSchemas: false,
-  includeAttributes: false,
-  includeTypes: false,
-  indentCharacter: '  ',
-  renderer: 'react',
-  stripPropTypes: false,
-  useDefine: false,
-};

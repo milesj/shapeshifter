@@ -4,6 +4,7 @@
  * @flow
  */
 
+import Config from 'optimal';
 import Definition from '../Definition';
 
 import type { InstanceConfig } from '../types';
@@ -12,18 +13,13 @@ export default class InstanceDefinition extends Definition {
   config: InstanceConfig;
 
   validateConfig() {
-    super.validateConfig();
-
-    const { contract } = this.config;
-
-    if (!contract) {
-      throw new SyntaxError(
-        'Instance definitions require a "contract" property, ' +
-        'which is the function or class name to evaluate against.',
-      );
-
-    } else if (typeof contract !== 'string') {
-      throw new TypeError('Invalid type detected, "contract" property must be a string.');
-    }
+    this.config = new Config(this.config, opt => ({
+      contract: opt.string().required(),
+      nullable: opt.bool(),
+      type: opt.string('instance'),
+    }), {
+      name: 'InstanceDefinition',
+      unknown: true,
+    });
   }
 }

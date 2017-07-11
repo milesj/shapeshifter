@@ -9,6 +9,7 @@ describe('Definition', () => {
     expect(def.config).toEqual({
       nullable: true,
       key: 'value',
+      type: 'definition',
     });
   });
 
@@ -21,6 +22,6 @@ describe('Definition', () => {
   it('validates nullable', () => {
     expect(() => (
       new Definition(options, 'foo', { nullable: 'string' })
-    )).toThrowError('Invalid type detected, "nullable" property must be a boolean.');
+    )).toThrowError('Invalid Definition option "nullable". Must be a boolean.');
   });
 });

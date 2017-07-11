@@ -4,6 +4,7 @@
  * @flow
  */
 
+import Config from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 
@@ -14,14 +15,19 @@ export default class ArrayDefinition extends Definition {
   valueType: Definition;
 
   validateConfig() {
-    super.validateConfig();
+    this.config = new Config(this.config, opt => ({
+      nullable: opt.bool(),
+      type: opt.string('array'),
+      valueType: this.createValueType(opt),
+    }), {
+      name: 'ArrayDefinition',
+      unknown: true,
+    });
 
-    const { valueType } = this.config;
-
-    if (!valueType) {
-      throw new SyntaxError('Array definitions require a "valueType" property.');
-    }
-
-    this.valueType = DefinitionFactory.factory(this.options, this.attribute, valueType);
+    this.valueType = DefinitionFactory.factory(
+      this.options,
+      this.attribute,
+      this.config.valueType,
+    );
   }
 }

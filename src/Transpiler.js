@@ -8,11 +8,11 @@
 
 import fs from 'fs';
 import path from 'path';
+import Config from 'optimal';
 import RendererFactory from './RendererFactory';
 import Schematic from './Schematic';
 import readWithNode from './readers/node';
 import readWithGraphQL from './readers/graphql';
-import { DEFAULT_OPTIONS } from './constants';
 
 import type { Options } from './types';
 
@@ -26,10 +26,17 @@ export default class Transpiler {
   options: Options;
 
   constructor(options: Options) {
-    this.options = {
-      ...DEFAULT_OPTIONS,
-      ...options,
-    };
+    this.options = new Config(options, ({ bool, string }) => ({
+      defaultNullable: bool(),
+      importPath: string('shapeshifter'),
+      includeSchemas: bool(),
+      includeAttributes: bool(),
+      includeTypes: bool(),
+      indentCharacter: string('  '),
+      renderer: string('react'),
+      stripPropTypes: bool(),
+      useDefine: bool(),
+    }));
   }
 
   /**

@@ -4,6 +4,7 @@
  * @flow
  */
 
+import Config from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 
@@ -14,18 +15,16 @@ export default class UnionDefinition extends Definition {
   valueTypes: Definition[];
 
   validateConfig() {
-    super.validateConfig();
+    this.config = new Config(this.config, opt => ({
+      nullable: opt.bool(),
+      type: opt.string('union'),
+      valueTypes: opt.array(this.createValueType(opt)).notEmpty().required(),
+    }), {
+      name: 'UnionDefinition',
+      unknown: true,
+    });
 
-    const { valueTypes } = this.config;
-
-    if (!Array.isArray(valueTypes) || valueTypes.length === 0) {
-      throw new SyntaxError(
-        'Union definitions require a "valueTypes" property, ' +
-        'which is a list of type definitions',
-      );
-    }
-
-    this.valueTypes = valueTypes.map((type, i) => (
+    this.valueTypes = this.config.valueTypes.map((type, i) => (
       DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, type)
     ));
   }
