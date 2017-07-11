@@ -33,7 +33,7 @@ export default class Transpiler {
       includeAttributes: bool(),
       includeTypes: bool(),
       indentCharacter: string('  '),
-      renderer: string('react'),
+      renderer: string('react').oneOf(['react', 'flow', 'typescript']),
       stripPropTypes: bool(),
       useDefine: bool(),
     }));

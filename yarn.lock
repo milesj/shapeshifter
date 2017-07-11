@@ -4133,9 +4133,9 @@ opn@4.0.2:
     object-assign "^4.0.1"
     pinkie-promise "^2.0.0"
 
-optimal@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/optimal/-/optimal-0.10.0.tgz#fefd454f7842dfa46e8c52b61bd623417c505fc3"
+optimal@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/optimal/-/optimal-0.11.0.tgz#ca5d91b446068265c5a34e4b5ced004512cb512f"
   dependencies:
     babel-runtime "^6.23.0"
 

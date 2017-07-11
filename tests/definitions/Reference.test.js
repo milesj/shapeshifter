@@ -5,13 +5,13 @@ describe('definitions/Reference', () => {
   it('errors if `reference` and `self` are neither defined', () => {
     expect(() => (
       new ReferenceDefinition(options, 'foo', {})
-    )).toThrowError('Invalid ReferenceDefinition option "reference". Only one of these options may be defined: reference, self');
+    )).toThrowError('ReferenceDefinition: Only one of these options may be defined: reference, self');
   });
 
   it('errors if `reference` and `self` are both defined', () => {
     expect(() => (
       new ReferenceDefinition(options, 'foo', { reference: '', self: false })
-    )).toThrowError('Invalid ReferenceDefinition option "reference". Only one of these options may be defined: reference, self');
+    )).toThrowError('ReferenceDefinition: Only one of these options may be defined: reference, self');
   });
 
   it('errors if `reference` is not a string', () => {

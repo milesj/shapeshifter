@@ -13,7 +13,7 @@ describe('definitions/Shape', () => {
   it('errors if neither `attributes` or `reference` is defined', () => {
     expect(() => (
       new ShapeDefinition(options, 'foo', {})
-    )).toThrowError('Invalid ShapeDefinition option "reference". Only one of these options may be defined: reference, attributes');
+    )).toThrowError('ShapeDefinition: Only one of these options may be defined: reference, attributes');
   });
 
   it('errors if `reference` is not a string', () => {
