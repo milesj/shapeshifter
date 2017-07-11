@@ -4,12 +4,13 @@
  * @flow
  */
 
-import { PRIMITIVE_TYPES } from '../constants';
 import normalizeType from './normalizeType';
 
 /**
  * Verify that a value is a primitive type.
  */
 export default function isPrimitive(value: string): boolean {
-  return (PRIMITIVE_TYPES.indexOf(normalizeType(value)) >= 0);
+  const type = normalizeType(value);
+
+  return (type === 'boolean' || type === 'number' || type === 'string');
 }

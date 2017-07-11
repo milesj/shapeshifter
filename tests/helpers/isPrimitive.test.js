@@ -1,15 +1,17 @@
 import isPrimitive from '../../src/helpers/isPrimitive';
-import { COMPOUND_TYPES, PRIMITIVE_TYPES } from '../../src/constants';
 
 describe('helpers/isPrimitive', () => {
   it('returns false for compound types', () => {
-    COMPOUND_TYPES.forEach((value) => {
+    [
+      'array', 'enum', 'instance', 'object',
+      'shape', 'union', 'reference',
+    ].forEach((value) => {
       expect(isPrimitive(value)).toBe(false);
     });
   });
 
   it('returns true for primitive types', () => {
-    PRIMITIVE_TYPES.forEach((value) => {
+    ['boolean', 'number', 'string'].forEach((value) => {
       expect(isPrimitive(value)).toBe(true);
     });
   });
