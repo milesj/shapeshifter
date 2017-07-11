@@ -59,13 +59,15 @@ export default class Schema {
    * Map a one/many relational schema to the current schema.
    */
   addRelation(attribute: string, schema: Schema, relation: string): this {
-    if (!(schema instanceof Schema)) {
-      throw new TypeError(`Relation "${attribute}" is not a valid schema.`);
+    if (__DEV__) {
+      if (!(schema instanceof Schema)) {
+        throw new TypeError(`Relation "${attribute}" is not a valid schema.`);
 
-    } else if (this.relationTypes[attribute]) {
-      throw new Error(
-        `Relation "${attribute}" has already been mapped as "${this.relationTypes[attribute]}".`,
-      );
+      } else if (this.relationTypes[attribute]) {
+        throw new Error(
+          `Relation "${attribute}" has already been mapped as "${this.relationTypes[attribute]}".`,
+        );
+      }
     }
 
     this.relations.push({

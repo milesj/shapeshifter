@@ -6,7 +6,7 @@
 
 /* eslint-disable no-use-before-define */
 
-import Schema from './Schema';
+import type Schema from './Schema';
 
 export type Options = {
   defaultNullable: boolean,
@@ -32,7 +32,7 @@ export type Relation = {
   attribute: string,
   collection: boolean,
   relation: string,
-  schema: Schema,
+  +schema: Schema,
 };
 
 // Type Definitions
