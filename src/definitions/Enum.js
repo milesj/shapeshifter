@@ -18,9 +18,7 @@ export default class EnumDefinition extends Definition {
       nullable: opt.bool(),
       type: opt.string('enum'),
       valueType: this.createValueType(opt),
-      values: opt.array(
-        opt.custom(this.validateValue.bind(this)),
-      ).notEmpty().required(),
+      values: opt.array(opt.custom(this.validateValue)).notEmpty().required(),
     }), {
       name: 'EnumDefinition',
       unknown: true,
@@ -30,10 +28,11 @@ export default class EnumDefinition extends Definition {
   /**
    * Validate a value matches the type in `valueType`.
    */
-  validateValue(path: string, value: *) {
-    // eslint-disable-next-line valid-typeof
-    if (typeof value !== normalizeType(this.config.valueType)) {
-      throw new TypeError('Enum values do not match the defined value type.');
-    }
+  validateValue(path: string, value: *, options: Object, invariant: (boolean, string) => void) {
+    invariant(
+      // eslint-disable-next-line valid-typeof
+      (typeof value === normalizeType(options.valueType)),
+      'Enum values do not match the defined value type.',
+    );
   }
 }

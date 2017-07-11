@@ -27,11 +27,10 @@ const ALIAS_MAP = {
 /**
  * Expand and return the valid type name for all aliases and shorthands.
  */
-export default function normalizeType(baseType: mixed): string {
+export default function normalizeType(baseType: *): string {
   let type = baseType;
 
   if (isObject(baseType)) {
-    // $FlowIgnore We know its an object
     ({ type } = baseType);
   }
 

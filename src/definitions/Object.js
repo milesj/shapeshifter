@@ -26,13 +26,11 @@ export default class ObjectDefinition extends Definition {
       unknown: true,
     });
 
-    // Object keys should never be null
     this.keyType = DefinitionFactory.factory(this.options, `${this.attribute}_key`, {
       type: this.config.keyType,
       nullable: false,
     });
 
-    // Values can be anything
     this.valueType = DefinitionFactory.factory(
       this.options,
       `${this.attribute}_value`,
