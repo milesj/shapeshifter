@@ -191,7 +191,6 @@ class GraphQLReader {
     if (!this.schematic) {
       /* istanbul ignore next No need to cover */
       throw new SyntaxError('The schematic must be defined as the last GraphQL type.');
-
     } else if (this.schematic.kind !== Kind.OBJECT_TYPE_DEFINITION) {
       /* istanbul ignore next No need to cover */
       throw new TypeError('The schematic must be an object type.');

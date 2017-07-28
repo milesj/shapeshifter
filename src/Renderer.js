@@ -101,7 +101,6 @@ export default class Renderer {
   formatValue(value: PrimitiveType | PrimitiveType[], type: string = ''): string {
     if (value === null) {
       return 'null';
-
     } else if (Array.isArray(value)) {
       return this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
     }
@@ -316,6 +315,7 @@ export default class Renderer {
    * Render a definition to it's visual representation.
    */
   renderAttribute(definition: Definition, depth: number = 0): string {
+    /* eslint-disable padded-blocks */
     if (definition instanceof ArrayDefinition) {
       return this.renderArray(definition, depth);
 
@@ -346,6 +346,7 @@ export default class Renderer {
     } else if (definition instanceof UnionDefinition) {
       return this.renderUnion(definition, depth);
     }
+    /* eslint-enable padded-blocks */
 
     return '';
   }
@@ -412,7 +413,6 @@ export default class Renderer {
 
     if (!path) {
       throw new SyntaxError('Import statements require a file path.');
-
     } else if (!Array.isArray(named)) {
       throw new TypeError('Named imports must be an array.');
     }
@@ -644,7 +644,6 @@ export default class Renderer {
 
     if (!reference) {
       return '';
-
     } else if (!shapes[reference]) {
       throw new SyntaxError(
         `The shape reference "${reference}" does not exist in the "${name}" schema.`,

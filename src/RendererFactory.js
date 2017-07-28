@@ -13,7 +13,6 @@ import TypeScriptRenderer from './renderers/TypeScript';
 import type { Options } from './types';
 
 export default class RendererFactory {
-
   /**
    * Create a new renderer with the defined schematic.
    */

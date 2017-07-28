@@ -58,10 +58,8 @@ describe('Transpiler', () => {
   describe('transpile()', () => {
     RENDERERS.forEach(({ name, key, ext }) => {
       describe(`outputs ${name}`, () => {
-
         FORMATS.forEach(({ format, reader, cases }) => {
           describe(`from ${format.toUpperCase()} files`, () => {
-
             cases.forEach((schema) => {
               it(`when rendering schema case "${schema}"`, () => {
                 const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;

@@ -23,7 +23,6 @@ import UnionDefinition from './definitions/Union';
 import type { BaseConfig, Options } from './types';
 
 export default class DefinitionFactory {
-
   /**
    * Create a new definition based on the defined attribute configuration.
    */

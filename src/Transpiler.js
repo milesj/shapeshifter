@@ -60,10 +60,8 @@ export default class Transpiler {
               paths.push(
                 ...fs.readdirSync(target).map(file => path.resolve(target, file)),
               );
-
             } else if (stats.isFile()) {
               paths.push(path.resolve(target));
-
             } else {
               throw new Error(`Unsupported file type: ${target}.`);
             }
