@@ -28,11 +28,10 @@ export default class EnumDefinition extends Definition {
   /**
    * Validate a value matches the type in `valueType`.
    */
-  validateValue(path: string, value: *, options: Object, invariant: (boolean, string) => void) {
-    invariant(
-      // eslint-disable-next-line valid-typeof
-      (typeof value === normalizeType(options.valueType)),
-      'Enum values do not match the defined value type.',
-    );
+  validateValue(value: *, options: Object) {
+    // eslint-disable-next-line valid-typeof
+    if (typeof value !== normalizeType(options.valueType)) {
+      throw new TypeError('Enum values do not match the defined value type.');
+    }
   }
 }

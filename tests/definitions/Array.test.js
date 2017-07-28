@@ -18,7 +18,7 @@ describe('definitions/Array', () => {
   it('errors if `valueType` is the wrong type', () => {
     expect(() => (
       new ArrayDefinition(options, 'foo', { valueType: 123 })
-    )).toThrowError('Invalid ArrayDefinition option "valueType". Type must be one of: string, shape.');
+    )).toThrowError('Invalid ArrayDefinition option "valueType". Type must be one of: String, Shape');
   });
 
   it('creates a `Definition` for the `valueType`', () => {

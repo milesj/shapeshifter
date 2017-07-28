@@ -37,7 +37,7 @@ describe('definitions/Shape', () => {
   it('errors if `attributes` has the wrong values', () => {
     expect(() => (
       new ShapeDefinition(options, 'foo', { attributes: { foo: 123 } })
-    )).toThrowError('Invalid ShapeDefinition option "attributes.foo". Type must be one of: string, shape.');
+    )).toThrowError('Invalid ShapeDefinition option "attributes.foo". Type must be one of: String, Shape');
   });
 
   it('creates an array of `Definition`s for `attributes`', () => {
