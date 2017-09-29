@@ -23,6 +23,7 @@ export default class WebpackPlugin {
 
     if (opts.format) {
       opts.renderer = opts.format;
+      delete opts.format;
     }
 
     this.schematicsImportPath = schematicsImportPath;

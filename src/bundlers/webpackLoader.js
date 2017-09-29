@@ -2,6 +2,7 @@
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  */
+
 /* eslint-disable promise/always-return, promise/no-callback-in-promise */
 
 import Transpiler from '../Transpiler';
