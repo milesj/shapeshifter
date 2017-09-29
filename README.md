@@ -1,10 +1,9 @@
-# Shapeshifter v4.2.1
+# Shapeshifter
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
-Shapeshifter is a command line tool for generating ES2015 compatible
-files that export React prop types, Flow type aliases, or TypeScript
-interfaces, as well as relation schema classes from JSON or GraphQL
-schematic files. Schematics can represent database tables, API endpoints,
+Shapeshifter is a command line tool for generating ECMAScript (ES) compatible files that export
+React prop types, Flow type aliases, or TypeScript interfaces, as well as relation schema classes
+from JSON or GraphQL schematic files. Schematics can represent database tables, API endpoints,
 data structures, resources, internal shapes, and more.
 
 Take this user schematic for example.
@@ -79,20 +78,20 @@ export interface UserInterface {
 And finally, the schema class. Which can define ORM styled relations.
 
 ```javascript
-export const UserSchema = new Schema('users', 'id');
+export const userSchema = new Schema('users', 'id');
 ```
 
 ## Requirements
 
-* ES2015
+* ES2015+
 * Node 4+
-* React 15+ / Flow 0.30+ / TypeScript 2.0+
-* IE 11+
+* React 15/16+ / Flow 0.30+ / TypeScript 2.0+
+* IE 10+
 
 ## Installation
 
-Shapeshifter can be used as a dev dependency if you're only generating
-types (shapes, aliases, interfaces, etc).
+Shapeshifter can be used as a dev dependency if you're only generating types (shapes, aliases,
+interfaces, etc).
 
 ```
 npm install shapeshifter --save-dev
@@ -116,13 +115,11 @@ Shapeshifter is provided as a binary which can be executed and piped like so.
 shapeshifter build [options] <input> > <output>
 ```
 
-The binary input accepts either a single schematic file, a directory of
-schematic files, or multiple files. If a directory is provided,
-they will be combined into a single output.
+The binary input accepts either a single schematic file, a directory of schematic files,
+or multiple files. If a directory is provided, they will be combined into a single output.
 
-By default, the binary will send output to stdout, which can then be
-redirected to a destination of your choosing, otherwise the output
-will be sent to the console.
+By default, the binary will send output to stdout, which can then be redirected to a
+destination of your choosing, otherwise the output will be sent to the console.
 
 ### Options
 
@@ -141,9 +138,8 @@ will be sent to the console.
 * `--types` (bool) - Include type definition exports in the output. Defaults to
   "false".
 * `--useDefine` (bool) - Update all schema relations to use `Schema#define`.
-* `--stripPropTypes` (bool) - Wrap PropType definitions in
-  `process.env.NODE_ENV !== 'production'` expressions, allowing them to be
-  removed with dead code elimination (through minification).
+* `--stripPropTypes` (bool) - Wrap PropType definitions in `process.env.NODE_ENV`
+  production expressions, allowing them to be removed with dead code elimination.
 
 ## Documentation
 
@@ -175,11 +171,10 @@ will be sent to the console.
 
 ### Schematic Structure
 
-Shapeshifter is powered by files known as schematics, which can
-be a JSON (`.json`), JavaScript (`.js`), or GraphQL file (`.gql`).
-Schematics must define a name, used to denote the name of the
-ES2015 export, and set of attributes, used as as fields in which
-the schematic is defining.
+Shapeshifter is powered by files known as schematics, which can be a JSON (`.json`),
+JavaScript (`.js`), or GraphQL file (`.gql`). Schematics must define a name, used to denote
+the name of the ES export, and set of attributes, used as as fields in which the schematic is
+defining.
 
 ```json
 {
@@ -203,20 +198,17 @@ type User {
 }
 ```
 
-> GraphQL has limited functionality compared to JSON or JavaScript.
-> Jump to the section on [GraphQL](#graphql-support), and read the
-> documentation thoroughly, for more information.
+> GraphQL has limited functionality compared to JSON or JavaScript. Jump to the section on
+> [GraphQL](#graphql-support), and read the documentation thoroughly, for more information.
 
 #### Attributes
 
-The `attributes` object represents a mapping of field names to
-[type definitions](#attribute-types). Attributes are usually a
-one-to-one mapping of database table columns or data model attributes.
+The `attributes` object represents a mapping of fields to [type definitions](#attribute-types).
+Attributes are usually a one-to-one mapping of database table columns or data model attributes.
 
-The value of a field, the type definition, represents what type of
-data this value expects to be. This definition can either be a string
-of the name of a [primitive type](#primitives), or an object with
-a required `type` property, which can be the name of any type.
+The value of a field, the type definition, represents what type of data this value expects to be.
+This definition can either be a string of the name of a [primitive type](#primitives), or an
+object with a required `type` property, which can be the name of any type.
 
 Depending on the type used, additional properties may be required.
 
@@ -235,8 +227,8 @@ Depending on the type used, additional properties may be required.
 
 ##### Nullable
 
-All attribute type definitions support the `nullable` modifier,
-which accepts a boolean value, and triggers the following:
+All attribute type definitions support the `nullable` modifier, which accepts a boolean value,
+and triggers the following:
 
 * React: Non-nullable fields will append `isRequired` to the prop type.
 * Flowtype: Nullable fields will prepend `?` to each type alias.
@@ -250,8 +242,8 @@ which accepts a boolean value, and triggers the following:
 }
 ```
 
-If using GraphQL, all attributes are nullable by default. To mark a field
-as non-nullable, append an exclamation mark (`!`) to the type.
+If using GraphQL, all attributes are nullable by default. To mark a field as non-nullable,
+append an exclamation mark (`!`) to the type.
 
 ```graphql
 field: String!
@@ -259,13 +251,12 @@ field: String!
 
 #### Metadata
 
-The `meta` object allows arbitrary metadata to be defined. Only two
-fields are supported currently, `primaryKey` and `resourceName`, both
-of which are used when generating `Schema` classes using `--schemas`.
-The `primaryKey` defines the unique identifier / primary key of the record,
-usually "id" (default), while `resourceName` is the unique name found in
-a URL path. For example, in the URL "/api/users/123", the "users" path
-part would be the resource name, and "123" would be the primary key.
+The `meta` object allows arbitrary metadata to be defined. Only two fields are supported currently,
+`primaryKey` and `resourceName`, both of which are used when generating `Schema` classes using
+`--schemas`. The `primaryKey` defines the unique identifier / primary key of the record,
+usually "id" (default), while `resourceName` is the unique name found in a URL path. For example,
+in the URL "/api/users/123", the "users" path part would be the resource name, and "123" would
+be the primary key.
 
 ```json
 "meta": {
@@ -298,13 +289,12 @@ type User {
 
 #### Imports
 
-The `imports` array provides a mechanism for defining ES2015 imports,
-which in turn allow re-use of application level structures.
+The `imports` array provides a mechanism for defining ES imports, which in turn allow re-use
+of application level structures.
 
-An import object requires a `path` property that maps to a file
-in the application, relative to the transpiled schema. Default imports
-can be defined with the `default` property, while named imports
-can be defined with `named` (an array).
+An import object requires a `path` property that maps to a file in the application, relative
+to the transpiled schema. Default imports can be defined with the `default` property, while named
+imports can be defined with `named` (an array).
 
 ```json
 "imports": [
@@ -318,13 +308,11 @@ can be defined with `named` (an array).
 
 #### Constants
 
-The `constants` object is a mapping of a constant to a primitive
-value or an array of primitive values. Constants are transpiled
-down to exported ES2015 `const`s, allowing easy re-use of values.
+The `constants` object is a mapping of a constant to a primitive value or an array of primitive
+values. Constants are transpiled down to exported ES `const`s, allowing easy re-use of values.
 
-The primary use case of this feature is to provide constants from a
-backend model layer that can easily be used on the frontend,
-without introducing duplication.
+The primary use case of this feature is to provide constants from a backend model layer that can
+easily be used on the frontend, without introducing duplication.
 
 ```json
 "constants": {
@@ -339,15 +327,13 @@ without introducing duplication.
 
 #### Subsets
 
-The `subsets` object allows for smaller sets of attributes to be
-defined and exported in the ES2015 output. Each key in the object
-represents a unique name for the subset, while the value of each
-property can either be an array of [attribute names](#attributes),
-or an object of `attributes` and `nullable` (optional) properties.
+The `subsets` object allows for smaller sets of attributes to be defined and exported in the ES
+output. Each key in the object represents a unique name for the subset, while the value of each
+property can either be an array of [attribute names](#attributes), or an object of `attributes`
+and `nullable` (optional) properties.
 
-Unlike `nullable` properties found on type definitions,
-this property represents a mapping of attributes in the current
-subset to boolean values, which enable or disable the modifier.
+Unlike `nullable` properties found on type definitions, this property represents a mapping of
+attributes in the current subset to boolean values, which enable or disable the modifier.
 
 ```json
 "subsets": {
@@ -373,15 +359,13 @@ subset to boolean values, which enable or disable the modifier.
 
 ### GraphQL Support
 
-Shapeshifter supports reading from GraphQL (`.gql`) type files -- if you
-prefer GraphQL over JavaScript/JSON. However, since GraphQL is a rather strict
-and direct representation of a data model, only a small subset of Shapeshifter
-functionality is available.
+Shapeshifter supports reading from GraphQL (`.gql`) type files -- if you prefer GraphQL over
+JavaScript/JSON. However, since GraphQL is a rather strict and direct representation of a data
+model, only a small subset of Shapeshifter functionality is available.
 
-When defining a GraphQL schematic, multiple definitions (`type`, `enum`, `union`, etc)
-can exist in a single schematic, with the last `type` definition being
-used as the schematic representation. All prior definitions will be used
-as internal shapes, references, enums, and unions.
+When defining a GraphQL schematic, multiple definitions (`type`, `enum`, `union`, etc) can exist
+in a single schematic, with the last `type` definition being used as the schematic representation.
+All prior definitions will be used as internal shapes, references, enums, and unions.
 
 For more guidance, [take a look at our test cases.](./tests/schemas/gql/)
 
@@ -389,15 +373,13 @@ For more guidance, [take a look at our test cases.](./tests/schemas/gql/)
 
 ### Attribute Types
 
-For every attribute defined in a schematic, a type definition is required.
-Types will be generated when the `--types` CLI option is passed. The
-following types are supported.
+For every attribute defined in a schematic, a type definition is required. Types will be
+generated when the `--types` CLI option is passed. The following types are supported.
 
 #### Primitives
 
-There are 3 primitive types, all of which map to native JavaScript
-primitives. They are `string`, `number`, and `boolean`. Primitives
-are the only types that support shorthand notation.
+There are 3 primitive types, all of which map to native JavaScript primitives. They are `string`,
+`number`, and `boolean`. Primitives are the only types that support shorthand notation.
 
 ```json
 "name": "string",
@@ -447,8 +429,7 @@ Alias names: `str`, `num`, `int`, `integer`, `float`, `bool`, `binary`
 
 #### Arrays
 
-An `array` is a dynamic list of values, with the type of the value
-defined by the `valueType` property.
+An `array` is a dynamic list of values, with the value's type defined by the `valueType` property.
 
 ```json
 "messages": {
@@ -479,9 +460,8 @@ Alias names: `arr`, `list`
 
 #### Objects
 
-An `object` maps key-value pairs through the `keyType` and `valueType`
-properties -- both of which are type definitions. When transpiling down
-to React, the `keyType` is not required.
+An `object` maps key-value pairs through the `keyType` and `valueType` properties -- both of which
+are type definitions. When transpiling down to React, the `keyType` is not required.
 
 This is equivalent to generics from other languages: `Object<T1, T2>`.
 
@@ -514,9 +494,8 @@ Alias names: `obj`, `map`
 
 #### Enums
 
-An `enum` is a fixed list of values, with both the values and the value
-type being defined through the `values` and `valueType` properties
-respectively.
+An `enum` is a fixed list of values, with both the values and the value type being defined
+through the `values` and `valueType` properties respectively.
 
 ```json
 "words": {
@@ -558,10 +537,9 @@ words: SchemaWordsEnum;
 
 #### Shapes
 
-A `shape` is a key-value object with its own set of attributes and
-types. A shape differs from an object in that an object defines the
-type for all keys and values, while a shape defines individual
-attributes. This provides nested structures within a schematic.
+A `shape` is a key-value object with its own set of attributes and types. A shape differs from
+an object in that an object defines the type for all keys and values, while a shape defines
+individual attributes. This provides nested structures within a schematic.
 
 A shape is similar to a struct found in the C language.
 
@@ -590,7 +568,7 @@ location: LocationStruct
 
 This transpiles to:
 
-```javascript
+```
 // React
 location: PropTypes.shape({
   lat: PropTypes.number.isRequired,
@@ -617,14 +595,11 @@ Alias names: `struct`
 
 ##### Shape References
 
-Shapes are powerful at defining nested attributes, while
-[references](#references) are great at reusing external schematics.
-Shape references are a combination of both of these patterns --
-it permits a local shape definition to be used throughout
-multiple attributes.
+Shapes are powerful at defining nested attributes, while [references](#references) are great at
+reusing external schematics. Shape references are a combination of both of these patterns --
+it permits a local shape definition to be used throughout multiple attributes.
 
-To begin, define a mapping of attributes, under unique name,
-in the top level `shapes` property.
+To begin, define a mapping of attributes, under unique name, in the top level `shapes` property.
 
 ```json
 {
@@ -640,8 +615,8 @@ in the top level `shapes` property.
 }
 ```
 
-Once the shape definition exists, we can point out attributes
-to the shape using the `reference` property, like so.
+Once the shape definition exists, we can point out attributes to the shape using the `reference`
+property, like so.
 
 ```json
 "attributes": {
@@ -660,17 +635,15 @@ to the shape using the `reference` property, like so.
 }
 ```
 
-With this approach, the `attributes` property is not required
-for each shape type.
+With this approach, the `attributes` property is not required for each shape type.
 
 > If an additional `type` definition exists within a GraphQL schematic,
 > it will be treated as a shape reference, otherwise, a normal reference.
 
 #### Unions
 
-The `union` type provides a logical OR operation against a list of
-type definitions defined at `valueTypes`. Any value passed through
-this attribute must match one of the types in the list.
+The `union` type provides a logical OR operation against a list of type definitions defined at
+`valueTypes`. Any value passed through this attribute must match one of the types in the list.
 
 ```json
 "error": {
@@ -710,14 +683,12 @@ error: string | number | Error;
 
 #### References
 
-The final type, `reference`, is the most powerful and versatile type.
-A reference provides a link to an external schematic file, permitting
-easy re-use and extensibility, while avoiding schematic structure
-duplication across files.
+The final type, `reference`, is the most powerful and versatile type. A reference provides a
+link to an external schematic file, permitting easy re-use and extensibility, while avoiding
+schematic structure duplication across files.
 
-To make use of references, a `references` map must be defined in
-the root of the schematic. Each value in the map is a relative path to
-an external schematic file.
+To make use of references, a `references` map must be defined in the root of the schematic.
+Each value in the map is a relative path to an external schematic file.
 
 ```json
 {
@@ -729,10 +700,9 @@ an external schematic file.
 }
 ```
 
-Once the reference map exists, we can define the attribute type,
-which requires the `reference` property to point to a key found in
-the references map. An optional `subset` property can be defined
-that points to a subset found in the reference schematic file.
+Once the reference map exists, we can define the attribute type, which requires the `reference`
+property to point to a key found in the references map. An optional `subset` property can be
+defined that points to a subset found in the reference schematic file.
 
 ```json
 "profile": {
@@ -766,10 +736,9 @@ Alias names: `ref`
 
 ##### Self References
 
-It's possible to create recursive structures using the `self`
-property, which refers to the current schematic in which it was defined.
-When using self, the `reference` property and the `references` map
-is not required.
+It's possible to create recursive structures using the `self` property, which refers to the
+current schematic in which it was defined. When using self, the `reference` property and the
+`references` map is not required.
 
 ```json
 "node": {
@@ -785,10 +754,9 @@ type Schema {
 
 ##### Exported Schemas
 
-When generating schema classes using the `--schemas` CLI option,
-all references defined in a schematic are considered a relation (ORM style),
-and in turn, will generate schemas as well. To disable this export
-from occurring, set `export` to false.
+When generating schema classes using the `--schemas` CLI option, all references defined in a
+schematic are considered a relation (ORM style), and in turn, will generate schemas as well.
+To disable this export from occurring, set `export` to false.
 
 ```json
 "node": {
@@ -802,13 +770,12 @@ from occurring, set `export` to false.
 
 ##### Relation Type
 
-When generating schema classes, like above, a reference attribute can
-define the type of relation it has with the parent schema, using ORM
-styled terminology, and the `relation` property.
+When generating schema classes, like above, a reference attribute can define the type of relation
+it has with the parent schema, using ORM styled terminology, and the `relation` property.
 
-The following relation types are supported, which are based on the
-`Schema` [class constants](#schema-classes): `hasOne`, `hasMany`,
-`belongsTo`, and `belongsToMany` (many to many).
+The following relation types are supported, which are based on the `Schema`
+[class constants](#schema-classes): `hasOne`, `hasMany`, `belongsTo`, and `belongsToMany`
+(many to many).
 
 ```json
 "node": {
@@ -822,13 +789,11 @@ The following relation types are supported, which are based on the
 
 #### Instance Ofs
 
-The `instance` type provides a mechanism for comparing a value to
-an object (class, function, etc) found in JavaScript. While this
-doesn't necessarily map to a database table, it does provide an easy
-way to map to something like a model in the application.
+The `instance` type provides a mechanism for comparing a value to an object (class, function, etc)
+found in JavaScript. While this doesn't necessarily map to a database table, it does provide an
+easy way to map to something like a model in the application.
 
-The instance type requires a `contract` property, which is the name
-of the object.
+The instance type requires a `contract` property, which is the name of the object.
 
 ```json
 "model": {
@@ -837,8 +802,8 @@ of the object.
 }
 ```
 
-For the most part, this feature must be used in unison with
-[imports](#imports), as to pull the object into scope.
+For the most part, this feature must be used in unison with [imports](#imports), as to pull
+the object into scope.
 
 ```json
 "imports": [
@@ -867,32 +832,29 @@ Alias names: `inst`
 
 ### Schema Classes
 
-Schema classes are ES2015 based classes that are generated and included
-in the output when `--schemas` is passed to the command line. These
-schemas provide basic attribute and relational support, which in turn
-can be used by consuming libraries through exports.
+Schema classes are ES based classes that are generated and included in the output when `--schemas`
+is passed to the command line. These schemas provide basic attribute and relational support,
+which in turn can be used by consuming libraries through exports.
 
-Using our users example from the intro, and the `--schemas` CLI options,
-we would get the following output.
+Using our users example from the intro, and the `--schemas` CLI options, we would get the
+following output.
 
 ```javascript
-export const UserSchema = new Schema('users', 'id');
+export const userSchema = new Schema('users', 'id');
 ```
 
 The following properties are available on the `Schema` class instance.
 
-* `resourceName` (string) - The resource name of the schema, passed as
-  the first argument to the constructor. This field is based on
-  `meta.resourceName` in the schematic file.
-* `primaryKey` (string|string[]) - The name of the primary key in the current
-  schema, passed as the second argument to the constructor. Compound keys can be
-  supported by passing an array of attribute names. This field is based on
-  `meta.primaryKey` in the JSON schematic file. Defaults to "id".
+* `resourceName` (string) - The resource name of the schema, passed as the first argument to
+  the constructor. This field is based on `meta.resourceName` in the schematic file.
+* `primaryKey` (string|string[]) - The name of the primary key in the current schema,
+  passed as the second argument to the constructor. Compound keys can be supported by passing
+  an array of attribute names. This field is based on `meta.primaryKey` in the JSON schematic file.
+  Defaults to "id".
 * `attributes` (string[]) - List of attribute names in the current schema.
 * `metadata` (object) - Extra metadata defined in the current schema.
-* `relations` (object[]) - List of relational objects that map specific
-  attributes to externally referenced schemas. The relational object
-  follows this structure:
+* `relations` (object[]) - List of relational objects that map specific attributes to externally
+  referenced schemas. The relational object follows this structure:
 
 ```javascript
 {
@@ -903,92 +865,88 @@ The following properties are available on the `Schema` class instance.
 }
 ```
 
-* `relationTypes` (object) - Maps attribute names to relation types. A
-  relation type is one of the following constants found on the `Schema`
-  class: `HAS_ONE`, `HAS_MANY`, `BELONGS_TO`, `BELONGS_TO_MANY`.
+* `relationTypes` (object) - Maps attribute names to relation types. A relation type is one of
+  the following constants found on the `Schema` class: `HAS_ONE`, `HAS_MANY`, `BELONGS_TO`,
+  `BELONGS_TO_MANY`.
 
 > Schemas are not supported by GraphQL.
 
 #### Including Attributes
 
-By default, attributes are excluded from the output unless the
-`--attributes` CLI option is passed. Once passed, they are defined
-as a list of strings using `addAttributes()`.
+By default, attributes are excluded from the output unless the `--attributes` CLI option is passed.
+Once passed, they are defined as a list of strings using `addAttributes()`.
 
 Continuing with our previous example, the output will be.
 
 ```javascript
-export const UserSchema = new Schema('users', 'id');
+export const userSchema = new Schema('users', 'id');
 
-UserSchema
+userSchema
   .addAttributes(['id', 'username', 'email', 'location']);
 ```
 
 #### Including Relations
 
-Unlike attributes, relations are always included in the output, as
-relations between entities (via schemas) are highly informational.
-Relations are divided into 4 categories: has one, has many, belongs to,
-and belongs to many (many to many).
+Unlike attributes, relations are always included in the output, as relations between entities
+(via schemas) are highly informational. Relations are divided into 4 categories: has one,
+has many, belongs to, and belongs to many (many to many).
 
-Relations are generated based on [references](#references) found
-within the current schema. Assume we add a has many `posts` relation,
-and a has one `country` relation to the current `users` schema,
-we would generate the following output.
+Relations are generated based on [references](#references) found within the current schema.
+Assume we add a has many `posts` relation, and a has one `country` relation to the current
+`users` schema, we would generate the following output.
 
 ```javascript
-export const CountrySchema = new Schema('countries');
+export const countrySchema = new Schema('countries');
 
-export const PostSchema = new Schema('posts');
+export const postSchema = new Schema('posts');
 
-export const UserSchema = new Schema('users');
+export const userSchema = new Schema('users');
 
-PostSchema
+postSchema
   .belongsTo({
-    user: UserSchema,
+    user: userSchema,
   });
 
-UserSchema
+userSchema
   .hasOne({
-    country: CountrySchema,
+    country: countrySchema,
   })
   .hasMany({
-    posts: PostSchema,
+    posts: postSchema,
   });
 ```
 
-If `--useDefine` is passed on the command line, the relation output will
-be modified to the following:
+If `--useDefine` is passed on the command line, the relation output will be modified to:
 
 ```javascript
-PostSchema.define({
-  user: UserSchema,
+postSchema.define({
+  user: userSchema,
 });
 
-UserSchema.define({
-  country: CountrySchema,
-  posts: [PostSchema],
+userSchema.define({
+  country: countrySchema,
+  posts: [postSchema],
 });
 ```
 
 ### Auto-Transpilation
 
-By default, Shapeshifter transpiles schematics to a target folder through a manual
-CLI script. This can be problematic, as the command may incur VCS conflicts,
-or simply, developers will forget to run the command.
+By default, Shapeshifter transpiles schematics to a target folder through a manual CLI script.
+This can be problematic, as the command may incur VCS conflicts, or simply, developers will
+forget to run the command.
 
 To mitigate this issue, an auto-transpilation plugin can be added to your build/bundle process.
 This plugin will intercept a custom import path and replace the source code with the
 transpiled Shapeshifter output.
 
 ```javascript
-import { UserSchema } from 'shapeshifter/schematics';
+import { userSchema } from 'shapeshifter/schematics';
 ```
 
 The plugin accepts an object with the following options -- with most of them being based on the
 [options passed to the command line](#options).
 
-* `schematicsSource` (string|string[]) - Absolute file system path to schematics source folder. *Required.*
+* `schematicsSource` (string | string[]) - Absolute file system path to schematics source folder. *Required.*
 * `schematicsImportPath` (string) - The fake import path to intercept. Defaults to `shapeshifter/schematics`.
 * `defaultNullable`
 * `format`
@@ -1002,10 +960,10 @@ The plugin accepts an object with the following options -- with most of them bei
 
 #### Webpack
 
-To automatically transpile Shapeshifter during Webpack's build process, add the `WebpackPlugin`.
+To automatically transpile Shapeshifter during Webpack's build process, add the Webpack plugin.
 
 ```javascript
-const ShapeshifterPlugin = require('shapeshifter/lib/bundlers/WebpackPlugin');
+const ShapeshifterPlugin = require('shapeshifter/lib/bundlers/WebpackPlugin').default;
 
 // Webpack config
 plugins: [
@@ -1023,12 +981,11 @@ Looking into...
 
 **Why `arrayOf`, `objectOf` over `array`, `object` React prop types?**
 
-I chose `arrayOf` and `objectOf` because they provide type safety and
-the assurance of the values found within the collection. Using
-non-type safe features would defeat the purpose of this library.
+I chose `arrayOf` and `objectOf` because they provide type safety and the assurance of the values
+found within the collection. Using non-type safe features would defeat the purpose of this library.
 
 **What about `node`, `element`, and `func` React prop types?**
 
-The `node` and `element` types represent DOM elements or React
-structures found within the application. These types don't really
-map to database tables or data structures very well, if at all.
+The `node` and `element` types represent DOM elements or React structures found within the
+application. These types don't really map to database tables or data structures very well,
+if at all.
