@@ -166,6 +166,13 @@ export default class Renderer {
   }
 
   /**
+   * Return the schema name with a lowercase first character.
+   */
+  getSchemaInstanceName(name: string): string {
+    return name.charAt(0).toLowerCase() + name.slice(1);
+  }
+
+  /**
    * Return a list of the primary set and all subsets.
    */
   getSets(): TemplateList {
@@ -571,7 +578,7 @@ export default class Renderer {
         const relationName = relationConfig.self
           ? this.schematic.name
           : references[relationConfig.reference].name;
-        const schemaName = this.getObjectName(relationName, 'Schema');
+        const schemaName = this.getSchemaInstanceName(this.getObjectName(relationName, 'Schema'));
         const isCollection = (
           relationType === Schema.HAS_MANY ||
           relationType === Schema.BELONGS_TO_MANY
@@ -595,7 +602,8 @@ export default class Renderer {
       args.push(this.renderPlainObject(meta));
     }
 
-    const schemaTemplate = `export const ${name} = new Schema(${args.join(', ')});`;
+    const schemaName = this.getSchemaInstanceName(name);
+    const schemaTemplate = `export const ${schemaName} = new Schema(${args.join(', ')});`;
 
     // Generate relations separately so that we avoid circular references
     let relationTemplate = '';
@@ -622,7 +630,7 @@ export default class Renderer {
     }
 
     if (relationTemplate) {
-      this.relations.push(`${name}${relationTemplate};`);
+      this.relations.push(`${schemaName}${relationTemplate};`);
     }
 
     return `${schemaTemplate}`;

@@ -3,7 +3,7 @@
 // @flow
 import Schema from 'shapeshifter';
 
-export const ExtraMetaSchema = new Schema('extra', {
+export const extraMetaSchema = new Schema('extra', {
   arrayOfThings: ['id', 'date'],
   extraThing: 123,
   something: true,

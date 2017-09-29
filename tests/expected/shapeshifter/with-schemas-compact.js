@@ -3,17 +3,17 @@
 // @flow
 import Schema from 'shapeshifter';
 
-export const MultipleChildrenSchema = new Schema('multiple-children', 'uuid');
+export const multipleChildrenSchema = new Schema('multiple-children', 'uuid');
 
-export const SingleChildSchema = new Schema('single-child');
+export const singleChildSchema = new Schema('single-child');
 
-export const ParentSchema = new Schema('parents');
+export const parentSchema = new Schema('parents');
 
-SingleChildSchema.define({
-  self: SingleChildSchema,
+singleChildSchema.define({
+  self: singleChildSchema,
 });
 
-ParentSchema.define({
-  orphan: SingleChildSchema,
-  children: [MultipleChildrenSchema],
+parentSchema.define({
+  orphan: singleChildSchema,
+  children: [multipleChildrenSchema],
 });

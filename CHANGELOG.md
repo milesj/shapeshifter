@@ -1,6 +1,10 @@
 # 5.0.0
+#### 💥 Breaking
+* Transpiled schema instance variables are now in camel case form. `UserSchema` -> `userSchema`.
+
+#### 🛠 Internal
 * Integrated `optimal` for options validation.
-* Moved flow definitions to flow-typed/ folder.
+* Moved Flowtype definitions to flow-typed/ folder.
 
 # 4.2.1
 * Fixed an issue with the lib/ build.
@@ -9,7 +13,7 @@
 * Schematics can now be auto-transpiled through a build or bundle process.
 * Added a new `WebpackPlugin` plugin for auto-transpilation.
 * Added a new `importPath` option, allowing the output import to be customized.
-* Added an `eslint-disable` comment to the top of the output.
+* Added an `eslint-disable` comment to the top of the output file.
 
 # 4.1.0
 * Updated IE requirement to 11+.

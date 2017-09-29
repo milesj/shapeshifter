@@ -3,18 +3,18 @@
 // @flow
 import Schema from 'shapeshifter';
 
-export const MultipleChildrenSchema = new Schema('multiple-children', 'uuid');
+export const multipleChildrenSchema = new Schema('multiple-children', 'uuid');
 
-export const SingleChildSchema = new Schema('single-child');
+export const singleChildSchema = new Schema('single-child');
 
-export const ParentSchema = new Schema('parents');
+export const parentSchema = new Schema('parents');
 
-SingleChildSchema.hasOne({
-  self: SingleChildSchema,
+singleChildSchema.hasOne({
+  self: singleChildSchema,
 });
 
-ParentSchema.hasOne({
-  orphan: SingleChildSchema,
+parentSchema.hasOne({
+  orphan: singleChildSchema,
 }).belongsToMany({
-  children: MultipleChildrenSchema,
+  children: multipleChildrenSchema,
 });

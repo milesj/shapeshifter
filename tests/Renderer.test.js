@@ -297,14 +297,14 @@ describe('Renderer', () => {
     it('renders template', () => {
       expect(renderer.renderSchema('QuxSchema', [], {
         resourceName: 'quxs',
-      })).toBe('export const QuxSchema = new Schema(\'quxs\');');
+      })).toBe('export const quxSchema = new Schema(\'quxs\');');
     });
 
     it('renders template with primary key', () => {
       expect(renderer.renderSchema('QuxSchema', [], {
         resourceName: 'quxs',
         primaryKey: 'uuid',
-      })).toBe('export const QuxSchema = new Schema(\'quxs\', \'uuid\');');
+      })).toBe('export const quxSchema = new Schema(\'quxs\', \'uuid\');');
     });
 
     it('renders template with attributes', () => {
@@ -315,10 +315,10 @@ describe('Renderer', () => {
         new StringDefinition(options, 'last_name'),
       ], {
         resourceName: 'quxs',
-      })).toBe('export const QuxSchema = new Schema(\'quxs\');');
+      })).toBe('export const quxSchema = new Schema(\'quxs\');');
 
       expect(renderer.relations).toEqual([
-        `QuxSchema.addAttributes([
+        `quxSchema.addAttributes([
   'first_name',
   'last_name',
 ]);`,
@@ -344,7 +344,7 @@ describe('Renderer', () => {
         }),
       ], {
         resourceName: 'quxs',
-      })).toBe('export const QuxSchema = new Schema(\'quxs\');');
+      })).toBe('export const quxSchema = new Schema(\'quxs\');');
     });
 
     it('renders template with one references', () => {
@@ -356,11 +356,11 @@ describe('Renderer', () => {
         new ReferenceDefinition(options, 'post', { reference: 'posts' }),
       ], {
         resourceName: 'quxs',
-      })).toBe('export const QuxSchema = new Schema(\'quxs\');');
+      })).toBe('export const quxSchema = new Schema(\'quxs\');');
 
       expect(renderer.relations).toEqual([
-        `QuxSchema.hasOne({
-  post: PostsSchema,
+        `quxSchema.hasOne({
+  post: postsSchema,
 });`,
       ]);
     });
@@ -374,11 +374,11 @@ describe('Renderer', () => {
         new StringDefinition(options, 'last_name'),
       ], {
         resourceName: 'quxs',
-      })).toBe('export const QuxSchema = new Schema(\'quxs\');');
+      })).toBe('export const quxSchema = new Schema(\'quxs\');');
 
       expect(renderer.relations).toEqual([
-        `QuxSchema.hasOne({
-  post: PostsSchema,
+        `quxSchema.hasOne({
+  post: postsSchema,
 });`,
       ]);
     });
@@ -395,11 +395,11 @@ describe('Renderer', () => {
         }),
       ], {
         resourceName: 'quxs',
-      })).toBe('export const QuxSchema = new Schema(\'quxs\');');
+      })).toBe('export const quxSchema = new Schema(\'quxs\');');
 
       expect(renderer.relations).toEqual([
-        `QuxSchema.hasMany({
-  posts: PostsSchema,
+        `quxSchema.hasMany({
+  posts: postsSchema,
 });`,
       ]);
     });
@@ -421,13 +421,13 @@ describe('Renderer', () => {
         }),
       ], {
         resourceName: 'quxs',
-      })).toBe('export const QuxSchema = new Schema(\'quxs\');');
+      })).toBe('export const quxSchema = new Schema(\'quxs\');');
 
       expect(renderer.relations).toEqual([
-        `QuxSchema.belongsTo({
-  post: PostsSchema,
+        `quxSchema.belongsTo({
+  post: postsSchema,
 }).belongsToMany({
-  posts: PostsSchema,
+  posts: postsSchema,
 });`,
       ]);
     });
@@ -451,18 +451,18 @@ describe('Renderer', () => {
         }),
       ], {
         resourceName: 'quxs',
-      })).toBe('export const QuxSchema = new Schema(\'quxs\');');
+      })).toBe('export const quxSchema = new Schema(\'quxs\');');
 
       expect(renderer.relations).toEqual([
-        `QuxSchema.addAttributes([
+        `quxSchema.addAttributes([
   'first_name',
   'last_name',
   'post',
   'posts',
 ]).hasMany({
-  posts: PostsSchema,
+  posts: postsSchema,
 }).belongsTo({
-  post: PostsSchema,
+  post: postsSchema,
 });`,
       ]);
 
@@ -487,12 +487,12 @@ describe('Renderer', () => {
         }),
       ], {
         resourceName: 'quxs',
-      })).toBe('export const QuxSchema = new Schema(\'quxs\');');
+      })).toBe('export const quxSchema = new Schema(\'quxs\');');
 
       expect(renderer.relations).toEqual([
-        `QuxSchema.define({
-  post: PostsSchema,
-  posts: [PostsSchema],
+        `quxSchema.define({
+  post: postsSchema,
+  posts: [postsSchema],
 });`,
       ]);
     });

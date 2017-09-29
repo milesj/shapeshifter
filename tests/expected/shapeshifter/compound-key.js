@@ -3,7 +3,7 @@
 // @flow
 import Schema from 'shapeshifter';
 
-export const CompoundSupportSchema = new Schema('compounds', ['start_date', 'end_date', 'user_id']);
+export const compoundSupportSchema = new Schema('compounds', ['start_date', 'end_date', 'user_id']);
 
 export type CompoundSupportType = {
   status: ?number,
