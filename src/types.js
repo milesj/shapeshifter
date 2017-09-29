@@ -15,7 +15,7 @@ export type Options = {
   includeSchemas: boolean,
   includeTypes: boolean,
   indentCharacter: string,
-  renderer: string,
+  renderer: 'react' | 'flow' | 'typescript',
   stripPropTypes: boolean,
   useDefine: boolean,
 };
