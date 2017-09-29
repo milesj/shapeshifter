@@ -4,7 +4,7 @@
  * @flow
  */
 
-import Config from 'optimal';
+import Config, { bool, string, array } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 
@@ -15,11 +15,11 @@ export default class UnionDefinition extends Definition {
   valueTypes: Definition[];
 
   validateConfig() {
-    this.config = new Config(this.config, opt => ({
-      nullable: opt.bool(),
-      type: opt.string('union'),
-      valueTypes: opt.array(this.createValueType(opt)).notEmpty().required(),
-    }), {
+    this.config = new Config(this.config, {
+      nullable: bool(),
+      type: string('union'),
+      valueTypes: array(this.createValueType()).notEmpty().required(),
+    }, {
       name: 'UnionDefinition',
       unknown: true,
     });

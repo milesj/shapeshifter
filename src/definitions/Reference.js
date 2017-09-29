@@ -4,7 +4,7 @@
  * @flow
  */
 
-import Config from 'optimal';
+import Config, { bool, string } from 'optimal';
 import Definition from '../Definition';
 
 import type { ReferenceConfig } from '../types';
@@ -13,15 +13,15 @@ export default class ReferenceDefinition extends Definition {
   config: ReferenceConfig;
 
   validateConfig() {
-    this.config = new Config(this.config, opt => ({
-      export: opt.bool(true),
-      nullable: opt.bool(),
-      reference: opt.string().empty().xor('self'),
-      relation: opt.string().empty(),
-      self: opt.bool().xor('reference'),
-      subset: opt.string().empty(),
-      type: opt.string('reference'),
-    }), {
+    this.config = new Config(this.config, {
+      export: bool(true),
+      nullable: bool(),
+      reference: string().empty().xor('self'),
+      relation: string().empty(),
+      self: bool().xor('reference'),
+      subset: string().empty(),
+      type: string('reference'),
+    }, {
       name: 'ReferenceDefinition',
       unknown: true,
     });

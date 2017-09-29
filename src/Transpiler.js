@@ -8,7 +8,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import Config from 'optimal';
+import Config, { bool, string } from 'optimal';
 import RendererFactory from './RendererFactory';
 import Schematic from './Schematic';
 import readWithNode from './readers/node';
@@ -26,7 +26,7 @@ export default class Transpiler {
   options: Options;
 
   constructor(options: Options) {
-    this.options = new Config(options, ({ bool, string }) => ({
+    this.options = new Config(options, {
       defaultNullable: bool(),
       importPath: string('shapeshifter'),
       includeSchemas: bool(),
@@ -36,7 +36,7 @@ export default class Transpiler {
       renderer: string('react').oneOf(['react', 'flow', 'typescript']),
       stripPropTypes: bool(),
       useDefine: bool(),
-    }));
+    });
   }
 
   /**

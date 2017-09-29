@@ -4,7 +4,7 @@
  * @flow
  */
 
-import Config from 'optimal';
+import Config, { bool, string } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 
@@ -16,12 +16,12 @@ export default class ObjectDefinition extends Definition {
   valueType: Definition;
 
   validateConfig() {
-    this.config = new Config(this.config, opt => ({
-      nullable: opt.bool(),
-      keyType: opt.string('string'),
-      type: opt.string('object'),
-      valueType: this.createValueType(opt),
-    }), {
+    this.config = new Config(this.config, {
+      nullable: bool(),
+      keyType: string('string'),
+      type: string('object'),
+      valueType: this.createValueType(),
+    }, {
       name: 'ObjectDefinition',
       unknown: true,
     });

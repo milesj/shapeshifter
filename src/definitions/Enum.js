@@ -4,7 +4,7 @@
  * @flow
  */
 
-import Config from 'optimal';
+import Config, { bool, string, array, custom } from 'optimal';
 import Definition from '../Definition';
 import normalizeType from '../helpers/normalizeType';
 
@@ -14,12 +14,12 @@ export default class EnumDefinition extends Definition {
   config: EnumConfig;
 
   validateConfig() {
-    this.config = new Config(this.config, opt => ({
-      nullable: opt.bool(),
-      type: opt.string('enum'),
-      valueType: this.createValueType(opt),
-      values: opt.array(opt.custom(this.validateValue)).notEmpty().required(),
-    }), {
+    this.config = new Config(this.config, {
+      nullable: bool(),
+      type: string('enum'),
+      valueType: this.createValueType(),
+      values: array(custom(this.validateValue)).notEmpty().required(),
+    }, {
       name: 'EnumDefinition',
       unknown: true,
     });

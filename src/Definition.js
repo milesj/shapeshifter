@@ -4,10 +4,10 @@
  * @flow
  */
 
-import Config from 'optimal';
+import Config, { bool, string, shape, union } from 'optimal';
 import normalizeType from './helpers/normalizeType';
 
-import type { Builders, UnionBuilder } from 'optimal'; // eslint-disable-line
+import type { UnionBuilder } from 'optimal'; // eslint-disable-line
 import type { Options } from './types';
 
 export default class Definition {
@@ -32,9 +32,7 @@ export default class Definition {
   /**
    * Create an option for our `valueType` type definition.
    */
-  createValueType(builders: Builders): UnionBuilder {
-    const { shape, string, union } = builders;
-
+  createValueType(): UnionBuilder {
     return union([
       string(),
       shape({
@@ -56,10 +54,10 @@ export default class Definition {
   validateConfig() {
     const { name } = this.constructor;
 
-    this.config = new Config(this.config, opt => ({
-      nullable: opt.bool(),
-      type: opt.string(normalizeType(name.toLowerCase())),
-    }), {
+    this.config = new Config(this.config, {
+      nullable: bool(),
+      type: string(normalizeType(name.toLowerCase())),
+    }, {
       name: name || 'Definition',
       unknown: true,
     });

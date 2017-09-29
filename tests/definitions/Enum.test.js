@@ -26,7 +26,7 @@ describe('definitions/Enum', () => {
     )).toThrowError('Invalid EnumDefinition option "values". Array cannot be empty.');
   });
 
-  it('errors if `values` do not match the type in `valueType`', () => {
+  describe('errors if `values` do not match the type in `valueType`', () => {
     it('for strings', () => {
       expect(() => (
         new EnumDefinition(options, 'foo', { valueType: 'string', values: ['foo', 123] })

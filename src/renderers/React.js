@@ -57,8 +57,10 @@ export default class ReactRenderer extends Renderer {
   renderEnum(definition: EnumDefinition, depth: number): string {
     const { values, valueType } = definition.config;
 
-    return this.wrapPropType(definition,
-      this.wrapFunction('oneOf',
+    return this.wrapPropType(
+      definition,
+      this.wrapFunction(
+        'oneOf',
         this.formatArray(this.renderArrayItems(values, depth + 1, valueType), depth),
       ),
     );
@@ -67,8 +69,10 @@ export default class ReactRenderer extends Renderer {
   renderInstance(definition: InstanceDefinition): string {
     const { contract } = definition.config;
 
-    return this.wrapPropType(definition,
-      this.wrapFunction('instanceOf', this.formatValue(contract, 'function')));
+    return this.wrapPropType(
+      definition,
+      this.wrapFunction('instanceOf', this.formatValue(contract, 'function')),
+    );
   }
 
   renderNumber(definition: NumberDefinition): string {
@@ -99,8 +103,10 @@ export default class ReactRenderer extends Renderer {
       return this.wrapNullable(definition, reference);
     }
 
-    return this.wrapPropType(definition,
-      this.wrapFunction('shape',
+    return this.wrapPropType(
+      definition,
+      this.wrapFunction(
+        'shape',
         this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth),
       ),
     );
@@ -111,8 +117,10 @@ export default class ReactRenderer extends Renderer {
   }
 
   renderUnion(definition: UnionDefinition, depth: number): string {
-    return this.wrapPropType(definition,
-      this.wrapFunction('oneOfType',
+    return this.wrapPropType(
+      definition,
+      this.wrapFunction(
+        'oneOfType',
         this.formatArray(this.renderArrayDefinitions(definition.valueTypes, depth + 1), depth),
       ),
     );

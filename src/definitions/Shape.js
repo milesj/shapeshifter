@@ -4,7 +4,7 @@
  * @flow
  */
 
-import Config from 'optimal';
+import Config, { bool, string, object } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 
@@ -15,12 +15,12 @@ export default class ShapeDefinition extends Definition {
   attributes: Definition[];
 
   validateConfig() {
-    this.config = new Config(this.config, opt => ({
-      attributes: opt.object(this.createValueType(opt), null).nullable().xor('reference').notEmpty(),
-      nullable: opt.bool(),
-      reference: opt.string().xor('attributes').empty(),
-      type: opt.string('shape'),
-    }), {
+    this.config = new Config(this.config, {
+      attributes: object(this.createValueType(), null).nullable().xor('reference').notEmpty(),
+      nullable: bool(),
+      reference: string().xor('attributes').empty(),
+      type: string('shape'),
+    }, {
       name: 'ShapeDefinition',
       unknown: true,
     });

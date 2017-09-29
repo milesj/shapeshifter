@@ -31,6 +31,7 @@ export default function normalizeType(baseType: *): string {
   let type = baseType;
 
   if (isObject(baseType)) {
+    // $FlowIgnore
     ({ type } = baseType);
   }
 

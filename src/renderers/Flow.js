@@ -77,8 +77,7 @@ export default class FlowRenderer extends Renderer {
   renderShape(definition: ShapeDefinition, depth: number): string {
     return this.wrapNullable(definition,
       this.renderShapeReference(definition) ||
-      this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth),
-    );
+      this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth));
   }
 
   renderString(definition: StringDefinition): string {
