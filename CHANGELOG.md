@@ -2,6 +2,9 @@
 #### 💥 Breaking
 * Transpiled schema instance variables are now in camel case form. `UserSchema` -> `userSchema`.
 
+#### 🐞 Fixed
+* Call `process.exit()` when transpilation fails.
+
 #### 🛠 Internal
 * Integrated `optimal` for options validation.
 * Moved Flowtype definitions to flow-typed/ folder.

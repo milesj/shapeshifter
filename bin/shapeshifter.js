@@ -47,6 +47,8 @@ shapeshifter
       .catch(function failure(error) {
         // Rudimentary error handling and styling
         action.log(shapeshifter.chalk.red(error.message));
+
+        process.exit(1);
       });
   });
 
