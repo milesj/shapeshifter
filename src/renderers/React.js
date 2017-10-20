@@ -35,7 +35,7 @@ export default class ReactRenderer extends Renderer {
     }
   }
 
-  render(setName: string, attributes: Definition[] = []) {
+  render(setName: string, attributes: Definition[] = []): string {
     const shape = this.formatObject(this.renderObjectProps(attributes, 1), 0);
 
     if (this.options.stripPropTypes) {

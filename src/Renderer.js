@@ -36,13 +36,21 @@ type TemplateList = string[];
 
 export default class Renderer {
   options: Options;
+
   schematic: Schematic;
+
   suffix: string;
+
   imports: TemplateList;
+
   constants: TemplateList;
+
   header: TemplateList;
+
   sets: TemplateList;
+
   schemas: TemplateList;
+
   relations: TemplateList;
 
   constructor(options: Options, schematic: Schematic) {
@@ -691,7 +699,7 @@ export default class Renderer {
 
   /**
    * Render a generics alias with optional type arguments.
-     */
+   */
   wrapGenerics(alias: string, ...types: string[]): string {
     return `${alias}<${types.join(', ')}>`;
   }

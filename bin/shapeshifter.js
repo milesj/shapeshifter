@@ -29,8 +29,8 @@ shapeshifter
     return new Transpiler({
       defaultNullable: options.nullable || false,
       importPath: options.import || 'shapeshifter',
-      includeSchemas: options.schemas || false,
       includeAttributes: options.attributes || false,
+      includeSchemas: options.schemas || false,
       includeTypes: options.types || false,
       indentCharacter: options.indent || '  ',
       renderer: options.format || 'react',

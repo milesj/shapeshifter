@@ -12,6 +12,7 @@ import type { ShapeConfig } from '../types';
 
 export default class ShapeDefinition extends Definition {
   config: ShapeConfig;
+
   attributes: Definition[];
 
   validateConfig() {

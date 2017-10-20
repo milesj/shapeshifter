@@ -31,7 +31,7 @@ export default class FlowRenderer extends Renderer {
     this.imports.unshift('// @flow');
   }
 
-  render(setName: string, attributes: Definition[] = []) {
+  render(setName: string, attributes: Definition[] = []): string {
     const shape = this.formatObject(this.renderObjectProps(attributes, 1), 0);
 
     return `export type ${setName} = ${shape};`;

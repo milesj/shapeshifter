@@ -29,8 +29,8 @@ export default class Transpiler {
     this.options = new Config(options, {
       defaultNullable: bool(),
       importPath: string('shapeshifter'),
-      includeSchemas: bool(),
       includeAttributes: bool(),
+      includeSchemas: bool(),
       includeTypes: bool(),
       indentCharacter: string('  '),
       renderer: string('react').oneOf(['react', 'flow', 'typescript']),
@@ -130,9 +130,9 @@ export default class Transpiler {
       // Extract child references
       Object.keys(schematic.references).forEach((ref: string) => {
         toResolve.push({
-          resolvePath: path.normalize(path.join(basePath, schematic.references[ref])),
           parentSchematic: schematic,
           refKey: ref,
+          resolvePath: path.normalize(path.join(basePath, schematic.references[ref])),
         });
       });
     }

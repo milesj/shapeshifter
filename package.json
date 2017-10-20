@@ -52,17 +52,17 @@
   "homepage": "https://github.com/milesj/shapeshifter#readme",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "graphql": "^0.11.4",
+    "graphql": "^0.11.7",
     "optimal": "^0.14.0",
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.30.2",
+    "@milesj/build-tool-config": "^0.33.0",
     "babel-loader": "^7.1.2",
     "prop-types": "^15.6.0",
     "typescript": "^2.5.3",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
   },
   "babel": {
     "extends": "./node_modules/@milesj/build-tool-config/babel.json5"

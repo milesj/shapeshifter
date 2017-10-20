@@ -23,16 +23,27 @@ import type {
 
 export default class Schematic {
   data: SchemaStructure;
+
   path: string;
+
   name: string;
+
   options: Options;
+
   metadata: MetadataField;
+
   attributes: Definition[];
+
   constants: ConstantsField;
+
   imports: ImportsField;
+
   shapes: ShapesField;
+
   subsets: SubsetsField;
+
   references: ReferencesField;
+
   referenceSchematics: { [key: string]: Schematic };
 
   /**

@@ -27,14 +27,23 @@ import type {
 
 class GraphQLReader {
   document: DocumentNode = null;
+
   schematic: DefinitionNode = null;
+
   fileExt: string = '';
+
   name: string = '';
+
   primaryKey: string = '';
+
   attributes: AttributesField = {};
+
   references: ReferencesField = {};
+
   enums: { [key: string]: number[] } = {};
+
   shapes: ShapesField = {};
+
   unions: { [key: string]: TypeDefinition[] } = {};
 
   constructor(doc: DocumentNode, ext: string) {
@@ -59,9 +68,9 @@ class GraphQLReader {
     } else if (type.kind === Kind.LIST_TYPE) {
       // $FlowIgnore We know what this will be
       return {
+        nullable,
         type: 'array',
         valueType: this.buildAttribute(field, type.type, true, schematic),
-        nullable,
       };
 
     // Named
@@ -79,12 +88,14 @@ class GraphQLReader {
             this.primaryKey = field.name.value;
           }
 
-          // GQL denotes ID fields as strings,
-          // but we should accept integers as well.
+          /*
+           * GQL denotes ID fields as strings,
+           * but we should accept integers as well.
+           */
           return {
+            nullable,
             type: 'union',
             valueTypes: ['number', 'string'],
-            nullable,
           };
 
         case 'Int':
@@ -93,45 +104,45 @@ class GraphQLReader {
         case 'String':
         case 'Boolean':
           return {
-            type: value.toLowerCase(),
             nullable,
+            type: value.toLowerCase(),
           };
 
         default:
           // Enum
           if (this.enums[value]) {
             return {
-              type: 'enum',
-              valueType: (typeof this.enums[value][0]),
-              values: this.enums[value],
               nullable,
+              type: 'enum',
+              values: this.enums[value],
+              valueType: typeof this.enums[value][0],
             };
           }
 
           // Shapes
           if (this.shapes[value]) {
             return {
-              type: 'shape',
-              reference: value,
               nullable,
+              reference: value,
+              type: 'shape',
             };
           }
 
           // Unions
           if (this.unions[value]) {
             return {
+              nullable,
               type: 'union',
               valueTypes: this.unions[value],
-              nullable,
             };
           }
 
           // Self references
           if (value === this.name) {
             return {
-              type: 'reference',
-              self: true,
               nullable,
+              self: true,
+              type: 'reference',
             };
           }
 
@@ -139,9 +150,9 @@ class GraphQLReader {
           this.references[value] = `./${value}${this.fileExt}`;
 
           return {
-            type: 'reference',
-            reference: value,
             nullable,
+            reference: value,
+            type: 'reference',
           };
       }
     }
@@ -225,11 +236,11 @@ class GraphQLReader {
 
   toSchematic(): SchemaStructure {
     return {
-      name: this.name,
+      attributes: this.attributes,
       meta: {
         primaryKey: this.primaryKey || 'id',
       },
-      attributes: this.attributes,
+      name: this.name,
       references: this.references,
       shapes: this.shapes,
     };

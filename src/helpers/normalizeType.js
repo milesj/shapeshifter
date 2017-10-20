@@ -8,20 +8,20 @@ import isObject from './isObject';
 
 // Use a hash map for faster lookups
 const ALIAS_MAP = {
+  arr: 'array',
   binary: 'boolean',
   bool: 'boolean',
+  float: 'number',
   inst: 'instance',
   int: 'number',
   integer: 'number',
-  num: 'number',
-  float: 'number',
-  obj: 'object',
-  struct: 'shape',
-  str: 'string',
-  ref: 'reference',
-  arr: 'array',
   list: 'array',
   map: 'object',
+  num: 'number',
+  obj: 'object',
+  ref: 'reference',
+  str: 'string',
+  struct: 'shape',
 };
 
 /**

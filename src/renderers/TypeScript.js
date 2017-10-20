@@ -31,7 +31,7 @@ export default class TypeScriptRenderer extends Renderer {
     this.suffix = 'Interface';
   }
 
-  render(setName: string, attributes: Definition[] = []) {
+  render(setName: string, attributes: Definition[] = []): string {
     const shape = this.formatObject(this.renderObjectProps(attributes, 1, ';'), 0);
 
     return `export interface ${setName} ${shape}`;
@@ -63,8 +63,10 @@ export default class TypeScriptRenderer extends Renderer {
     let currentChar = ASCII_ALPHA_START;
 
     switch (normalizeType(valueType)) {
-      // If a string is provided
-      // Assign values incrementally starting from 0
+      /*
+       * If a string is provided
+       * Assign values incrementally starting from 0
+       */
       default:
       case 'string':
         values.forEach((value: PrimitiveType) => {
@@ -73,8 +75,10 @@ export default class TypeScriptRenderer extends Renderer {
         });
         break;
 
-      // If a number or boolean is provided
-      // Generate unique keys using the alphabet
+      /*
+       * If a number or boolean is provided
+       * Generate unique keys using the alphabet
+       */
       case 'number':
       case 'boolean':
         values.forEach((value: PrimitiveType) => {

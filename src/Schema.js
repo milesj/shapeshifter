@@ -13,14 +13,23 @@ const HAS_MANY: string = 'hasMany';
 
 export default class Schema {
   attributes: string[];
+
   metadata: Object;
+
   primaryKey: PrimaryKey;
+
   relations: Relation[];
+
   relationTypes: { [key: string]: string };
+
   resourceName: string;
+
   static HAS_ONE: string = HAS_ONE;
+
   static HAS_MANY: string = HAS_MANY;
+
   static BELONGS_TO: string = BELONGS_TO;
+
   static BELONGS_TO_MANY: string = BELONGS_TO_MANY;
 
   /**
@@ -71,9 +80,9 @@ export default class Schema {
 
     this.relations.push({
       attribute,
-      schema,
-      relation,
       collection: (relation === BELONGS_TO_MANY || relation === HAS_MANY),
+      relation,
+      schema,
     });
 
     this.relationTypes[attribute] = relation;

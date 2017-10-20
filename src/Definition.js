@@ -12,7 +12,9 @@ import type { Options } from './types';
 
 export default class Definition {
   options: Options;
+
   attribute: string;
+
   config: Object;
 
   /**

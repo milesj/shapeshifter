@@ -12,6 +12,7 @@ import type { UnionConfig } from '../types';
 
 export default class UnionDefinition extends Definition {
   config: UnionConfig;
+
   valueTypes: Definition[];
 
   validateConfig() {

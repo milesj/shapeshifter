@@ -12,13 +12,15 @@ import type { ObjectConfig } from '../types';
 
 export default class ObjectDefinition extends Definition {
   config: ObjectConfig;
+
   keyType: Definition;
+
   valueType: Definition;
 
   validateConfig() {
     this.config = new Config(this.config, {
-      nullable: bool(),
       keyType: string('string'),
+      nullable: bool(),
       type: string('object'),
       valueType: this.createValueType(),
     }, {
@@ -27,8 +29,8 @@ export default class ObjectDefinition extends Definition {
     });
 
     this.keyType = DefinitionFactory.factory(this.options, `${this.attribute}_key`, {
-      type: this.config.keyType,
       nullable: false,
+      type: this.config.keyType,
     });
 
     this.valueType = DefinitionFactory.factory(
