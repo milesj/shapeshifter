@@ -25,10 +25,10 @@
   "main": "./lib/index.js",
   "bin": "./bin/shapeshifter.js",
   "scripts": {
-    "babel": "build-lib ./src -d ./lib",
+    "babel": "build-lib",
     "check": "type-check && tsc --noEmit --allowJs ./tests/expected/gql/typescript/* ./tests/expected/node/typescript/*",
     "coverage": "run-coverage",
-    "eslint": "run-linter ./bin ./src ./tests",
+    "eslint": "run-linter ./bin",
     "jest": "run-tests",
     "posttest": "yarn run check",
     "pretest": "yarn run eslint",
@@ -57,23 +57,20 @@
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.33.0",
+    "@milesj/build-tool-config": "^0.41.2",
     "babel-loader": "^7.1.2",
     "prop-types": "^15.6.0",
-    "typescript": "^2.5.3",
+    "typescript": "^2.6.1",
     "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.3"
+    "webpack-dev-server": "^2.9.4"
   },
   "babel": {
-    "extends": "./node_modules/@milesj/build-tool-config/babel.json5"
+    "presets": "@milesj/build-tool-config/babel"
   },
   "eslintConfig": {
-    "extends": "./node_modules/@milesj/build-tool-config/eslint.json5",
+    "extends": "./node_modules/@milesj/build-tool-config/eslint.js",
     "env": {
       "node": true
     }
-  },
-  "jest": {
-    "preset": "@milesj/build-tool-config"
   }
 }

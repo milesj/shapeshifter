@@ -4,8 +4,6 @@
  * @flow
  */
 
-/* eslint-disable no-console, global-require */
-
 import fs from 'fs';
 import path from 'path';
 import Config, { bool, string } from 'optimal';

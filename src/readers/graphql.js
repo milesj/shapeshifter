@@ -4,7 +4,7 @@
  * @flow
  */
 
-/* eslint-disable import/no-extraneous-dependencies, no-console, complexity */
+/* eslint-disable complexity */
 
 import fs from 'fs';
 import { extname } from 'path';

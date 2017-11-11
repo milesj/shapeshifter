@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-
 import fs from 'fs';
 import Transpiler from '../src/Transpiler';
 import { options } from './mocks';

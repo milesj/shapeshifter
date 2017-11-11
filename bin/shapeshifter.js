@@ -5,7 +5,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable import/no-unresolved, no-invalid-this, prefer-arrow-callback */
+/* eslint-disable prefer-arrow-callback */
 
 const Vorpal = require('vorpal');
 const Transpiler = require('../lib/Transpiler').default;
@@ -48,7 +48,7 @@ shapeshifter
         // Rudimentary error handling and styling
         action.log(shapeshifter.chalk.red(error.message));
 
-        process.exit(1);
+        process.exitCode = 1;
       });
   });
 

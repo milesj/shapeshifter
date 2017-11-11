@@ -156,7 +156,7 @@ export default class Renderer {
    * Return the export name to be used as the prop type or type alias name.
    */
   getObjectName(...names: string[]): string {
-    return names.map(formatName).join('');
+    return names.map(name => formatName(name)).join('');
   }
 
   /**
@@ -330,7 +330,6 @@ export default class Renderer {
    * Render a definition to it's visual representation.
    */
   renderAttribute(definition: Definition, depth: number = 0): string {
-    /* eslint-disable padded-blocks */
     if (definition instanceof ArrayDefinition) {
       return this.renderArray(definition, depth);
 
