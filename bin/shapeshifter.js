@@ -23,11 +23,13 @@ shapeshifter
   .option('--types', 'Include type definition exports in the output. Defaults to false.')
   .option('--useDefine', 'Reduce the output of schema ORM definitions. Defaults to false.')
   .option('--stripPropTypes', 'Strip PropTypes shapes in production. Defaults to false.')
+  .option('--disableEslint', 'Prepend an eslint-disable comment to the top of the output. Defaults to false.')
   .action(function run({ options, paths }) {
     const action = this;
 
     return new Transpiler({
       defaultNullable: options.nullable || false,
+      disableEslint: options.disableEslint || false,
       importPath: options.import || 'shapeshifter',
       includeAttributes: options.attributes || false,
       includeSchemas: options.schemas || false,

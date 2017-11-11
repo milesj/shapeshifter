@@ -3,6 +3,7 @@ export const truthyValues = ['foo', 1, 1.1, true, [], {}];
 export const allValues = [...falsyValues, ...truthyValues];
 export const options = {
   defaultNullable: true,
+  disableEslint: true,
   indentCharacter: '  ',
   renderer: 'react',
   includeSchemas: false,

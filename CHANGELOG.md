@@ -1,3 +1,7 @@
+# 5.1.0 - 11/10/17
+#### 🚀 New
+* The `eslint-disable` comment atop the output file is now controlled by a `--disableEslint` flag.
+
 # 5.0.0 - 9/28/17
 #### 💥 Breaking
 * Transpiled schema instance variables are now in camel case form. `UserSchema` -> `userSchema`.

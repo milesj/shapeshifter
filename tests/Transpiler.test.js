@@ -245,6 +245,18 @@ describe('Transpiler', () => {
 
       expect(output).toBe(file(expectedPath));
     });
+
+    it('can toggle eslint disable setting', () => {
+      const actualPath = `${__dirname}/schemas/types-schemas.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/eslint-enabled.js`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        disableEslint: false,
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
   });
 
   describe('extractSchematics()', () => {
