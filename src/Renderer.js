@@ -547,6 +547,7 @@ export default class Renderer {
     let relationDefinition: ?ReferenceDefinition = null;
     let relationType: string = '';
 
+    // eslint-disable-next-line complexity
     attributes.forEach((definition: Definition) => {
       relationDefinition = null;
 
