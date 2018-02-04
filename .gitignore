@@ -20,7 +20,8 @@ tests/bundle.min.js
 
 # Configs
 .babelrc
-.eslintrc
+.eslintrc.json
+.eslintignore
 .flowconfig
 jest.json
 .prettierrc
