@@ -28,7 +28,7 @@ export default class ReactRenderer extends Renderer {
   }
 
   beforeParse() {
-    this.imports.push('import PropTypes from \'prop-types\';');
+    this.imports.push("import PropTypes from 'prop-types';");
 
     if (this.options.stripPropTypes) {
       this.header.push('const PropTypePolyfill = () => {};');
@@ -46,8 +46,10 @@ export default class ReactRenderer extends Renderer {
   }
 
   renderArray(definition: ArrayDefinition, depth: number): string {
-    return this.wrapPropType(definition,
-      this.wrapFunction('arrayOf', this.renderAttribute(definition.valueType, depth)));
+    return this.wrapPropType(
+      definition,
+      this.wrapFunction('arrayOf', this.renderAttribute(definition.valueType, depth)),
+    );
   }
 
   renderBool(definition: BoolDefinition): string {
@@ -80,8 +82,10 @@ export default class ReactRenderer extends Renderer {
   }
 
   renderObject(definition: ObjectDefinition, depth: number): string {
-    return this.wrapPropType(definition,
-      this.wrapFunction('objectOf', this.renderAttribute(definition.valueType, depth)));
+    return this.wrapPropType(
+      definition,
+      this.wrapFunction('objectOf', this.renderAttribute(definition.valueType, depth)),
+    );
   }
 
   renderReference(definition: ReferenceDefinition): string {

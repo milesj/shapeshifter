@@ -16,16 +16,17 @@ export default function webpackLoader() {
   this.cacheable();
 
   // Add schematics folder as a dependency
-  schematicsSource.forEach((depPath) => {
+  schematicsSource.forEach(depPath => {
     this.addDependency(depPath);
   });
 
   // Transpile the schematics
-  transpiler.transpile(schematicsSource)
-    .then((source) => {
+  transpiler
+    .transpile(schematicsSource)
+    .then(source => {
       callback(null, source);
     })
-    .catch((error) => {
+    .catch(error => {
       callback(error);
     });
 }

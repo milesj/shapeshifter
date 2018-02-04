@@ -16,17 +16,23 @@ export default class UnionDefinition extends Definition {
   valueTypes: Definition[];
 
   validateConfig() {
-    this.config = new Config(this.config, {
-      nullable: bool(),
-      type: string('union'),
-      valueTypes: array(this.createValueType()).notEmpty().required(),
-    }, {
-      name: 'UnionDefinition',
-      unknown: true,
-    });
+    this.config = new Config(
+      this.config,
+      {
+        nullable: bool(),
+        type: string('union'),
+        valueTypes: array(this.createValueType())
+          .notEmpty()
+          .required(),
+      },
+      {
+        name: 'UnionDefinition',
+        unknown: true,
+      },
+    );
 
-    this.valueTypes = this.config.valueTypes.map((type, i) => (
-      DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, type)
-    ));
+    this.valueTypes = this.config.valueTypes.map(
+      (type, i) => DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, type),
+    );
   }
 }

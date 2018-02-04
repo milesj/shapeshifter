@@ -6,15 +6,15 @@ import StringDefinition from '../../src/definitions/String';
 
 describe('definitions/Union', () => {
   it('errors if `valueTypes` is not an array', () => {
-    expect(() => (
-      new UnionDefinition(options, 'foo', { valueTypes: 123 })
-    )).toThrowError('Invalid UnionDefinition option "valueTypes". Must be an array.');
+    expect(() => new UnionDefinition(options, 'foo', { valueTypes: 123 })).toThrowError(
+      'Invalid UnionDefinition option "valueTypes". Must be an array.',
+    );
   });
 
   it('errors if `valueTypes` has no items', () => {
-    expect(() => (
-      new UnionDefinition(options, 'foo', { valueTypes: [] })
-    )).toThrowError('Invalid UnionDefinition option "valueTypes". Array cannot be empty.');
+    expect(() => new UnionDefinition(options, 'foo', { valueTypes: [] })).toThrowError(
+      'Invalid UnionDefinition option "valueTypes". Array cannot be empty.',
+    );
   });
 
   it('creates an array of `Definition`s for `valueTypes`', () => {

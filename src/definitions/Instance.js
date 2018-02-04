@@ -13,13 +13,17 @@ export default class InstanceDefinition extends Definition {
   config: InstanceConfig;
 
   validateConfig() {
-    this.config = new Config(this.config, {
-      contract: string().required(),
-      nullable: bool(),
-      type: string('instance'),
-    }, {
-      name: 'InstanceDefinition',
-      unknown: true,
-    });
+    this.config = new Config(
+      this.config,
+      {
+        contract: string().required(),
+        nullable: bool(),
+        type: string('instance'),
+      },
+      {
+        name: 'InstanceDefinition',
+        unknown: true,
+      },
+    );
   }
 }

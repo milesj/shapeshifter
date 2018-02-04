@@ -64,7 +64,7 @@ class GraphQLReader {
     if (type.kind === Kind.NON_NULL_TYPE) {
       return this.buildAttribute(field, type.type, false, schematic);
 
-    // List
+      // List
     } else if (type.kind === Kind.LIST_TYPE) {
       // $FlowIgnore We know what this will be
       return {
@@ -73,7 +73,7 @@ class GraphQLReader {
         valueType: this.buildAttribute(field, type.type, true, schematic),
       };
 
-    // Named
+      // Named
     } else if (type.kind === Kind.NAMED_TYPE) {
       const { value } = type.name;
 
@@ -248,8 +248,5 @@ class GraphQLReader {
 }
 
 export default function readWithGraphQL(path: string): SchemaStructure {
-  return new GraphQLReader(
-    parse(fs.readFileSync(path, 'utf8')),
-    extname(path),
-  ).toSchematic();
+  return new GraphQLReader(parse(fs.readFileSync(path, 'utf8')), extname(path)).toSchematic();
 }

@@ -15,24 +15,38 @@ describe('ReactRenderer', () => {
   let renderer;
 
   beforeEach(() => {
-    renderer = new ReactRenderer(options, new Schematic('/foo.json', {
-      name: 'Foo',
-      attributes: { id: 'number' },
-    }, options));
+    renderer = new ReactRenderer(
+      options,
+      new Schematic(
+        '/foo.json',
+        {
+          name: 'Foo',
+          attributes: { id: 'number' },
+        },
+        options,
+      ),
+    );
   });
 
   describe('beforeParse()', () => {
     it('adds React import', () => {
       renderer.beforeParse();
 
-      expect(renderer.imports).toEqual(['import PropTypes from \'prop-types\';']);
+      expect(renderer.imports).toEqual(["import PropTypes from 'prop-types';"]);
     });
 
     it('adds production noop when stripPropTypes is true', () => {
-      const prodRenderer = new ReactRenderer({ ...options, stripPropTypes: true }, new Schematic('./foo.json', {
-        name: 'Foo',
-        attributes: { id: 'number' },
-      }, options));
+      const prodRenderer = new ReactRenderer(
+        { ...options, stripPropTypes: true },
+        new Schematic(
+          './foo.json',
+          {
+            name: 'Foo',
+            attributes: { id: 'number' },
+          },
+          options,
+        ),
+      );
 
       prodRenderer.beforeParse();
 
@@ -42,42 +56,62 @@ describe('ReactRenderer', () => {
 
   describe('renderArray()', () => {
     it('renders required', () => {
-      expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
-        nullable: false,
-        valueType: 'string',
-      }))).toBe('PropTypes.arrayOf(PropTypes.string).isRequired');
+      expect(
+        renderer.renderArray(
+          new ArrayDefinition(options, 'foo', {
+            nullable: false,
+            valueType: 'string',
+          }),
+        ),
+      ).toBe('PropTypes.arrayOf(PropTypes.string).isRequired');
     });
 
     it('renders non-required', () => {
-      expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
-        valueType: 'string',
-      }))).toBe('PropTypes.arrayOf(PropTypes.string)');
+      expect(
+        renderer.renderArray(
+          new ArrayDefinition(options, 'foo', {
+            valueType: 'string',
+          }),
+        ),
+      ).toBe('PropTypes.arrayOf(PropTypes.string)');
     });
 
     it('handles non-primitive', () => {
-      expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
-        valueType: {
-          type: 'object',
-          valueType: 'string',
-        },
-      }))).toBe('PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))');
+      expect(
+        renderer.renderArray(
+          new ArrayDefinition(options, 'foo', {
+            valueType: {
+              type: 'object',
+              valueType: 'string',
+            },
+          }),
+        ),
+      ).toBe('PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))');
     });
 
     it('handles instance ofs', () => {
-      expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
-        valueType: {
-          type: 'instance',
-          contract: 'FooBar',
-        },
-      }))).toBe('PropTypes.arrayOf(PropTypes.instanceOf(FooBar))');
+      expect(
+        renderer.renderArray(
+          new ArrayDefinition(options, 'foo', {
+            valueType: {
+              type: 'instance',
+              contract: 'FooBar',
+            },
+          }),
+        ),
+      ).toBe('PropTypes.arrayOf(PropTypes.instanceOf(FooBar))');
     });
   });
 
   describe('renderBool()', () => {
     it('renders required', () => {
-      expect(renderer.renderBool(new BoolDefinition(options, 'foo', {
-        nullable: false,
-      }))).toBe('PropTypes.bool.isRequired');
+      expect(
+        renderer.renderBool(
+          new BoolDefinition(options, 'foo', {
+            nullable: false,
+          }),
+        ),
+      ).toBe('PropTypes.bool.isRequired');
     });
 
     it('renders non-required', () => {
@@ -87,11 +121,15 @@ describe('ReactRenderer', () => {
 
   describe('renderEnum()', () => {
     it('renders required', () => {
-      expect(renderer.renderEnum(new EnumDefinition(options, 'foo', {
-        nullable: false,
-        valueType: 'number',
-        values: [1, 23, 164],
-      }))).toBe(`PropTypes.oneOf([
+      expect(
+        renderer.renderEnum(
+          new EnumDefinition(options, 'foo', {
+            nullable: false,
+            valueType: 'number',
+            values: [1, 23, 164],
+          }),
+        ),
+      ).toBe(`PropTypes.oneOf([
 1,
 23,
 164,
@@ -99,10 +137,14 @@ describe('ReactRenderer', () => {
     });
 
     it('renders non-required', () => {
-      expect(renderer.renderEnum(new EnumDefinition(options, 'foo', {
-        valueType: 'number',
-        values: [1, 23, 164],
-      }))).toBe(`PropTypes.oneOf([
+      expect(
+        renderer.renderEnum(
+          new EnumDefinition(options, 'foo', {
+            valueType: 'number',
+            values: [1, 23, 164],
+          }),
+        ),
+      ).toBe(`PropTypes.oneOf([
 1,
 23,
 164,
@@ -112,24 +154,36 @@ describe('ReactRenderer', () => {
 
   describe('renderInstance()', () => {
     it('renders required', () => {
-      expect(renderer.renderInstance(new InstanceDefinition(options, 'foo', {
-        nullable: false,
-        contract: 'FooBar',
-      }))).toBe('PropTypes.instanceOf(FooBar).isRequired');
+      expect(
+        renderer.renderInstance(
+          new InstanceDefinition(options, 'foo', {
+            nullable: false,
+            contract: 'FooBar',
+          }),
+        ),
+      ).toBe('PropTypes.instanceOf(FooBar).isRequired');
     });
 
     it('renders non-required', () => {
-      expect(renderer.renderInstance(new InstanceDefinition(options, 'foo', {
-        contract: 'FooBar',
-      }))).toBe('PropTypes.instanceOf(FooBar)');
+      expect(
+        renderer.renderInstance(
+          new InstanceDefinition(options, 'foo', {
+            contract: 'FooBar',
+          }),
+        ),
+      ).toBe('PropTypes.instanceOf(FooBar)');
     });
   });
 
   describe('renderNumber()', () => {
     it('renders required', () => {
-      expect(renderer.renderNumber(new NumberDefinition(options, 'foo', {
-        nullable: false,
-      }))).toBe('PropTypes.number.isRequired');
+      expect(
+        renderer.renderNumber(
+          new NumberDefinition(options, 'foo', {
+            nullable: false,
+          }),
+        ),
+      ).toBe('PropTypes.number.isRequired');
     });
 
     it('renders non-required', () => {
@@ -139,39 +193,59 @@ describe('ReactRenderer', () => {
 
   describe('renderObject()', () => {
     it('renders required', () => {
-      expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
-        nullable: false,
-        valueType: 'number',
-      }))).toBe('PropTypes.objectOf(PropTypes.number).isRequired');
+      expect(
+        renderer.renderObject(
+          new ObjectDefinition(options, 'foo', {
+            nullable: false,
+            valueType: 'number',
+          }),
+        ),
+      ).toBe('PropTypes.objectOf(PropTypes.number).isRequired');
     });
 
     it('renders non-required', () => {
-      expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
-        valueType: 'number',
-      }))).toBe('PropTypes.objectOf(PropTypes.number)');
+      expect(
+        renderer.renderObject(
+          new ObjectDefinition(options, 'foo', {
+            valueType: 'number',
+          }),
+        ),
+      ).toBe('PropTypes.objectOf(PropTypes.number)');
     });
   });
 
   describe('renderReference()', () => {
     it('renders required', () => {
-      expect(renderer.renderReference(new ReferenceDefinition(options, 'foo', {
-        nullable: false,
-        self: true,
-      }))).toBe('(...args) => FooShape(...args).isRequired');
+      expect(
+        renderer.renderReference(
+          new ReferenceDefinition(options, 'foo', {
+            nullable: false,
+            self: true,
+          }),
+        ),
+      ).toBe('(...args) => FooShape(...args).isRequired');
     });
 
     it('renders non-required', () => {
-      expect(renderer.renderReference(new ReferenceDefinition(options, 'foo', {
-        self: true,
-      }))).toBe('(...args) => FooShape(...args)');
+      expect(
+        renderer.renderReference(
+          new ReferenceDefinition(options, 'foo', {
+            self: true,
+          }),
+        ),
+      ).toBe('(...args) => FooShape(...args)');
     });
   });
 
   describe('renderString()', () => {
     it('renders required', () => {
-      expect(renderer.renderString(new StringDefinition(options, 'foo', {
-        nullable: false,
-      }))).toBe('PropTypes.string.isRequired');
+      expect(
+        renderer.renderString(
+          new StringDefinition(options, 'foo', {
+            nullable: false,
+          }),
+        ),
+      ).toBe('PropTypes.string.isRequired');
     });
 
     it('renders non-required', () => {
@@ -190,10 +264,14 @@ describe('ReactRenderer', () => {
     ];
 
     it('renders required', () => {
-      expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
-        nullable: false,
-        valueTypes,
-      }))).toBe(`PropTypes.oneOfType([
+      expect(
+        renderer.renderUnion(
+          new UnionDefinition(options, 'foo', {
+            nullable: false,
+            valueTypes,
+          }),
+        ),
+      ).toBe(`PropTypes.oneOfType([
 PropTypes.string,
 PropTypes.bool,
 PropTypes.arrayOf(PropTypes.number),
@@ -201,9 +279,13 @@ PropTypes.arrayOf(PropTypes.number),
     });
 
     it('renders non-required', () => {
-      expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
-        valueTypes,
-      }))).toBe(`PropTypes.oneOfType([
+      expect(
+        renderer.renderUnion(
+          new UnionDefinition(options, 'foo', {
+            valueTypes,
+          }),
+        ),
+      ).toBe(`PropTypes.oneOfType([
 PropTypes.string,
 PropTypes.bool,
 PropTypes.arrayOf(PropTypes.number),
@@ -221,9 +303,13 @@ PropTypes.arrayOf(PropTypes.number),
         ],
       });
 
-      expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
-        valueTypes,
-      }))).toBe(`PropTypes.oneOfType([
+      expect(
+        renderer.renderUnion(
+          new UnionDefinition(options, 'foo', {
+            valueTypes,
+          }),
+        ),
+      ).toBe(`PropTypes.oneOfType([
 PropTypes.string,
 PropTypes.bool,
 PropTypes.arrayOf(PropTypes.number),

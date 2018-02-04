@@ -7,11 +7,7 @@ import path from 'path';
 
 export default class WebpackPlugin {
   constructor(options = {}) {
-    const {
-      schematicsImportPath = 'shapeshifter/schematics',
-      schematicsSource,
-      ...opts
-    } = options;
+    const { schematicsImportPath = 'shapeshifter/schematics', schematicsSource, ...opts } = options;
 
     if (!schematicsImportPath) {
       throw new Error('An import name is required to resolve with.');
@@ -32,7 +28,7 @@ export default class WebpackPlugin {
   }
 
   apply(compiler) {
-    compiler.plugin('normal-module-factory', (nmf) => {
+    compiler.plugin('normal-module-factory', nmf => {
       nmf.plugin('after-resolve', (result, callback) => {
         if (result.rawRequest === this.schematicsImportPath) {
           result.loaders.push({

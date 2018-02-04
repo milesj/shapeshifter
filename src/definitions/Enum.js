@@ -14,17 +14,23 @@ export default class EnumDefinition extends Definition {
   config: EnumConfig;
 
   validateConfig() {
-    this.config = new Config(this.config, {
-      nullable: bool(),
-      type: string('enum'),
-      valueType: this.createValueType(),
-      // valueType must be validated before values
-      // eslint-disable-next-line sort-keys
-      values: array(custom(this.validateValue)).notEmpty().required(),
-    }, {
-      name: 'EnumDefinition',
-      unknown: true,
-    });
+    this.config = new Config(
+      this.config,
+      {
+        nullable: bool(),
+        type: string('enum'),
+        valueType: this.createValueType(),
+        // valueType must be validated before values
+        // eslint-disable-next-line sort-keys
+        values: array(custom(this.validateValue))
+          .notEmpty()
+          .required(),
+      },
+      {
+        name: 'EnumDefinition',
+        unknown: true,
+      },
+    );
   }
 
   /**

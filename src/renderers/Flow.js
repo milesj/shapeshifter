@@ -38,8 +38,10 @@ export default class FlowRenderer extends Renderer {
   }
 
   renderArray(definition: ArrayDefinition, depth: number): string {
-    return this.wrapNullable(definition,
-      this.wrapGenerics('Array', this.renderAttribute(definition.valueType, depth)));
+    return this.wrapNullable(
+      definition,
+      this.wrapGenerics('Array', this.renderAttribute(definition.valueType, depth)),
+    );
   }
 
   renderBool(definition: BoolDefinition): string {
@@ -49,9 +51,7 @@ export default class FlowRenderer extends Renderer {
   renderEnum(definition: EnumDefinition, depth: number): string {
     const { values, valueType } = definition.config;
 
-    return values
-      .map(item => this.renderOrFormat(item, depth, valueType))
-      .join(' | ');
+    return values.map(item => this.renderOrFormat(item, depth, valueType)).join(' | ');
   }
 
   renderInstance(definition: InstanceDefinition): string {
@@ -66,8 +66,7 @@ export default class FlowRenderer extends Renderer {
     const key = this.renderAttribute(definition.keyType, depth);
     const value = this.renderAttribute(definition.valueType, depth);
 
-    return this.wrapNullable(definition,
-      this.formatObject(`[key: ${key}]: ${value}`, 0, ' ', ' '));
+    return this.wrapNullable(definition, this.formatObject(`[key: ${key}]: ${value}`, 0, ' ', ' '));
   }
 
   renderReference(definition: ReferenceDefinition): string {
@@ -75,9 +74,11 @@ export default class FlowRenderer extends Renderer {
   }
 
   renderShape(definition: ShapeDefinition, depth: number): string {
-    return this.wrapNullable(definition,
+    return this.wrapNullable(
+      definition,
       this.renderShapeReference(definition) ||
-      this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth));
+        this.formatObject(this.renderObjectProps(definition.attributes, depth + 1), depth),
+    );
   }
 
   renderString(definition: StringDefinition): string {

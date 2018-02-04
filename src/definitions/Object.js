@@ -18,15 +18,19 @@ export default class ObjectDefinition extends Definition {
   valueType: Definition;
 
   validateConfig() {
-    this.config = new Config(this.config, {
-      keyType: string('string'),
-      nullable: bool(),
-      type: string('object'),
-      valueType: this.createValueType(),
-    }, {
-      name: 'ObjectDefinition',
-      unknown: true,
-    });
+    this.config = new Config(
+      this.config,
+      {
+        keyType: string('string'),
+        nullable: bool(),
+        type: string('object'),
+        valueType: this.createValueType(),
+      },
+      {
+        name: 'ObjectDefinition',
+        unknown: true,
+      },
+    );
 
     this.keyType = DefinitionFactory.factory(this.options, `${this.attribute}_key`, {
       nullable: false,

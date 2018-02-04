@@ -3,10 +3,17 @@ import normalizeType from '../../src/helpers/normalizeType';
 describe('helpers/normalizeType', () => {
   it('returns the name of built-in types', () => {
     [
-      'array', 'enum', 'instance', 'object',
-      'shape', 'union', 'reference',
-      'boolean', 'number', 'string',
-    ].forEach((value) => {
+      'array',
+      'enum',
+      'instance',
+      'object',
+      'shape',
+      'union',
+      'reference',
+      'boolean',
+      'number',
+      'string',
+    ].forEach(value => {
       expect(normalizeType(value)).toBe(value);
     });
   });

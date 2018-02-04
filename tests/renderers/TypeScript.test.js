@@ -15,35 +15,54 @@ describe('TypeScriptRenderer', () => {
   let renderer;
 
   beforeEach(() => {
-    renderer = new TypeScriptRenderer(options, new Schematic('/foo.json', {
-      name: 'Foo',
-      attributes: { id: 'number' },
-    }, options));
+    renderer = new TypeScriptRenderer(
+      options,
+      new Schematic(
+        '/foo.json',
+        {
+          name: 'Foo',
+          attributes: { id: 'number' },
+        },
+        options,
+      ),
+    );
   });
 
   describe('renderArray()', () => {
     it('renders', () => {
-      expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
-        valueType: 'string',
-      }))).toBe('string[]');
+      expect(
+        renderer.renderArray(
+          new ArrayDefinition(options, 'foo', {
+            valueType: 'string',
+          }),
+        ),
+      ).toBe('string[]');
     });
 
     it('handles non-primitive', () => {
-      expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
-        valueType: {
-          type: 'object',
-          valueType: 'string',
-        },
-      }))).toBe('Array<{ [key: string]: string }>');
+      expect(
+        renderer.renderArray(
+          new ArrayDefinition(options, 'foo', {
+            valueType: {
+              type: 'object',
+              valueType: 'string',
+            },
+          }),
+        ),
+      ).toBe('Array<{ [key: string]: string }>');
     });
 
     it('handles instance ofs', () => {
-      expect(renderer.renderArray(new ArrayDefinition(options, 'foo', {
-        valueType: {
-          type: 'instance',
-          contract: 'FooBar',
-        },
-      }))).toBe('FooBar[]');
+      expect(
+        renderer.renderArray(
+          new ArrayDefinition(options, 'foo', {
+            valueType: {
+              type: 'instance',
+              contract: 'FooBar',
+            },
+          }),
+        ),
+      ).toBe('FooBar[]');
     });
   });
 
@@ -55,18 +74,26 @@ describe('TypeScriptRenderer', () => {
 
   describe('renderEnum()', () => {
     it('renders', () => {
-      expect(renderer.renderEnum(new EnumDefinition(options, 'bar', {
-        valueType: 'number',
-        values: [1, 23, 164],
-      }))).toBe('FooBarEnum');
+      expect(
+        renderer.renderEnum(
+          new EnumDefinition(options, 'bar', {
+            valueType: 'number',
+            values: [1, 23, 164],
+          }),
+        ),
+      ).toBe('FooBarEnum');
     });
   });
 
   describe('renderInstance()', () => {
     it('renders', () => {
-      expect(renderer.renderInstance(new InstanceDefinition(options, 'foo', {
-        contract: 'FooBar',
-      }))).toBe('FooBar');
+      expect(
+        renderer.renderInstance(
+          new InstanceDefinition(options, 'foo', {
+            contract: 'FooBar',
+          }),
+        ),
+      ).toBe('FooBar');
     });
   });
 
@@ -78,27 +105,39 @@ describe('TypeScriptRenderer', () => {
 
   describe('renderObject()', () => {
     it('renders', () => {
-      expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
-        valueType: 'number',
-      }))).toBe('{ [key: string]: number }');
+      expect(
+        renderer.renderObject(
+          new ObjectDefinition(options, 'foo', {
+            valueType: 'number',
+          }),
+        ),
+      ).toBe('{ [key: string]: number }');
     });
 
     it('handles key type', () => {
-      expect(renderer.renderObject(new ObjectDefinition(options, 'foo', {
-        keyType: 'number',
-        valueType: {
-          type: 'array',
-          valueType: 'string',
-        },
-      }))).toBe('{ [key: number]: string[] }');
+      expect(
+        renderer.renderObject(
+          new ObjectDefinition(options, 'foo', {
+            keyType: 'number',
+            valueType: {
+              type: 'array',
+              valueType: 'string',
+            },
+          }),
+        ),
+      ).toBe('{ [key: number]: string[] }');
     });
   });
 
   describe('renderReference()', () => {
     it('renders', () => {
-      expect(renderer.renderReference(new ReferenceDefinition(options, 'foo', {
-        self: true,
-      }))).toBe('FooInterface');
+      expect(
+        renderer.renderReference(
+          new ReferenceDefinition(options, 'foo', {
+            self: true,
+          }),
+        ),
+      ).toBe('FooInterface');
     });
   });
 
@@ -119,26 +158,34 @@ describe('TypeScriptRenderer', () => {
     ];
 
     it('renders', () => {
-      expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
-        valueTypes,
-      }))).toBe('string | boolean | number[]');
+      expect(
+        renderer.renderUnion(
+          new UnionDefinition(options, 'foo', {
+            valueTypes,
+          }),
+        ),
+      ).toBe('string | boolean | number[]');
     });
 
     it('handles nested unions', () => {
-      expect(renderer.renderUnion(new UnionDefinition(options, 'foo', {
-        valueTypes: [
-          ...valueTypes,
-          {
-            type: 'union',
+      expect(
+        renderer.renderUnion(
+          new UnionDefinition(options, 'foo', {
             valueTypes: [
+              ...valueTypes,
               {
-                type: 'instance',
-                contract: 'FooBar',
+                type: 'union',
+                valueTypes: [
+                  {
+                    type: 'instance',
+                    contract: 'FooBar',
+                  },
+                ],
               },
             ],
-          },
-        ],
-      }))).toBe('string | boolean | number[] | FooBar');
+          }),
+        ),
+      ).toBe('string | boolean | number[] | FooBar');
     });
   });
 });

@@ -12,5 +12,5 @@ import normalizeType from './normalizeType';
 export default function isPrimitive(value: string): boolean {
   const type = normalizeType(value);
 
-  return (type === 'boolean' || type === 'number' || type === 'string');
+  return type === 'boolean' || type === 'number' || type === 'string';
 }

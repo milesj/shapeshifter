@@ -16,19 +16,19 @@ export default class ArrayDefinition extends Definition {
   valueType: Definition;
 
   validateConfig() {
-    this.config = new Config(this.config, {
-      nullable: bool(),
-      type: string('array'),
-      valueType: this.createValueType(),
-    }, {
-      name: 'ArrayDefinition',
-      unknown: true,
-    });
-
-    this.valueType = DefinitionFactory.factory(
-      this.options,
-      this.attribute,
-      this.config.valueType,
+    this.config = new Config(
+      this.config,
+      {
+        nullable: bool(),
+        type: string('array'),
+        valueType: this.createValueType(),
+      },
+      {
+        name: 'ArrayDefinition',
+        unknown: true,
+      },
     );
+
+    this.valueType = DefinitionFactory.factory(this.options, this.attribute, this.config.valueType);
   }
 }

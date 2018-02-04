@@ -2,16 +2,13 @@ import isPrimitive from '../../src/helpers/isPrimitive';
 
 describe('helpers/isPrimitive', () => {
   it('returns false for compound types', () => {
-    [
-      'array', 'enum', 'instance', 'object',
-      'shape', 'union', 'reference',
-    ].forEach((value) => {
+    ['array', 'enum', 'instance', 'object', 'shape', 'union', 'reference'].forEach(value => {
       expect(isPrimitive(value)).toBe(false);
     });
   });
 
   it('returns true for primitive types', () => {
-    ['boolean', 'number', 'string'].forEach((value) => {
+    ['boolean', 'number', 'string'].forEach(value => {
       expect(isPrimitive(value)).toBe(true);
     });
   });
