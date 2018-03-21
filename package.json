@@ -23,25 +23,26 @@
     "graphql"
   ],
   "main": "./lib/index.js",
-  "module": "./esm/index.js",
   "bin": "./bin/shapeshifter.js",
   "scripts": {
-    "babel": "yarn run babel:cjs && yarn run babel:esm",
-    "babel:cjs": "beemo babel ./src --out-dir ./lib --copy-files --cjs",
-    "babel:esm": "beemo babel ./src --out-dir ./esm --copy-files --esm",
+    "build": "beemo typescript",
     "check": "type-check && tsc --noEmit --allowJs ./tests/expected/gql/typescript/* ./tests/expected/node/typescript/*",
     "coverage": "yarn run jest --coverage",
-    "eslint": "beemo eslint --color --report-unused-disable-directives ./src ./tests",
-    "jest": "beemo jest --colors --logHeapUsage",
-    "posttest": "yarn run flow --silent",
-    "pretest": "yarn run eslint --silent",
+    "eslint": "beemo eslint",
+    "jest": "beemo jest",
+    "posttest": "yarn run eslint --silent",
+    "pretest": "yarn run type --silent",
     "preversion": "yarn test",
-    "postversion": "yarn run babel",
+    "postversion": "yarn run build",
     "test": "yarn run jest --silent",
     "test:webpack": "yarn run babel && webpack --config webpack.config.js",
     "test:webpack:dev": "yarn run babel && webpack-dev-server",
     "flow": "beemo flow check",
-    "prettier": "beemo prettier --write ./README.md ./{src,tests}/**/*.{js,json,md}"
+    "prettier": "beemo prettier",
+    "type": "beemo typescript --noEmit",
+    "docs": "gitbook build --log=debug --debug",
+    "docs:serve": "gitbook serve",
+    "docs:install": "gitbook install"
   },
   "repository": {
     "type": "git",
@@ -58,40 +59,32 @@
   "homepage": "https://github.com/milesj/shapeshifter#readme",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "graphql": "^0.12.3",
-    "optimal": "^0.14.0",
+    "graphql": "^0.13.2",
+    "optimal": "^0.15.0",
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.60.0",
-    "babel-loader": "^7.1.2",
-    "prop-types": "^15.6.0",
-    "typescript": "^2.7.1",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1"
+    "@milesj/build-tool-config": "^0.75.2",
+    "babel-loader": "^7.1.4",
+    "flow-bin": "^0.68.0",
+    "prop-types": "^15.6.1",
+    "typescript": "^2.7.2",
+    "webpack": "^4.1.1",
+    "webpack-dev-server": "^3.1.1"
   },
   "beemo": {
-    "config": "@milesj/build-tool-config",
+    "module": "@milesj/build-tool-config",
     "drivers": [
       "babel",
       "eslint",
-      "flow",
       "jest",
-      "prettier"
+      "prettier",
+      "typescript"
     ],
-    "execute": {
-      "cleanup": false
-    },
     "eslint": {
       "ignore": [
         "tests/expected/**/*",
         "tests/bundle.js"
-      ]
-    },
-    "flow": {
-      "libs": [
-        "./shapeshifter.js.flow",
-        "./node_modules/optimal/optimal.js.flow"
       ]
     }
   }
