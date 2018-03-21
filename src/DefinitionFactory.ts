@@ -1,7 +1,6 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 /* eslint-disable complexity */
@@ -19,20 +18,19 @@ import ReferenceDefinition from './definitions/Reference';
 import ShapeDefinition from './definitions/Shape';
 import StringDefinition from './definitions/String';
 import UnionDefinition from './definitions/Union';
-
-import type { BaseConfig, Options } from './types';
+import { Config, TypeDefinition, Options } from './types';
 
 export default class DefinitionFactory {
   /**
    * Create a new definition based on the defined attribute configuration.
    */
-  static factory(options: Options, attribute: string, baseConfig: string | BaseConfig): Definition {
-    let config = {};
+  static factory<T extends Config>(options: Options, attribute: string, baseConfig: TypeDefinition): Definition<T> {
+    let config = { type: '' };
 
     // Convert primitives to configuration objects
     if (typeof baseConfig === 'string') {
       if (isPrimitive(normalizeType(baseConfig))) {
-        config = ({ type: baseConfig }: BaseConfig);
+        config = { type: baseConfig };
       } else {
         throw new TypeError(`Invalid primitive type "${baseConfig}".`);
       }
@@ -50,33 +48,43 @@ export default class DefinitionFactory {
     // Instantiate definition classes
     switch (config.type) {
       case 'array':
+        // @ts-ignore
         return new ArrayDefinition(options, attribute, config);
 
       case 'boolean':
+        // @ts-ignore
         return new BoolDefinition(options, attribute, config);
 
       case 'enum':
+        // @ts-ignore
         return new EnumDefinition(options, attribute, config);
 
       case 'instance':
+        // @ts-ignore
         return new InstanceDefinition(options, attribute, config);
 
       case 'number':
+        // @ts-ignore
         return new NumberDefinition(options, attribute, config);
 
       case 'object':
+        // @ts-ignore
         return new ObjectDefinition(options, attribute, config);
 
       case 'shape':
+        // @ts-ignore
         return new ShapeDefinition(options, attribute, config);
 
       case 'string':
+        // @ts-ignore
         return new StringDefinition(options, attribute, config);
 
       case 'union':
+        // @ts-ignore
         return new UnionDefinition(options, attribute, config);
 
       case 'reference':
+        // @ts-ignore
         return new ReferenceDefinition(options, attribute, config);
 
       default:

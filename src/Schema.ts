@@ -1,10 +1,10 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-import type { PrimaryKey, Relation, SchemaExpandedMap, SchemaMap } from './types';
+import isObject from './helpers/isObject';
+import { PrimaryKey, Relation, SchemaExpandedMap, SchemaMap, MetadataField } from './types';
 
 const BELONGS_TO: string = 'belongsTo';
 const BELONGS_TO_MANY: string = 'belongsToMany';
@@ -14,7 +14,7 @@ const HAS_MANY: string = 'hasMany';
 export default class Schema {
   attributes: string[];
 
-  metadata: Object;
+  metadata: MetadataField;
 
   primaryKey: PrimaryKey;
 
@@ -37,19 +37,19 @@ export default class Schema {
    */
   constructor(
     resourceName: string,
-    primaryKey: PrimaryKey | Object = 'id',
-    metadata: Object = {},
+    primaryKey: PrimaryKey | MetadataField = 'id',
+    metadata: MetadataField = {},
   ) {
     /* eslint-disable no-param-reassign */
-    if (typeof primaryKey === 'object' && !Array.isArray(primaryKey)) {
-      metadata = primaryKey;
+    if (isObject(primaryKey)) {
+      metadata = primaryKey as MetadataField;
       primaryKey = metadata.primaryKey || 'id';
     }
     /* eslint-enable no-param-reassign */
 
     this.attributes = [];
     this.metadata = metadata;
-    this.primaryKey = primaryKey;
+    this.primaryKey = primaryKey as PrimaryKey;
     this.relations = [];
     this.relationTypes = {};
     this.resourceName = resourceName;
@@ -68,7 +68,7 @@ export default class Schema {
    * Map a one/many relational schema to the current schema.
    */
   addRelation(attribute: string, schema: Schema, relation: string): this {
-    if (__DEV__) {
+    if (process.env.NODE_ENV !== 'production') {
       if (!(schema instanceof Schema)) {
         throw new TypeError(`Relation "${attribute}" is not a valid schema.`);
       } else if (this.relationTypes[attribute]) {

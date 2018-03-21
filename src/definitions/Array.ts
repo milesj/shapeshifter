@@ -1,22 +1,18 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-import Config, { bool, string } from 'optimal';
+import parseOptions, { bool, string } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
+import { Config, ArrayConfig } from '../types';
 
-import type { ArrayConfig } from '../types';
-
-export default class ArrayDefinition extends Definition {
-  config: ArrayConfig;
-
-  valueType: Definition;
+export default class ArrayDefinition extends Definition<ArrayConfig> {
+  valueType: Definition<Config> | null = null;
 
   validateConfig() {
-    this.config = new Config(
+    this.config = parseOptions(
       this.config,
       {
         nullable: bool(),

@@ -1,30 +1,28 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-import Config, { bool, string, shape, union } from 'optimal';
+import parseOptions, { bool, string, shape, union, UnionBuilder } from 'optimal';
 import normalizeType from './helpers/normalizeType';
+import { Config, Options } from './types';
 
-import type { UnionBuilder } from 'optimal'; // eslint-disable-line
-import type { Options } from './types';
-
-export default class Definition {
+export default class Definition<T extends Config> {
   options: Options;
 
   attribute: string;
 
-  config: Object;
+  config: T;
 
   /**
    * Represents a type definition for an attribute.
    */
-  constructor(options: Options, attribute: string, config: Object = {}) {
+  constructor(options: Options, attribute: string, config: T) {
     this.options = options;
     this.attribute = attribute;
     this.config = {
       nullable: options.defaultNullable,
+      // @ts-ignore
       ...config,
     };
 
@@ -47,7 +45,7 @@ export default class Definition {
    * Returns true if the attribute allows nulls.
    */
   isNullable(): boolean {
-    return this.config.nullable;
+    return this.config.nullable || false;
   }
 
   /**
@@ -56,7 +54,7 @@ export default class Definition {
   validateConfig() {
     const { name } = this.constructor;
 
-    this.config = new Config(this.config, {
+    this.config = parseOptions(this.config, {
       nullable: bool(),
       type: string(normalizeType(name.toLowerCase())),
     }, {

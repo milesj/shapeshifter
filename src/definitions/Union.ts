@@ -4,19 +4,16 @@
  * @flow
  */
 
-import Config, { bool, string, array } from 'optimal';
+import parseOptions, { bool, string, array } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
+import { Config, UnionConfig } from '../types';
 
-import type { UnionConfig } from '../types';
-
-export default class UnionDefinition extends Definition {
-  config: UnionConfig;
-
-  valueTypes: Definition[];
+export default class UnionDefinition extends Definition<UnionConfig> {
+  valueTypes: Definition<Config>[] = [];
 
   validateConfig() {
-    this.config = new Config(
+    this.config = parseOptions(
       this.config,
       {
         nullable: bool(),

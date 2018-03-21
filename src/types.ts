@@ -1,14 +1,12 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-/* eslint-disable no-use-before-define */
+import { Options as BaseConfig } from 'optimal';
+import Schema from './Schema';
 
-import type Schema from './Schema';
-
-export type Options = {
+export interface Options {
   defaultNullable: boolean,
   disableEslint: boolean,
   importPath: string,
@@ -19,93 +17,74 @@ export type Options = {
   renderer: 'react' | 'flow' | 'typescript',
   stripPropTypes: boolean,
   useDefine: boolean,
-};
+}
 
 export type PrimitiveType = string | number | boolean;
 
-export type SchemaMap = { [attribute: string]: Schema };
+export interface SchemaMap {
+  [attribute: string]: Schema
+}
 
-export type SchemaExpandedMap = { [attribute: string]: Schema | Schema[] };
+export interface SchemaExpandedMap {
+  [attribute: string]: Schema | Schema[]
+}
 
 export type PrimaryKey = string | string[];
 
-export type Relation = {
+export interface Relation {
   attribute: string,
   collection: boolean,
   relation: string,
-  +schema: Schema,
-};
+  schema: Schema,
+}
 
 // Type Definitions
 
-export type BaseConfig = {
+export interface Config extends BaseConfig {
   nullable?: boolean,
   type: string,
-};
+}
 
-export type ArrayConfig = {
-  nullable?: boolean,
-  type: string,
+export interface ArrayConfig extends Config {
   valueType: TypeDefinition,
-};
+}
 
-export type BoolConfig = {
-  nullable?: boolean,
-  type: string,
-};
+export interface BoolConfig extends Config {}
 
-export type EnumConfig = {
-  nullable?: boolean,
-  type: string,
+export interface EnumConfig extends Config {
   values: PrimitiveType[],
   valueType: string,
-};
+}
 
-export type InstanceConfig = {
+export interface InstanceConfig extends Config {
   contract: string,
-  nullable?: boolean,
-  type: string,
-};
+}
 
-export type NumberConfig = {
-  nullable?: boolean,
-  type: string,
-};
+export interface NumberConfig extends Config {}
 
-export type ObjectConfig = {
+export interface ObjectConfig extends Config {
   keyType: TypeDefinition,
-  nullable?: boolean,
-  type: string,
   valueType: TypeDefinition,
-};
+}
 
-export type ReferenceConfig = {
+export interface ReferenceConfig extends Config {
   export?: boolean,
-  nullable?: boolean,
   reference: string,
   relation?: string,
   self: boolean,
   subset?: string,
-  type: string,
-};
+}
 
-export type ShapeConfig = {
+export interface ShapeConfig extends Config {
   attributes: { [key: string]: TypeDefinition },
-  nullable?: boolean,
   reference?: string,
-  type: string,
-};
+}
 
-export type StringConfig = {
-  nullable?: boolean,
-  type: string,
-};
+export interface StringConfig extends Config {}
 
-export type UnionConfig = {
-  nullable?: boolean,
-  type: string,
+export interface UnionConfig extends Config {
   valueTypes: TypeDefinition[],
-};
+}
 
 export type TypeDefinition = string |
   ArrayConfig | BoolConfig | EnumConfig | InstanceConfig | NumberConfig |
@@ -113,39 +92,47 @@ export type TypeDefinition = string |
 
 // JSON Structure
 
-export type MetadataField = {
+export interface MetadataField {
   primaryKey?: string,
   resourceName?: string,
-};
+}
 
-export type ConstantsField = { [key: string]: PrimitiveType | PrimitiveType[] };
+export interface ConstantsField {
+  [key: string]: PrimitiveType | PrimitiveType[]
+}
 
-export type ImportStructure = {
+export interface ImportStructure {
   default?: string,
   named?: string[],
   path: string,
-};
+}
 
 export type ImportsField = ImportStructure[];
 
-export type ShapesField = {
+export interface ShapesField {
   [key: string]: {
     [key: string]: TypeDefinition,
   },
-};
+}
 
-export type SubsetStructure = {
+export interface SubsetStructure {
   attributes: string[],
   nullable?: { [key: string]: boolean },
-};
+}
 
-export type SubsetsField = { [key: string]: string[] | SubsetStructure };
+export interface SubsetsField {
+  [key: string]: string[] | SubsetStructure;
+}
 
-export type AttributesField = { [key: string]: TypeDefinition };
+export interface AttributesField {
+  [key: string]: TypeDefinition
+}
 
-export type ReferencesField = { [key: string]: string };
+export interface ReferencesField {
+  [key: string]: string
+}
 
-export type SchemaStructure = {
+export interface SchemaStructure {
   attributes: AttributesField,
   constants?: ConstantsField,
   imports?: ImportsField,
@@ -154,4 +141,10 @@ export type SchemaStructure = {
   references?: ReferencesField,
   shapes?: ShapesField,
   subsets?: SubsetsField,
+}
+
+// Helpers
+
+export type Optional<T> = {
+  [P in keyof T]?: T[P];
 };

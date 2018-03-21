@@ -1,24 +1,20 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-import Config, { bool, string } from 'optimal';
+import parseOptions, { bool, string } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
+import { Config, ObjectConfig } from '../types';
 
-import type { ObjectConfig } from '../types';
+export default class ObjectDefinition extends Definition<ObjectConfig> {
+  keyType: Definition<Config> | null = null;
 
-export default class ObjectDefinition extends Definition {
-  config: ObjectConfig;
-
-  keyType: Definition;
-
-  valueType: Definition;
+  valueType: Definition<Config> | null = null;
 
   validateConfig() {
-    this.config = new Config(
+    this.config = parseOptions(
       this.config,
       {
         keyType: string('string'),
@@ -32,10 +28,11 @@ export default class ObjectDefinition extends Definition {
       },
     );
 
-    this.keyType = DefinitionFactory.factory(this.options, `${this.attribute}_key`, {
-      nullable: false,
-      type: this.config.keyType,
-    });
+    this.keyType = DefinitionFactory.factory(
+      this.options,
+      `${this.attribute}_key`,
+      this.config.keyType,
+    );
 
     this.valueType = DefinitionFactory.factory(
       this.options,

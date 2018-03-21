@@ -1,15 +1,13 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import path from 'path';
 import Definition from './Definition';
 import DefinitionFactory from './DefinitionFactory';
 import isObject from './helpers/isObject';
-
-import type {
+import {
   AttributesField,
   ConstantsField,
   ImportsField,
@@ -32,7 +30,7 @@ export default class Schematic {
 
   metadata: MetadataField;
 
-  attributes: Definition[];
+  attributes: Definition<any>[];
 
   constants: ConstantsField;
 
@@ -117,6 +115,7 @@ export default class Schematic {
 
     // Convert to type definitions
     this.attributes = Object.keys(attributes).map(attribute => (
+      // @ts-ignore
       DefinitionFactory.factory(this.options, attribute, attributes[attribute])
     ));
   }

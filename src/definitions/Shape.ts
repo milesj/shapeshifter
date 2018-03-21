@@ -1,22 +1,18 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-import Config, { bool, string, object } from 'optimal';
+import parseOptions, { bool, string, object } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
+import { Config, ShapeConfig } from '../types';
 
-import type { ShapeConfig } from '../types';
-
-export default class ShapeDefinition extends Definition {
-  config: ShapeConfig;
-
-  attributes: Definition[];
+export default class ShapeDefinition extends Definition<ShapeConfig> {
+  attributes: Definition<Config>[] = [];
 
   validateConfig() {
-    this.config = new Config(
+    this.config = parseOptions(
       this.config,
       {
         attributes: object(this.createValueType(), null)

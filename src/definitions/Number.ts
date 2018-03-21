@@ -5,9 +5,6 @@
  */
 
 import Definition from '../Definition';
+import { NumberConfig } from '../types';
 
-import type { NumberConfig } from '../types';
-
-export default class NumberDefinition extends Definition {
-  config: NumberConfig;
-}
+export default class NumberDefinition extends Definition<NumberConfig> {}

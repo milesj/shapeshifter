@@ -1,7 +1,6 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import normalizeType from './normalizeType';

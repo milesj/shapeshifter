@@ -5,9 +5,6 @@
  */
 
 import Definition from '../Definition';
+import { StringConfig } from '../types';
 
-import type { BoolConfig } from '../types';
-
-export default class BoolDefinition extends Definition {
-  config: BoolConfig;
-}
+export default class StringDefinition extends Definition<StringConfig> {}

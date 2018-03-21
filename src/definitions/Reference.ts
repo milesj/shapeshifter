@@ -1,19 +1,15 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-import Config, { bool, string } from 'optimal';
+import parseOptions, { bool, string } from 'optimal';
 import Definition from '../Definition';
+import { ReferenceConfig } from '../types';
 
-import type { ReferenceConfig } from '../types';
-
-export default class ReferenceDefinition extends Definition {
-  config: ReferenceConfig;
-
+export default class ReferenceDefinition extends Definition<ReferenceConfig> {
   validateConfig() {
-    this.config = new Config(
+    this.config = parseOptions(
       this.config,
       {
         export: bool(true),
