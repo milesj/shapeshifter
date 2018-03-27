@@ -1,7 +1,6 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import Renderer from '../Renderer';
@@ -17,8 +16,7 @@ import ReferenceDefinition from '../definitions/Reference';
 import ShapeDefinition from '../definitions/Shape';
 import StringDefinition from '../definitions/String';
 import UnionDefinition from '../definitions/Union';
-
-import type { Options } from '../types';
+import { Config, Options } from '../types';
 
 export default class FlowRenderer extends Renderer {
   constructor(options: Options, schematic: Schematic) {
@@ -31,7 +29,7 @@ export default class FlowRenderer extends Renderer {
     this.imports.unshift('// @flow');
   }
 
-  render(setName: string, attributes: Definition[] = []): string {
+  render(setName: string, attributes: Definition<Config>[] = []): string {
     const shape = this.formatObject(this.renderObjectProps(attributes, 1), 0);
 
     return `export type ${setName} = ${shape};`;
@@ -40,7 +38,10 @@ export default class FlowRenderer extends Renderer {
   renderArray(definition: ArrayDefinition, depth: number): string {
     return this.wrapNullable(
       definition,
-      this.wrapGenerics('Array', this.renderAttribute(definition.valueType, depth)),
+      this.wrapGenerics(
+        'Array',
+        definition.valueType ? this.renderAttribute(definition.valueType, depth) : 'any',
+      ),
     );
   }
 
@@ -63,8 +64,8 @@ export default class FlowRenderer extends Renderer {
   }
 
   renderObject(definition: ObjectDefinition, depth: number): string {
-    const key = this.renderAttribute(definition.keyType, depth);
-    const value = this.renderAttribute(definition.valueType, depth);
+    const key = definition.keyType ? this.renderAttribute(definition.keyType, depth) : 'string';
+    const value = definition.valueType ? this.renderAttribute(definition.valueType, depth) : 'any';
 
     return this.wrapNullable(definition, this.formatObject(`[key: ${key}]: ${value}`, 0, ' ', ' '));
   }
@@ -94,8 +95,8 @@ export default class FlowRenderer extends Renderer {
   /**
    * Render a definition and wrap for Flow nullable support.
    */
-  wrapNullable(definition: Definition, template: string): string {
-    if (definition.isNullable && definition.isNullable()) {
+  wrapNullable(definition: Definition<Config>, template: string): string {
+    if (definition.isNullable()) {
       return `?${template}`;
     }
 

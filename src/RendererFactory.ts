@@ -1,7 +1,6 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import Schematic from './Schematic';
@@ -9,8 +8,7 @@ import Renderer from './Renderer';
 import FlowRenderer from './renderers/Flow';
 import ReactRenderer from './renderers/React';
 import TypeScriptRenderer from './renderers/TypeScript';
-
-import type { Options } from './types';
+import { Options } from './types';
 
 export default class RendererFactory {
   /**

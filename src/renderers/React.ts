@@ -1,7 +1,6 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import Renderer from '../Renderer';
@@ -17,8 +16,7 @@ import ReferenceDefinition from '../definitions/Reference';
 import ShapeDefinition from '../definitions/Shape';
 import StringDefinition from '../definitions/String';
 import UnionDefinition from '../definitions/Union';
-
-import type { Options } from '../types';
+import { Config, Options } from '../types';
 
 export default class ReactRenderer extends Renderer {
   constructor(options: Options, schematic: Schematic) {
@@ -35,7 +33,7 @@ export default class ReactRenderer extends Renderer {
     }
   }
 
-  render(setName: string, attributes: Definition[] = []): string {
+  render(setName: string, attributes: Definition<Config>[] = []): string {
     const shape = this.formatObject(this.renderObjectProps(attributes, 1), 0);
 
     if (this.options.stripPropTypes) {
@@ -46,6 +44,10 @@ export default class ReactRenderer extends Renderer {
   }
 
   renderArray(definition: ArrayDefinition, depth: number): string {
+    if (!definition.valueType) {
+      return this.wrapPropType(definition, 'array');
+    }
+
     return this.wrapPropType(
       definition,
       this.wrapFunction('arrayOf', this.renderAttribute(definition.valueType, depth)),
@@ -82,6 +84,10 @@ export default class ReactRenderer extends Renderer {
   }
 
   renderObject(definition: ObjectDefinition, depth: number): string {
+    if (!definition.valueType) {
+      return this.wrapPropType(definition, 'object');
+    }
+
     return this.wrapPropType(
       definition,
       this.wrapFunction('objectOf', this.renderAttribute(definition.valueType, depth)),
@@ -133,15 +139,15 @@ export default class ReactRenderer extends Renderer {
   /**
    * Render a definition into an React PropType representation.
    */
-  wrapPropType(definition: Definition, template: string): string {
+  wrapPropType(definition: Definition<Config>, template: string): string {
     return this.wrapNullable(definition, `PropTypes.${template}`);
   }
 
   /**
    * Wrap a definition template with required if applicable.
    */
-  wrapNullable(definition: Definition, template: string): string {
-    if (definition.isNullable && !definition.isNullable()) {
+  wrapNullable(definition: Definition<Config>, template: string): string {
+    if (!definition.isNullable()) {
       return `${template}.isRequired`;
     }
 

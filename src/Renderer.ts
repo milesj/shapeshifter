@@ -1,9 +1,9 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
+import { Struct } from 'optimal';
 import Definition from './Definition';
 import DefinitionFactory from './DefinitionFactory';
 import Schema from './Schema';
@@ -22,9 +22,8 @@ import indent from './helpers/indent';
 import isObject from './helpers/isObject';
 import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
-
-import type {
-  BaseConfig,
+import {
+  Config,
   ImportStructure,
   MetadataField,
   Options,
@@ -32,7 +31,7 @@ import type {
   ReferenceConfig,
 } from './types';
 
-type TemplateList = string[];
+export type TemplateList = string[];
 
 export default class Renderer {
   options: Options;
@@ -106,7 +105,7 @@ export default class Renderer {
   /**
    * Format a primitive value to it's visual representation.
    */
-  formatValue(value: PrimitiveType | PrimitiveType[], type: string = ''): string {
+  formatValue(value: any, type: string = ''): string {
     if (value === null) {
       return 'null';
     } else if (Array.isArray(value)) {
@@ -238,19 +237,19 @@ export default class Renderer {
 
     // Allow schematics to not require a Schema
     if (metadata.resourceName) {
-      this.schemas.push(this.renderSchema(
-        this.getObjectName(name, 'Schema'),
-        attributes,
-        metadata,
-      ));
+      this.schemas.push(
+        this.renderSchema(this.getObjectName(name, 'Schema'), attributes, metadata),
+      );
     }
 
     // Only add the import if schemas exist
     if (this.schemas.length > 0) {
-      this.imports.unshift(this.renderImport({
-        default: 'Schema',
-        path: this.options.importPath,
-      }));
+      this.imports.unshift(
+        this.renderImport({
+          default: 'Schema',
+          path: this.options.importPath,
+        }),
+      );
     }
   }
 
@@ -266,8 +265,8 @@ export default class Renderer {
     const { attributes, subsets, name } = this.schematic;
 
     // Subsets
-    Object.keys(subsets).forEach((setName: string) => {
-      const setAttributes = [];
+    Object.keys(subsets).forEach(setName => {
+      const setAttributes: Definition<Config>[] = [];
       let subset = subsets[setName];
 
       if (Array.isArray(subset)) {
@@ -276,7 +275,7 @@ export default class Renderer {
 
       const nullable = subset.nullable || {};
 
-      subset.attributes.forEach((attribute: string) => {
+      subset.attributes.forEach(attribute => {
         let setConfig = baseAttributes[attribute];
 
         /* istanbul ignore next Hard to test */
@@ -285,9 +284,9 @@ export default class Renderer {
         }
 
         if (typeof setConfig === 'string') {
-          setConfig = ({ type: setConfig }: BaseConfig);
+          setConfig = { type: setConfig };
         } else {
-          setConfig = ({ ...setConfig }: BaseConfig); // Dereference original object
+          setConfig = { ...setConfig }; // Dereference original object
         }
 
         if (attribute in nullable) {
@@ -311,9 +310,9 @@ export default class Renderer {
     const { name, shapes } = this.schematic;
 
     Object.keys(shapes).forEach((key: string) => {
-      const attributes = Object.keys(shapes[key]).map(attribute => (
-        DefinitionFactory.factory(this.options, attribute, shapes[key][attribute])
-      ));
+      const attributes = Object.keys(shapes[key]).map(attribute =>
+        DefinitionFactory.factory(this.options, attribute, shapes[key][attribute]),
+      );
 
       this.sets.push(this.render(this.getObjectName(name, key, this.suffix), attributes));
     });
@@ -322,41 +321,33 @@ export default class Renderer {
   /**
    * Render the current schema into a formatted output.
    */
-  render(setName: string, attributes: Definition[] = []): string {
+  render(setName: string, attributes: Definition<Config>[] = []): string {
     throw new Error('Renderer not implemented.');
   }
 
   /**
    * Render a definition to it's visual representation.
    */
-  renderAttribute(definition: Definition, depth: number = 0): string {
+  renderAttribute(definition: Definition<Config>, depth: number = 0): string {
+    /* eslint-disable padded-blocks */
     if (definition instanceof ArrayDefinition) {
       return this.renderArray(definition, depth);
-
     } else if (definition instanceof BoolDefinition) {
       return this.renderBool(definition);
-
     } else if (definition instanceof EnumDefinition) {
       return this.renderEnum(definition, depth);
-
     } else if (definition instanceof InstanceDefinition) {
       return this.renderInstance(definition);
-
     } else if (definition instanceof NumberDefinition) {
       return this.renderNumber(definition);
-
     } else if (definition instanceof ObjectDefinition) {
       return this.renderObject(definition, depth);
-
     } else if (definition instanceof ReferenceDefinition) {
       return this.renderReference(definition);
-
     } else if (definition instanceof ShapeDefinition) {
       return this.renderShape(definition, depth);
-
     } else if (definition instanceof StringDefinition) {
       return this.renderString(definition);
-
     } else if (definition instanceof UnionDefinition) {
       return this.renderUnion(definition, depth);
     }
@@ -382,12 +373,10 @@ export default class Renderer {
   /**
    * Render an array of definitions by formatting each value and prepending an indentation.
    */
-  renderArrayDefinitions(items: Definition[], depth: number = 0): string[] {
-    const set = new Set(
-      items.map(item => this.wrapItem(this.renderAttribute(item, depth), depth)),
+  renderArrayDefinitions(items: Definition<Config>[], depth: number = 0): string[] {
+    return Array.from(
+      new Set(items.map(item => this.wrapItem(this.renderAttribute(item, depth), depth))),
     );
-
-    return Array.from(set.values());
   }
 
   /**
@@ -472,21 +461,21 @@ export default class Renderer {
   /**
    * Render a mapping of properties by formatting each value and prepending an indentation.
    */
-  renderObjectProps(props: Definition[], depth: number = 0, sep: string = ','): string[] {
-    return props.map(prop => (
-      this.wrapProperty(this.wrapPropertyName(prop), this.renderAttribute(prop, depth), depth, sep)
-    ));
+  renderObjectProps(props: Definition<Config>[], depth: number = 0, sep: string = ','): string[] {
+    return props.map(prop =>
+      this.wrapProperty(this.wrapPropertyName(prop), this.renderAttribute(prop, depth), depth, sep),
+    );
   }
 
   /**
    * Either render a definition or format a value.
    */
   renderOrFormat(
-    value: PrimitiveType | Definition,
+    value: PrimitiveType | Definition<Config>,
     depth: number,
     valueType: string = '',
   ): string {
-    return (value instanceof Definition)
+    return value instanceof Definition
       ? this.renderAttribute(value, depth)
       : this.formatValue(value, valueType);
   }
@@ -494,10 +483,13 @@ export default class Renderer {
   /**
    * Render a plain JS object.
    */
-  renderPlainObject(object: Object, depth: number = 0): string {
-    return this.formatObject(Object.keys(object).map((key: string) => (
-      this.wrapProperty(key, this.formatValue(object[key]), depth + 1)
-    )), depth);
+  renderPlainObject(object: Struct, depth: number = 0): string {
+    return this.formatObject(
+      Object.keys(object).map(key =>
+        this.wrapProperty(key, this.formatValue(object[key]), depth + 1),
+      ),
+      depth,
+    );
   }
 
   /**
@@ -525,11 +517,15 @@ export default class Renderer {
   /**
    * Render a class schema.
    */
-  renderSchema(name: string, attributes: Definition[] = [], metadata: MetadataField): string {
+  renderSchema(
+    name: string,
+    attributes: Definition<Config>[] = [],
+    metadata: MetadataField,
+  ): string {
     const { primaryKey, resourceName, ...meta } = metadata;
     const { includeAttributes, useDefine } = this.options;
     const references = this.schematic.referenceSchematics;
-    const fields = [];
+    const fields: string[] = [];
     const relations: { [key: string]: string[] } = {
       [Schema.HAS_ONE]: [],
       [Schema.HAS_MANY]: [],
@@ -540,15 +536,15 @@ export default class Renderer {
     if (!resourceName || typeof resourceName !== 'string') {
       throw new SyntaxError(
         `Schema ${name} requires a "meta.resourceName" property to be defined. ` +
-        'The resource name is a unique key found within a URL.',
+          'The resource name is a unique key found within a URL.',
       );
     }
 
-    let relationDefinition: ?ReferenceDefinition = null;
+    let relationDefinition: ReferenceDefinition | null = null;
     let relationType: string = '';
 
     // eslint-disable-next-line complexity
-    attributes.forEach((definition: Definition) => {
+    attributes.forEach(definition => {
       relationDefinition = null;
 
       if (includeAttributes) {
@@ -562,7 +558,11 @@ export default class Renderer {
       }
 
       // Multiple
-      if (definition.valueType && definition.valueType instanceof ReferenceDefinition) {
+      if (
+        (definition instanceof ArrayDefinition || definition instanceof ObjectDefinition) &&
+        definition.valueType &&
+        definition.valueType instanceof ReferenceDefinition
+      ) {
         relationDefinition = definition.valueType;
         relationType = Schema.HAS_MANY;
       }
@@ -587,16 +587,16 @@ export default class Renderer {
           ? this.schematic.name
           : references[relationConfig.reference].name;
         const schemaName = this.getSchemaInstanceName(this.getObjectName(relationName, 'Schema'));
-        const isCollection = (
-          relationType === Schema.HAS_MANY ||
-          relationType === Schema.BELONGS_TO_MANY
-        );
+        const isCollection =
+          relationType === Schema.HAS_MANY || relationType === Schema.BELONGS_TO_MANY;
 
-        relations[relationConfig.relation || relationType].push(this.wrapProperty(
-          relationDefinition.attribute,
-          (useDefine && isCollection) ? `[${schemaName}]` : schemaName,
-          1,
-        ));
+        relations[relationConfig.relation || relationType].push(
+          this.wrapProperty(
+            relationDefinition.attribute,
+            useDefine && isCollection ? `[${schemaName}]` : schemaName,
+            1,
+          ),
+        );
       }
     });
 
@@ -621,10 +621,10 @@ export default class Renderer {
     }
 
     if (useDefine) {
-      const useDefineList = Object.keys(relations).reduce((joined: string[], relation: string) => ([
-        ...joined,
-        ...relations[relation],
-      ]), []);
+      const useDefineList = Object.keys(relations).reduce(
+        (joined: string[], relation: string) => [...joined, ...relations[relation]],
+        [],
+      );
 
       if (useDefineList.length > 0) {
         relationTemplate += `.define(${this.formatObject(useDefineList, 0)})`;
@@ -728,7 +728,7 @@ export default class Renderer {
   /**
    * Return the property name as is.
    */
-  wrapPropertyName(definition: Definition): string {
+  wrapPropertyName(definition: Definition<Config>): string {
     return definition.attribute;
   }
 }
