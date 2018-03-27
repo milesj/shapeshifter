@@ -69,6 +69,7 @@
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.79.0",
+    "@types/graphql": "^0.12.6",
     "babel-loader": "^7.1.4",
     "flow-bin": "^0.68.0",
     "prop-types": "^15.6.1",

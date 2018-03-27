@@ -125,6 +125,10 @@
     "@types/cheerio" "*"
     "@types/react" "*"
 
+"@types/graphql@^0.12.6":
+  version "0.12.6"
+  resolved "https://registry.npmjs.org/@types/graphql/-/graphql-0.12.6.tgz#3d619198585fcabe5f4e1adfb5cf5f3388c66c13"
+
 "@types/jest@^22.2.2":
   version "22.2.2"
   resolved "https://registry.npmjs.org/@types/jest/-/jest-22.2.2.tgz#afe5dacbd00d65325f52da0ed3e76e259629ac9d"

@@ -8,16 +8,22 @@
 
 import fs from 'fs';
 import { extname } from 'path';
-import { Kind, parse } from 'graphql';
-
-import type {
+import {
+  parse,
+  Kind,
   DefinitionNode,
   DocumentNode,
   FieldDefinitionNode,
   NamedTypeNode,
+  TypeNode,
   TypeDefinitionNode,
+  ListTypeNode,
+  NonNullTypeNode,
+  EnumTypeDefinitionNode,
+  ObjectTypeDefinitionNode,
+  UnionTypeDefinitionNode,
 } from 'graphql';
-import type {
+import {
   AttributesField,
   ReferencesField,
   SchemaStructure,
@@ -26,9 +32,9 @@ import type {
 } from '../types';
 
 class GraphQLReader {
-  document: DocumentNode = null;
+  document: DocumentNode;
 
-  schematic: DefinitionNode = null;
+  schematic: DefinitionNode;
 
   fileExt: string = '';
 
@@ -40,42 +46,54 @@ class GraphQLReader {
 
   references: ReferencesField = {};
 
-  enums: { [key: string]: number[] } = {};
+  enums: { [key: string]: (string | number)[] } = {};
 
   shapes: ShapesField = {};
 
   unions: { [key: string]: TypeDefinition[] } = {};
 
   constructor(doc: DocumentNode, ext: string) {
-    this.document = doc;
     this.fileExt = ext;
+    this.document = doc;
+    this.schematic = this.document.definitions.pop()!;
+
+    if (!this.schematic) {
+      /* istanbul ignore next No need to cover */
+      throw new SyntaxError('The schematic must be defined as the last GraphQL type.');
+    } else if (this.schematic.kind !== Kind.OBJECT_TYPE_DEFINITION) {
+      /* istanbul ignore next No need to cover */
+      throw new TypeError('The schematic must be an object type.');
+    }
+
+    this.name = this.schematic.name.value;
 
     this.parseDefinitions();
     this.parseAttributes();
   }
 
   buildAttribute(
-    field: DefinitionNode,
-    type: TypeDefinitionNode,
+    field: FieldDefinitionNode | TypeDefinitionNode,
+    type: TypeNode,
     nullable: boolean = true,
     schematic: boolean = false,
   ): TypeDefinition {
+    const kind = String(type.kind);
+
     // Non-nullable
-    if (type.kind === Kind.NON_NULL_TYPE) {
-      return this.buildAttribute(field, type.type, false, schematic);
+    if (kind === Kind.NON_NULL_TYPE) {
+      return this.buildAttribute(field, (<NonNullTypeNode>type).type, false, schematic);
 
       // List
-    } else if (type.kind === Kind.LIST_TYPE) {
-      // $FlowIgnore We know what this will be
+    } else if (kind === Kind.LIST_TYPE) {
       return {
         nullable,
         type: 'array',
-        valueType: this.buildAttribute(field, type.type, true, schematic),
+        valueType: this.buildAttribute(field, (<ListTypeNode>type).type, true, schematic),
       };
 
       // Named
-    } else if (type.kind === Kind.NAMED_TYPE) {
-      const { value } = type.name;
+    } else if (kind === Kind.NAMED_TYPE) {
+      const { value } = (<NamedTypeNode>type).name;
 
       switch (value) {
         case 'ID':
@@ -88,10 +106,7 @@ class GraphQLReader {
             this.primaryKey = field.name.value;
           }
 
-          /*
-           * GQL denotes ID fields as strings,
-           * but we should accept integers as well.
-           */
+          // GQL denotes ID fields as strings, but we should accept integers as well
           return {
             nullable,
             type: 'union',
@@ -161,22 +176,24 @@ class GraphQLReader {
     throw new TypeError(`Unsupported GraphQL attribute type "${field.name.value}".`);
   }
 
-  extractEnum(definition: DefinitionNode) {
-    this.enums[definition.name.value] = definition.values.map(value => value.name.value);
+  extractEnum(definition: EnumTypeDefinitionNode) {
+    this.enums[definition.name.value] = definition.values.map(
+      ({ name: { value } }) => (value.match(/^\d+$/) ? Number(value) : String(value)),
+    );
   }
 
-  extractShape(definition: DefinitionNode) {
-    const attributes = {};
+  extractShape(definition: ObjectTypeDefinitionNode) {
+    const attributes: { [key: string]: TypeDefinition } = {};
 
-    definition.fields.forEach((field: FieldDefinitionNode) => {
+    (definition.fields || []).forEach((field: FieldDefinitionNode) => {
       attributes[field.name.value] = this.buildAttribute(field, field.type);
     });
 
     this.shapes[definition.name.value] = attributes;
   }
 
-  extractUnion(definition: DefinitionNode) {
-    const values = [];
+  extractUnion(definition: UnionTypeDefinitionNode) {
+    const values: TypeDefinition[] = [];
 
     definition.types.forEach((type: NamedTypeNode) => {
       values.push(this.buildAttribute(definition, type));
@@ -186,7 +203,10 @@ class GraphQLReader {
   }
 
   parseAttributes() {
-    this.schematic.fields.forEach((fieldDefinition: DefinitionNode) => {
+    // @ts-ignore
+    const { fields = [] } = this.schematic;
+
+    fields.forEach((fieldDefinition: FieldDefinitionNode) => {
       this.attributes[fieldDefinition.name.value] = this.buildAttribute(
         fieldDefinition,
         fieldDefinition.type,
@@ -197,39 +217,31 @@ class GraphQLReader {
   }
 
   parseDefinitions() {
-    this.schematic = this.document.definitions.pop();
-
-    if (!this.schematic) {
-      /* istanbul ignore next No need to cover */
-      throw new SyntaxError('The schematic must be defined as the last GraphQL type.');
-    } else if (this.schematic.kind !== Kind.OBJECT_TYPE_DEFINITION) {
-      /* istanbul ignore next No need to cover */
-      throw new TypeError('The schematic must be an object type.');
-    }
-
-    this.name = this.schematic.name.value;
-
     this.document.definitions.forEach((definition: DefinitionNode) => {
       switch (definition.kind) {
         case Kind.ENUM_TYPE_DEFINITION:
-          this.extractEnum(definition);
+          this.extractEnum(definition as EnumTypeDefinitionNode);
           break;
 
         case Kind.OBJECT_TYPE_DEFINITION:
-          this.extractShape(definition);
+          this.extractShape(definition as ObjectTypeDefinitionNode);
           break;
 
         case Kind.UNION_TYPE_DEFINITION:
-          this.extractUnion(definition);
+          this.extractUnion(definition as UnionTypeDefinitionNode);
           break;
 
         case Kind.INTERFACE_TYPE_DEFINITION:
           // Ignore interfaces
           break;
 
-        default:
+        default: {
+          // @ts-ignore
+          const name = definition.name.value;
+
           /* istanbul ignore next No need to cover */
-          throw new TypeError(`Unsupported GraphQL definition "${definition.name.value}".`);
+          throw new TypeError(`Unsupported GraphQL definition "${name}".`);
+        }
       }
     });
   }

@@ -1,30 +1,28 @@
 /**
  * @copyright   2016-2017, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import fs from 'fs';
 import path from 'path';
-import Config, { bool, string } from 'optimal';
+import optimal, { bool, string } from 'optimal';
 import RendererFactory from './RendererFactory';
 import Schematic from './Schematic';
 import readWithNode from './readers/node';
 import readWithGraphQL from './readers/graphql';
+import { Options } from './types';
 
-import type { Options } from './types';
-
-type ResolveList = {
-  parentSchematic?: Schematic,
-  refKey?: string,
-  resolvePath: string,
+type ResolveUnit = {
+  parentSchematic?: Schematic;
+  refKey?: string;
+  resolvePath: string;
 };
 
 export default class Transpiler {
   options: Options;
 
   constructor(options: Options) {
-    this.options = new Config(options, {
+    this.options = optimal(options, {
       defaultNullable: bool(),
       disableEslint: bool(),
       importPath: string('shapeshifter'),
@@ -43,40 +41,24 @@ export default class Transpiler {
    */
   /* istanbul ignore next */
   transpile(targets: string[]): Promise<string> {
-    return Promise.all(targets.map(target => (
-      new Promise((resolve: *, reject: *) => {
-        fs.stat(target, (statError: ?Error, stats: fs.Stats) => {
-          if (statError) {
-            reject(statError);
+    return Promise.all(
+      targets.map(target => {
+        const stats = fs.statSync(target);
+        const paths = [];
 
-            return;
-          }
+        if (stats.isDirectory()) {
+          paths.push(...fs.readdirSync(target).map(file => path.resolve(target, file)));
+        } else if (stats.isFile()) {
+          paths.push(path.resolve(target));
+        } else {
+          throw new Error(`Unsupported file type: ${target}.`);
+        }
 
-          const paths = [];
-
-          try {
-            if (stats.isDirectory()) {
-              paths.push(
-                ...fs.readdirSync(target).map(file => path.resolve(target, file)),
-              );
-            } else if (stats.isFile()) {
-              paths.push(path.resolve(target));
-            } else {
-              throw new Error(`Unsupported file type: ${target}.`);
-            }
-          } catch (error) {
-            reject(error);
-          }
-
-          resolve(paths);
-        });
-      })
-    ))).then((targetPaths: string[][]) => (
-      this.generate(targetPaths.reduce((paths: string[], target: string[]) => ([
-        ...paths,
-        ...target,
-      ]), []))
-    ));
+        return paths;
+      }),
+    ).then(targetPaths =>
+      this.generate(targetPaths.reduce((paths, target) => [...paths, ...target], [])),
+    );
   }
 
   /**
@@ -98,12 +80,12 @@ export default class Transpiler {
    */
   extractSchematics(filePath: string): Schematic[] {
     const basePath = path.dirname(filePath);
-    const toResolve: ResolveList[] = [{ resolvePath: filePath }];
+    const toResolve: ResolveUnit[] = [{ resolvePath: filePath }];
     const schematics = [];
 
     // Use `require()` as it handles JSON and JS files easily
     while (toResolve.length) {
-      const { resolvePath, parentSchematic, refKey } = toResolve.shift();
+      const { resolvePath, parentSchematic, refKey } = toResolve.shift()!;
       const pathExt = path.extname(resolvePath);
       let data = null;
 
@@ -143,10 +125,15 @@ export default class Transpiler {
    * Generate the output by locating a schematic for every defined file path.
    */
   generate(filePaths: string[]): string {
-    return this.generateOutput(filePaths.reduce((schematics, filePath) => ([
-      ...schematics,
-      ...this.extractSchematics(filePath),
-    ]), []));
+    return this.generateOutput(
+      filePaths.reduce(
+        (schematics: Schematic[], filePath: string) => [
+          ...schematics,
+          ...this.extractSchematics(filePath),
+        ],
+        [],
+      ),
+    );
   }
 
   /**
@@ -171,35 +158,17 @@ export default class Transpiler {
 
       renderer.parse();
 
-      imports = new Set([
-        ...Array.from(imports.values()),
-        ...renderer.getImports(),
-      ]);
+      imports = new Set([...Array.from(imports.values()), ...renderer.getImports()]);
 
-      constants = new Set([
-        ...Array.from(constants.values()),
-        ...renderer.getConstants(),
-      ]);
+      constants = new Set([...Array.from(constants.values()), ...renderer.getConstants()]);
 
-      header = new Set([
-        ...Array.from(header.values()),
-        ...renderer.getHeader(),
-      ]);
+      header = new Set([...Array.from(header.values()), ...renderer.getHeader()]);
 
-      schemas = new Set([
-        ...Array.from(schemas.values()),
-        ...renderer.getSchemas(),
-      ]);
+      schemas = new Set([...Array.from(schemas.values()), ...renderer.getSchemas()]);
 
-      relations = new Set([
-        ...Array.from(relations.values()),
-        ...renderer.getRelations(),
-      ]);
+      relations = new Set([...Array.from(relations.values()), ...renderer.getRelations()]);
 
-      sets = new Set([
-        ...Array.from(sets.values()),
-        ...renderer.getSets(),
-      ]);
+      sets = new Set([...Array.from(sets.values()), ...renderer.getSets()]);
 
       rendered.add(schematic.path);
     });
