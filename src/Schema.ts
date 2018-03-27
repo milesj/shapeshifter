@@ -4,12 +4,29 @@
  */
 
 import isObject from './helpers/isObject';
-import { PrimaryKey, Relation, SchemaExpandedMap, SchemaMap, MetadataField } from './types';
+import { MetadataField } from './types';
 
 const BELONGS_TO: string = 'belongsTo';
 const BELONGS_TO_MANY: string = 'belongsToMany';
 const HAS_ONE: string = 'hasOne';
 const HAS_MANY: string = 'hasMany';
+
+export interface SchemaMap {
+  [attribute: string]: Schema;
+}
+
+export interface SchemaExpandedMap {
+  [attribute: string]: Schema | Schema[];
+}
+
+export interface Relation {
+  attribute: string;
+  collection: boolean;
+  relation: string;
+  schema: Schema;
+}
+
+export type PrimaryKey = string | string[];
 
 export default class Schema {
   attributes: string[];
@@ -80,7 +97,7 @@ export default class Schema {
 
     this.relations.push({
       attribute,
-      collection: (relation === BELONGS_TO_MANY || relation === HAS_MANY),
+      collection: relation === BELONGS_TO_MANY || relation === HAS_MANY,
       relation,
       schema,
     });

@@ -114,10 +114,9 @@ export default class Schematic {
     }
 
     // Convert to type definitions
-    this.attributes = Object.keys(attributes).map(attribute => (
-      // @ts-ignore
-      DefinitionFactory.factory(this.options, attribute, attributes[attribute])
-    ));
+    this.attributes = Object.keys(attributes).map(attribute =>
+      DefinitionFactory.factory(this.options, attribute, attributes[attribute]),
+    );
   }
 
   /**

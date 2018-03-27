@@ -3,13 +3,13 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import parseOptions, { bool, string } from 'optimal';
+import optimal, { bool, string } from 'optimal';
 import Definition from '../Definition';
 import { InstanceConfig } from '../types';
 
 export default class InstanceDefinition extends Definition<InstanceConfig> {
   validateConfig() {
-    this.config = parseOptions(
+    this.config = optimal(
       this.config,
       {
         contract: string().required(),

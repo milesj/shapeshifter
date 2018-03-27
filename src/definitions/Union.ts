@@ -4,7 +4,7 @@
  * @flow
  */
 
-import parseOptions, { bool, string, array } from 'optimal';
+import optimal, { bool, string, array } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 import { Config, UnionConfig } from '../types';
@@ -13,12 +13,12 @@ export default class UnionDefinition extends Definition<UnionConfig> {
   valueTypes: Definition<Config>[] = [];
 
   validateConfig() {
-    this.config = parseOptions(
+    this.config = optimal(
       this.config,
       {
         nullable: bool(),
         type: string('union'),
-        valueTypes: array(this.createValueType())
+        valueTypes: array(this.createUnionType())
           .notEmpty()
           .required(),
       },
@@ -28,8 +28,8 @@ export default class UnionDefinition extends Definition<UnionConfig> {
       },
     );
 
-    this.valueTypes = this.config.valueTypes.map(
-      (type, i) => DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, type),
+    this.valueTypes = this.config.valueTypes.map((type, i) =>
+      DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, type),
     );
   }
 }

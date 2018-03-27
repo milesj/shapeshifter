@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import parseOptions, { bool, string } from 'optimal';
+import optimal, { bool, string } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 import { Config, ObjectConfig } from '../types';
@@ -14,13 +14,13 @@ export default class ObjectDefinition extends Definition<ObjectConfig> {
   valueType: Definition<Config> | null = null;
 
   validateConfig() {
-    this.config = parseOptions(
+    this.config = optimal(
       this.config,
       {
-        keyType: string('string'),
+        keyType: this.createUnionType(false),
         nullable: bool(),
         type: string('object'),
-        valueType: this.createValueType(),
+        valueType: this.createUnionType(),
       },
       {
         name: 'ObjectDefinition',
@@ -31,7 +31,7 @@ export default class ObjectDefinition extends Definition<ObjectConfig> {
     this.keyType = DefinitionFactory.factory(
       this.options,
       `${this.attribute}_key`,
-      this.config.keyType,
+      this.config.keyType || 'string',
     );
 
     this.valueType = DefinitionFactory.factory(

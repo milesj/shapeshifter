@@ -3,11 +3,11 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import parseOptions, { bool, string, shape, union, UnionBuilder } from 'optimal';
+import optimal, { bool, string, shape, union, UnionBuilder } from 'optimal';
 import normalizeType from './helpers/normalizeType';
-import { Config, Options } from './types';
+import { Config, Options, Partial } from './types';
 
-export default class Definition<T extends Config> {
+export default abstract class Definition<T extends Config> {
   options: Options;
 
   attribute: string;
@@ -17,7 +17,7 @@ export default class Definition<T extends Config> {
   /**
    * Represents a type definition for an attribute.
    */
-  constructor(options: Options, attribute: string, config: T) {
+  constructor(options: Options, attribute: string, config: Partial<T>) {
     this.options = options;
     this.attribute = attribute;
     this.config = {
@@ -30,22 +30,28 @@ export default class Definition<T extends Config> {
   }
 
   /**
-   * Create an option for our `valueType` type definition.
+   * Create an option for type definitions that can be a string or object.
    */
-  createValueType(): UnionBuilder {
-    return union([
+  createUnionType(required: boolean = true): UnionBuilder {
+    const type = union([
       string(),
       shape({
         type: string().required(),
       }),
-    ]).required();
+    ]);
+
+    if (required) {
+      type.required();
+    }
+
+    return type;
   }
 
   /**
    * Returns true if the attribute allows nulls.
    */
   isNullable(): boolean {
-    return this.config.nullable || false;
+    return this.config.nullable || this.options.defaultNullable;
   }
 
   /**
@@ -54,12 +60,16 @@ export default class Definition<T extends Config> {
   validateConfig() {
     const { name } = this.constructor;
 
-    this.config = parseOptions(this.config, {
-      nullable: bool(),
-      type: string(normalizeType(name.toLowerCase())),
-    }, {
-      name: name || 'Definition',
-      unknown: true,
-    });
+    this.config = optimal(
+      this.config,
+      {
+        nullable: bool(),
+        type: string(normalizeType(name.toLowerCase())),
+      },
+      {
+        name: name || 'Definition',
+        unknown: true,
+      },
+    );
   }
 }

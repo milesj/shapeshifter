@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import parseOptions, { bool, string } from 'optimal';
+import optimal, { bool, string } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 import { Config, ArrayConfig } from '../types';
@@ -12,12 +12,12 @@ export default class ArrayDefinition extends Definition<ArrayConfig> {
   valueType: Definition<Config> | null = null;
 
   validateConfig() {
-    this.config = parseOptions(
+    this.config = optimal(
       this.config,
       {
         nullable: bool(),
         type: string('array'),
-        valueType: this.createValueType(),
+        valueType: this.createUnionType(),
       },
       {
         name: 'ArrayDefinition',

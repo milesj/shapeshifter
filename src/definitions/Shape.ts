@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import parseOptions, { bool, string, object } from 'optimal';
+import optimal, { bool, string, object } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 import { Config, ShapeConfig } from '../types';
@@ -12,10 +12,10 @@ export default class ShapeDefinition extends Definition<ShapeConfig> {
   attributes: Definition<Config>[] = [];
 
   validateConfig() {
-    this.config = parseOptions(
+    this.config = optimal(
       this.config,
       {
-        attributes: object(this.createValueType(), null)
+        attributes: object(this.createUnionType(), null)
           .nullable()
           .xor('reference')
           .notEmpty(),
@@ -34,8 +34,8 @@ export default class ShapeDefinition extends Definition<ShapeConfig> {
     const { attributes } = this.config;
 
     if (attributes) {
-      this.attributes = Object.keys(attributes).map(
-        attribute => DefinitionFactory.factory(this.options, attribute, attributes[attribute]),
+      this.attributes = Object.keys(attributes).map(attribute =>
+        DefinitionFactory.factory(this.options, attribute, attributes[attribute]),
       );
     }
   }

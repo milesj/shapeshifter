@@ -3,121 +3,114 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import { Options as BaseConfig } from 'optimal';
-import Schema from './Schema';
+import { Struct } from 'optimal';
 
-export interface Options {
-  defaultNullable: boolean,
-  disableEslint: boolean,
-  importPath: string,
-  includeAttributes: boolean,
-  includeSchemas: boolean,
-  includeTypes: boolean,
-  indentCharacter: string,
-  renderer: 'react' | 'flow' | 'typescript',
-  stripPropTypes: boolean,
-  useDefine: boolean,
+export interface Options extends Struct {
+  defaultNullable: boolean;
+  disableEslint: boolean;
+  importPath: string;
+  includeAttributes: boolean;
+  includeSchemas: boolean;
+  includeTypes: boolean;
+  indentCharacter: string;
+  renderer: 'react' | 'flow' | 'typescript';
+  stripPropTypes: boolean;
+  useDefine: boolean;
 }
 
 export type PrimitiveType = string | number | boolean;
 
-export interface SchemaMap {
-  [attribute: string]: Schema
-}
-
-export interface SchemaExpandedMap {
-  [attribute: string]: Schema | Schema[]
-}
-
-export type PrimaryKey = string | string[];
-
-export interface Relation {
-  attribute: string,
-  collection: boolean,
-  relation: string,
-  schema: Schema,
-}
-
 // Type Definitions
 
-export interface Config extends BaseConfig {
-  nullable?: boolean,
-  type: string,
+export interface Config extends Struct {
+  nullable?: boolean;
+  type: string;
 }
 
 export interface ArrayConfig extends Config {
-  valueType: TypeDefinition,
+  valueType: TypeDefinition;
 }
 
 export interface BoolConfig extends Config {}
 
 export interface EnumConfig extends Config {
-  values: PrimitiveType[],
-  valueType: string,
+  values: PrimitiveType[];
+  valueType: string;
 }
 
 export interface InstanceConfig extends Config {
-  contract: string,
+  contract: string;
 }
 
 export interface NumberConfig extends Config {}
 
 export interface ObjectConfig extends Config {
-  keyType: TypeDefinition,
-  valueType: TypeDefinition,
+  keyType?: TypeDefinition;
+  valueType: TypeDefinition;
 }
 
 export interface ReferenceConfig extends Config {
-  export?: boolean,
-  reference: string,
-  relation?: string,
-  self: boolean,
-  subset?: string,
+  export?: boolean;
+  reference: string;
+  relation?: string;
+  self?: boolean;
+  subset?: string;
 }
 
 export interface ShapeConfig extends Config {
-  attributes: { [key: string]: TypeDefinition },
-  reference?: string,
+  attributes: {
+    [key: string]: TypeDefinition;
+  };
+  reference?: string;
 }
 
 export interface StringConfig extends Config {}
 
 export interface UnionConfig extends Config {
-  valueTypes: TypeDefinition[],
+  valueTypes: TypeDefinition[];
 }
 
-export type TypeDefinition = string |
-  ArrayConfig | BoolConfig | EnumConfig | InstanceConfig | NumberConfig |
-  ObjectConfig | ReferenceConfig | ShapeConfig | StringConfig | UnionConfig;
+export type TypeDefinition =
+  | string
+  | ArrayConfig
+  | BoolConfig
+  | EnumConfig
+  | InstanceConfig
+  | NumberConfig
+  | ObjectConfig
+  | ReferenceConfig
+  | ShapeConfig
+  | StringConfig
+  | UnionConfig;
 
 // JSON Structure
 
 export interface MetadataField {
-  primaryKey?: string,
-  resourceName?: string,
+  primaryKey?: string;
+  resourceName?: string;
 }
 
 export interface ConstantsField {
-  [key: string]: PrimitiveType | PrimitiveType[]
+  [key: string]: PrimitiveType | PrimitiveType[];
 }
 
 export interface ImportStructure {
-  default?: string,
-  named?: string[],
-  path: string,
+  default?: string;
+  named?: string[];
+  path: string;
 }
 
 export type ImportsField = ImportStructure[];
 
 export interface ShapesField {
   [key: string]: {
-    [key: string]: TypeDefinition,
-  },
+    [key: string]: TypeDefinition;
+  };
 }
 
 export interface SubsetStructure {
-  attributes: string[],
-  nullable?: { [key: string]: boolean },
+  attributes: string[];
+  nullable?: { [key: string]: boolean };
 }
 
 export interface SubsetsField {
@@ -125,26 +118,24 @@ export interface SubsetsField {
 }
 
 export interface AttributesField {
-  [key: string]: TypeDefinition
+  [key: string]: TypeDefinition;
 }
 
 export interface ReferencesField {
-  [key: string]: string
+  [key: string]: string;
 }
 
 export interface SchemaStructure {
-  attributes: AttributesField,
-  constants?: ConstantsField,
-  imports?: ImportsField,
-  meta?: MetadataField,
-  name: string,
-  references?: ReferencesField,
-  shapes?: ShapesField,
-  subsets?: SubsetsField,
+  attributes: AttributesField;
+  constants?: ConstantsField;
+  imports?: ImportsField;
+  meta?: MetadataField;
+  name: string;
+  references?: ReferencesField;
+  shapes?: ShapesField;
+  subsets?: SubsetsField;
 }
 
 // Helpers
 
-export type Optional<T> = {
-  [P in keyof T]?: T[P];
-};
+export type Partial<T> = { [P in keyof T]?: T[P] };

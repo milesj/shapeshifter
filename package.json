@@ -23,26 +23,30 @@
     "graphql"
   ],
   "main": "./lib/index.js",
+  "module": "./esm/index.js",
   "bin": "./bin/shapeshifter.js",
   "scripts": {
-    "build": "beemo typescript",
+    "babel": "beemo typescript --node",
+    "build": "yarn run babel && yarn run build:dts",
+    "build:dts": "beemo run-script generate-dts",
     "check": "type-check && tsc --noEmit --allowJs ./tests/expected/gql/typescript/* ./tests/expected/node/typescript/*",
+    "clean": "rimraf ./{lib,esm}/",
     "coverage": "yarn run jest --coverage",
+    "docs": "gitbook build --debug",
+    "docs:serve": "gitbook serve",
+    "docs:install": "gitbook install",
     "eslint": "beemo eslint",
     "jest": "beemo jest",
-    "posttest": "yarn run eslint --silent",
-    "pretest": "yarn run type --silent",
-    "preversion": "yarn test",
-    "postversion": "yarn run build",
-    "test": "yarn run jest --silent",
+    "package": "yarn run clean && yarn run build && yarn test",
+    "prettier": "beemo prettier",
+    "pretest": "yarn run type",
+    "test": "yarn run jest",
     "test:webpack": "yarn run babel && webpack --config webpack.config.js",
     "test:webpack:dev": "yarn run babel && webpack-dev-server",
-    "flow": "beemo flow check",
-    "prettier": "beemo prettier",
+    "posttest": "yarn run eslint",
     "type": "beemo typescript --noEmit",
-    "docs": "gitbook build --log=debug --debug",
-    "docs:serve": "gitbook serve",
-    "docs:install": "gitbook install"
+    "prerelease": "yarn run package",
+    "release": "np --yolo --no-yarn"
   },
   "repository": {
     "type": "git",
@@ -60,16 +64,16 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "graphql": "^0.13.2",
-    "optimal": "^0.15.0",
+    "optimal": "^0.18.0",
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.75.2",
+    "@milesj/build-tool-config": "^0.79.0",
     "babel-loader": "^7.1.4",
     "flow-bin": "^0.68.0",
     "prop-types": "^15.6.1",
     "typescript": "^2.7.2",
-    "webpack": "^4.1.1",
+    "webpack": "^4.2.0",
     "webpack-dev-server": "^3.1.1"
   },
   "beemo": {

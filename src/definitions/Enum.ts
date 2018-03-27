@@ -5,21 +5,20 @@
 
 /* eslint-disable sort-keys */
 
-import parseOptions, { bool, string, array, custom } from 'optimal';
+import optimal, { bool, string, array, custom, Struct } from 'optimal';
 import Definition from '../Definition';
 import normalizeType from '../helpers/normalizeType';
 import { EnumConfig } from '../types';
 
 export default class EnumDefinition extends Definition<EnumConfig> {
   validateConfig() {
-    this.config = parseOptions(
+    this.config = optimal(
       this.config,
       {
         nullable: bool(),
         type: string('enum'),
-        valueType: this.createValueType(),
+        valueType: this.createUnionType(),
         // `valueType` must be validated before values
-        // @ts-ignore
         values: array(custom(this.validateValue))
           .notEmpty()
           .required(),
@@ -34,7 +33,7 @@ export default class EnumDefinition extends Definition<EnumConfig> {
   /**
    * Validate a value matches the type in `valueType`.
    */
-  validateValue(value: any, config: EnumConfig) {
+  validateValue(value: any, config: Struct) {
     // eslint-disable-next-line valid-typeof
     if (typeof value !== normalizeType(config.valueType)) {
       throw new TypeError('Enum values do not match the defined value type.');

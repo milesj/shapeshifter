@@ -13,7 +13,7 @@ export default function formatName(value: string): string {
 
   const name = value
     .replace(/[^a-zA-Z0-9]+/g, ' ')
-    .replace(/\W+(.)/g, match => match[1].toUpperCase())
+    .replace(/\W+(.)/g, match => match.charAt(1).toUpperCase())
     .trim();
 
   return name.charAt(0).toUpperCase() + name.slice(1);
