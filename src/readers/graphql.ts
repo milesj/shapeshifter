@@ -81,19 +81,24 @@ class GraphQLReader {
 
     // Non-nullable
     if (kind === Kind.NON_NULL_TYPE) {
-      return this.buildAttribute(field, (<NonNullTypeNode>type).type, false, schematic);
+      const refinedType = type as NonNullTypeNode;
+
+      return this.buildAttribute(field, refinedType.type, false, schematic);
 
       // List
     } else if (kind === Kind.LIST_TYPE) {
+      const refinedType = type as ListTypeNode;
+
       return {
         nullable,
         type: 'array',
-        valueType: this.buildAttribute(field, (<ListTypeNode>type).type, true, schematic),
+        valueType: this.buildAttribute(field, refinedType.type, true, schematic),
       };
 
       // Named
     } else if (kind === Kind.NAMED_TYPE) {
-      const { value } = (<NamedTypeNode>type).name;
+      const refinedType = type as NamedTypeNode;
+      const { value } = refinedType.name;
 
       switch (value) {
         case 'ID':

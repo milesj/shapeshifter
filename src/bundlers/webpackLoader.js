@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable promise/always-return, promise/no-callback-in-promise */
+/* eslint-disable promise/always-return, promise/no-callback-in-promise, babel/no-invalid-this */
 
 import Transpiler from '../Transpiler';
 

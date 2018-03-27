@@ -329,7 +329,6 @@ export default class Renderer {
    * Render a definition to it's visual representation.
    */
   renderAttribute(definition: Definition<Config>, depth: number = 0): string {
-    /* eslint-disable padded-blocks */
     if (definition instanceof ArrayDefinition) {
       return this.renderArray(definition, depth);
     } else if (definition instanceof BoolDefinition) {
@@ -351,7 +350,6 @@ export default class Renderer {
     } else if (definition instanceof UnionDefinition) {
       return this.renderUnion(definition, depth);
     }
-    /* eslint-enable padded-blocks */
 
     return '';
   }

@@ -3,8 +3,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import Schema, { PrimaryKey, Relation } from './Schema';
-import { MetadataField } from './types';
+import Schema from './Schema';
+import { MetadataField, PrimaryKey, Relation } from './types';
 
 export { PrimaryKey, Relation, MetadataField };
 

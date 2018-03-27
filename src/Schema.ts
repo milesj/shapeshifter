@@ -4,43 +4,14 @@
  */
 
 import isObject from './helpers/isObject';
-import { MetadataField } from './types';
+import { PrimaryKey, Relation, SchemaMap, SchemaExpandedMap, MetadataField } from './types';
 
 const BELONGS_TO: string = 'belongsTo';
 const BELONGS_TO_MANY: string = 'belongsToMany';
 const HAS_ONE: string = 'hasOne';
 const HAS_MANY: string = 'hasMany';
 
-export interface SchemaMap {
-  [attribute: string]: Schema;
-}
-
-export interface SchemaExpandedMap {
-  [attribute: string]: Schema | Schema[];
-}
-
-export interface Relation {
-  attribute: string;
-  collection: boolean;
-  relation: string;
-  schema: Schema;
-}
-
-export type PrimaryKey = string | string[];
-
 export default class Schema {
-  attributes: string[];
-
-  metadata: MetadataField;
-
-  primaryKey: PrimaryKey;
-
-  relations: Relation[];
-
-  relationTypes: { [key: string]: string };
-
-  resourceName: string;
-
   static HAS_ONE: string = HAS_ONE;
 
   static HAS_MANY: string = HAS_MANY;
@@ -48,6 +19,18 @@ export default class Schema {
   static BELONGS_TO: string = BELONGS_TO;
 
   static BELONGS_TO_MANY: string = BELONGS_TO_MANY;
+
+  attributes: string[] = [];
+
+  metadata: MetadataField;
+
+  primaryKey: PrimaryKey;
+
+  relations: Relation[] = [];
+
+  relationTypes: { [key: string]: string } = {};
+
+  resourceName: string;
 
   /**
    * Represents a basic relational schema for an entity.
@@ -64,11 +47,8 @@ export default class Schema {
     }
     /* eslint-enable no-param-reassign */
 
-    this.attributes = [];
     this.metadata = metadata;
     this.primaryKey = primaryKey as PrimaryKey;
-    this.relations = [];
-    this.relationTypes = {};
     this.resourceName = resourceName;
   }
 

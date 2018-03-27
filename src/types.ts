@@ -3,7 +3,10 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+/* eslint-disable typescript/no-empty-interface */
+
 import { Struct } from 'optimal';
+import Schema from './Schema';
 
 export interface Options extends Struct {
   defaultNullable: boolean;
@@ -20,7 +23,37 @@ export interface Options extends Struct {
 
 export type PrimitiveType = string | number | boolean;
 
+export interface SchemaMap {
+  [attribute: string]: Schema;
+}
+
+export interface SchemaExpandedMap {
+  [attribute: string]: Schema | Schema[];
+}
+
+export interface Relation {
+  attribute: string;
+  collection: boolean;
+  relation: string;
+  schema: Schema;
+}
+
+export type PrimaryKey = string | string[];
+
 // Type Definitions
+
+export type TypeDefinition =
+  | string
+  | ArrayConfig
+  | BoolConfig
+  | EnumConfig
+  | InstanceConfig
+  | NumberConfig
+  | ObjectConfig
+  | ReferenceConfig
+  | ShapeConfig
+  | StringConfig
+  | UnionConfig;
 
 export interface Config extends Struct {
   nullable?: boolean;
@@ -69,19 +102,6 @@ export interface StringConfig extends Config {}
 export interface UnionConfig extends Config {
   valueTypes: TypeDefinition[];
 }
-
-export type TypeDefinition =
-  | string
-  | ArrayConfig
-  | BoolConfig
-  | EnumConfig
-  | InstanceConfig
-  | NumberConfig
-  | ObjectConfig
-  | ReferenceConfig
-  | ShapeConfig
-  | StringConfig
-  | UnionConfig;
 
 // JSON Structure
 
