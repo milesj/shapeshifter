@@ -5,9 +5,9 @@
 
 import optimal, { bool, string, shape, union, UnionBuilder } from 'optimal';
 import normalizeType from './helpers/normalizeType';
-import { Config, Options, Partial } from './types';
+import { Config, Options } from './types';
 
-export default abstract class Definition<T extends Config> {
+export default class Definition<T extends Config> {
   options: Options;
 
   attribute: string;
@@ -18,6 +18,8 @@ export default abstract class Definition<T extends Config> {
    * Represents a type definition for an attribute.
    */
   constructor(options: Options, attribute: string, config: Partial<T>) {
+    console.log('new', this.constructor.name);
+
     this.options = options;
     this.attribute = attribute;
     this.config = {
@@ -51,7 +53,7 @@ export default abstract class Definition<T extends Config> {
    * Returns true if the attribute allows nulls.
    */
   isNullable(): boolean {
-    return this.config.nullable || this.options.defaultNullable;
+    return this.config.nullable || false;
   }
 
   /**

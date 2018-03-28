@@ -16,25 +16,25 @@ describe('definitions/Shape', () => {
 
   it('errors if `reference` is not a string', () => {
     expect(() => new ShapeDefinition(options, 'foo', { reference: 123 })).toThrowError(
-      'Invalid ShapeDefinition option "reference". Must be a string.',
+      'Invalid ShapeDefinition field "reference". Must be a string.',
     );
   });
 
   it('errors if `attributes` is a non-object', () => {
     expect(() => new ShapeDefinition(options, 'foo', { attributes: 'foo' })).toThrowError(
-      'Invalid ShapeDefinition option "attributes". Must be a plain object.',
+      'Invalid ShapeDefinition field "attributes". Must be a plain object.',
     );
   });
 
   it('errors if `attributes` has no properties', () => {
     expect(() => new ShapeDefinition(options, 'foo', { attributes: {} })).toThrowError(
-      'Invalid ShapeDefinition option "attributes". Object cannot be empty.',
+      'Invalid ShapeDefinition field "attributes". Object cannot be empty.',
     );
   });
 
   it('errors if `attributes` has the wrong values', () => {
     expect(() => new ShapeDefinition(options, 'foo', { attributes: { foo: 123 } })).toThrowError(
-      'Invalid ShapeDefinition option "attributes.foo". Type must be one of: String, Shape',
+      'Invalid ShapeDefinition field "attributes.foo". Type must be one of: String, Shape',
     );
   });
 

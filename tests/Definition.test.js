@@ -20,8 +20,8 @@ describe('Definition', () => {
   });
 
   it('validates nullable', () => {
-    expect(() => (
-      new Definition(options, 'foo', { nullable: 'string' })
-    )).toThrowError('Invalid Definition option "nullable". Must be a boolean.');
+    expect(() => new Definition(options, 'foo', { nullable: 'string' })).toThrowError(
+      'Invalid Definition field "nullable". Must be a boolean.',
+    );
   });
 });

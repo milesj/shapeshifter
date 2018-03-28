@@ -155,7 +155,3 @@ export interface SchemaStructure {
   shapes?: ShapesField;
   subsets?: SubsetsField;
 }
-
-// Helpers
-
-export type Partial<T> = { [P in keyof T]?: T[P] };

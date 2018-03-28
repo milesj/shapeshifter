@@ -4,26 +4,26 @@ import EnumDefinition from '../../src/definitions/Enum';
 describe('definitions/Enum', () => {
   it('errors if `valueType` is missing', () => {
     expect(() => new EnumDefinition(options, 'foo', {})).toThrowError(
-      'Invalid EnumDefinition option "valueType". Field is required and must be defined.',
+      'Invalid EnumDefinition field "valueType". Field is required and must be defined.',
     );
   });
 
   it('errors if `valueType` is empty', () => {
     expect(() => new EnumDefinition(options, 'foo', { valueType: '' })).toThrowError(
-      'Invalid EnumDefinition option "valueType". String cannot be empty.',
+      'Invalid EnumDefinition field "valueType". String cannot be empty.',
     );
   });
 
   it('errors if `values` is not an array', () => {
     expect(
       () => new EnumDefinition(options, 'foo', { valueType: 'string', values: 'string' }),
-    ).toThrowError('Invalid EnumDefinition option "values". Must be an array.');
+    ).toThrowError('Invalid EnumDefinition field "values". Must be an array.');
   });
 
   it('errors if `values` is empty', () => {
     expect(
       () => new EnumDefinition(options, 'foo', { valueType: 'string', values: [] }),
-    ).toThrowError('Invalid EnumDefinition option "values". Array cannot be empty.');
+    ).toThrowError('Invalid EnumDefinition field "values". Array cannot be empty.');
   });
 
   describe('errors if `values` do not match the type in `valueType`', () => {
