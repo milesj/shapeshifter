@@ -37,7 +37,7 @@ module.exports = {
     floatField: {
       type: 'enum',
       valueType: 'float',
-      values: [12.34, 56.78, 9.00, 65.4],
+      values: [12.34, 56.78, 9.0, 65.4],
     },
     strField: {
       type: 'enum',

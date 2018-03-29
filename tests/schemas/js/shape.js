@@ -1,8 +1,6 @@
 module.exports = {
   name: 'Shape',
-  imports: [
-    { default: 'ShapeDefault', named: ['ShapeClassName'], path: '../stub' },
-  ],
+  imports: [{ default: 'ShapeDefault', named: ['ShapeClassName'], path: '../stub' }],
   attributes: {
     structAlias: {
       type: 'struct',

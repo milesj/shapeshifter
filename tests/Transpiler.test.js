@@ -31,24 +31,44 @@ const FORMATS = [
     format: 'js',
     reader: 'node',
     cases: [
-      'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
-      'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
+      'array',
+      'enum',
+      'instance',
+      'object',
+      'primitive',
+      'shape',
+      'union',
+      'imports',
+      'constants',
+      'sets',
+      'reference',
+      'reference-self',
+      'shape-reference',
     ],
   },
   {
     format: 'json',
     reader: 'node',
     cases: [
-      'array', 'enum', 'instance', 'object', 'primitive', 'shape', 'union',
-      'imports', 'constants', 'sets', 'reference', 'reference-self', 'shape-reference',
+      'array',
+      'enum',
+      'instance',
+      'object',
+      'primitive',
+      'shape',
+      'union',
+      'imports',
+      'constants',
+      'sets',
+      'reference',
+      'reference-self',
+      'shape-reference',
     ],
   },
   {
     format: 'gql',
     reader: 'gql',
-    cases: [
-      'array', 'enum', 'primitive', 'shape', 'union', 'reference', 'reference-self', 'core',
-    ],
+    cases: ['array', 'enum', 'primitive', 'shape', 'union', 'reference', 'reference-self', 'core'],
   },
 ];
 
@@ -58,7 +78,7 @@ describe('Transpiler', () => {
       describe(`outputs ${name}`, () => {
         FORMATS.forEach(({ format, reader, cases }) => {
           describe(`from ${format.toUpperCase()} files`, () => {
-            cases.forEach((schema) => {
+            cases.forEach(schema => {
               it(`when rendering schema case "${schema}"`, () => {
                 const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
                 const expectedPath = `${__dirname}/expected/${reader}/${key}/${schema}.${ext}`;
@@ -114,8 +134,7 @@ describe('Transpiler', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/no-types.js`;
 
-      const output = new Transpiler({ ...otherOptions })
-        .transpileFile(actualPath);
+      const output = new Transpiler({ ...otherOptions }).transpileFile(actualPath);
 
       expect(output).toBe(file(expectedPath));
     });
@@ -149,8 +168,7 @@ describe('Transpiler', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/no-schemas.js`;
 
-      const output = new Transpiler({ ...otherOptions })
-        .transpileFile(actualPath);
+      const output = new Transpiler({ ...otherOptions }).transpileFile(actualPath);
 
       expect(output).toBe(file(expectedPath));
     });
@@ -261,8 +279,9 @@ describe('Transpiler', () => {
 
   describe('extractSchematics()', () => {
     it('handles reference paths correctly', () => {
-      const schematics = new Transpiler(options)
-        .extractSchematics(`${__dirname}/schemas/json/reference.json`);
+      const schematics = new Transpiler(options).extractSchematics(
+        `${__dirname}/schemas/json/reference.json`,
+      );
 
       expect(schematics.map(schematic => schematic.path)).toEqual([
         `${__dirname}/schemas/json/reference-bar.json`,

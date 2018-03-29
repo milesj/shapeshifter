@@ -1,7 +1,8 @@
 {
   "name": "shapeshifter",
   "version": "5.1.0",
-  "description": "Generate relational schemas, React prop types, Flow type aliases, or TypeScript interfaces from JSON, JS, or GraphQL schematic files.",
+  "description":
+    "Generate relational schemas, React prop types, Flow type aliases, or TypeScript interfaces from JSON, JS, or GraphQL schematic files.",
   "keywords": [
     "generate",
     "schema",
@@ -29,7 +30,8 @@
     "babel": "beemo typescript --node",
     "build": "yarn run babel && yarn run build:dts",
     "build:dts": "beemo run-script generate-dts",
-    "check": "flow check && tsc --noEmit --allowJs ./tests/expected/gql/typescript/* ./tests/expected/node/typescript/*",
+    "check":
+      "flow check && tsc --noEmit --allowJs ./tests/expected/gql/typescript/* ./tests/expected/node/typescript/*",
     "clean": "rimraf ./{lib,esm}/",
     "coverage": "yarn run jest --coverage",
     "docs": "gitbook build --debug",
@@ -79,21 +81,15 @@
   },
   "beemo": {
     "module": "@milesj/build-tool-config",
-    "drivers": [
-      "babel",
-      "eslint",
-      "jest",
-      "prettier",
-      "typescript"
-    ],
+    "drivers": ["babel", "eslint", "jest", "prettier", "typescript"],
     "eslint": {
-      "ignore": [
-        "tests/expected/**/*",
-        "tests/bundle.js"
-      ],
+      "ignore": ["tests/expected/**/*", "tests/bundle.js"],
       "rules": {
         "function-paren-newline": "off"
       }
+    },
+    "prettier": {
+      "ignore": ["package.json", "tests/expected/**/*"]
     }
   }
 }

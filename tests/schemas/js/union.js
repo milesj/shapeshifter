@@ -1,8 +1,6 @@
 module.exports = {
   name: 'Union',
-  imports: [
-    { default: 'UnionDefault', named: ['UnionClassName'], path: '../stub' },
-  ],
+  imports: [{ default: 'UnionDefault', named: ['UnionClassName'], path: '../stub' }],
   attributes: {
     arrayField: {
       type: 'union',
@@ -22,10 +20,7 @@ module.exports = {
     },
     primitiveFields: {
       type: 'union',
-      valueTypes: [
-        'bool',
-        'integer',
-      ],
+      valueTypes: ['bool', 'integer'],
     },
     enumField: {
       type: 'union',
@@ -111,10 +106,7 @@ module.exports = {
         },
         {
           type: 'union',
-          valueTypes: [
-            'bool',
-            'int',
-          ],
+          valueTypes: ['bool', 'int'],
         },
       ],
     },

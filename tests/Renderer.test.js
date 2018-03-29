@@ -10,10 +10,17 @@ describe('Renderer', () => {
   let renderer;
 
   beforeEach(() => {
-    renderer = new Renderer(options, new Schematic('/foo.json', {
-      name: 'foo Bar-Baz',
-      attributes: { foo: 'string' },
-    }, options));
+    renderer = new Renderer(
+      options,
+      new Schematic(
+        '/foo.json',
+        {
+          name: 'foo Bar-Baz',
+          attributes: { foo: 'string' },
+        },
+        options,
+      ),
+    );
   });
 
   describe('formatArray()', () => {
@@ -56,13 +63,13 @@ describe('Renderer', () => {
 
   describe('formatValue()', () => {
     it('wraps strings in quotes', () => {
-      expect(renderer.formatValue('foo')).toBe('\'foo\'');
-      expect(renderer.formatValue('foo', 'string')).toBe('\'foo\'');
+      expect(renderer.formatValue('foo')).toBe("'foo'");
+      expect(renderer.formatValue('foo', 'string')).toBe("'foo'");
     });
 
     it('handles array of values', () => {
-      expect(renderer.formatValue(['foo'])).toBe('[\'foo\']');
-      expect(renderer.formatValue(['foo', 123])).toBe('[\'foo\', 123]');
+      expect(renderer.formatValue(['foo'])).toBe("['foo']");
+      expect(renderer.formatValue(['foo', 123])).toBe("['foo', 123]");
     });
 
     it('passes functions and booleans as is', () => {
@@ -78,9 +85,9 @@ describe('Renderer', () => {
     });
 
     it('errors on invalid types', () => {
-      expect(() => (
-        renderer.formatValue('foo', 'what')
-      )).toThrowError('Unknown type "what" passed to formatValue().');
+      expect(() => renderer.formatValue('foo', 'what')).toThrowError(
+        'Unknown type "what" passed to formatValue().',
+      );
     });
   });
 
@@ -102,64 +109,73 @@ describe('Renderer', () => {
 
   describe('renderArray()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderArray())
-        .toThrowError('The "array" definition is not supported by Renderer.');
+      expect(() => renderer.renderArray()).toThrowError(
+        'The "array" definition is not supported by Renderer.',
+      );
     });
   });
 
   describe('renderBool()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderBool())
-        .toThrowError('The "boolean" definition is not supported by Renderer.');
+      expect(() => renderer.renderBool()).toThrowError(
+        'The "boolean" definition is not supported by Renderer.',
+      );
     });
   });
 
   describe('renderEnum()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderEnum())
-        .toThrowError('The "enum" definition is not supported by Renderer.');
+      expect(() => renderer.renderEnum()).toThrowError(
+        'The "enum" definition is not supported by Renderer.',
+      );
     });
   });
 
   describe('renderInstance()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderInstance())
-        .toThrowError('The "instance" definition is not supported by Renderer.');
+      expect(() => renderer.renderInstance()).toThrowError(
+        'The "instance" definition is not supported by Renderer.',
+      );
     });
   });
 
   describe('renderNumber()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderNumber())
-        .toThrowError('The "number" definition is not supported by Renderer.');
+      expect(() => renderer.renderNumber()).toThrowError(
+        'The "number" definition is not supported by Renderer.',
+      );
     });
   });
 
   describe('renderObject()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderObject())
-        .toThrowError('The "object" definition is not supported by Renderer.');
+      expect(() => renderer.renderObject()).toThrowError(
+        'The "object" definition is not supported by Renderer.',
+      );
     });
   });
 
   describe('renderShape()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderShape())
-        .toThrowError('The "shape" definition is not supported by Renderer.');
+      expect(() => renderer.renderShape()).toThrowError(
+        'The "shape" definition is not supported by Renderer.',
+      );
     });
   });
 
   describe('renderString()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderString())
-        .toThrowError('The "string" definition is not supported by Renderer.');
+      expect(() => renderer.renderString()).toThrowError(
+        'The "string" definition is not supported by Renderer.',
+      );
     });
   });
 
   describe('renderUnion()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderUnion())
-        .toThrowError('The "union" definition is not supported by Renderer.');
+      expect(() => renderer.renderUnion()).toThrowError(
+        'The "union" definition is not supported by Renderer.',
+      );
     });
   });
 
@@ -171,7 +187,7 @@ describe('Renderer', () => {
 
   describe('renderConstant()', () => {
     it('renders primitive values', () => {
-      expect(renderer.renderConstant('FOO', 'bar')).toBe('export const FOO = \'bar\';');
+      expect(renderer.renderConstant('FOO', 'bar')).toBe("export const FOO = 'bar';");
       expect(renderer.renderConstant('FOO', 123)).toBe('export const FOO = 123;');
       expect(renderer.renderConstant('FOO', 456.78)).toBe('export const FOO = 456.78;');
       expect(renderer.renderConstant('FOO', true)).toBe('export const FOO = true;');
@@ -179,59 +195,69 @@ describe('Renderer', () => {
     });
 
     it('renders an array of primitive values', () => {
-      expect(renderer.renderConstant('FOO', [
-        'bar', 123, 456.78, true,
-      ])).toBe('export const FOO = [\'bar\', 123, 456.78, true];');
+      expect(renderer.renderConstant('FOO', ['bar', 123, 456.78, true])).toBe(
+        "export const FOO = ['bar', 123, 456.78, true];",
+      );
     });
   });
 
   describe('renderImport()', () => {
     it('errors if no `path` is set', () => {
-      expect(() => renderer.renderImport({})).toThrowError('Import statements require a file path.');
+      expect(() => renderer.renderImport({})).toThrowError(
+        'Import statements require a file path.',
+      );
     });
 
     it('errors if `named` is not an array', () => {
-      expect(() => (
-        renderer.renderImport({ path: '/', named: true })
-      )).toThrowError('Named imports must be an array.');
+      expect(() => renderer.renderImport({ path: '/', named: true })).toThrowError(
+        'Named imports must be an array.',
+      );
     });
 
     it('errors if no named or default imports', () => {
-      expect(() => (
-        renderer.renderImport({ path: '/', named: [] })
-      )).toThrowError('Import statements require either a default export or named exports.');
+      expect(() => renderer.renderImport({ path: '/', named: [] })).toThrowError(
+        'Import statements require either a default export or named exports.',
+      );
     });
 
     it('renders a default import', () => {
-      expect(renderer.renderImport({
-        path: '/',
-        default: 'DefaultName',
-      })).toBe('import DefaultName from \'/\';');
+      expect(
+        renderer.renderImport({
+          path: '/',
+          default: 'DefaultName',
+        }),
+      ).toBe("import DefaultName from '/';");
     });
 
     it('renders named imports', () => {
-      expect(renderer.renderImport({
-        path: '/',
-        named: ['foo', 'bar'],
-      })).toBe('import { foo, bar } from \'/\';');
+      expect(
+        renderer.renderImport({
+          path: '/',
+          named: ['foo', 'bar'],
+        }),
+      ).toBe("import { foo, bar } from '/';");
     });
 
     it('renders a default and named imports', () => {
-      expect(renderer.renderImport({
-        path: '/',
-        default: 'DefaultName',
-        named: ['foo', 'bar'],
-      })).toBe('import DefaultName, { foo, bar } from \'/\';');
+      expect(
+        renderer.renderImport({
+          path: '/',
+          default: 'DefaultName',
+          named: ['foo', 'bar'],
+        }),
+      ).toBe("import DefaultName, { foo, bar } from '/';");
     });
   });
 
   describe('renderPlainObject()', () => {
     it('renders correctly', () => {
-      expect(renderer.renderPlainObject({
-        string: 'foo',
-        number: 123,
-        boolean: true,
-      })).toBe(`{
+      expect(
+        renderer.renderPlainObject({
+          string: 'foo',
+          number: 123,
+          boolean: true,
+        }),
+      ).toBe(`{
   string: 'foo',
   number: 123,
   boolean: true,
@@ -239,9 +265,11 @@ describe('Renderer', () => {
     });
 
     it('supports arrays', () => {
-      expect(renderer.renderPlainObject({
-        values: ['foo', 123, true],
-      })).toBe(`{
+      expect(
+        renderer.renderPlainObject({
+          values: ['foo', 123, true],
+        }),
+      ).toBe(`{
   values: ['foo', 123, true],
 }`);
     });
@@ -251,11 +279,13 @@ describe('Renderer', () => {
     it('errors if reference doesnt exist', () => {
       renderer.schematic.shapes = {};
 
-      expect(() => (
-        renderer.renderShapeReference(new ShapeDefinition(options, 'attr', {
-          reference: 'foo',
-        }))
-      )).toThrowError('The shape reference "foo" does not exist in the "foo Bar-Baz" schema.');
+      expect(() =>
+        renderer.renderShapeReference(
+          new ShapeDefinition(options, 'attr', {
+            reference: 'foo',
+          }),
+        ),
+      ).toThrowError('The shape reference "foo" does not exist in the "foo Bar-Baz" schema.');
     });
   });
 
@@ -263,25 +293,33 @@ describe('Renderer', () => {
     it('errors if reference doesnt exist', () => {
       renderer.schematic.referenceSchematics = {};
 
-      expect(() => (
-        renderer.renderReference(new ReferenceDefinition(options, 'attr', {
-          reference: 'foo',
-        }))
-      )).toThrowError('The reference "foo" does not exist in the "foo Bar-Baz" schema.');
+      expect(() =>
+        renderer.renderReference(
+          new ReferenceDefinition(options, 'attr', {
+            reference: 'foo',
+          }),
+        ),
+      ).toThrowError('The reference "foo" does not exist in the "foo Bar-Baz" schema.');
     });
 
     it('errors if subset doesnt exist', () => {
-      renderer.schematic.referenceSchematics.bar = new Schematic('/bar.json', {
-        name: 'bar',
-        attributes: { foo: 'string' },
-      }, options);
+      renderer.schematic.referenceSchematics.bar = new Schematic(
+        '/bar.json',
+        {
+          name: 'bar',
+          attributes: { foo: 'string' },
+        },
+        options,
+      );
 
-      expect(() => (
-        renderer.renderReference(new ReferenceDefinition(options, 'attr', {
-          reference: 'bar',
-          subset: 'sub',
-        }))
-      )).toThrowError('The reference "bar" does not contain a subset named "sub".');
+      expect(() =>
+        renderer.renderReference(
+          new ReferenceDefinition(options, 'attr', {
+            reference: 'bar',
+            subset: 'sub',
+          }),
+        ),
+      ).toThrowError('The reference "bar" does not contain a subset named "sub".');
     });
   });
 
@@ -295,27 +333,34 @@ describe('Renderer', () => {
     });
 
     it('renders template', () => {
-      expect(renderer.renderSchema('QuxSchema', [], {
-        resourceName: 'quxs',
-      })).toBe('export const quxSchema = new Schema(\'quxs\');');
+      expect(
+        renderer.renderSchema('QuxSchema', [], {
+          resourceName: 'quxs',
+        }),
+      ).toBe("export const quxSchema = new Schema('quxs');");
     });
 
     it('renders template with primary key', () => {
-      expect(renderer.renderSchema('QuxSchema', [], {
-        resourceName: 'quxs',
-        primaryKey: 'uuid',
-      })).toBe('export const quxSchema = new Schema(\'quxs\', \'uuid\');');
+      expect(
+        renderer.renderSchema('QuxSchema', [], {
+          resourceName: 'quxs',
+          primaryKey: 'uuid',
+        }),
+      ).toBe("export const quxSchema = new Schema('quxs', 'uuid');");
     });
 
     it('renders template with attributes', () => {
       renderer.options.includeAttributes = true;
 
-      expect(renderer.renderSchema('QuxSchema', [
-        new StringDefinition(options, 'first_name'),
-        new StringDefinition(options, 'last_name'),
-      ], {
-        resourceName: 'quxs',
-      })).toBe('export const quxSchema = new Schema(\'quxs\');');
+      expect(
+        renderer.renderSchema(
+          'QuxSchema',
+          [new StringDefinition(options, 'first_name'), new StringDefinition(options, 'last_name')],
+          {
+            resourceName: 'quxs',
+          },
+        ),
+      ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(renderer.relations).toEqual([
         `quxSchema.addAttributes([
@@ -328,35 +373,47 @@ describe('Renderer', () => {
     });
 
     it('renders template and ignores specific references', () => {
-      expect(renderer.renderSchema('QuxSchema', [
-        new StringDefinition(options, 'first_name'),
-        new StringDefinition(options, 'last_name'),
-        new ReferenceDefinition(options, 'post', {
-          reference: 'posts',
-          export: false,
-        }),
-        new ArrayDefinition(options, 'posts', {
-          valueType: {
-            type: 'reference',
-            reference: 'posts',
-            export: false,
+      expect(
+        renderer.renderSchema(
+          'QuxSchema',
+          [
+            new StringDefinition(options, 'first_name'),
+            new StringDefinition(options, 'last_name'),
+            new ReferenceDefinition(options, 'post', {
+              reference: 'posts',
+              export: false,
+            }),
+            new ArrayDefinition(options, 'posts', {
+              valueType: {
+                type: 'reference',
+                reference: 'posts',
+                export: false,
+              },
+            }),
+          ],
+          {
+            resourceName: 'quxs',
           },
-        }),
-      ], {
-        resourceName: 'quxs',
-      })).toBe('export const quxSchema = new Schema(\'quxs\');');
+        ),
+      ).toBe("export const quxSchema = new Schema('quxs');");
     });
 
     it('renders template with one references', () => {
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
-      expect(renderer.renderSchema('QuxSchema', [
-        new StringDefinition(options, 'first_name'),
-        new StringDefinition(options, 'last_name'),
-        new ReferenceDefinition(options, 'post', { reference: 'posts' }),
-      ], {
-        resourceName: 'quxs',
-      })).toBe('export const quxSchema = new Schema(\'quxs\');');
+      expect(
+        renderer.renderSchema(
+          'QuxSchema',
+          [
+            new StringDefinition(options, 'first_name'),
+            new StringDefinition(options, 'last_name'),
+            new ReferenceDefinition(options, 'post', { reference: 'posts' }),
+          ],
+          {
+            resourceName: 'quxs',
+          },
+        ),
+      ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(renderer.relations).toEqual([
         `quxSchema.hasOne({
@@ -368,13 +425,19 @@ describe('Renderer', () => {
     it('renders template and avoids duplication by following attributes', () => {
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
-      expect(renderer.renderSchema('QuxSchema', [
-        new ReferenceDefinition(options, 'post', { reference: 'posts' }),
-        new StringDefinition(options, 'first_name'),
-        new StringDefinition(options, 'last_name'),
-      ], {
-        resourceName: 'quxs',
-      })).toBe('export const quxSchema = new Schema(\'quxs\');');
+      expect(
+        renderer.renderSchema(
+          'QuxSchema',
+          [
+            new ReferenceDefinition(options, 'post', { reference: 'posts' }),
+            new StringDefinition(options, 'first_name'),
+            new StringDefinition(options, 'last_name'),
+          ],
+          {
+            resourceName: 'quxs',
+          },
+        ),
+      ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(renderer.relations).toEqual([
         `quxSchema.hasOne({
@@ -386,16 +449,22 @@ describe('Renderer', () => {
     it('renders template with many references', () => {
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
-      expect(renderer.renderSchema('QuxSchema', [
-        new ArrayDefinition(options, 'posts', {
-          valueType: {
-            type: 'reference',
-            reference: 'posts',
+      expect(
+        renderer.renderSchema(
+          'QuxSchema',
+          [
+            new ArrayDefinition(options, 'posts', {
+              valueType: {
+                type: 'reference',
+                reference: 'posts',
+              },
+            }),
+          ],
+          {
+            resourceName: 'quxs',
           },
-        }),
-      ], {
-        resourceName: 'quxs',
-      })).toBe('export const quxSchema = new Schema(\'quxs\');');
+        ),
+      ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(renderer.relations).toEqual([
         `quxSchema.hasMany({
@@ -407,21 +476,27 @@ describe('Renderer', () => {
     it('renders template with one/many references and a custom relation name', () => {
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
-      expect(renderer.renderSchema('QuxSchema', [
-        new ReferenceDefinition(options, 'post', {
-          reference: 'posts',
-          relation: 'belongsTo',
-        }),
-        new ArrayDefinition(options, 'posts', {
-          valueType: {
-            type: 'reference',
-            reference: 'posts',
-            relation: 'belongsToMany',
+      expect(
+        renderer.renderSchema(
+          'QuxSchema',
+          [
+            new ReferenceDefinition(options, 'post', {
+              reference: 'posts',
+              relation: 'belongsTo',
+            }),
+            new ArrayDefinition(options, 'posts', {
+              valueType: {
+                type: 'reference',
+                reference: 'posts',
+                relation: 'belongsToMany',
+              },
+            }),
+          ],
+          {
+            resourceName: 'quxs',
           },
-        }),
-      ], {
-        resourceName: 'quxs',
-      })).toBe('export const quxSchema = new Schema(\'quxs\');');
+        ),
+      ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(renderer.relations).toEqual([
         `quxSchema.belongsTo({
@@ -436,22 +511,28 @@ describe('Renderer', () => {
       renderer.options.includeAttributes = true;
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
-      expect(renderer.renderSchema('QuxSchema', [
-        new StringDefinition(options, 'first_name'),
-        new StringDefinition(options, 'last_name'),
-        new ReferenceDefinition(options, 'post', {
-          reference: 'posts',
-          relation: 'belongsTo',
-        }),
-        new ArrayDefinition(options, 'posts', {
-          valueType: {
-            type: 'reference',
-            reference: 'posts',
+      expect(
+        renderer.renderSchema(
+          'QuxSchema',
+          [
+            new StringDefinition(options, 'first_name'),
+            new StringDefinition(options, 'last_name'),
+            new ReferenceDefinition(options, 'post', {
+              reference: 'posts',
+              relation: 'belongsTo',
+            }),
+            new ArrayDefinition(options, 'posts', {
+              valueType: {
+                type: 'reference',
+                reference: 'posts',
+              },
+            }),
+          ],
+          {
+            resourceName: 'quxs',
           },
-        }),
-      ], {
-        resourceName: 'quxs',
-      })).toBe('export const quxSchema = new Schema(\'quxs\');');
+        ),
+      ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(renderer.relations).toEqual([
         `quxSchema.addAttributes([
@@ -473,21 +554,27 @@ describe('Renderer', () => {
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
       renderer.options.useDefine = true;
 
-      expect(renderer.renderSchema('QuxSchema', [
-        new ReferenceDefinition(options, 'post', {
-          reference: 'posts',
-          relation: 'belongsTo',
-        }),
-        new ArrayDefinition(options, 'posts', {
-          valueType: {
-            type: 'reference',
-            reference: 'posts',
-            relation: 'belongsToMany',
+      expect(
+        renderer.renderSchema(
+          'QuxSchema',
+          [
+            new ReferenceDefinition(options, 'post', {
+              reference: 'posts',
+              relation: 'belongsTo',
+            }),
+            new ArrayDefinition(options, 'posts', {
+              valueType: {
+                type: 'reference',
+                reference: 'posts',
+                relation: 'belongsToMany',
+              },
+            }),
+          ],
+          {
+            resourceName: 'quxs',
           },
-        }),
-      ], {
-        resourceName: 'quxs',
-      })).toBe('export const quxSchema = new Schema(\'quxs\');');
+        ),
+      ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(renderer.relations).toEqual([
         `quxSchema.define({
@@ -500,18 +587,22 @@ describe('Renderer', () => {
     it('errors for invalid relation name', () => {
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
-      expect(() => (
-        renderer.renderSchema('QuxSchema', [
-          new StringDefinition(options, 'first_name'),
-          new StringDefinition(options, 'last_name'),
-          new ReferenceDefinition(options, 'post', {
-            reference: 'posts',
-            relation: 'watwat',
-          }),
-        ], {
-          resourceName: 'quxs',
-        })
-      )).toThrowError();
+      expect(() =>
+        renderer.renderSchema(
+          'QuxSchema',
+          [
+            new StringDefinition(options, 'first_name'),
+            new StringDefinition(options, 'last_name'),
+            new ReferenceDefinition(options, 'post', {
+              reference: 'posts',
+              relation: 'watwat',
+            }),
+          ],
+          {
+            resourceName: 'quxs',
+          },
+        ),
+      ).toThrowError();
     });
   });
 
