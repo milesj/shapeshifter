@@ -7,54 +7,87 @@
 
 /* eslint-disable */
 
-const Vorpal = require('vorpal');
+const app = require('yargs');
 const Transpiler = require('../lib/Transpiler').default;
 
-const shapeshifter = new Vorpal();
-
-shapeshifter
-  .command('build <paths...>', 'Transpile source files or folder.')
-  .option('-n, --nullable', 'Mark attributes as nullable by default (recommended). Defaults to false.')
-  .option('--indent <char>', 'The indentation characters to use. Defaults to 2 space indent.')
-  .option('--import <name>', 'The import path to a Schema class. Defaults to "shapeshifter".')
-  .option('--format <name>', 'The format to generate. Accepts react, flow, or typescript. Defaults to react.', ['react', 'flow', 'typescript'])
-  .option('--schemas', 'Include schema class exports in the output. Defaults to false.')
-  .option('--attributes', 'Include an attribute list in the schema class export. Defaults to false.')
-  .option('--types', 'Include type definition exports in the output. Defaults to false.')
-  .option('--useDefine', 'Reduce the output of schema ORM definitions. Defaults to false.')
-  .option('--stripPropTypes', 'Strip PropTypes shapes in production. Defaults to false.')
-  .option('--disableEslint', 'Prepend an eslint-disable comment to the top of the output. Defaults to false.')
-  .action(function run({ options, paths }) {
-    const action = this;
-
-    return new Transpiler({
-      defaultNullable: options.nullable || false,
-      disableEslint: options.disableEslint || false,
-      importPath: options.import || 'shapeshifter',
-      includeAttributes: options.attributes || false,
-      includeSchemas: options.schemas || false,
-      includeTypes: options.types || false,
-      indentCharacter: options.indent || '  ',
-      renderer: options.format || 'react',
-      stripPropTypes: options.stripPropTypes || false,
-      useDefine: options.useDefine || false,
-    })
-      .transpile(paths)
-      .then(function success(output) {
-        // We need to log the output so that it can be piped
-        action.log(output);
-
-        return output;
+app
+  .usage(
+    '$0 <paths..>',
+    'Transpile source files or folder.',
+    {
+      attributes: {
+        boolean: true,
+        default: false,
+        description: 'Include an attribute list in the schema class export.',
+      },
+      'disable-eslint': {
+        boolean: true,
+        default: false,
+        description: 'Prepend an eslint-disable comment to the top of the output.',
+      },
+      format: {
+        choices: ['react', 'flow', 'typescript'],
+        default: 'react',
+        description: 'The format to generate. Accepts react, flow, or typescript.',
+        string: true,
+      },
+      indent: {
+        default: '  ',
+        description: 'The indentation characters to use.',
+        string: true,
+      },
+      import: {
+        default: 'shapeshifter',
+        description: 'The default import path to a Schema class.',
+        string: true,
+      },
+      nullable: {
+        boolean: true,
+        default: false,
+        description: 'Mark attributes as nullable by default (recommended).',
+      },
+      schemas: {
+        boolean: true,
+        default: false,
+        description: 'Include schema class exports in the output.',
+      },
+      'strip-prop-types': {
+        boolean: true,
+        default: false,
+        description: 'Strip PropTypes shapes in production.',
+      },
+      types: {
+        boolean: true,
+        default: false,
+        description: 'Include type definition exports in the output.',
+      },
+      'use-define': {
+        boolean: true,
+        default: false,
+        description: 'Reduce the output of schema ORM definitions.',
+      },
+    },
+    function(options) {
+      new Transpiler({
+        defaultNullable: options.nullable,
+        disableEslint: options.disableEslint,
+        importPath: options.import,
+        includeAttributes: options.attributes,
+        includeSchemas: options.schemas,
+        includeTypes: options.types,
+        indentCharacter: options.indent,
+        renderer: options.format,
+        stripPropTypes: options.stripPropTypes,
+        useDefine: options.useDefine,
       })
-      .catch(function failure(error) {
-        // Rudimentary error handling and styling
-        action.log(shapeshifter.chalk.red(error.message));
-
-        process.exitCode = 1;
-      });
-  });
-
-shapeshifter
-  .delimiter(shapeshifter.chalk.magenta('shapeshifter$ '))
-  .history('shapeshifter')
-  .parse(process.argv);
+        .transpile(options.paths)
+        .then(function(output) {
+          console.log(output);
+        })
+        .catch(function(error) {
+          console.error(error.message);
+          process.exitCode = 1;
+        });
+    },
+  )
+  .help().argv;

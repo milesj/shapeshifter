@@ -156,7 +156,7 @@ declare module 'shapeshifter/lib/Definition' {
       attribute: string;
       config: T;
       constructor(options: Options, attribute: string, config: Partial<T>);
-      createUnionType(required?: boolean): UnionBuilder;
+      createUnionType(defaultValue?: any): UnionBuilder;
       isNullable(): boolean;
       validateConfig(): void;
   }
@@ -211,8 +211,8 @@ declare module 'shapeshifter/lib/definitions/Object' {
   import Definition from 'shapeshifter/lib/Definition';
   import { Config, ObjectConfig } from 'shapeshifter/lib/types';
   export default class ObjectDefinition extends Definition<ObjectConfig> {
-      keyType: Definition<Config> | null;
-      valueType: Definition<Config> | null;
+      keyType?: Definition<Config>;
+      valueType?: Definition<Config>;
       validateConfig(): void;
   }
 
@@ -229,7 +229,7 @@ declare module 'shapeshifter/lib/definitions/Shape' {
   import Definition from 'shapeshifter/lib/Definition';
   import { Config, ShapeConfig } from 'shapeshifter/lib/types';
   export default class ShapeDefinition extends Definition<ShapeConfig> {
-      attributes: Definition<Config>[];
+      attributes?: Definition<Config>[];
       validateConfig(): void;
   }
 
@@ -256,13 +256,6 @@ declare module 'shapeshifter/lib/DefinitionFactory' {
   export default class DefinitionFactory {
       static factory(options: Options, attribute: string, baseConfig: TypeDefinition): Definition<Config>;
   }
-
-}
-declare module 'shapeshifter' {
-  import Schema from 'shapeshifter/lib/Schema';
-  import { MetadataField, PrimaryKey, Relation } from 'shapeshifter/lib/types';
-  export { PrimaryKey, Relation, MetadataField };
-  export default Schema;
 
 }
 declare module 'shapeshifter/lib/Schematic' {
@@ -511,5 +504,12 @@ declare module 'shapeshifter/lib/Transpiler' {
       generate(filePaths: string[]): string;
       generateOutput(schematics: Schematic[]): string;
   }
+
+}
+declare module 'shapeshifter' {
+  import Schema from 'shapeshifter/lib/Schema';
+  import { MetadataField, PrimaryKey, Relation } from 'shapeshifter/lib/types';
+  export { PrimaryKey, Relation, MetadataField };
+  export default Schema;
 
 }

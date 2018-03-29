@@ -62,19 +62,19 @@
   },
   "homepage": "https://github.com/milesj/shapeshifter#readme",
   "dependencies": {
+    "@types/yargs": "^11.0.0",
     "babel-runtime": "^6.26.0",
     "graphql": "^0.13.2",
     "optimal": "^0.18.0",
-    "vorpal": "^1.12.0"
+    "yargs": "^11.0.0"
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.79.0",
-    "@types/graphql": "^0.12.6",
-    "babel-loader": "^7.1.4",
-    "flow-bin": "^0.68.0",
+    "@types/graphql": "^0.12.7",
+    "flow-bin": "^0.69.0",
     "prop-types": "^15.6.1",
-    "typescript": "^2.7.2",
-    "webpack": "^4.2.0",
+    "typescript": "^2.8.1",
+    "webpack": "^4.3.0",
     "webpack-dev-server": "^3.1.1"
   },
   "beemo": {
@@ -82,12 +82,7 @@
     "drivers": [
       "babel",
       "eslint",
-      {
-        "driver": "jest",
-        "env": {
-          "TS_JEST_DEBUG": "true"
-        }
-      },
+      "jest",
       "prettier",
       "typescript"
     ],

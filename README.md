@@ -124,20 +124,22 @@ your choosing, otherwise the output will be sent to the console.
 
 ### Options
 
-* `--nullable`, `-n` (bool) - Marks all attributes as nullable by default. Not applicable to
-  GraphQL. Defaults to false.
+* `--attributes` (bool) - Include an attribute list in the schema class export. Defaults to "false".
+* `--disable-eslint` (bool) - Prepend an eslint-disable comment to the top of the output. Defaults
+  to "false".
+* `--format` (string) - The format to output to. Accepts "react", "flow", or "typescript". Defaults
+  to "react".
 * `--indent` (string) - Defines the indentation characters to use in the generated output. Defaults
   to 2 spaces.
 * `--import` (string) - The import path to a `Schema` class, inserted at the top of every output
   file. Defaults to "shapeshifter".
-* `--format` (string) - The format to output to. Accepts "react", "flow", or "typescript". Defaults
-  to "react".
+* `--nullable` (bool) - Marks all attributes as nullable by default. Not applicable to GraphQL.
+  Defaults to false.
 * `--schemas` (bool) - Include schema class exports in the output. Defaults to "false".
-* `--attributes` (bool) - Include an attribute list in the schema class export. Defaults to "false".
-* `--types` (bool) - Include type definition exports in the output. Defaults to "false".
-* `--useDefine` (bool) - Update all schema relations to use `Schema#define`.
-* `--stripPropTypes` (bool) - Wrap PropType definitions in `process.env.NODE_ENV` production
+* `--strip-prop-types` (bool) - Wrap PropType definitions in `process.env.NODE_ENV` production
   expressions, allowing them to be removed with dead code elimination.
+* `--types` (bool) - Include type definition exports in the output. Defaults to "false".
+* `--use-define` (bool) - Update all schema relations to use `Schema#define`.
 
 ## Documentation
 
@@ -920,7 +922,7 @@ userSchema
   });
 ```
 
-If `--useDefine` is passed on the command line, the relation output will be modified to:
+If `--use-define` is passed on the command line, the relation output will be modified to:
 
 ```javascript
 postSchema.define({
@@ -955,6 +957,7 @@ The plugin accepts an object with the following options -- with most of them bei
 * `schematicsImportPath` (string) - The fake import path to intercept. Defaults to
   `shapeshifter/schematics`.
 * `defaultNullable`
+* `disableEslint`
 * `format`
 * `importPath`
 * `includeAttributes`

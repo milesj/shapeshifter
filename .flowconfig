@@ -4,16 +4,7 @@
 .*\.test\.js
 
 [include]
-./src
-
-[lints]
-all=warn
-sketchy-null-bool=off
-sketchy-null-mixed=off
-sketchy-null-number=off
-sketchy-null-string=off
-unclear-type=off
-untyped-import=off
+./tests/expected
 
 [options]
 emoji=true
@@ -23,7 +14,3 @@ esproposal.export_star_as=enable
 include_warnings=true
 module.ignore_non_literal_requires=true
 suppress_comment=\\(.\\|\n\\)*\\$FlowIgnore
-
-[libs]
-./shapeshifter.js.flow
-./node_modules/optimal/optimal.js.flow
