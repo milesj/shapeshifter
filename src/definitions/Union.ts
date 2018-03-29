@@ -9,7 +9,8 @@ import DefinitionFactory from '../DefinitionFactory';
 import { Config, UnionConfig } from '../types';
 
 export default class UnionDefinition extends Definition<UnionConfig> {
-  valueTypes: Definition<Config>[] = [];
+  // @ts-ignore Set after instantiation
+  valueTypes: Definition<Config>[];
 
   validateConfig() {
     this.config = optimal(

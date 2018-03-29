@@ -322,7 +322,7 @@ PropTypes.instanceOf(FooBar),
 
   describe('wrapPropType()', () => {
     it('adds prop type text', () => {
-      expect(renderer.wrapPropType({}, 'foo')).toBe('PropTypes.foo');
+      expect(renderer.wrapPropType({ isNullable: () => true }, 'foo')).toBe('PropTypes.foo');
     });
   });
 
@@ -332,7 +332,7 @@ PropTypes.instanceOf(FooBar),
     });
 
     it('renders non-required', () => {
-      expect(renderer.wrapNullable({}, 'foo')).toBe('foo');
+      expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('foo');
     });
   });
 });

@@ -24,8 +24,6 @@ describe('definitions/Array', () => {
   it('creates a `Definition` for the `valueType`', () => {
     const def = new ArrayDefinition(options, 'foo', { valueType: 'string' });
 
-    console.log('C', def);
-
     expect(def.valueType).toBeInstanceOf(StringDefinition);
   });
 });

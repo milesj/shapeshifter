@@ -10,7 +10,7 @@ describe('definitions/Shape', () => {
 
   it('errors if neither `attributes` or `reference` is defined', () => {
     expect(() => new ShapeDefinition(options, 'foo', {})).toThrowError(
-      'ShapeDefinition: Only one of these options may be defined: reference, attributes',
+      'ShapeDefinition: Only one of these fields may be defined: reference, attributes',
     );
   });
 
@@ -34,7 +34,7 @@ describe('definitions/Shape', () => {
 
   it('errors if `attributes` has the wrong values', () => {
     expect(() => new ShapeDefinition(options, 'foo', { attributes: { foo: 123 } })).toThrowError(
-      'Invalid ShapeDefinition field "attributes.foo". Type must be one of: String, Shape',
+      'Invalid ShapeDefinition field "attributes.foo". Type must be one of: string, shape',
     );
   });
 

@@ -18,8 +18,6 @@ export default class Definition<T extends Config> {
    * Represents a type definition for an attribute.
    */
   constructor(options: Options, attribute: string, config: Partial<T>) {
-    console.log('new', this.constructor.name);
-
     this.options = options;
     this.attribute = attribute;
     this.config = {
@@ -34,19 +32,16 @@ export default class Definition<T extends Config> {
   /**
    * Create an option for type definitions that can be a string or object.
    */
-  createUnionType(required: boolean = true): UnionBuilder {
-    const type = union([
-      string(),
-      shape({
-        type: string().required(),
-      }),
-    ]);
-
-    if (required) {
-      type.required();
-    }
-
-    return type;
+  createUnionType(defaultValue: any = null): UnionBuilder {
+    return union(
+      [
+        string(),
+        shape({
+          type: string().required(),
+        }),
+      ],
+      defaultValue,
+    ).required();
   }
 
   /**

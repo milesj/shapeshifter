@@ -6,18 +6,18 @@
 import optimal, { bool, string } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
-import { Config, ObjectConfig } from '../types';
+import { Config, ObjectConfig, StringConfig } from '../types';
 
 export default class ObjectDefinition extends Definition<ObjectConfig> {
-  keyType: Definition<Config> | null = null;
+  keyType?: Definition<Config>;
 
-  valueType: Definition<Config> | null = null;
+  valueType?: Definition<Config>;
 
   validateConfig() {
     this.config = optimal(
       this.config,
       {
-        keyType: this.createUnionType(false),
+        keyType: string('string'),
         nullable: bool(),
         type: string('object'),
         valueType: this.createUnionType(),
@@ -28,11 +28,10 @@ export default class ObjectDefinition extends Definition<ObjectConfig> {
       },
     );
 
-    this.keyType = DefinitionFactory.factory(
-      this.options,
-      `${this.attribute}_key`,
-      this.config.keyType || 'string',
-    );
+    this.keyType = DefinitionFactory.factory(this.options, `${this.attribute}_key`, {
+      nullable: false,
+      type: this.config.keyType,
+    } as StringConfig);
 
     this.valueType = DefinitionFactory.factory(
       this.options,

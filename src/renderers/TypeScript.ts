@@ -105,10 +105,17 @@ export default class TypeScriptRenderer extends Renderer {
   }
 
   renderShape(definition: ShapeDefinition, depth: number): string {
-    return (
-      this.renderShapeReference(definition) ||
-      this.formatObject(this.renderObjectProps(definition.attributes, depth + 1, ';'), depth)
-    );
+    const reference = this.renderShapeReference(definition);
+
+    if (reference) {
+      return reference;
+    }
+
+    if (!definition.attributes) {
+      return 'object';
+    }
+
+    return this.formatObject(this.renderObjectProps(definition.attributes, depth + 1, ';'), depth);
   }
 
   renderString(definition: StringDefinition): string {

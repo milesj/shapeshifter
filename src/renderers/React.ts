@@ -113,6 +113,10 @@ export default class ReactRenderer extends Renderer {
       return this.wrapNullable(definition, reference);
     }
 
+    if (!definition.attributes) {
+      return this.wrapPropType(definition, this.wrapFunction('object'));
+    }
+
     return this.wrapPropType(
       definition,
       this.wrapFunction(

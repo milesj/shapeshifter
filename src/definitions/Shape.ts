@@ -9,7 +9,8 @@ import DefinitionFactory from '../DefinitionFactory';
 import { Config, ShapeConfig } from '../types';
 
 export default class ShapeDefinition extends Definition<ShapeConfig> {
-  attributes: Definition<Config>[] = [];
+  // @ts-ignore Set after instantiation
+  attributes?: Definition<Config>[];
 
   validateConfig() {
     this.config = optimal(

@@ -299,7 +299,7 @@ describe('FlowRenderer', () => {
     });
 
     it('renders non-nullable', () => {
-      expect(renderer.wrapNullable({}, 'foo')).toBe('foo');
+      expect(renderer.wrapNullable({ isNullable: () => false }, 'foo')).toBe('foo');
     });
   });
 });

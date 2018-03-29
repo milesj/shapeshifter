@@ -9,7 +9,7 @@ import DefinitionFactory from '../DefinitionFactory';
 import { Config, ArrayConfig } from '../types';
 
 export default class ArrayDefinition extends Definition<ArrayConfig> {
-  valueType: Definition<Config> | null = null;
+  valueType?: Definition<Config>;
 
   validateConfig() {
     this.config = optimal(
@@ -25,10 +25,6 @@ export default class ArrayDefinition extends Definition<ArrayConfig> {
       },
     );
 
-    console.log('A', this);
-
     this.valueType = DefinitionFactory.factory(this.options, this.attribute, this.config.valueType);
-
-    console.log('B', this);
   }
 }
