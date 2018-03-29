@@ -21,9 +21,9 @@ export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
 export enum ArrayEnumFieldEnum {
-  foo = 0,
-  bar = 1,
-  baz = 2
+  foo,
+  bar,
+  baz
 }
 
 export enum ArrayUnionField1Enum {
@@ -79,25 +79,25 @@ export enum EnumFloatFieldEnum {
 }
 
 export enum EnumStrFieldEnum {
-  foo = 0,
-  bar = 1
+  foo,
+  bar
 }
 
 export enum EnumStringFieldEnum {
-  baz = 0,
-  qux = 1
+  baz,
+  qux
 }
 
 export enum ObjectEnumFieldValueEnum {
-  foo = 0,
-  bar = 1,
-  baz = 2
+  foo,
+  bar,
+  baz
 }
 
 export enum ShapeStringEnumEnum {
-  foo = 0,
-  bar = 1,
-  baz = 2
+  foo,
+  bar,
+  baz
 }
 
 export enum ShapeIntEnumEnum {
@@ -113,9 +113,9 @@ export enum ShapeEnumEnum {
 }
 
 export enum UnionEnumField0Enum {
-  foo = 0,
-  bar = 1,
-  baz = 2
+  foo,
+  bar,
+  baz
 }
 
 export enum UnionEnumField1Enum {

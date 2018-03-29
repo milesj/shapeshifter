@@ -5,9 +5,9 @@ import ArrayDefault from '../stub';
 export const ARRAY_NUM = 123;
 
 export enum ArrayEnumFieldEnum {
-  foo = 0,
-  bar = 1,
-  baz = 2
+  foo,
+  bar,
+  baz
 }
 
 export enum ArrayUnionField1Enum {

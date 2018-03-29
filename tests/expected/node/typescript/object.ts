@@ -3,9 +3,9 @@
 import ObjectDefault from '../stub';
 
 export enum ObjectEnumFieldValueEnum {
-  foo = 0,
-  bar = 1,
-  baz = 2
+  foo,
+  bar,
+  baz
 }
 
 export interface ObjectInterface {

@@ -6,6 +6,10 @@
 * CLI options are now dashed instead of camel cased.
 * Removed `-n` shorthand option.
 
+#### 🐞 Fixed
+
+* Removed values from TypeScript string enums and let it infer them instead.
+
 #### 🛠 Internal
 
 * Converted from Flow to TypeScript.

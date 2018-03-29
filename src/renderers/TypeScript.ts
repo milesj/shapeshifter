@@ -69,7 +69,7 @@ export default class TypeScriptRenderer extends Renderer {
       default:
       case 'string':
         values.forEach((value: PrimitiveType) => {
-          members.push(`${indent(1, char)}${String(value)} = ${currentIndex}`);
+          members.push(`${indent(1, char)}${String(value)}`);
           currentIndex += 1;
         });
         break;

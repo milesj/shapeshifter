@@ -3,9 +3,9 @@
 import ShapeDefault, { ShapeClassName } from '../stub';
 
 export enum ShapeStringEnumEnum {
-  foo = 0,
-  bar = 1,
-  baz = 2
+  foo,
+  bar,
+  baz
 }
 
 export enum ShapeIntEnumEnum {

@@ -3,9 +3,9 @@
 import UnionDefault, { UnionClassName } from '../stub';
 
 export enum UnionEnumField0Enum {
-  foo = 0,
-  bar = 1,
-  baz = 2
+  foo,
+  bar,
+  baz
 }
 
 export enum UnionEnumField1Enum {

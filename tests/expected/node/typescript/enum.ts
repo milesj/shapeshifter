@@ -47,13 +47,13 @@ export enum EnumFloatFieldEnum {
 }
 
 export enum EnumStrFieldEnum {
-  foo = 0,
-  bar = 1
+  foo,
+  bar
 }
 
 export enum EnumStringFieldEnum {
-  baz = 0,
-  qux = 1
+  baz,
+  qux
 }
 
 export interface EnumInterface {
