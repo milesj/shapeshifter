@@ -8,6 +8,10 @@
 import { Struct } from 'optimal';
 import Schema from './Schema';
 
+export type PrimitiveType = string | number | boolean;
+
+export type RendererType = 'flow' | 'prop-types' | 'typescript';
+
 export interface Options extends Struct {
   defaultNullable: boolean;
   disableEslint: boolean;
@@ -16,12 +20,10 @@ export interface Options extends Struct {
   includeSchemas: boolean;
   includeTypes: boolean;
   indentCharacter: string;
-  renderer: 'react' | 'flow' | 'typescript';
+  renderers: RendererType[];
   stripPropTypes: boolean;
   useDefine: boolean;
 }
-
-export type PrimitiveType = string | number | boolean;
 
 export interface SchemaMap {
   [attribute: string]: Schema;

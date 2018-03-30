@@ -2,9 +2,15 @@
 
 #### 💥 Breaking
 
+* React is now referred to as PropTypes.
 * CLI script is now `shapeshifter` instead of `shapeshifter build`.
 * CLI options are now dashed instead of camel cased.
+* CLI option `--format` is now split into 3 individual options.
 * Removed `-n` shorthand option.
+
+#### 🚀 New
+
+* Added individual options `--flow`, `--prop-types`, and `--typescript`, to opt into generation.
 
 #### 🐞 Fixed
 

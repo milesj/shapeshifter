@@ -5,7 +5,7 @@ export const options = {
   defaultNullable: true,
   disableEslint: true,
   indentCharacter: '  ',
-  renderer: 'react',
+  renderers: ['prop-types'],
   includeSchemas: false,
   includeAttributes: false,
   includeTypes: false,

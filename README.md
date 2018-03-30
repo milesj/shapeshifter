@@ -3,8 +3,8 @@
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
 Shapeshifter is a command line tool for generating ECMAScript (ES) compatible files that export
-React prop types, Flow type aliases, or TypeScript interfaces, as well as relation schema classes
-from JSON or GraphQL schematic files. Schematics can represent database tables, API endpoints, data
+PropTypes, Flow type aliases, or TypeScript interfaces, as well as relation schema classes from JSON
+or GraphQL schematic files. Schematics can represent database tables, API endpoints, data
 structures, resources, internal shapes, and more.
 
 Take this user schematic for example.
@@ -30,7 +30,7 @@ Take this user schematic for example.
 }
 ```
 
-Which transpiles down to the following React prop types.
+Which transpiles down to the following PropTypes.
 
 ```javascript
 import PropTypes from 'prop-types';
@@ -84,9 +84,8 @@ export const userSchema = new Schema('users', 'id');
 
 ## Requirements
 
-* ES2015+
 * Node 4+
-* React 15/16+ / Flow 0.30+ / TypeScript 2.0+
+* PropTypes 15+ / Flow 0.60+ / TypeScript 2.4+
 * IE 10+
 
 ## Installation
@@ -127,18 +126,19 @@ your choosing, otherwise the output will be sent to the console.
 * `--attributes` (bool) - Include an attribute list in the schema class export. Defaults to "false".
 * `--disable-eslint` (bool) - Prepend an eslint-disable comment to the top of the output. Defaults
   to "false".
-* `--format` (string) - The format to output to. Accepts "react", "flow", or "typescript". Defaults
-  to "react".
+* `--flow` (bool) - Generate Flow definitions. Defaults to "false".
 * `--indent` (string) - Defines the indentation characters to use in the generated output. Defaults
   to 2 spaces.
 * `--import` (string) - The import path to a `Schema` class, inserted at the top of every output
   file. Defaults to "shapeshifter".
 * `--nullable` (bool) - Marks all attributes as nullable by default. Not applicable to GraphQL.
   Defaults to false.
+* `--prop-types` (bool) - Generate PropTypes definitions. Defaults to "false".
 * `--schemas` (bool) - Include schema class exports in the output. Defaults to "false".
 * `--strip-prop-types` (bool) - Wrap PropType definitions in `process.env.NODE_ENV` production
   expressions, allowing them to be removed with dead code elimination.
 * `--types` (bool) - Include type definition exports in the output. Defaults to "false".
+* `--typescript` (bool) - Generate TypeScript definitions. Defaults to "false".
 * `--use-define` (bool) - Update all schema relations to use `Schema#define`.
 
 ## Documentation
@@ -232,8 +232,8 @@ Depending on the type used, additional properties may be required.
 All attribute type definitions support the `nullable` modifier, which accepts a boolean value, and
 triggers the following:
 
-* React: Non-nullable fields will append `isRequired` to the prop type.
-* Flowtype: Nullable fields will prepend `?` to each type alias.
+* Flow: Nullable fields will prepend `?` to each type alias.
+* PropTypes: Non-nullable fields will append `isRequired` to the prop type.
 * TypeScript: Does nothing, please use `--strictNullChecks` provided by TypeScript.
 
 ```json
@@ -411,7 +411,7 @@ As well as the expanded standard notation.
 This transpiles down to:
 
 ```javascript
-// React
+// PropTypes
 name: PropTypes.string,
 status: PropTypes.number,
 active: PropTypes.bool,
@@ -449,7 +449,7 @@ messages: [String]
 This transpiles down to:
 
 ```javascript
-// React
+// PropTypes
 messages: PropTypes.arrayOf(PropTypes.string),
 
 // Flow
@@ -464,7 +464,7 @@ Alias names: `arr`, `list`
 #### Objects
 
 An `object` maps key-value pairs through the `keyType` and `valueType` properties -- both of which
-are type definitions. When transpiling down to React, the `keyType` is not required.
+are type definitions. When transpiling down to PropTypes, the `keyType` is not required.
 
 This is equivalent to generics from other languages: `Object<T1, T2>`.
 
@@ -481,7 +481,7 @@ This is equivalent to generics from other languages: `Object<T1, T2>`.
 This transpiles down to:
 
 ```javascript
-// React
+// PropTypes
 costs: PropTypes.objectOf(PropTypes.number),
 
 // Flow
@@ -521,7 +521,7 @@ words: WordsEnum
 This transpiles down to:
 
 ```javascript
-// React
+// PropTypes
 words: PropTypes.oneOf(['foo', 'bar', 'baz']),
 
 // Flow
@@ -574,7 +574,7 @@ location: LocationStruct
 This transpiles to:
 
 ```
-// React
+// PropTypes
 location: PropTypes.shape({
   lat: PropTypes.number.isRequired,
   long: PropTypes.number.isRequired,
@@ -673,7 +673,7 @@ error: PrimitiveUnion
 This transpiles to:
 
 ```javascript
-// React
+// PropTypes
 error: PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.number,
@@ -725,7 +725,7 @@ profile: Profile
 This transpiles to:
 
 ```javascript
-// React
+// PropTypes
 profile: ProfileShape,
 
 // Flow
@@ -824,7 +824,7 @@ This transpiles down to:
 ```javascript
 import UserModel from '../models/UserModel';
 
-// React
+// PropTypes
 model: PropTypes.instanceOf(UserModel),
 
 // Flow
@@ -988,13 +988,13 @@ Looking into...
 
 ## FAQ
 
-**Why `arrayOf`, `objectOf` over `array`, `object` React prop types?**
+**Why `arrayOf`, `objectOf` over `array`, `object` PropTypes prop types?**
 
 I chose `arrayOf` and `objectOf` because they provide type safety and the assurance of the values
 found within the collection. Using non-type safe features would defeat the purpose of this library.
 
-**What about `node`, `element`, and `func` React prop types?**
+**What about `node`, `element`, and `func` PropTypes prop types?**
 
-The `node` and `element` types represent DOM elements or React structures found within the
+The `node` and `element` types represent DOM elements or PropTypes structures found within the
 application. These types don't really map to database tables or data structures very well, if at
 all.

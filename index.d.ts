@@ -49,6 +49,8 @@ declare module 'shapeshifter/lib/Schema' {
 declare module 'shapeshifter/lib/types' {
   import { Struct } from 'optimal';
   import Schema from 'shapeshifter/lib/Schema';
+  export type PrimitiveType = string | number | boolean;
+  export type RendererType = 'flow' | 'prop-types' | 'typescript';
   export interface Options extends Struct {
       defaultNullable: boolean;
       disableEslint: boolean;
@@ -57,11 +59,10 @@ declare module 'shapeshifter/lib/types' {
       includeSchemas: boolean;
       includeTypes: boolean;
       indentCharacter: string;
-      renderer: 'react' | 'flow' | 'typescript';
+      renderers: RendererType[];
       stripPropTypes: boolean;
       useDefine: boolean;
   }
-  export type PrimitiveType = string | number | boolean;
   export interface SchemaMap {
       [attribute: string]: Schema;
   }
@@ -411,7 +412,7 @@ declare module 'shapeshifter/lib/renderers/Flow' {
   }
 
 }
-declare module 'shapeshifter/lib/renderers/React' {
+declare module 'shapeshifter/lib/renderers/PropTypes' {
   import Renderer from 'shapeshifter/lib/Renderer';
   import Definition from 'shapeshifter/lib/Definition';
   import ArrayDefinition from 'shapeshifter/lib/definitions/Array';
@@ -425,7 +426,7 @@ declare module 'shapeshifter/lib/renderers/React' {
   import StringDefinition from 'shapeshifter/lib/definitions/String';
   import UnionDefinition from 'shapeshifter/lib/definitions/Union';
   import { Config } from 'shapeshifter/lib/types';
-  export default class ReactRenderer extends Renderer {
+  export default class PropTypesRenderer extends Renderer {
       suffix: string;
       beforeParse(): void;
       render(setName: string, attributes?: Definition<Config>[]): string;
@@ -476,9 +477,9 @@ declare module 'shapeshifter/lib/RendererFactory' {
   import Schematic from 'shapeshifter/lib/Schematic';
   import Builder from 'shapeshifter/lib/Builder';
   import Renderer from 'shapeshifter/lib/Renderer';
-  import { Options } from 'shapeshifter/lib/types';
+  import { Options, RendererType } from 'shapeshifter/lib/types';
   export default class RendererFactory {
-      static factory(options: Options, builder: Builder, schematic: Schematic): Renderer;
+      static factory(renderer: RendererType, options: Options, builder: Builder, schematic: Schematic): Renderer;
   }
 
 }

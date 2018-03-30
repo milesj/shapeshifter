@@ -9,17 +9,17 @@ function file(path) {
 // Supported renderers
 const RENDERERS = [
   {
-    name: 'React prop types',
-    key: 'react',
-    ext: 'js',
-  },
-  {
-    name: 'Flow types',
+    name: 'Flow',
     key: 'flow',
     ext: 'js',
   },
   {
-    name: 'TypeScript interfaces',
+    name: 'PropTypes',
+    key: 'prop-types',
+    ext: 'js',
+  },
+  {
+    name: 'TypeScript',
     key: 'typescript',
     ext: 'ts',
   },
@@ -85,7 +85,7 @@ describe('Transpiler', () => {
 
                 const output = new Transpiler({
                   ...options,
-                  renderer: key,
+                  renderers: [key],
                   includeTypes: true,
                 }).transpileFile(actualPath);
 
@@ -100,7 +100,7 @@ describe('Transpiler', () => {
 
             const output = new Transpiler({
               ...options,
-              renderer: key,
+              renderers: [key],
               includeTypes: true,
             }).transpileFolder(actualPath);
 
@@ -113,7 +113,7 @@ describe('Transpiler', () => {
     // We only need to test functionality, not renderers here
     const otherOptions = {
       ...options,
-      renderer: 'flow',
+      renderers: ['flow'],
       includeTypes: false,
       includeSchemas: false,
     };
@@ -245,7 +245,7 @@ describe('Transpiler', () => {
         ...otherOptions,
         includeTypes: true,
         stripPropTypes: true,
-        renderer: 'react',
+        renderers: ['prop-types'],
       }).transpileFile(actualPath);
 
       expect(output).toBe(file(expectedPath));

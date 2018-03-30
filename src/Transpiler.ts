@@ -5,7 +5,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import optimal, { bool, string } from 'optimal';
+import optimal, { array, bool, string } from 'optimal';
 import Builder from './Builder';
 import RendererFactory from './RendererFactory';
 import Schematic from './Schematic';
@@ -31,7 +31,7 @@ export default class Transpiler {
       includeSchemas: bool(),
       includeTypes: bool(),
       indentCharacter: string('  '),
-      renderer: string('react').oneOf(['react', 'flow', 'typescript']),
+      renderers: array(string()).notEmpty(),
       stripPropTypes: bool(),
       useDefine: bool(),
     });
@@ -154,9 +154,11 @@ export default class Transpiler {
         return;
       }
 
-      RendererFactory.factory(this.options, builder, schematic).parse();
+      this.options.renderers.forEach(renderer => {
+        RendererFactory.factory(renderer, this.options, builder, schematic).parse();
 
-      rendered.add(schematic.path);
+        rendered.add(schematic.path);
+      });
     });
 
     // Combine and filter the chunks

@@ -25,11 +25,10 @@ app
         default: false,
         description: 'Prepend an eslint-disable comment to the top of the output.',
       },
-      format: {
-        choices: ['react', 'flow', 'typescript'],
-        default: 'react',
-        description: 'The format to generate. Accepts react, flow, or typescript.',
-        string: true,
+      flow: {
+        boolean: true,
+        default: false,
+        description: 'Generate Flow definitions.',
       },
       indent: {
         default: '  ',
@@ -46,6 +45,11 @@ app
         default: false,
         description: 'Mark attributes as nullable by default (recommended).',
       },
+      'prop-types': {
+        boolean: true,
+        default: false,
+        description: 'Generate PropTypes definitions.',
+      },
       schemas: {
         boolean: true,
         default: false,
@@ -61,6 +65,11 @@ app
         default: false,
         description: 'Include type definition exports in the output.',
       },
+      typescript: {
+        boolean: true,
+        default: false,
+        description: 'Generate TypeScript definitions.',
+      },
       'use-define': {
         boolean: true,
         default: false,
@@ -68,6 +77,12 @@ app
       },
     },
     function(options) {
+      const renderers = [
+        options.flow ? 'flow' : '',
+        options.propTypes ? 'prop-types' : '',
+        options.typescript ? 'typescript' : '',
+      ];
+
       new Transpiler({
         defaultNullable: options.nullable,
         disableEslint: options.disableEslint,
@@ -76,7 +91,7 @@ app
         includeSchemas: options.schemas,
         includeTypes: options.types,
         indentCharacter: options.indent,
-        renderer: options.format,
+        renderers: renderers.filter(Boolean),
         stripPropTypes: options.stripPropTypes,
         useDefine: options.useDefine,
       })

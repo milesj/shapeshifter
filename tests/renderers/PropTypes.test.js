@@ -5,18 +5,18 @@ import EnumDefinition from '../../src/definitions/Enum';
 import InstanceDefinition from '../../src/definitions/Instance';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
-import ReactRenderer from '../../src/renderers/React';
+import PropTypesRenderer from '../../src/renderers/PropTypes';
 import ReferenceDefinition from '../../src/definitions/Reference';
 import Schematic from '../../src/Schematic';
 import StringDefinition from '../../src/definitions/String';
 import UnionDefinition from '../../src/definitions/Union';
 import { options } from '../mocks';
 
-describe('ReactRenderer', () => {
+describe('PropTypesRenderer', () => {
   let renderer;
 
   beforeEach(() => {
-    renderer = new ReactRenderer(
+    renderer = new PropTypesRenderer(
       options,
       new Builder(),
       new Schematic(
@@ -31,14 +31,14 @@ describe('ReactRenderer', () => {
   });
 
   describe('beforeParse()', () => {
-    it('adds React import', () => {
+    it('adds PropTypes import', () => {
       renderer.beforeParse();
 
       expect(Array.from(renderer.builder.imports)).toEqual(["import PropTypes from 'prop-types';"]);
     });
 
     it('adds production noop when stripPropTypes is true', () => {
-      const prodRenderer = new ReactRenderer(
+      const prodRenderer = new PropTypesRenderer(
         { ...options, stripPropTypes: true },
         new Builder(),
         new Schematic(

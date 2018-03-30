@@ -18,7 +18,7 @@ import StringDefinition from '../definitions/String';
 import UnionDefinition from '../definitions/Union';
 import { Config, Options } from '../types';
 
-export default class ReactRenderer extends Renderer {
+export default class PropTypesRenderer extends Renderer {
   suffix: string = 'Shape';
 
   beforeParse() {
@@ -137,7 +137,7 @@ export default class ReactRenderer extends Renderer {
   }
 
   /**
-   * Render a definition into an React PropType representation.
+   * Render a definition into a PropType representation.
    */
   wrapPropType(definition: Definition<Config>, template: string): string {
     return this.wrapNullable(definition, `PropTypes.${template}`);
