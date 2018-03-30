@@ -30,8 +30,7 @@
     "babel": "beemo typescript --node",
     "build": "yarn run babel && yarn run build:dts",
     "build:dts": "beemo run-script generate-dts",
-    "check":
-      "flow check && tsc --noEmit --allowJs ./tests/expected/gql/typescript/* ./tests/expected/node/typescript/*",
+    "check": "flow check && tsc --noEmit --lib esnext,esnext.asynciterable ./tests/expected/gql/typescript/*.ts ./tests/expected/node/typescript/*.ts",
     "clean": "rimraf ./{lib,esm}/",
     "coverage": "yarn run jest --coverage",
     "docs": "gitbook build --debug",

@@ -1,3 +1,4 @@
+import Builder from '../../src/Builder';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
@@ -17,6 +18,7 @@ describe('ReactRenderer', () => {
   beforeEach(() => {
     renderer = new ReactRenderer(
       options,
+      new Builder(),
       new Schematic(
         '/foo.json',
         {
@@ -32,12 +34,13 @@ describe('ReactRenderer', () => {
     it('adds React import', () => {
       renderer.beforeParse();
 
-      expect(renderer.imports).toEqual(["import PropTypes from 'prop-types';"]);
+      expect(Array.from(renderer.builder.imports)).toEqual(["import PropTypes from 'prop-types';"]);
     });
 
     it('adds production noop when stripPropTypes is true', () => {
       const prodRenderer = new ReactRenderer(
         { ...options, stripPropTypes: true },
+        new Builder(),
         new Schematic(
           './foo.json',
           {
@@ -50,7 +53,9 @@ describe('ReactRenderer', () => {
 
       prodRenderer.beforeParse();
 
-      expect(prodRenderer.header).toEqual(['const PropTypePolyfill = () => {};']);
+      expect(Array.from(prodRenderer.builder.header)).toEqual([
+        'const PropTypePolyfill = () => {};',
+      ]);
     });
   });
 

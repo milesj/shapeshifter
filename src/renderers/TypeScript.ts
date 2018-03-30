@@ -23,11 +23,7 @@ import { Config, Options, PrimitiveType } from '../types';
 const ASCII_ALPHA_START: number = 65;
 
 export default class TypeScriptRenderer extends Renderer {
-  constructor(options: Options, schematic: Schematic) {
-    super(options, schematic);
-
-    this.suffix = 'Interface';
-  }
+  suffix: string = 'Interface';
 
   render(setName: string, attributes: Definition<Config>[] = []): string {
     const shape = this.formatObject(this.renderObjectProps(attributes, 1, ';'), 0);
@@ -84,7 +80,7 @@ export default class TypeScriptRenderer extends Renderer {
         break;
     }
 
-    this.header.push(`export enum ${enumName} ${this.formatObject(members, 0, ',\n')}`);
+    this.builder.header.add(`export enum ${enumName} ${this.formatObject(members, 0, ',\n')}`);
 
     return enumName;
   }

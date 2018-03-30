@@ -1,3 +1,16 @@
+declare module 'shapeshifter/lib/Builder' {
+  export type TemplateList = Set<string>;
+  export default class Builder {
+      imports: TemplateList;
+      comments: TemplateList;
+      constants: TemplateList;
+      header: TemplateList;
+      sets: TemplateList;
+      schemas: TemplateList;
+      relations: TemplateList;
+  }
+
+}
 declare module 'shapeshifter/lib/helpers/isObject' {
   export default function isObject<T>(value: T): boolean;
 
@@ -300,6 +313,7 @@ declare module 'shapeshifter/lib/helpers/formatName' {
 }
 declare module 'shapeshifter/lib/Renderer' {
   import { Struct } from 'optimal';
+  import Builder from 'shapeshifter/lib/Builder';
   import Definition from 'shapeshifter/lib/Definition';
   import Schematic from 'shapeshifter/lib/Schematic';
   import ArrayDefinition from 'shapeshifter/lib/definitions/Array';
@@ -315,29 +329,18 @@ declare module 'shapeshifter/lib/Renderer' {
   import { Config, ImportStructure, MetadataField, Options, PrimitiveType } from 'shapeshifter/lib/types';
   export type TemplateList = string[];
   export default class Renderer {
+      builder: Builder;
       options: Options;
       schematic: Schematic;
       suffix: string;
-      imports: TemplateList;
-      constants: TemplateList;
-      header: TemplateList;
-      sets: TemplateList;
-      schemas: TemplateList;
-      relations: TemplateList;
-      constructor(options: Options, schematic: Schematic);
+      constructor(options: Options, builder: Builder, schematic: Schematic);
       afterParse(): void;
       beforeParse(): void;
       formatArray(items: string | string[], depth: number, itemSpacer?: string, indentSpacer?: string): string;
       formatObject(props: string | string[], depth: number, propSpacer?: string, indentSpacer?: string): string;
       formatValue(value: any, type?: string): string;
-      getConstants(): TemplateList;
-      getHeader(): TemplateList;
-      getImports(): TemplateList;
       getObjectName(...names: string[]): string;
-      getRelations(): TemplateList;
-      getSchemas(): TemplateList;
       getSchemaInstanceName(name: string): string;
-      getSets(): TemplateList;
       parse(): void;
       parseConstants(): void;
       parseImports(): void;
@@ -378,7 +381,6 @@ declare module 'shapeshifter/lib/Renderer' {
 }
 declare module 'shapeshifter/lib/renderers/Flow' {
   import Renderer from 'shapeshifter/lib/Renderer';
-  import Schematic from 'shapeshifter/lib/Schematic';
   import Definition from 'shapeshifter/lib/Definition';
   import ArrayDefinition from 'shapeshifter/lib/definitions/Array';
   import BoolDefinition from 'shapeshifter/lib/definitions/Bool';
@@ -390,9 +392,9 @@ declare module 'shapeshifter/lib/renderers/Flow' {
   import ShapeDefinition from 'shapeshifter/lib/definitions/Shape';
   import StringDefinition from 'shapeshifter/lib/definitions/String';
   import UnionDefinition from 'shapeshifter/lib/definitions/Union';
-  import { Config, Options } from 'shapeshifter/lib/types';
+  import { Config } from 'shapeshifter/lib/types';
   export default class FlowRenderer extends Renderer {
-      constructor(options: Options, schematic: Schematic);
+      suffix: string;
       afterParse(): void;
       render(setName: string, attributes?: Definition<Config>[]): string;
       renderArray(definition: ArrayDefinition, depth: number): string;
@@ -411,7 +413,6 @@ declare module 'shapeshifter/lib/renderers/Flow' {
 }
 declare module 'shapeshifter/lib/renderers/React' {
   import Renderer from 'shapeshifter/lib/Renderer';
-  import Schematic from 'shapeshifter/lib/Schematic';
   import Definition from 'shapeshifter/lib/Definition';
   import ArrayDefinition from 'shapeshifter/lib/definitions/Array';
   import BoolDefinition from 'shapeshifter/lib/definitions/Bool';
@@ -423,9 +424,9 @@ declare module 'shapeshifter/lib/renderers/React' {
   import ShapeDefinition from 'shapeshifter/lib/definitions/Shape';
   import StringDefinition from 'shapeshifter/lib/definitions/String';
   import UnionDefinition from 'shapeshifter/lib/definitions/Union';
-  import { Config, Options } from 'shapeshifter/lib/types';
+  import { Config } from 'shapeshifter/lib/types';
   export default class ReactRenderer extends Renderer {
-      constructor(options: Options, schematic: Schematic);
+      suffix: string;
       beforeParse(): void;
       render(setName: string, attributes?: Definition<Config>[]): string;
       renderArray(definition: ArrayDefinition, depth: number): string;
@@ -445,7 +446,6 @@ declare module 'shapeshifter/lib/renderers/React' {
 }
 declare module 'shapeshifter/lib/renderers/TypeScript' {
   import Renderer from 'shapeshifter/lib/Renderer';
-  import Schematic from 'shapeshifter/lib/Schematic';
   import Definition from 'shapeshifter/lib/Definition';
   import ArrayDefinition from 'shapeshifter/lib/definitions/Array';
   import BoolDefinition from 'shapeshifter/lib/definitions/Bool';
@@ -456,9 +456,9 @@ declare module 'shapeshifter/lib/renderers/TypeScript' {
   import ShapeDefinition from 'shapeshifter/lib/definitions/Shape';
   import StringDefinition from 'shapeshifter/lib/definitions/String';
   import UnionDefinition from 'shapeshifter/lib/definitions/Union';
-  import { Config, Options } from 'shapeshifter/lib/types';
+  import { Config } from 'shapeshifter/lib/types';
   export default class TypeScriptRenderer extends Renderer {
-      constructor(options: Options, schematic: Schematic);
+      suffix: string;
       render(setName: string, attributes?: Definition<Config>[]): string;
       renderArray(definition: ArrayDefinition, depth: number): string;
       renderBool(definition: BoolDefinition): string;
@@ -474,10 +474,11 @@ declare module 'shapeshifter/lib/renderers/TypeScript' {
 }
 declare module 'shapeshifter/lib/RendererFactory' {
   import Schematic from 'shapeshifter/lib/Schematic';
+  import Builder from 'shapeshifter/lib/Builder';
   import Renderer from 'shapeshifter/lib/Renderer';
   import { Options } from 'shapeshifter/lib/types';
   export default class RendererFactory {
-      static factory(options: Options, schematic: Schematic): Renderer;
+      static factory(options: Options, builder: Builder, schematic: Schematic): Renderer;
   }
 
 }

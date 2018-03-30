@@ -4,6 +4,7 @@
  */
 
 import { Struct } from 'optimal';
+import Builder from './Builder';
 import Definition from './Definition';
 import DefinitionFactory from './DefinitionFactory';
 import Schema from './Schema';
@@ -34,34 +35,19 @@ import {
 export type TemplateList = string[];
 
 export default class Renderer {
+  builder: Builder;
+
   options: Options;
 
   schematic: Schematic;
 
   suffix: string;
 
-  imports: TemplateList;
-
-  constants: TemplateList;
-
-  header: TemplateList;
-
-  sets: TemplateList;
-
-  schemas: TemplateList;
-
-  relations: TemplateList;
-
-  constructor(options: Options, schematic: Schematic) {
+  constructor(options: Options, builder: Builder, schematic: Schematic) {
     this.options = options;
+    this.builder = builder;
     this.schematic = schematic;
     this.suffix = '';
-    this.imports = [];
-    this.constants = [];
-    this.header = [];
-    this.sets = [];
-    this.schemas = [];
-    this.relations = [];
   }
 
   /**
@@ -131,27 +117,6 @@ export default class Renderer {
   }
 
   /**
-   * Return a rendered list of constants to place at the top of the file.
-   */
-  getConstants(): TemplateList {
-    return this.constants;
-  }
-
-  /**
-   * Return a header template to place at the top of the file after constants.
-   */
-  getHeader(): TemplateList {
-    return this.header;
-  }
-
-  /**
-   * Return a rendered list of imports to place at the top of the file.
-   */
-  getImports(): TemplateList {
-    return this.imports;
-  }
-
-  /**
    * Return the export name to be used as the prop type or type alias name.
    */
   getObjectName(...names: string[]): string {
@@ -159,31 +124,10 @@ export default class Renderer {
   }
 
   /**
-   * Return a list of schema relations.
-   */
-  getRelations(): TemplateList {
-    return this.relations;
-  }
-
-  /**
-   * Return a list of schema class definitions.
-   */
-  getSchemas(): TemplateList {
-    return this.schemas;
-  }
-
-  /**
    * Return the schema name with a lowercase first character.
    */
   getSchemaInstanceName(name: string): string {
     return name.charAt(0).toLowerCase() + name.slice(1);
-  }
-
-  /**
-   * Return a list of the primary set and all subsets.
-   */
-  getSets(): TemplateList {
-    return this.sets;
   }
 
   /**
@@ -207,7 +151,7 @@ export default class Renderer {
     const { constants } = this.schematic;
 
     Object.keys(constants).forEach((key: string) => {
-      this.constants.push(this.renderConstant(key, constants[key]));
+      this.builder.constants.add(this.renderConstant(key, constants[key]));
     });
   }
 
@@ -216,7 +160,7 @@ export default class Renderer {
    */
   parseImports() {
     this.schematic.imports.forEach((statement: ImportStructure) => {
-      this.imports.push(this.renderImport(statement));
+      this.builder.imports.add(this.renderImport(statement));
     });
   }
 
@@ -237,14 +181,14 @@ export default class Renderer {
 
     // Allow schematics to not require a Schema
     if (metadata.resourceName) {
-      this.schemas.push(
+      this.builder.schemas.add(
         this.renderSchema(this.getObjectName(name, 'Schema'), attributes, metadata),
       );
     }
 
     // Only add the import if schemas exist
-    if (this.schemas.length > 0) {
-      this.imports.unshift(
+    if (this.builder.schemas.size > 0) {
+      this.builder.imports.add(
         this.renderImport({
           default: 'Schema',
           path: this.options.importPath,
@@ -296,11 +240,13 @@ export default class Renderer {
         setAttributes.push(DefinitionFactory.factory(this.options, attribute, setConfig));
       });
 
-      this.sets.push(this.render(this.getObjectName(name, setName, this.suffix), setAttributes));
+      this.builder.sets.add(
+        this.render(this.getObjectName(name, setName, this.suffix), setAttributes),
+      );
     });
 
     // Default set
-    this.sets.push(this.render(this.getObjectName(name, this.suffix), attributes));
+    this.builder.sets.add(this.render(this.getObjectName(name, this.suffix), attributes));
   }
 
   /**
@@ -314,7 +260,7 @@ export default class Renderer {
         DefinitionFactory.factory(this.options, attribute, shapes[key][attribute]),
       );
 
-      this.sets.push(this.render(this.getObjectName(name, key, this.suffix), attributes));
+      this.builder.sets.add(this.render(this.getObjectName(name, key, this.suffix), attributes));
     });
   }
 
@@ -636,7 +582,7 @@ export default class Renderer {
     }
 
     if (relationTemplate) {
-      this.relations.push(`${schemaName}${relationTemplate};`);
+      this.builder.relations.add(`${schemaName}${relationTemplate};`);
     }
 
     return `${schemaTemplate}`;

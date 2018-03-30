@@ -1,6 +1,5 @@
 [ignore]
 .*/node_modules/.*
-.*/tests/.*
 .*\.test\.js
 
 [include]
@@ -14,3 +13,6 @@ esproposal.export_star_as=enable
 include_warnings=true
 module.ignore_non_literal_requires=true
 suppress_comment=\\(.\\|\n\\)*\\$FlowIgnore
+
+[libs]
+./tests/declarations.js.flow

@@ -19,14 +19,10 @@ import UnionDefinition from '../definitions/Union';
 import { Config, Options } from '../types';
 
 export default class FlowRenderer extends Renderer {
-  constructor(options: Options, schematic: Schematic) {
-    super(options, schematic);
-
-    this.suffix = 'Type';
-  }
+  suffix: string = 'Type';
 
   afterParse() {
-    this.imports.unshift('// @flow');
+    this.builder.comments.add('/* @flow */');
   }
 
   render(setName: string, attributes: Definition<Config>[] = []): string {

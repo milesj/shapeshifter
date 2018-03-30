@@ -49,7 +49,7 @@ export const UserShape = PropTypes.shape({
 Or the following Flow type aliases.
 
 ```javascript
-// @flow
+/* @flow */
 
 export type UserType = {
   id: number,

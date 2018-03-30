@@ -4,6 +4,7 @@
  */
 
 import Schematic from './Schematic';
+import Builder from './Builder';
 import Renderer from './Renderer';
 import FlowRenderer from './renderers/Flow';
 import ReactRenderer from './renderers/React';
@@ -14,18 +15,18 @@ export default class RendererFactory {
   /**
    * Create a new renderer with the defined schematic.
    */
-  static factory(options: Options, schematic: Schematic): Renderer {
+  static factory(options: Options, builder: Builder, schematic: Schematic): Renderer {
     const { renderer } = options;
 
     switch (renderer.toLowerCase()) {
       case 'react':
-        return new ReactRenderer(options, schematic);
+        return new ReactRenderer(options, builder, schematic);
 
       case 'flow':
-        return new FlowRenderer(options, schematic);
+        return new FlowRenderer(options, builder, schematic);
 
       case 'typescript':
-        return new TypeScriptRenderer(options, schematic);
+        return new TypeScriptRenderer(options, builder, schematic);
 
       default:
         throw new Error(`Renderer "${renderer || 'unknown'}" not supported.`);

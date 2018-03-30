@@ -1,3 +1,4 @@
+import Builder from '../../src/Builder';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
@@ -17,6 +18,7 @@ describe('FlowRenderer', () => {
   beforeEach(() => {
     renderer = new FlowRenderer(
       options,
+      new Builder(),
       new Schematic(
         '/foo.json',
         {
@@ -32,7 +34,7 @@ describe('FlowRenderer', () => {
     it('adds flow comment', () => {
       renderer.afterParse();
 
-      expect(renderer.imports).toEqual(['// @flow']);
+      expect(Array.from(renderer.builder.comments)).toEqual(['/* @flow */']);
     });
   });
 

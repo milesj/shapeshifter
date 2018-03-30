@@ -19,17 +19,13 @@ import UnionDefinition from '../definitions/Union';
 import { Config, Options } from '../types';
 
 export default class ReactRenderer extends Renderer {
-  constructor(options: Options, schematic: Schematic) {
-    super(options, schematic);
-
-    this.suffix = 'Shape';
-  }
+  suffix: string = 'Shape';
 
   beforeParse() {
-    this.imports.push("import PropTypes from 'prop-types';");
+    this.builder.imports.add("import PropTypes from 'prop-types';");
 
     if (this.options.stripPropTypes) {
-      this.header.push('const PropTypePolyfill = () => {};');
+      this.builder.header.add('const PropTypePolyfill = () => {};');
     }
   }
 

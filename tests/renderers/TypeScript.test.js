@@ -1,3 +1,4 @@
+import Builder from '../../src/Builder';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
@@ -17,6 +18,7 @@ describe('TypeScriptRenderer', () => {
   beforeEach(() => {
     renderer = new TypeScriptRenderer(
       options,
+      new Builder(),
       new Schematic(
         '/foo.json',
         {

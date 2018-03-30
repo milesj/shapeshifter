@@ -1,3 +1,4 @@
+import Builder from '../src/Builder';
 import ArrayDefinition from '../src/definitions/Array';
 import ReferenceDefinition from '../src/definitions/Reference';
 import Renderer from '../src/Renderer';
@@ -12,6 +13,7 @@ describe('Renderer', () => {
   beforeEach(() => {
     renderer = new Renderer(
       options,
+      new Builder(),
       new Schematic(
         '/foo.json',
         {
@@ -362,7 +364,7 @@ describe('Renderer', () => {
         ),
       ).toBe("export const quxSchema = new Schema('quxs');");
 
-      expect(renderer.relations).toEqual([
+      expect(Array.from(renderer.builder.relations)).toEqual([
         `quxSchema.addAttributes([
   'first_name',
   'last_name',
@@ -415,7 +417,7 @@ describe('Renderer', () => {
         ),
       ).toBe("export const quxSchema = new Schema('quxs');");
 
-      expect(renderer.relations).toEqual([
+      expect(Array.from(renderer.builder.relations)).toEqual([
         `quxSchema.hasOne({
   post: postsSchema,
 });`,
@@ -439,7 +441,7 @@ describe('Renderer', () => {
         ),
       ).toBe("export const quxSchema = new Schema('quxs');");
 
-      expect(renderer.relations).toEqual([
+      expect(Array.from(renderer.builder.relations)).toEqual([
         `quxSchema.hasOne({
   post: postsSchema,
 });`,
@@ -466,7 +468,7 @@ describe('Renderer', () => {
         ),
       ).toBe("export const quxSchema = new Schema('quxs');");
 
-      expect(renderer.relations).toEqual([
+      expect(Array.from(renderer.builder.relations)).toEqual([
         `quxSchema.hasMany({
   posts: postsSchema,
 });`,
@@ -498,7 +500,7 @@ describe('Renderer', () => {
         ),
       ).toBe("export const quxSchema = new Schema('quxs');");
 
-      expect(renderer.relations).toEqual([
+      expect(Array.from(renderer.builder.relations)).toEqual([
         `quxSchema.belongsTo({
   post: postsSchema,
 }).belongsToMany({
@@ -534,7 +536,7 @@ describe('Renderer', () => {
         ),
       ).toBe("export const quxSchema = new Schema('quxs');");
 
-      expect(renderer.relations).toEqual([
+      expect(Array.from(renderer.builder.relations)).toEqual([
         `quxSchema.addAttributes([
   'first_name',
   'last_name',
@@ -576,7 +578,7 @@ describe('Renderer', () => {
         ),
       ).toBe("export const quxSchema = new Schema('quxs');");
 
-      expect(renderer.relations).toEqual([
+      expect(Array.from(renderer.builder.relations)).toEqual([
         `quxSchema.define({
   post: postsSchema,
   posts: [postsSchema],
