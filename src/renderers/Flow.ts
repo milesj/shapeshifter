@@ -92,9 +92,11 @@ export default class FlowRenderer extends Renderer {
   }
 
   renderUnion(definition: UnionDefinition, depth: number): string {
-    const set = new Set(definition.valueTypes.map(item => this.renderAttribute(item, depth)));
+    const template = Array.from(
+      new Set(definition.valueTypes.map(item => this.renderAttribute(item, depth))),
+    ).join(' | ');
 
-    return Array.from(set.values()).join(' | ');
+    return definition.isNullable() && !template.endsWith('null') ? `${template} | null` : template;
   }
 
   /**

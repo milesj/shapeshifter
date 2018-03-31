@@ -34,12 +34,12 @@ export type ShapeType = {
     intStringObject: ?{ [key: number]: ?string },
     unionObject: ?{ [key: string]: ?number | ?string | ?{
       foo: ?string,
-    } },
+    } | null },
   },
   unionFields: ?{
     multiUnion: ?number | ?boolean | ?ShapeClassName | ?{ [key: string]: ?string } | ?{
       string: ?string,
       enum: 123 | 456 | 789,
-    },
+    } | null,
   },
 };

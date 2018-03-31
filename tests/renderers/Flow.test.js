@@ -259,7 +259,7 @@ describe('FlowRenderer', () => {
             valueTypes,
           }),
         ),
-      ).toBe('?string | ?boolean | ?Array<number>');
+      ).toBe('?string | ?boolean | ?Array<number> | null');
     });
 
     it('renders non-nullable', () => {
@@ -291,7 +291,7 @@ describe('FlowRenderer', () => {
             valueTypes,
           }),
         ),
-      ).toBe('?string | ?boolean | ?Array<number> | FooBar');
+      ).toBe('?string | ?boolean | ?Array<number> | FooBar | null');
     });
   });
 

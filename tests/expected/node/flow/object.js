@@ -16,7 +16,7 @@ export type ObjectType = {
     bar: ?boolean,
   } },
   stringField: ?{ [key: string]: ?string },
-  unionField: ?{ [key: string]: ?number | ?Array<?string> },
+  unionField: ?{ [key: string]: ?number | ?Array<?string> | null },
   objShorthandField: ?{ [key: string]: ?string },
   objKeyTypeField: ?{ [key: number]: ?string },
 };

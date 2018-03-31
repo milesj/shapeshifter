@@ -5,16 +5,16 @@
 import UnionDefault, { UnionClassName } from '../stub';
 
 export type UnionType = {
-  arrayField: ?Array<?string> | ?Array<?{ [key: string]: ?string }>,
-  primitiveFields: ?boolean | ?number,
-  enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123,
-  instanceField: ?UnionClassName | UnionDefault,
-  objectField: ?{ [key: string]: ?number } | ?{ [key: string]: ?Array<?string> },
+  arrayField: ?Array<?string> | ?Array<?{ [key: string]: ?string }> | null,
+  primitiveFields: ?boolean | ?number | null,
+  enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123 | null,
+  instanceField: ?UnionClassName | UnionDefault | null,
+  objectField: ?{ [key: string]: ?number } | ?{ [key: string]: ?Array<?string> } | null,
   shapeField: ?{
     foo: ?string,
     bar: ?boolean,
   } | ?{
-    qux: ?string | ?boolean,
-  },
-  unionField: ?string | 1 | 2 | 3 | ?boolean | ?number,
+    qux: ?string | ?boolean | null,
+  } | null,
+  unionField: ?string | 1 | 2 | 3 | null | ?boolean | ?number | null,
 };

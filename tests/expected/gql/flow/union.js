@@ -11,12 +11,12 @@ export type UnionBarStructType = {
 };
 
 export type UnionBazStructType = {
-  baz: ?boolean | ?number,
+  baz: ?boolean | ?number | null,
 };
 
 export type UnionType = {
-  primitiveField: ?boolean | ?number,
-  enumField: 'FOO' | 'BAR' | 'BAZ' | 'QUX',
-  shapeField: ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType,
-  unionField: ?boolean | ?number | 'FOO' | 'BAR' | 'BAZ' | 'QUX' | ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType,
+  primitiveField: ?boolean | ?number | null,
+  enumField: 'FOO' | 'BAR' | 'BAZ' | 'QUX' | null,
+  shapeField: ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType | null,
+  unionField: ?boolean | ?number | null | 'FOO' | 'BAR' | 'BAZ' | 'QUX' | null | ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType | null,
 };

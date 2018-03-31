@@ -18,5 +18,5 @@ export type ArrayType = {
     bar: ?boolean,
   }>,
   stringField: ?Array<?string>,
-  unionField: ?Array<string | 1 | 2 | 3>,
+  unionField: ?Array<string | 1 | 2 | 3 | null>,
 };

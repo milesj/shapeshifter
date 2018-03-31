@@ -3,19 +3,19 @@
 /* @flow */
 
 export type CoreFooType = {
-  id: ?number | ?string,
+  id: ?number | ?string | null,
   name: ?string,
   foo: ?string,
 };
 
 export type CoreBarType = {
-  id: ?number | ?string,
+  id: ?number | ?string | null,
   name: ?string,
   bar: ?number,
 };
 
 export type CoreType = {
-  id: ?number | ?string,
+  id: ?number | ?string | null,
   name: ?string,
   foo: ?CoreFooType,
   fooWithArg: CoreFooType,

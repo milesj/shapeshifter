@@ -27,19 +27,19 @@ export type ArrayType = {
 };
 
 export type CoreFooType = {
-  id: ?number | ?string,
+  id: ?number | ?string | null,
   name: ?string,
   foo: ?string,
 };
 
 export type CoreBarType = {
-  id: ?number | ?string,
+  id: ?number | ?string | null,
   name: ?string,
   bar: ?number,
 };
 
 export type CoreType = {
-  id: ?number | ?string,
+  id: ?number | ?string | null,
   name: ?string,
   foo: ?CoreFooType,
   fooWithArg: CoreFooType,
@@ -95,7 +95,7 @@ export type ShapeEnumStructType = {
 };
 
 export type ShapeUnionStructType = {
-  multiUnion: ?number | ?boolean | ?ShapeEnumStructType,
+  multiUnion: ?number | ?boolean | ?ShapeEnumStructType | null,
 };
 
 export type ShapeType = {
@@ -115,12 +115,12 @@ export type UnionBarStructType = {
 };
 
 export type UnionBazStructType = {
-  baz: ?boolean | ?number,
+  baz: ?boolean | ?number | null,
 };
 
 export type UnionType = {
-  primitiveField: ?boolean | ?number,
-  enumField: 'FOO' | 'BAR' | 'BAZ' | 'QUX',
-  shapeField: ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType,
-  unionField: ?boolean | ?number | 'FOO' | 'BAR' | 'BAZ' | 'QUX' | ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType,
+  primitiveField: ?boolean | ?number | null,
+  enumField: 'FOO' | 'BAR' | 'BAZ' | 'QUX' | null,
+  shapeField: ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType | null,
+  unionField: ?boolean | ?number | null | 'FOO' | 'BAR' | 'BAZ' | 'QUX' | null | ?UnionFooStructType | ?UnionBarStructType | ?UnionBazStructType | null,
 };
