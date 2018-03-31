@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 
 export const CoreFooShape = PropTypes.shape({
   id: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
+    PropTypes.number.isRequired,
+    PropTypes.string.isRequired,
   ]),
   name: PropTypes.string,
   foo: PropTypes.string,
@@ -14,8 +14,8 @@ export const CoreFooShape = PropTypes.shape({
 
 export const CoreBarShape = PropTypes.shape({
   id: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
+    PropTypes.number.isRequired,
+    PropTypes.string.isRequired,
   ]),
   name: PropTypes.string,
   bar: PropTypes.number,
@@ -23,8 +23,8 @@ export const CoreBarShape = PropTypes.shape({
 
 export const CoreShape = PropTypes.shape({
   id: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
+    PropTypes.number.isRequired,
+    PropTypes.string.isRequired,
   ]),
   name: PropTypes.string,
   foo: CoreFooShape,

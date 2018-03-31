@@ -319,9 +319,9 @@ This transpiles to:
 ```javascript
 // PropTypes
 error: PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.number,
-  PropTypes.instanceOf(Error),
+  PropTypes.string.isRequired,
+  PropTypes.number.isRequired,
+  PropTypes.instanceOf(Error).isRequired,
 ]),
 
 // Flow
@@ -330,6 +330,8 @@ error: string | number | Error,
 // TypeScript
 error: string | number | Error;
 ```
+
+> Direct value types cannot be nullable.
 
 ## References
 

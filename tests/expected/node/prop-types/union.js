@@ -6,57 +6,57 @@ import UnionDefault, { UnionClassName } from '../stub';
 
 export const UnionShape = PropTypes.shape({
   arrayField: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+    PropTypes.arrayOf(PropTypes.string).isRequired,
+    PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   ]),
   primitiveFields: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.number,
+    PropTypes.bool.isRequired,
+    PropTypes.number.isRequired,
   ]),
   enumField: PropTypes.oneOfType([
     PropTypes.oneOf([
       'foo',
       'bar',
       'baz',
-    ]),
+    ]).isRequired,
     PropTypes.oneOf([
       789,
       456,
       123,
-    ]),
+    ]).isRequired,
   ]),
   instanceField: PropTypes.oneOfType([
-    PropTypes.instanceOf(UnionClassName),
+    PropTypes.instanceOf(UnionClassName).isRequired,
     PropTypes.instanceOf(UnionDefault).isRequired,
   ]),
   objectField: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.number),
-    PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
+    PropTypes.objectOf(PropTypes.number).isRequired,
+    PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   ]),
   shapeField: PropTypes.oneOfType([
     PropTypes.shape({
       foo: PropTypes.string,
       bar: PropTypes.bool,
-    }),
+    }).isRequired,
     PropTypes.shape({
       qux: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.bool,
+        PropTypes.string.isRequired,
+        PropTypes.bool.isRequired,
       ]),
-    }),
+    }).isRequired,
   ]),
   unionField: PropTypes.oneOfType([
     PropTypes.oneOfType([
-      PropTypes.string,
+      PropTypes.string.isRequired,
       PropTypes.oneOf([
         1,
         2,
         3,
-      ]),
-    ]),
+      ]).isRequired,
+    ]).isRequired,
     PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.number,
-    ]),
+      PropTypes.bool.isRequired,
+      PropTypes.number.isRequired,
+    ]).isRequired,
   ]),
 });

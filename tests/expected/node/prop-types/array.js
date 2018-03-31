@@ -28,6 +28,6 @@ export const ArrayShape = PropTypes.shape({
       1,
       2,
       3,
-    ]),
+    ]).isRequired,
   ])),
 });

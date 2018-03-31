@@ -13,11 +13,11 @@ const RENDERERS = [
     key: 'flow',
     ext: 'js',
   },
-  // {
-  //   name: 'PropTypes',
-  //   key: 'prop-types',
-  //   ext: 'js',
-  // },
+  {
+    name: 'PropTypes',
+    key: 'prop-types',
+    ext: 'js',
+  },
   // {
   //   name: 'TypeScript',
   //   key: 'typescript',

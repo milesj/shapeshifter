@@ -30,9 +30,9 @@ export const ShapeEnumStructShape = PropTypes.shape({
 
 export const ShapeUnionStructShape = PropTypes.shape({
   multiUnion: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.bool,
-    ShapeEnumStructShape,
+    PropTypes.number.isRequired,
+    PropTypes.bool.isRequired,
+    ShapeEnumStructShape.isRequired,
   ]),
 });
 

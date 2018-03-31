@@ -21,8 +21,8 @@ export const ObjectShape = PropTypes.shape({
   })),
   stringField: PropTypes.objectOf(PropTypes.string),
   unionField: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.number.isRequired,
+    PropTypes.arrayOf(PropTypes.string).isRequired,
   ])),
   objShorthandField: PropTypes.objectOf(PropTypes.string),
   objKeyTypeField: PropTypes.objectOf(PropTypes.string),

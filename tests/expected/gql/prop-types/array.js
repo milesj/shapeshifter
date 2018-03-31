@@ -21,7 +21,7 @@ export const ArrayShape = PropTypes.shape({
   shapeField: PropTypes.arrayOf(ArrayShapeObjectShape),
   stringField: PropTypes.arrayOf(PropTypes.string),
   unionField: PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
+    PropTypes.string.isRequired,
+    PropTypes.number.isRequired,
   ]).isRequired),
 });

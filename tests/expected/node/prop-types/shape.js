@@ -41,19 +41,19 @@ export const ShapeShape = PropTypes.shape({
     boolObject: PropTypes.objectOf(PropTypes.bool),
     intStringObject: PropTypes.objectOf(PropTypes.string),
     unionObject: PropTypes.objectOf(PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
+      PropTypes.number.isRequired,
+      PropTypes.string.isRequired,
       PropTypes.shape({
         foo: PropTypes.string,
-      }),
+      }).isRequired,
     ])),
   }),
   unionFields: PropTypes.shape({
     multiUnion: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.bool,
-      PropTypes.instanceOf(ShapeClassName),
-      PropTypes.objectOf(PropTypes.string),
+      PropTypes.number.isRequired,
+      PropTypes.bool.isRequired,
+      PropTypes.instanceOf(ShapeClassName).isRequired,
+      PropTypes.objectOf(PropTypes.string).isRequired,
       PropTypes.shape({
         string: PropTypes.string,
         enum: PropTypes.oneOf([
@@ -61,7 +61,7 @@ export const ShapeShape = PropTypes.shape({
           456,
           789,
         ]),
-      }),
+      }).isRequired,
     ]),
   }),
 });

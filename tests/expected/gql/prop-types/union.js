@@ -13,50 +13,50 @@ export const UnionBarStructShape = PropTypes.shape({
 
 export const UnionBazStructShape = PropTypes.shape({
   baz: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.number,
+    PropTypes.bool.isRequired,
+    PropTypes.number.isRequired,
   ]),
 });
 
 export const UnionShape = PropTypes.shape({
   primitiveField: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.number,
+    PropTypes.bool.isRequired,
+    PropTypes.number.isRequired,
   ]),
   enumField: PropTypes.oneOfType([
     PropTypes.oneOf([
       'FOO',
       'BAR',
-    ]),
+    ]).isRequired,
     PropTypes.oneOf([
       'BAZ',
       'QUX',
-    ]),
+    ]).isRequired,
   ]),
   shapeField: PropTypes.oneOfType([
-    UnionFooStructShape,
-    UnionBarStructShape,
-    UnionBazStructShape,
+    UnionFooStructShape.isRequired,
+    UnionBarStructShape.isRequired,
+    UnionBazStructShape.isRequired,
   ]),
   unionField: PropTypes.oneOfType([
     PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.number,
-    ]),
+      PropTypes.bool.isRequired,
+      PropTypes.number.isRequired,
+    ]).isRequired,
     PropTypes.oneOfType([
       PropTypes.oneOf([
         'FOO',
         'BAR',
-      ]),
+      ]).isRequired,
       PropTypes.oneOf([
         'BAZ',
         'QUX',
-      ]),
-    ]),
+      ]).isRequired,
+    ]).isRequired,
     PropTypes.oneOfType([
-      UnionFooStructShape,
-      UnionBarStructShape,
-      UnionBazStructShape,
-    ]),
+      UnionFooStructShape.isRequired,
+      UnionBarStructShape.isRequired,
+      UnionBazStructShape.isRequired,
+    ]).isRequired,
   ]),
 });
