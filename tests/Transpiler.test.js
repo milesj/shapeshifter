@@ -275,6 +275,20 @@ describe('Transpiler', () => {
 
       expect(output).toBe(file(expectedPath));
     });
+
+    it('can render multiple languages', () => {
+      const actualPath = `${__dirname}/schemas/types-schemas.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/multiple-renderers.js`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeDefinitions: true,
+        includeSchemas: true,
+        renderers: ['prop-types', 'flow'],
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
   });
 
   describe('extractSchematics()', () => {

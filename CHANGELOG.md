@@ -5,10 +5,11 @@
 * React is now referred to as PropTypes.
 * CLI script is now `shapeshifter` instead of `shapeshifter build`.
   * Options are now dashed instead of camel cased.
-* CLI option `--format` is now split into 3 individual options.
 * Removed `-n` shorthand option.
+* Removed `--format` option in favor of 3 individual options.
 * Renamed `--types` option to `--definitions`.
-* Renamed `Transpiler` and `WebpackPlugin` option `format` to `renderers` (also now an array).
+* Renamed `Transpiler` and `WebpackPlugin` option `format` to `renderers`.
+  * Accepts an array of renderer names (flow, prop-types, typescript).
 
 #### 🚀 New
 
@@ -18,7 +19,7 @@
 
 #### 🐞 Fixed
 
-* Removed values from TypeScript string enums and let it infer them instead.
+* Removed values from TypeScript string enums (will infer them instead).
 
 #### 🛠 Internal
 
