@@ -330,7 +330,7 @@ describe('Renderer', () => {
       expect(() => renderer.renderSchema('QuxSchema', [], {})).toThrowError();
     });
 
-    it('errors if invalud resource name', () => {
+    it('errors if invalid resource name', () => {
       expect(() => renderer.renderSchema('QuxSchema', [], { resourceName: true })).toThrowError();
     });
 

@@ -1,0 +1,11 @@
+{
+  "root": "./docs",
+  "title": "Shapeshifter",
+  "description": "Generate relational schemas, PropTypes, Flow aliases, and TypeScript interfaces from schematics.",
+  "plugins": ["github"],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/milesj/shapeshifter"
+    }
+  }
+}
