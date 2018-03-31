@@ -2,16 +2,16 @@
 /* eslint-disable */
 
 export interface ReferenceBarInterface {
-  boolField: boolean;
+  boolField: boolean | null;
 }
 
 export interface ReferenceFooInterface {
-  numberField: number;
+  numberField: number | null;
   refField: ReferenceBarInterface;
 }
 
 export interface ReferenceInterface {
-  stringField: string;
+  stringField: string | null;
   refField: ReferenceFooInterface;
-  referenceField: ReferenceFooInterface;
+  referenceField: ReferenceFooInterface | null;
 }

@@ -9,16 +9,16 @@ export enum ArrayEnumFieldEnum {
 }
 
 export interface ArrayShapeObjectInterface {
-  foo: string;
-  bar: boolean;
+  foo: string | null;
+  bar: boolean | null;
 }
 
 export interface ArrayInterface {
-  arrayField: Array<string[]>;
-  boolField: boolean[];
-  enumField: Array<ArrayEnumFieldEnum>;
-  numberField: number[];
-  shapeField: Array<ArrayShapeObjectInterface>;
-  stringField: string[];
-  unionField: Array<string | number>;
+  arrayField: Array<Array<string | null> | null> | null;
+  boolField: Array<boolean | null> | null;
+  enumField: Array<ArrayEnumFieldEnum | null> | null;
+  numberField: Array<number | null>;
+  shapeField: Array<ArrayShapeObjectInterface | null> | null;
+  stringField: Array<string | null> | null;
+  unionField: Array<string | number> | null;
 }

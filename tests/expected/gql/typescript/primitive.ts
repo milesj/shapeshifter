@@ -2,12 +2,12 @@
 /* eslint-disable */
 
 export interface PrimitiveInterface {
-  boolField: boolean;
+  boolField: boolean | null;
   boolFieldExpanded: boolean;
-  numberField: number;
+  numberField: number | null;
   numberFieldExpanded: number;
-  floatField: number;
+  floatField: number | null;
   floatFieldExpanded: number;
-  stringField: string;
+  stringField: string | null;
   stringFieldExpanded: string;
 }

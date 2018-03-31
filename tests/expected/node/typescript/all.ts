@@ -210,11 +210,11 @@ export interface PrimitiveInterface {
 }
 
 export interface ReferenceBarInterface {
-  boolField: boolean;
+  boolField: boolean | null;
 }
 
 export interface ReferenceFooInterface {
-  numberField: number;
+  numberField: number | null;
   refField: ReferenceBarInterface;
 }
 

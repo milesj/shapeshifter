@@ -2,22 +2,22 @@
 /* eslint-disable */
 
 export interface CoreFooInterface {
-  id: number | string;
-  name: string;
-  foo: string;
+  id: number | string | null;
+  name: string | null;
+  foo: string | null;
 }
 
 export interface CoreBarInterface {
-  id: number | string;
-  name: string;
-  bar: number;
+  id: number | string | null;
+  name: string | null;
+  bar: number | null;
 }
 
 export interface CoreInterface {
-  id: number | string;
-  name: string;
-  foo: CoreFooInterface;
+  id: number | string | null;
+  name: string | null;
+  foo: CoreFooInterface | null;
   fooWithArg: CoreFooInterface;
-  bar: CoreBarInterface;
+  bar: CoreBarInterface | null;
   barWithArg: CoreBarInterface;
 }

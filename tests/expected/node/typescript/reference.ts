@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 export interface ReferenceBarInterface {
-  boolField: boolean;
+  boolField: boolean | null;
 }
 
 export interface ReferenceSetOnlyStringInterface {
@@ -16,7 +16,7 @@ export interface ReferenceSetInterface {
 }
 
 export interface ReferenceFooInterface {
-  numberField: number;
+  numberField: number | null;
   refField: ReferenceBarInterface;
 }
 

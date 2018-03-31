@@ -9,33 +9,33 @@ export enum ShapeStringEnumEnum {
 }
 
 export interface ShapeBasicStructInterface {
-  foo: string;
+  foo: string | null;
 }
 
 export interface ShapePrimitiveStructInterface {
-  string: string;
+  string: string | null;
   bool: boolean;
   number: number;
 }
 
 export interface ShapeArrayStructInterface {
-  numberArray: number[];
-  stringArray: string[];
-  shapeArray: Array<ShapeBasicStructInterface>;
+  numberArray: Array<number | null> | null;
+  stringArray: Array<string | null> | null;
+  shapeArray: Array<ShapeBasicStructInterface | null> | null;
 }
 
 export interface ShapeEnumStructInterface {
-  stringEnum: ShapeStringEnumEnum;
+  stringEnum: ShapeStringEnumEnum | null;
 }
 
 export interface ShapeUnionStructInterface {
-  multiUnion: number | boolean | ShapeEnumStructInterface;
+  multiUnion: number | boolean | ShapeEnumStructInterface | null;
 }
 
 export interface ShapeInterface {
-  structAlias: ShapeBasicStructInterface;
-  primitiveFields: ShapePrimitiveStructInterface;
-  arrayFields: ShapeArrayStructInterface;
-  enumFields: ShapeEnumStructInterface;
-  unionFields: ShapeUnionStructInterface;
+  structAlias: ShapeBasicStructInterface | null;
+  primitiveFields: ShapePrimitiveStructInterface | null;
+  arrayFields: ShapeArrayStructInterface | null;
+  enumFields: ShapeEnumStructInterface | null;
+  unionFields: ShapeUnionStructInterface | null;
 }
