@@ -64,9 +64,10 @@ Depending on the type used, additional properties may be required.
 All attribute type definitions support the `nullable` modifier, which accepts a boolean value, and
 triggers the following:
 
-* Flow: Nullable fields will prepend `?` to each type alias.
+* Flow: Nullable fields will prepend `?` to each type.
 * PropTypes: Non-nullable fields will append `isRequired` to the prop type.
-* TypeScript: Does nothing, please use `--strictNullChecks` provided by TypeScript.
+* TypeScript: Nullable fields will append `| null` to each type. Best used with
+  `--strictNullChecks`.
 
 ```json
 {

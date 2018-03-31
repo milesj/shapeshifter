@@ -15,12 +15,14 @@
 
 * Can now generate and include multiple renderers (typed languages) into the output.
   * Added individual options `--flow`, `--prop-types`, and `--typescript`, to opt into generation.
+* Added proper `null` support for TypeScript.
 * Updated `WebpackPlugin` to support Webpack 4.
 
 #### 🐞 Fixed
 
-* Union value types will no longer allow nullable.
-* Flow unions will now inject `null` when nullable.
+* Reworked unions and nullable types.
+  * Direct union value types will no longer be nullable.
+  * Union itself can be nullable.
 * Removed values from TypeScript string enums (will infer them instead).
 
 #### 🛠 Internal

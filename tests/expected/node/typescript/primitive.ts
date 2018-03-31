@@ -5,22 +5,22 @@ export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
 export interface PrimitiveInterface {
-  boolField: boolean;
+  boolField: boolean | null;
   boolFieldExpanded: boolean;
-  booleanField: boolean;
+  booleanField: boolean | null;
   booleanFieldExpanded: boolean;
-  intField: number;
+  intField: number | null;
   intFieldExpanded: number;
-  integerField: number;
+  integerField: number | null;
   integerFieldExpanded: number;
-  numField: number;
+  numField: number | null;
   numFieldExpanded: number;
-  numberField: number;
+  numberField: number | null;
   numberFieldExpanded: number;
-  floatField: number;
+  floatField: number | null;
   floatFieldExpanded: number;
-  strField: string;
+  strField: string | null;
   strFieldExpanded: string;
-  stringField: string;
+  stringField: string | null;
   stringFieldExpanded: string;
 }

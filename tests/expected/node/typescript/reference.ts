@@ -10,9 +10,9 @@ export interface ReferenceSetOnlyStringInterface {
 }
 
 export interface ReferenceSetInterface {
-  boolField: boolean;
-  stringField: string;
-  numberField: number;
+  boolField: boolean | null;
+  stringField: string | null;
+  numberField: number | null;
 }
 
 export interface ReferenceFooInterface {
@@ -21,8 +21,8 @@ export interface ReferenceFooInterface {
 }
 
 export interface ReferenceInterface {
-  stringField: string;
+  stringField: string | null;
   refField: ReferenceFooInterface;
-  referenceField: ReferenceFooInterface;
-  subsetRefField: ReferenceSetOnlyStringInterface;
+  referenceField: ReferenceFooInterface | null;
+  subsetRefField: ReferenceSetOnlyStringInterface | null;
 }

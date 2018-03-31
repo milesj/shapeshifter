@@ -132,80 +132,80 @@ export enum UnionUnionField01Enum {
 }
 
 export interface ArrayInterface {
-  arrayField: Array<string[]>;
-  boolField: boolean[];
-  enumField: Array<ArrayEnumFieldEnum>;
-  instanceField: ArrayDefault[];
-  numberField: number[];
-  objectField: Array<{ [key: string]: number }>;
+  arrayField: Array<Array<string | null> | null> | null;
+  boolField: Array<boolean | null> | null;
+  enumField: Array<ArrayEnumFieldEnum | null> | null;
+  instanceField: Array<ArrayDefault | null> | null;
+  numberField: Array<number | null>;
+  objectField: Array<{ [key: string]: number | null } | null> | null;
   shapeField: Array<{
-    foo: string;
-    bar: boolean;
-  }>;
-  stringField: string[];
-  unionField: Array<string | ArrayUnionField1Enum>;
+    foo: string | null;
+    bar: boolean | null;
+  } | null> | null;
+  stringField: Array<string | null> | null;
+  unionField: Array<string | ArrayUnionField1Enum | null> | null;
 }
 
 export interface ConstantsInterface {
-  numberField: number;
+  numberField: number | null;
 }
 
 export interface EnumInterface {
-  boolField: EnumBoolFieldEnum;
-  booleanField: EnumBooleanFieldEnum;
-  intField: EnumIntFieldEnum;
-  integerField: EnumIntegerFieldEnum;
-  numField: EnumNumFieldEnum;
-  numberField: EnumNumberFieldEnum;
-  floatField: EnumFloatFieldEnum;
-  strField: EnumStrFieldEnum;
-  stringField: EnumStringFieldEnum;
+  boolField: EnumBoolFieldEnum | null;
+  booleanField: EnumBooleanFieldEnum | null;
+  intField: EnumIntFieldEnum | null;
+  integerField: EnumIntegerFieldEnum | null;
+  numField: EnumNumFieldEnum | null;
+  numberField: EnumNumberFieldEnum | null;
+  floatField: EnumFloatFieldEnum | null;
+  strField: EnumStrFieldEnum | null;
+  stringField: EnumStringFieldEnum | null;
 }
 
 export interface ImportsInterface {
-  stringField: string;
+  stringField: string | null;
 }
 
 export interface InstanceInterface {
-  instField: InstanceClassName;
+  instField: InstanceClassName | null;
   instanceField: InstanceDefault;
 }
 
 export interface ObjectInterface {
-  arrayField: { [key: string]: string[] };
-  boolField: { [key: string]: boolean };
-  enumField: { [key: string]: ObjectEnumFieldValueEnum };
-  instanceField: { [key: string]: ObjectDefault };
-  numberField: { [key: string]: number };
-  objectField: { [key: string]: { [key: string]: number } };
+  arrayField: { [key: string]: Array<string | null> | null } | null;
+  boolField: { [key: string]: boolean | null };
+  enumField: { [key: string]: ObjectEnumFieldValueEnum | null };
+  instanceField: { [key: string]: ObjectDefault | null } | null;
+  numberField: { [key: string]: number | null } | null;
+  objectField: { [key: string]: { [key: string]: number | null } | null } | null;
   shapeField: { [key: string]: {
-    foo: string;
-    bar: boolean;
-  } };
-  stringField: { [key: string]: string };
-  unionField: { [key: string]: number | string[] };
-  objShorthandField: { [key: string]: string };
-  objKeyTypeField: { [key: number]: string };
+    foo: string | null;
+    bar: boolean | null;
+  } | null } | null;
+  stringField: { [key: string]: string | null } | null;
+  unionField: { [key: string]: number | Array<string | null> | null } | null;
+  objShorthandField: { [key: string]: string | null } | null;
+  objKeyTypeField: { [key: number]: string | null } | null;
 }
 
 export interface PrimitiveInterface {
-  boolField: boolean;
+  boolField: boolean | null;
   boolFieldExpanded: boolean;
-  booleanField: boolean;
+  booleanField: boolean | null;
   booleanFieldExpanded: boolean;
-  intField: number;
+  intField: number | null;
   intFieldExpanded: number;
-  integerField: number;
+  integerField: number | null;
   integerFieldExpanded: number;
-  numField: number;
+  numField: number | null;
   numFieldExpanded: number;
-  numberField: number;
+  numberField: number | null;
   numberFieldExpanded: number;
-  floatField: number;
+  floatField: number | null;
   floatFieldExpanded: number;
-  strField: string;
+  strField: string | null;
   strFieldExpanded: string;
-  stringField: string;
+  stringField: string | null;
   stringFieldExpanded: string;
 }
 
@@ -219,14 +219,14 @@ export interface ReferenceFooInterface {
 }
 
 export interface ReferenceSelfBasicInterface {
-  stringField: string;
+  stringField: string | null;
 }
 
 export interface ReferenceSelfInterface {
-  stringField: string;
-  referenceField: ReferenceSelfInterface;
+  stringField: string | null;
+  referenceField: ReferenceSelfInterface | null;
   requiredRefField: ReferenceSelfInterface;
-  subsetRefField: Array<ReferenceSelfBasicInterface>;
+  subsetRefField: Array<ReferenceSelfBasicInterface | null> | null;
 }
 
 export interface ReferenceSetOnlyStringInterface {
@@ -234,98 +234,98 @@ export interface ReferenceSetOnlyStringInterface {
 }
 
 export interface ReferenceSetInterface {
-  boolField: boolean;
-  stringField: string;
-  numberField: number;
+  boolField: boolean | null;
+  stringField: string | null;
+  numberField: number | null;
 }
 
 export interface ReferenceInterface {
-  stringField: string;
+  stringField: string | null;
   refField: ReferenceFooInterface;
-  referenceField: ReferenceFooInterface;
-  subsetRefField: ReferenceSetOnlyStringInterface;
+  referenceField: ReferenceFooInterface | null;
+  subsetRefField: ReferenceSetOnlyStringInterface | null;
 }
 
 export interface SetsBasicInterface {
-  foo: string;
+  foo: string | null;
   baz: boolean;
 }
 
 export interface SetsWithNullInterface {
   foo: string;
-  qux: string;
+  qux: string | null;
 }
 
 export interface SetsInterface {
-  foo: string;
-  bar: number;
+  foo: string | null;
+  bar: number | null;
   baz: boolean;
   qux: string;
 }
 
 export interface ShapeReferencePriceInterface {
-  amount: number;
-  nativeAmount: number;
-  exchangeRate: number;
+  amount: number | null;
+  nativeAmount: number | null;
+  exchangeRate: number | null;
 }
 
 export interface ShapeReferenceInterface {
-  fees: ShapeReferencePriceInterface;
+  fees: ShapeReferencePriceInterface | null;
   taxes: ShapeReferencePriceInterface;
   total: ShapeReferencePriceInterface;
 }
 
 export interface ShapeInterface {
   structAlias: {
-    foo: string;
-  };
+    foo: string | null;
+  } | null;
   primitiveFields: {
-    string: string;
+    string: string | null;
     bool: boolean;
     number: number;
-  };
+  } | null;
   arrayFields: {
-    numberArray: number[];
-    stringArray: string[];
+    numberArray: Array<number | null> | null;
+    stringArray: Array<string | null> | null;
     shapeArray: Array<{
-      foo: string;
-    }>;
-  };
+      foo: string | null;
+    } | null> | null;
+  } | null;
   enumFields: {
-    stringEnum: ShapeStringEnumEnum;
-    intEnum: ShapeIntEnumEnum;
-  };
+    stringEnum: ShapeStringEnumEnum | null;
+    intEnum: ShapeIntEnumEnum | null;
+  } | null;
   instanceFields: {
-    instOf: ShapeClassName;
-    instanceOf: ShapeDefault;
-  };
+    instOf: ShapeClassName | null;
+    instanceOf: ShapeDefault | null;
+  } | null;
   objectFields: {
-    numberObj: { [key: string]: number };
-    boolObject: { [key: string]: boolean };
-    intStringObject: { [key: number]: string };
+    numberObj: { [key: string]: number | null } | null;
+    boolObject: { [key: string]: boolean | null } | null;
+    intStringObject: { [key: number]: string | null } | null;
     unionObject: { [key: string]: number | string | {
-      foo: string;
-    } };
-  };
+      foo: string | null;
+    } | null } | null;
+  } | null;
   unionFields: {
-    multiUnion: number | boolean | ShapeClassName | { [key: string]: string } | {
-      string: string;
-      enum: ShapeEnumEnum;
-    };
-  };
+    multiUnion: number | boolean | ShapeClassName | { [key: string]: string | null } | {
+      string: string | null;
+      enum: ShapeEnumEnum | null;
+    } | null;
+  } | null;
 }
 
 export interface UnionInterface {
-  arrayField: string[] | Array<{ [key: string]: string }>;
-  primitiveFields: boolean | number;
-  enumField: UnionEnumField0Enum | UnionEnumField1Enum;
-  instanceField: UnionClassName | UnionDefault;
-  objectField: { [key: string]: number } | { [key: string]: string[] };
+  arrayField: Array<string | null> | Array<{ [key: string]: string | null } | null> | null;
+  primitiveFields: boolean | number | null;
+  enumField: UnionEnumField0Enum | UnionEnumField1Enum | null;
+  instanceField: UnionClassName | UnionDefault | null;
+  objectField: { [key: string]: number | null } | { [key: string]: Array<string | null> | null } | null;
   shapeField: {
-    foo: string;
-    bar: boolean;
+    foo: string | null;
+    bar: boolean | null;
   } | {
-    qux: string | boolean;
-  };
-  unionField: string | UnionUnionField01Enum | boolean | number;
+    qux: string | boolean | null;
+  } | null;
+  unionField: string | UnionUnionField01Enum | boolean | number | null;
 }
