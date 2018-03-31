@@ -56,8 +56,8 @@ declare module 'shapeshifter/lib/types' {
       disableEslint: boolean;
       importPath: string;
       includeAttributes: boolean;
+      includeDefinitions: boolean;
       includeSchemas: boolean;
-      includeTypes: boolean;
       indentCharacter: string;
       renderers: RendererType[];
       stripPropTypes: boolean;

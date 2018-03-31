@@ -86,7 +86,7 @@ describe('Transpiler', () => {
                 const output = new Transpiler({
                   ...options,
                   renderers: [key],
-                  includeTypes: true,
+                  includeDefinitions: true,
                 }).transpileFile(actualPath);
 
                 expect(output).toBe(file(expectedPath));
@@ -101,7 +101,7 @@ describe('Transpiler', () => {
             const output = new Transpiler({
               ...options,
               renderers: [key],
-              includeTypes: true,
+              includeDefinitions: true,
             }).transpileFolder(actualPath);
 
             expect(output).toBe(file(expectedPath));
@@ -114,7 +114,7 @@ describe('Transpiler', () => {
     const otherOptions = {
       ...options,
       renderers: ['flow'],
-      includeTypes: false,
+      includeDefinitions: false,
       includeSchemas: false,
     };
 
@@ -124,7 +124,7 @@ describe('Transpiler', () => {
 
       const output = new Transpiler({
         ...otherOptions,
-        includeTypes: true,
+        includeDefinitions: true,
       }).transpileFile(actualPath);
 
       expect(output).toBe(file(expectedPath));
@@ -179,7 +179,7 @@ describe('Transpiler', () => {
 
       const output = new Transpiler({
         ...otherOptions,
-        includeTypes: true,
+        includeDefinitions: true,
         includeSchemas: true,
       }).transpileFile(actualPath);
 
@@ -205,7 +205,7 @@ describe('Transpiler', () => {
       const output = new Transpiler({
         ...otherOptions,
         includeSchemas: true,
-        includeTypes: true,
+        includeDefinitions: true,
       }).transpileFile(actualPath);
 
       expect(output).toBe(file(expectedPath));
@@ -217,7 +217,7 @@ describe('Transpiler', () => {
 
       const output = new Transpiler({
         ...otherOptions,
-        includeTypes: true,
+        includeDefinitions: true,
         includeSchemas: true,
       }).transpileFile(actualPath);
 
@@ -243,7 +243,7 @@ describe('Transpiler', () => {
 
       const output = new Transpiler({
         ...otherOptions,
-        includeTypes: true,
+        includeDefinitions: true,
         stripPropTypes: true,
         renderers: ['prop-types'],
       }).transpileFile(actualPath);

@@ -45,7 +45,7 @@
     "test": "yarn run jest",
     "test:webpack": "yarn run babel && webpack --config webpack.config.js",
     "test:webpack:dev": "yarn run babel && webpack-dev-server",
-    "posttest": "yarn run eslint",
+    "posttest": "yarn run eslint && yarn run check",
     "type": "beemo typescript --noEmit",
     "prerelease": "yarn run package",
     "release": "np --yolo --no-yarn"

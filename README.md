@@ -124,6 +124,8 @@ your choosing, otherwise the output will be sent to the console.
 ### Options
 
 * `--attributes` (bool) - Include an attribute list in the schema class export. Defaults to "false".
+* `--definitions` (bool) - Include type annotations and definitions in the output. Defaults to
+  "false".
 * `--disable-eslint` (bool) - Prepend an eslint-disable comment to the top of the output. Defaults
   to "false".
 * `--flow` (bool) - Generate Flow definitions. Defaults to "false".
@@ -137,7 +139,6 @@ your choosing, otherwise the output will be sent to the console.
 * `--schemas` (bool) - Include schema class exports in the output. Defaults to "false".
 * `--strip-prop-types` (bool) - Wrap PropType definitions in `process.env.NODE_ENV` production
   expressions, allowing them to be removed with dead code elimination.
-* `--types` (bool) - Include type definition exports in the output. Defaults to "false".
 * `--typescript` (bool) - Generate TypeScript definitions. Defaults to "false".
 * `--use-define` (bool) - Update all schema relations to use `Schema#define`.
 
@@ -958,12 +959,12 @@ The plugin accepts an object with the following options -- with most of them bei
   `shapeshifter/schematics`.
 * `defaultNullable`
 * `disableEslint`
-* `format`
 * `importPath`
 * `includeAttributes`
+* `includeDefinitions`
 * `includeSchemas`
-* `includeTypes`
 * `indentCharacter`
+* `renderers`
 * `stripPropTypes`
 * `useDefine`
 

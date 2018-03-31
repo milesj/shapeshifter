@@ -20,6 +20,11 @@ app
         default: false,
         description: 'Include an attribute list in the schema class export.',
       },
+      definitions: {
+        boolean: true,
+        default: false,
+        description: 'Include type annotations and definitions in the output.',
+      },
       'disable-eslint': {
         boolean: true,
         default: false,
@@ -60,11 +65,6 @@ app
         default: false,
         description: 'Strip PropTypes shapes in production.',
       },
-      types: {
-        boolean: true,
-        default: false,
-        description: 'Include type definition exports in the output.',
-      },
       typescript: {
         boolean: true,
         default: false,
@@ -88,8 +88,8 @@ app
         disableEslint: options.disableEslint,
         importPath: options.import,
         includeAttributes: options.attributes,
+        includeDefinitions: options.definitions,
         includeSchemas: options.schemas,
-        includeTypes: options.types,
         indentCharacter: options.indent,
         renderers: renderers.filter(Boolean),
         stripPropTypes: options.stripPropTypes,

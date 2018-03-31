@@ -8,5 +8,5 @@ export const options = {
   renderers: ['prop-types'],
   includeSchemas: false,
   includeAttributes: false,
-  includeTypes: false,
+  includeDefinitions: false,
 };

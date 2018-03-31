@@ -17,11 +17,6 @@ export default class WebpackPlugin {
       throw new Error('A file path to the location of shapeshifter schematics is required.');
     }
 
-    if (opts.format) {
-      opts.renderer = opts.format;
-      delete opts.format;
-    }
-
     this.schematicsImportPath = schematicsImportPath;
     this.schematicsSource = Array.isArray(schematicsSource) ? schematicsSource : [schematicsSource];
     this.options = opts;

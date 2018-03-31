@@ -201,7 +201,7 @@ export default class Renderer {
    * Parse all type subsets out of the schema and append to the renderer.
    */
   parseSets() {
-    if (!this.options.includeTypes) {
+    if (!this.options.includeDefinitions) {
       return;
     }
 
