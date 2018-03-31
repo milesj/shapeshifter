@@ -23,7 +23,7 @@ export type ShapeEnumStructType = {
 };
 
 export type ShapeUnionStructType = {
-  multiUnion: ?number | ?boolean | ?ShapeEnumStructType | null,
+  multiUnion: number | boolean | ShapeEnumStructType | null,
 };
 
 export type ShapeType = {

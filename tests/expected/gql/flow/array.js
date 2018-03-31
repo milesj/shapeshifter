@@ -14,5 +14,5 @@ export type ArrayType = {
   numberField: Array<?number>,
   shapeField: ?Array<?ArrayShapeObjectType>,
   stringField: ?Array<?string>,
-  unionField: ?Array<?string | ?number>,
+  unionField: ?Array<string | number>,
 };

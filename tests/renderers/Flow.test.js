@@ -259,7 +259,7 @@ describe('FlowRenderer', () => {
             valueTypes,
           }),
         ),
-      ).toBe('?string | ?boolean | ?Array<number> | null');
+      ).toBe('string | boolean | Array<number> | null');
     });
 
     it('renders non-nullable', () => {
@@ -270,7 +270,7 @@ describe('FlowRenderer', () => {
             valueTypes,
           }),
         ),
-      ).toBe('?string | ?boolean | ?Array<number>');
+      ).toBe('string | boolean | Array<number>');
     });
 
     it('handles nested unions', () => {
@@ -291,7 +291,7 @@ describe('FlowRenderer', () => {
             valueTypes,
           }),
         ),
-      ).toBe('?string | ?boolean | ?Array<number> | FooBar | null');
+      ).toBe('string | boolean | Array<number> | FooBar | null');
     });
   });
 

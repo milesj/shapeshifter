@@ -32,12 +32,12 @@ export type ShapeType = {
     numberObj: ?{ [key: string]: ?number },
     boolObject: ?{ [key: string]: ?boolean },
     intStringObject: ?{ [key: number]: ?string },
-    unionObject: ?{ [key: string]: ?number | ?string | ?{
+    unionObject: ?{ [key: string]: number | string | {
       foo: ?string,
     } | null },
   },
   unionFields: ?{
-    multiUnion: ?number | ?boolean | ?ShapeClassName | ?{ [key: string]: ?string } | ?{
+    multiUnion: number | boolean | ShapeClassName | { [key: string]: ?string } | {
       string: ?string,
       enum: 123 | 456 | 789,
     } | null,

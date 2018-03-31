@@ -277,9 +277,9 @@ describe('PropTypesRenderer', () => {
           }),
         ),
       ).toBe(`PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.bool,
-PropTypes.arrayOf(PropTypes.number),
+PropTypes.string.isRequired,
+PropTypes.bool.isRequired,
+PropTypes.arrayOf(PropTypes.number).isRequired,
 ]).isRequired`);
     });
 
@@ -291,9 +291,9 @@ PropTypes.arrayOf(PropTypes.number),
           }),
         ),
       ).toBe(`PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.bool,
-PropTypes.arrayOf(PropTypes.number),
+PropTypes.string.isRequired,
+PropTypes.bool.isRequired,
+PropTypes.arrayOf(PropTypes.number).isRequired,
 ])`);
     });
 
@@ -315,12 +315,12 @@ PropTypes.arrayOf(PropTypes.number),
           }),
         ),
       ).toBe(`PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.bool,
-PropTypes.arrayOf(PropTypes.number),
+PropTypes.string.isRequired,
+PropTypes.bool.isRequired,
+PropTypes.arrayOf(PropTypes.number).isRequired,
 PropTypes.oneOfType([
-PropTypes.instanceOf(FooBar),
-]),
+PropTypes.instanceOf(FooBar).isRequired,
+]).isRequired,
 ])`);
     });
   });

@@ -19,6 +19,8 @@
 
 #### 🐞 Fixed
 
+* Union value types will no longer allow nullable.
+* Flow unions will now inject `null` when nullable.
 * Removed values from TypeScript string enums (will infer them instead).
 
 #### 🛠 Internal

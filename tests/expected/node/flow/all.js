@@ -74,7 +74,7 @@ export type ObjectType = {
     bar: ?boolean,
   } },
   stringField: ?{ [key: string]: ?string },
-  unionField: ?{ [key: string]: ?number | ?Array<?string> | null },
+  unionField: ?{ [key: string]: number | Array<?string> | null },
   objShorthandField: ?{ [key: string]: ?string },
   objKeyTypeField: ?{ [key: number]: ?string },
 };
@@ -194,12 +194,12 @@ export type ShapeType = {
     numberObj: ?{ [key: string]: ?number },
     boolObject: ?{ [key: string]: ?boolean },
     intStringObject: ?{ [key: number]: ?string },
-    unionObject: ?{ [key: string]: ?number | ?string | ?{
+    unionObject: ?{ [key: string]: number | string | {
       foo: ?string,
     } | null },
   },
   unionFields: ?{
-    multiUnion: ?number | ?boolean | ?ShapeClassName | ?{ [key: string]: ?string } | ?{
+    multiUnion: number | boolean | ShapeClassName | { [key: string]: ?string } | {
       string: ?string,
       enum: 123 | 456 | 789,
     } | null,
@@ -207,16 +207,16 @@ export type ShapeType = {
 };
 
 export type UnionType = {
-  arrayField: ?Array<?string> | ?Array<?{ [key: string]: ?string }> | null,
-  primitiveFields: ?boolean | ?number | null,
+  arrayField: Array<?string> | Array<?{ [key: string]: ?string }> | null,
+  primitiveFields: boolean | number | null,
   enumField: 'foo' | 'bar' | 'baz' | 789 | 456 | 123 | null,
-  instanceField: ?UnionClassName | UnionDefault | null,
-  objectField: ?{ [key: string]: ?number } | ?{ [key: string]: ?Array<?string> } | null,
-  shapeField: ?{
+  instanceField: UnionClassName | UnionDefault | null,
+  objectField: { [key: string]: ?number } | { [key: string]: ?Array<?string> } | null,
+  shapeField: {
     foo: ?string,
     bar: ?boolean,
-  } | ?{
-    qux: ?string | ?boolean | null,
+  } | {
+    qux: string | boolean | null,
   } | null,
-  unionField: ?string | 1 | 2 | 3 | null | ?boolean | ?number | null,
+  unionField: string | 1 | 2 | 3 | boolean | number | null,
 };

@@ -13,16 +13,16 @@ const RENDERERS = [
     key: 'flow',
     ext: 'js',
   },
-  {
-    name: 'PropTypes',
-    key: 'prop-types',
-    ext: 'js',
-  },
-  {
-    name: 'TypeScript',
-    key: 'typescript',
-    ext: 'ts',
-  },
+  // {
+  //   name: 'PropTypes',
+  //   key: 'prop-types',
+  //   ext: 'js',
+  // },
+  // {
+  //   name: 'TypeScript',
+  //   key: 'typescript',
+  //   ext: 'ts',
+  // },
 ];
 
 // Supported schema file formats

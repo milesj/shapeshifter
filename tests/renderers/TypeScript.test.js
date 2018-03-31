@@ -31,14 +31,28 @@ describe('TypeScriptRenderer', () => {
   });
 
   describe('renderArray()', () => {
-    it('renders', () => {
+    it('renders nullable', () => {
       expect(
         renderer.renderArray(
           new ArrayDefinition(options, 'foo', {
             valueType: 'string',
           }),
         ),
-      ).toBe('string[]');
+      ).toBe('Array<string | null> | null');
+    });
+
+    it('renders non-nullable', () => {
+      expect(
+        renderer.renderArray(
+          new ArrayDefinition(options, 'foo', {
+            nullable: false,
+            valueType: {
+              type: 'string',
+              nullable: false,
+            },
+          }),
+        ),
+      ).toBe('Array<string>');
     });
 
     it('handles non-primitive', () => {
@@ -51,7 +65,7 @@ describe('TypeScriptRenderer', () => {
             },
           }),
         ),
-      ).toBe('Array<{ [key: string]: string }>');
+      ).toBe('Array<{ [key: string]: string | null } | null> | null');
     });
 
     it('handles instance ofs', () => {
@@ -64,13 +78,23 @@ describe('TypeScriptRenderer', () => {
             },
           }),
         ),
-      ).toBe('FooBar[]');
+      ).toBe('Array<FooBar | null> | null');
     });
   });
 
   describe('renderBool()', () => {
-    it('renders', () => {
-      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).toBe('boolean');
+    it('renders nullable', () => {
+      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).toBe('boolean | null');
+    });
+
+    it('renders non-nullable', () => {
+      expect(
+        renderer.renderBool(
+          new BoolDefinition(options, 'foo', {
+            nullable: false,
+          }),
+        ),
+      ).toBe('boolean');
     });
   });
 
@@ -83,15 +107,26 @@ describe('TypeScriptRenderer', () => {
             values: [1, 23, 164],
           }),
         ),
-      ).toBe('FooBarEnum');
+      ).toBe('FooBarEnum | null');
     });
   });
 
   describe('renderInstance()', () => {
-    it('renders', () => {
+    it('renders nullable', () => {
       expect(
         renderer.renderInstance(
           new InstanceDefinition(options, 'foo', {
+            contract: 'FooBar',
+          }),
+        ),
+      ).toBe('FooBar | null');
+    });
+
+    it('renders non-nullable', () => {
+      expect(
+        renderer.renderInstance(
+          new InstanceDefinition(options, 'foo', {
+            nullable: false,
             contract: 'FooBar',
           }),
         ),
@@ -100,20 +135,41 @@ describe('TypeScriptRenderer', () => {
   });
 
   describe('renderNumber()', () => {
-    it('renders', () => {
-      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).toBe('number');
+    it('renders nullable', () => {
+      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).toBe('number | null');
+    });
+
+    it('renders non-nullable', () => {
+      expect(
+        renderer.renderNumber(
+          new NumberDefinition(options, 'foo', {
+            nullable: false,
+          }),
+        ),
+      ).toBe('number');
     });
   });
 
   describe('renderObject()', () => {
-    it('renders', () => {
+    it('renders nullable', () => {
       expect(
         renderer.renderObject(
           new ObjectDefinition(options, 'foo', {
             valueType: 'number',
           }),
         ),
-      ).toBe('{ [key: string]: number }');
+      ).toBe('{ [key: string]: number | null } | null');
+    });
+
+    it('renders non-nullable', () => {
+      expect(
+        renderer.renderObject(
+          new ObjectDefinition(options, 'foo', {
+            nullable: false,
+            valueType: 'number',
+          }),
+        ),
+      ).toBe('{ [key: string]: number | null }');
     });
 
     it('handles key type', () => {
@@ -127,15 +183,26 @@ describe('TypeScriptRenderer', () => {
             },
           }),
         ),
-      ).toBe('{ [key: number]: string[] }');
+      ).toBe('{ [key: number]: Array<string | null> | null } | null');
     });
   });
 
   describe('renderReference()', () => {
-    it('renders', () => {
+    it('renders nullable', () => {
       expect(
         renderer.renderReference(
           new ReferenceDefinition(options, 'foo', {
+            self: true,
+          }),
+        ),
+      ).toBe('FooInterface | null');
+    });
+
+    it('renders non-nullable', () => {
+      expect(
+        renderer.renderReference(
+          new ReferenceDefinition(options, 'foo', {
+            nullable: false,
             self: true,
           }),
         ),
@@ -144,8 +211,18 @@ describe('TypeScriptRenderer', () => {
   });
 
   describe('renderString()', () => {
-    it('renders', () => {
-      expect(renderer.renderString(new StringDefinition(options, 'foo'))).toBe('string');
+    it('renders nullable', () => {
+      expect(renderer.renderString(new StringDefinition(options, 'foo'))).toBe('string | null');
+    });
+
+    it('renders non-nullable', () => {
+      expect(
+        renderer.renderString(
+          new StringDefinition(options, 'foo', {
+            nullable: false,
+          }),
+        ),
+      ).toBe('string');
     });
   });
 
@@ -159,14 +236,25 @@ describe('TypeScriptRenderer', () => {
       },
     ];
 
-    it('renders', () => {
+    it('renders nullable', () => {
       expect(
         renderer.renderUnion(
           new UnionDefinition(options, 'foo', {
             valueTypes,
           }),
         ),
-      ).toBe('string | boolean | number[]');
+      ).toBe('string | boolean | Array<number | null> | null');
+    });
+
+    it('renders non-nullable', () => {
+      expect(
+        renderer.renderUnion(
+          new UnionDefinition(options, 'foo', {
+            nullable: false,
+            valueTypes,
+          }),
+        ),
+      ).toBe('string | boolean | Array<number | null>');
     });
 
     it('handles nested unions', () => {
@@ -187,7 +275,17 @@ describe('TypeScriptRenderer', () => {
             ],
           }),
         ),
-      ).toBe('string | boolean | number[] | FooBar');
+      ).toBe('string | boolean | Array<number | null> | FooBar | null');
+    });
+  });
+
+  describe('wrapNullable()', () => {
+    it('renders nullable', () => {
+      expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('foo | null');
+    });
+
+    it('renders non-nullable', () => {
+      expect(renderer.wrapNullable({ isNullable: () => false }, 'foo')).toBe('foo');
     });
   });
 });
