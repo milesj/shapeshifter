@@ -14,6 +14,7 @@
 
 * Can now generate and include multiple renderers (typed languages) into the output.
   * Added individual options `--flow`, `--prop-types`, and `--typescript`, to opt into generation.
+* Updated `WebpackPlugin` to support Webpack 4.
 
 #### 🐞 Fixed
 

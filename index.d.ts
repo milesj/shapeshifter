@@ -515,3 +515,27 @@ declare module 'shapeshifter' {
   export default Schema;
 
 }
+declare module 'shapeshifter/lib/bundlers/WebpackPlugin' {
+  /// <reference types="webpack" />
+  import webpack from 'webpack';
+  import { Options } from 'shapeshifter/lib/types';
+  export interface WebpackPluginOptions extends Options {
+      schematicsImportPath?: string;
+      schematicsSource: string | string[];
+  }
+  export default class WebpackPlugin {
+      options: Options;
+      schematicsImportPath: string;
+      schematicsSource: string[];
+      constructor(options: WebpackPluginOptions);
+      apply(compiler: webpack.Compiler): void;
+      handleResolve: (result: any, callback: any) => void;
+  }
+
+}
+declare module 'shapeshifter/lib/bundlers/webpackLoader' {
+  /// <reference types="webpack" />
+  import webpack from 'webpack';
+  export default function webpackLoader(this: webpack.loader.LoaderContext): void;
+
+}

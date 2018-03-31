@@ -5,23 +5,23 @@
 
 /* eslint-disable promise/always-return, promise/no-callback-in-promise, babel/no-invalid-this */
 
+import webpack from 'webpack';
 import Transpiler from '../Transpiler';
 
-export default function webpackLoader() {
+export default function webpackLoader(this: webpack.loader.LoaderContext) {
   const { schematicsSource, ...options } = this.query;
-  const callback = this.async();
-  const transpiler = new Transpiler(options);
+  const callback = this.async() as webpack.loader.loaderCallback;
 
   // Mark as cacheable
   this.cacheable();
 
   // Add schematics folder as a dependency
-  schematicsSource.forEach(depPath => {
+  schematicsSource.forEach((depPath: string) => {
     this.addDependency(depPath);
   });
 
   // Transpile the schematics
-  transpiler
+  new Transpiler(options)
     .transpile(schematicsSource)
     .then(source => {
       callback(null, source);

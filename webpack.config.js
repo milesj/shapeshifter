@@ -1,7 +1,10 @@
+/* eslint-disable sort-keys */
+
 const path = require('path');
 const ShapeshifterPlugin = require('./lib/bundlers/WebpackPlugin').default;
 
 module.exports = {
+  mode: 'development',
   entry: path.join(__dirname, 'tests/bundle.js'),
   output: {
     filename: 'bundle.min.js',
@@ -12,12 +15,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            extends: path.join(__dirname, 'node_modules/@milesj/build-tool-config/babel.node.json5'),
-          },
-        },
+        loader: 'babel-loader',
       },
     ],
   },
@@ -28,9 +26,9 @@ module.exports = {
       schematicsSource: path.join(__dirname, 'tests/schemas'),
       defaultNullable: true,
       includeAttributes: true,
+      includeDefinitions: true,
       includeSchemas: true,
-      includeTypes: true,
-      format: 'flow',
+      renderers: ['prop-types'],
     }),
   ],
   // The shapeshifter import won't work from within shapeshifter itself,
