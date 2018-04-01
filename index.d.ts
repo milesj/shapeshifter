@@ -26,6 +26,8 @@ declare module 'shapeshifter/lib/Schema' {
       static HAS_MANY: string;
       static BELONGS_TO: string;
       static BELONGS_TO_MANY: string;
+      static MORPH_TO: string;
+      static MORPH_TO_MANY: string;
       attributes: string[];
       metadata: MetadataField;
       primaryKey: PrimaryKey;
@@ -43,6 +45,8 @@ declare module 'shapeshifter/lib/Schema' {
       define(relations: SchemaExpandedMap): this;
       hasOne(relations: SchemaMap): this;
       hasMany(relations: SchemaMap): this;
+      morphTo(relations: SchemaMap): this;
+      morphToMany(relations: SchemaMap): this;
   }
 
 }
@@ -67,7 +71,7 @@ declare module 'shapeshifter/lib/types' {
       [attribute: string]: Schema;
   }
   export interface SchemaExpandedMap {
-      [attribute: string]: Schema | Schema[];
+      [attribute: string]: Schema | Schema[] | Relation;
   }
   export interface Relation {
       attribute: string;
@@ -454,6 +458,7 @@ declare module 'shapeshifter/lib/renderers/TypeScript' {
   import InstanceDefinition from 'shapeshifter/lib/definitions/Instance';
   import NumberDefinition from 'shapeshifter/lib/definitions/Number';
   import ObjectDefinition from 'shapeshifter/lib/definitions/Object';
+  import ReferenceDefinition from 'shapeshifter/lib/definitions/Reference';
   import ShapeDefinition from 'shapeshifter/lib/definitions/Shape';
   import StringDefinition from 'shapeshifter/lib/definitions/String';
   import UnionDefinition from 'shapeshifter/lib/definitions/Union';
@@ -467,9 +472,11 @@ declare module 'shapeshifter/lib/renderers/TypeScript' {
       renderInstance(definition: InstanceDefinition): string;
       renderNumber(definition: NumberDefinition): string;
       renderObject(definition: ObjectDefinition, depth: number): string;
+      renderReference(definition: ReferenceDefinition): string;
       renderShape(definition: ShapeDefinition, depth: number): string;
       renderString(definition: StringDefinition): string;
       renderUnion(definition: UnionDefinition, depth: number): string;
+      wrapNullable(definition: Definition<Config>, template: string): string;
   }
 
 }
@@ -508,10 +515,18 @@ declare module 'shapeshifter/lib/Transpiler' {
   }
 
 }
+declare module 'shapeshifter/lib/morph' {
+  import Schema from 'shapeshifter/lib/Schema';
+  import { Relation } from 'shapeshifter/lib/types';
+  export default function morph(schema: Schema | Schema[]): Relation;
+
+}
 declare module 'shapeshifter' {
   import Schema from 'shapeshifter/lib/Schema';
+  import morph from 'shapeshifter/lib/morph';
   import { MetadataField, PrimaryKey, Relation } from 'shapeshifter/lib/types';
   export { PrimaryKey, Relation, MetadataField };
+  export { morph };
   export default Schema;
 
 }

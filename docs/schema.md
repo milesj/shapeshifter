@@ -27,7 +27,7 @@ The following properties are available on the `Schema` class instance.
 ```javascript
 {
   attribute: 'foo',         // Field name
-  schema: Schema,           // Reference schema class
+  schema: schemaInstance,   // Reference schema class
   relation: Schema.HAS_ONE, // Relation type
   collection: false,        // Is it an array?
 }
@@ -35,7 +35,7 @@ The following properties are available on the `Schema` class instance.
 
 * `relationTypes` (object) - Maps attribute names to relation types. A relation type is one of the
   following constants found on the `Schema` class: `HAS_ONE`, `HAS_MANY`, `BELONGS_TO`,
-  `BELONGS_TO_MANY`.
+  `BELONGS_TO_MANY`, `MORPH_TO`, and `MORPH_TO_MANY`.
 
 > Schemas are not supported by GraphQL.
 
@@ -63,6 +63,8 @@ we add a has many `posts` relation, and a has one `country` relation to the curr
 we would generate the following output.
 
 ```javascript
+import Schema from 'shapeshifter';
+
 export const countrySchema = new Schema('countries');
 
 export const postSchema = new Schema('posts');
@@ -92,5 +94,48 @@ postSchema.define({
 userSchema.define({
   country: countrySchema,
   posts: [postSchema],
+});
+```
+
+### Polymorphism
+
+Schemas support a rudimentary form of polymorphism through relations. When an attribute is defined,
+for example `item` (which points to another record/schema), an associated `item_id` (the foreign
+key) and `item_type` (the name of a model or class) are also defined.
+
+The generated output would look something like the following.
+
+```js
+import Schema from 'shapeshifter';
+
+export const attachmentSchema = new Schema('attachments');
+
+export const ownerSchema = new Schema('owners');
+
+export const postSchema = new Schema('posts');
+
+attachmentSchema.morphTo({
+  owner: ownerSchema, // User, Bot, etc
+});
+
+post.morphToMany({
+  attachments: attachmentSchema, // Image, PDF, etc
+});
+```
+
+If `--use-define` is passed on the command line, we need to use the `morph` function exported
+alongside the `Schema`.
+
+```javascript
+import Schema, { morph } from 'shapeshifter';
+
+// ...
+
+attachmentSchema.define({
+  owner: morph(ownerSchema),
+});
+
+post.define({
+  attachments: morph([attachmentSchema]),
 });
 ```

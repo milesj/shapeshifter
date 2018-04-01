@@ -1,4 +1,5 @@
 import Schema from '../src/Schema';
+import morph from '../src/morph';
 
 describe('Schema', () => {
   let schema;
@@ -135,6 +136,36 @@ describe('Schema', () => {
       ]);
     });
 
+    it('adds a morph to relation for a single schema', () => {
+      expect(schema.relations).toEqual([]);
+
+      schema.define({ foo: morph(foo) });
+
+      expect(schema.relations).toEqual([
+        {
+          attribute: 'foo',
+          schema: foo,
+          relation: 'morphTo',
+          collection: false,
+        },
+      ]);
+    });
+
+    it('adds a morph to many relation for a single schema', () => {
+      expect(schema.relations).toEqual([]);
+
+      schema.define({ foo: morph([foo]) });
+
+      expect(schema.relations).toEqual([
+        {
+          attribute: 'foo',
+          schema: foo,
+          relation: 'morphToMany',
+          collection: true,
+        },
+      ]);
+    });
+
     it('errors if schema array is not valid', () => {
       expect(() => {
         schema.define({ foo: [] });
@@ -183,6 +214,42 @@ describe('Schema', () => {
         },
       ]);
       expect(schema.attributes).toEqual(['foo', 'qux']);
+    });
+  });
+
+  describe('morphTo()', () => {
+    it('adds a schema and maps the attribute', () => {
+      expect(schema.relations).toEqual([]);
+
+      schema.morphTo({ qux });
+
+      expect(schema.relations).toEqual([
+        {
+          attribute: 'qux',
+          schema: qux,
+          relation: 'morphTo',
+          collection: false,
+        },
+      ]);
+      expect(schema.attributes).toEqual(['qux', 'qux_id', 'qux_type']);
+    });
+  });
+
+  describe('morphToMany()', () => {
+    it('adds a schema and maps the attribute', () => {
+      expect(schema.relations).toEqual([]);
+
+      schema.morphToMany({ qux });
+
+      expect(schema.relations).toEqual([
+        {
+          attribute: 'qux',
+          schema: qux,
+          relation: 'morphToMany',
+          collection: true,
+        },
+      ]);
+      expect(schema.attributes).toEqual(['qux', 'qux_id', 'qux_type']);
     });
   });
 });

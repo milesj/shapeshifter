@@ -4,8 +4,11 @@
  */
 
 import Schema from './Schema';
+import morph from './morph';
 import { MetadataField, PrimaryKey, Relation } from './types';
 
 export { PrimaryKey, Relation, MetadataField };
+
+export { morph };
 
 export default Schema;

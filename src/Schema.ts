@@ -10,6 +10,8 @@ const BELONGS_TO: string = 'belongsTo';
 const BELONGS_TO_MANY: string = 'belongsToMany';
 const HAS_ONE: string = 'hasOne';
 const HAS_MANY: string = 'hasMany';
+const MORPH_TO: string = 'morphTo';
+const MORPH_TO_MANY: string = 'morphToMany';
 
 export default class Schema {
   static HAS_ONE: string = HAS_ONE;
@@ -19,6 +21,10 @@ export default class Schema {
   static BELONGS_TO: string = BELONGS_TO;
 
   static BELONGS_TO_MANY: string = BELONGS_TO_MANY;
+
+  static MORPH_TO: string = MORPH_TO;
+
+  static MORPH_TO_MANY: string = MORPH_TO_MANY;
 
   attributes: string[] = [];
 
@@ -56,7 +62,7 @@ export default class Schema {
    * Map a list of attribute names.
    */
   addAttributes(attributes: string[]): this {
-    this.attributes = this.attributes.concat(attributes);
+    this.attributes = Array.from(new Set([...this.attributes, ...attributes]));
 
     return this;
   }
@@ -75,18 +81,25 @@ export default class Schema {
       }
     }
 
+    // Set relations
     this.relations.push({
       attribute,
-      collection: relation === BELONGS_TO_MANY || relation === HAS_MANY,
+      collection:
+        relation === BELONGS_TO_MANY || relation === HAS_MANY || relation === MORPH_TO_MANY,
       relation,
       schema,
     });
 
     this.relationTypes[attribute] = relation;
 
-    if (this.attributes.indexOf(attribute) === -1) {
-      this.attributes.push(attribute);
+    // Set attributes
+    const attributes = [attribute];
+
+    if (relation === MORPH_TO || relation === MORPH_TO_MANY) {
+      attributes.push(`${attribute}_id`, `${attribute}_type`);
     }
+
+    this.addAttributes(attributes);
 
     return this;
   }
@@ -123,10 +136,12 @@ export default class Schema {
     Object.keys(relations).forEach((attribute: string) => {
       const schema = relations[attribute];
 
-      if (Array.isArray(schema)) {
-        this.addRelation(attribute, schema[0], HAS_MANY);
-      } else {
+      if (schema instanceof Schema) {
         this.addRelation(attribute, schema, HAS_ONE);
+      } else if (Array.isArray(schema)) {
+        this.addRelation(attribute, schema[0], HAS_MANY);
+      } else if (isObject(schema)) {
+        this.addRelation(attribute, schema.schema, schema.relation);
       }
     });
 
@@ -145,5 +160,19 @@ export default class Schema {
    */
   hasMany(relations: SchemaMap): this {
     return this.addRelations(relations, HAS_MANY);
+  }
+
+  /**
+   * Map morph-to nested entities by attribute name.
+   */
+  morphTo(relations: SchemaMap): this {
+    return this.addRelations(relations, MORPH_TO);
+  }
+
+  /**
+   * Map morph-to-many nested entities by attribute name.
+   */
+  morphToMany(relations: SchemaMap): this {
+    return this.addRelations(relations, MORPH_TO_MANY);
   }
 }

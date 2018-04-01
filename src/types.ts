@@ -30,7 +30,7 @@ export interface SchemaMap {
 }
 
 export interface SchemaExpandedMap {
-  [attribute: string]: Schema | Schema[];
+  [attribute: string]: Schema | Schema[] | Relation;
 }
 
 export interface Relation {
