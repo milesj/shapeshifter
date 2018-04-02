@@ -84,6 +84,10 @@ export interface ObjectConfig extends Config {
   valueType: TypeDefinition;
 }
 
+export interface PolymorphConfig extends Config {
+  valueTypes: TypeDefinition[];
+}
+
 export interface ReferenceConfig extends Config {
   export?: boolean;
   reference: string;

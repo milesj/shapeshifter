@@ -14,6 +14,7 @@ import isPrimitive from './helpers/isPrimitive';
 import NumberDefinition from './definitions/Number';
 import normalizeType from './helpers/normalizeType';
 import ObjectDefinition from './definitions/Object';
+import PolymorphDefinition from './definitions/Polymorph';
 import ReferenceDefinition from './definitions/Reference';
 import ShapeDefinition from './definitions/Shape';
 import StringDefinition from './definitions/String';
@@ -68,6 +69,9 @@ export default class DefinitionFactory {
 
       case 'object':
         return new ObjectDefinition(options, attribute, config);
+
+      case 'polymorph':
+        return new PolymorphDefinition(options, attribute, config);
 
       case 'shape':
         return new ShapeDefinition(options, attribute, config);

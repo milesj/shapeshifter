@@ -15,6 +15,9 @@
 
 * Can now generate and include multiple renderers (typed languages) into the output.
   * Added individual options `--flow`, `--prop-types`, and `--typescript`, to opt into generation.
+* Added polymorphic attribute support.
+  * `Schema`s can define polymorphic relations with `morphTo` and `morphToMany`.
+  * Schematics can define with the new "polymorph" field definition type.
 * Added proper `null` support for TypeScript.
 * Updated `WebpackPlugin` to support Webpack 4.
 
