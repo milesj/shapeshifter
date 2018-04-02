@@ -122,6 +122,8 @@ declare module 'shapeshifter/lib/types' {
       valueTypes: TypeDefinition[];
   }
   export interface MetadataField {
+      morphForeignKeySuffix?: string;
+      morphTypeSuffix?: string;
       primaryKey?: string;
       resourceName?: string;
   }

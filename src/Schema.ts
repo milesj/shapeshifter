@@ -53,9 +53,9 @@ export default class Schema {
     }
     /* eslint-enable no-param-reassign */
 
-    this.metadata = metadata;
-    this.primaryKey = primaryKey as PrimaryKey;
     this.resourceName = resourceName;
+    this.primaryKey = primaryKey as PrimaryKey;
+    this.metadata = metadata;
   }
 
   /**
@@ -81,6 +81,8 @@ export default class Schema {
       }
     }
 
+    const { morphForeignKeySuffix = '_id', morphTypeSuffix = '_type' } = this.metadata;
+
     // Set relations
     this.relations.push({
       attribute,
@@ -95,8 +97,8 @@ export default class Schema {
     // Set attributes
     const attributes = [attribute];
 
-    if (relation === MORPH_TO || relation === MORPH_TO_MANY) {
-      attributes.push(`${attribute}_id`, `${attribute}_type`);
+    if (relation === MORPH_TO) {
+      attributes.push(attribute + morphForeignKeySuffix, attribute + morphTypeSuffix);
     }
 
     this.addAttributes(attributes);

@@ -108,6 +108,8 @@ export interface UnionConfig extends Config {
 // JSON Structure
 
 export interface MetadataField {
+  morphForeignKeySuffix?: string;
+  morphTypeSuffix?: string;
   primaryKey?: string;
   resourceName?: string;
 }
