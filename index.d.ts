@@ -103,6 +103,9 @@ declare module 'shapeshifter/lib/types' {
       keyType?: TypeDefinition;
       valueType: TypeDefinition;
   }
+  export interface PolymorphConfig extends Config {
+      valueTypes: TypeDefinition[];
+  }
   export interface ReferenceConfig extends Config {
       export?: boolean;
       reference: string;
@@ -237,6 +240,15 @@ declare module 'shapeshifter/lib/definitions/Object' {
   }
 
 }
+declare module 'shapeshifter/lib/definitions/Polymorph' {
+  import Definition from 'shapeshifter/lib/Definition';
+  import { Config, PolymorphConfig } from 'shapeshifter/lib/types';
+  export default class PolymorphDefinition extends Definition<PolymorphConfig> {
+      valueTypes: Definition<Config>[];
+      validateConfig(): void;
+  }
+
+}
 declare module 'shapeshifter/lib/definitions/Reference' {
   import Definition from 'shapeshifter/lib/Definition';
   import { ReferenceConfig } from 'shapeshifter/lib/types';
@@ -302,7 +314,7 @@ declare module 'shapeshifter/lib/Schematic' {
       setAttributes(attributes: AttributesField): void;
       setConstants(constants: ConstantsField): void;
       setImports(imports: ImportsField): void;
-      setMeta(metadata: MetadataField): void;
+      setMetadata(metadata: MetadataField): void;
       setName(name: string): void;
       setReferences(references: ReferencesField): void;
       setShapes(shapes: ShapesField): void;
@@ -329,6 +341,7 @@ declare module 'shapeshifter/lib/Renderer' {
   import InstanceDefinition from 'shapeshifter/lib/definitions/Instance';
   import NumberDefinition from 'shapeshifter/lib/definitions/Number';
   import ObjectDefinition from 'shapeshifter/lib/definitions/Object';
+  import PolymorphDefinition from 'shapeshifter/lib/definitions/Polymorph';
   import ReferenceDefinition from 'shapeshifter/lib/definitions/Reference';
   import ShapeDefinition from 'shapeshifter/lib/definitions/Shape';
   import StringDefinition from 'shapeshifter/lib/definitions/String';
@@ -370,6 +383,7 @@ declare module 'shapeshifter/lib/Renderer' {
       renderObjectProps(props: Definition<Config>[], depth?: number, sep?: string): string[];
       renderOrFormat(value: PrimitiveType | Definition<Config>, depth: number, valueType?: string): string;
       renderPlainObject(object: Struct, depth?: number): string;
+      renderPolymorph(definition: PolymorphDefinition, depth: number): string;
       renderReference(definition: ReferenceDefinition): string;
       renderSchema(name: string, attributes: Definition<Config>[] | undefined, metadata: MetadataField): string;
       renderShape(definition: ShapeDefinition, depth: number): string;

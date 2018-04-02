@@ -449,6 +449,10 @@ many).
 
 > Customizing the relation type is not supported by GraphQL.
 
+## Polymorphic
+
+TODO
+
 ## Instance Ofs
 
 The `instance` type provides a mechanism for comparing a value to an object (class, function, etc)

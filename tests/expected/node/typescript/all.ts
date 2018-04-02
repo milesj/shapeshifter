@@ -188,6 +188,20 @@ export interface ObjectInterface {
   objKeyTypeField: { [key: number]: string | null } | null;
 }
 
+export interface PolymorphVideoInterface {
+  path: string | null;
+}
+
+export interface PolymorphImageInterface {
+  url: string | null;
+}
+
+export interface PolymorphInterface {
+  item: PolymorphImageInterface | PolymorphVideoInterface | null;
+  item_id: string | number | null;
+  item_type: string | null;
+}
+
 export interface PrimitiveInterface {
   boolField: boolean | null;
   boolFieldExpanded: boolean;

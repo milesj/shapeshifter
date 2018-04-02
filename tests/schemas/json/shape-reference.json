@@ -1,7 +1,7 @@
 {
   "name": "ShapeReference",
   "shapes": {
-    "price": {
+    "Price": {
       "amount": "number",
       "nativeAmount": "number",
       "exchangeRate": "number"
@@ -10,16 +10,16 @@
   "attributes": {
     "fees": {
       "type": "shape",
-      "reference": "price"
+      "reference": "Price"
     },
     "taxes": {
       "type": "shape",
-      "reference": "price",
+      "reference": "Price",
       "nullable": false
     },
     "total": {
       "type": "shape",
-      "reference": "price",
+      "reference": "Price",
       "nullable": false
     }
   }

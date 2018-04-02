@@ -79,6 +79,20 @@ export type ObjectType = {
   objKeyTypeField: ?{ [key: number]: ?string },
 };
 
+export type PolymorphVideoType = {
+  path: ?string,
+};
+
+export type PolymorphImageType = {
+  url: ?string,
+};
+
+export type PolymorphType = {
+  item: PolymorphImageType | PolymorphVideoType | null,
+  item_id: string | number | null,
+  item_type: ?string,
+};
+
 export type PrimitiveType = {
   boolField: ?boolean,
   boolFieldExpanded: boolean,

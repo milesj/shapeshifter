@@ -28,8 +28,13 @@ export default class PolymorphDefinition extends Definition<PolymorphConfig> {
       },
     );
 
-    this.valueTypes = this.config.valueTypes.map((type, i) =>
-      DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, type),
-    );
+    this.valueTypes = this.config.valueTypes.map((type, i) => {
+      const config = typeof type === 'string' ? { type } : type;
+
+      return DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, {
+        ...config,
+        nullable: false,
+      });
+    });
   }
 }

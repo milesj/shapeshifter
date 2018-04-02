@@ -34,7 +34,7 @@ describe('Schematic', () => {
           },
           options,
         ),
-    ).toThrowError('[Foo] No attributes found in schema.');
+    ).toThrowError('[Foo] No attributes found in schema "foo.json".');
   });
 
   it('errors if no `attributes` defined', () => {
@@ -48,7 +48,7 @@ describe('Schematic', () => {
           },
           options,
         ),
-    ).toThrowError('[Foo] No attributes found in schema.');
+    ).toThrowError('[Foo] No attributes found in schema "foo.json".');
   });
 
   it('does not error if `name` and `attributes` are defined', () => {

@@ -1,0 +1,26 @@
+{
+  "name": "Polymorph",
+  "references": {
+    "PolymorphVideo": "./polymorph-video.json"
+  },
+  "shapes": {
+    "Image": {
+      "url": "string"
+    }
+  },
+  "attributes": {
+    "item": {
+      "type": "polymorph",
+      "valueTypes": [
+        {
+          "type": "shape",
+          "reference": "Image"
+        },
+        {
+          "type": "reference",
+          "reference": "PolymorphVideo"
+        }
+      ]
+    }
+  }
+}

@@ -135,6 +135,26 @@ export const ObjectShape = PropTypes.shape({
   objKeyTypeField: PropTypes.objectOf(PropTypes.string),
 });
 
+export const PolymorphVideoShape = PropTypes.shape({
+  path: PropTypes.string,
+});
+
+export const PolymorphImageShape = PropTypes.shape({
+  url: PropTypes.string,
+});
+
+export const PolymorphShape = PropTypes.shape({
+  item: PropTypes.oneOfType([
+    PolymorphImageShape.isRequired,
+    PolymorphVideoShape.isRequired,
+  ]),
+  item_id: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.number.isRequired,
+  ]),
+  item_type: PropTypes.string,
+});
+
 export const PrimitiveShape = PropTypes.shape({
   boolField: PropTypes.bool,
   boolFieldExpanded: PropTypes.bool.isRequired,

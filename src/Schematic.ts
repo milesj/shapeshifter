@@ -6,6 +6,7 @@
 import path from 'path';
 import Definition from './Definition';
 import DefinitionFactory from './DefinitionFactory';
+import PolymorphDefinition from './definitions/Polymorph';
 import isObject from './helpers/isObject';
 import {
   AttributesField,
@@ -28,21 +29,21 @@ export default class Schematic {
 
   options: Options;
 
-  metadata: MetadataField;
+  metadata: MetadataField = {};
 
-  attributes: Definition<any>[];
+  attributes: Definition<any>[] = [];
 
-  constants: ConstantsField;
+  constants: ConstantsField = {};
 
-  imports: ImportsField;
+  imports: ImportsField = [];
 
-  shapes: ShapesField;
+  shapes: ShapesField = {};
 
-  subsets: SubsetsField;
+  subsets: SubsetsField = {};
 
-  references: ReferencesField;
+  references: ReferencesField = {};
 
-  referenceSchematics: { [key: string]: Schematic };
+  referenceSchematics: { [key: string]: Schematic } = {};
 
   /**
    * Load and parse a schema, either as a JSON string, or as a JS object.
@@ -52,14 +53,6 @@ export default class Schematic {
     this.name = path.basename(filePath);
     this.data = data;
     this.options = options;
-    this.metadata = {};
-    this.attributes = [];
-    this.constants = {};
-    this.imports = [];
-    this.shapes = {};
-    this.subsets = {};
-    this.references = {};
-    this.referenceSchematics = {};
 
     this.setup();
   }
@@ -78,10 +71,9 @@ export default class Schematic {
     const { data } = this;
 
     this.setName(data.name);
-    this.setAttributes(data.attributes);
 
     if (typeof data.meta !== 'undefined') {
-      this.setMeta(data.meta);
+      this.setMetadata(data.meta);
     }
 
     if (typeof data.constants !== 'undefined') {
@@ -103,6 +95,9 @@ export default class Schematic {
     if (typeof data.subsets !== 'undefined') {
       this.setSubsets(data.subsets);
     }
+
+    // Do last so we can reference previous structures
+    this.setAttributes(data.attributes);
   }
 
   /**
@@ -110,13 +105,35 @@ export default class Schematic {
    */
   setAttributes(attributes: AttributesField) {
     if (!isObject(attributes) || Object.keys(attributes).length === 0) {
-      this.throwError('No attributes found in schema.');
+      this.throwError(`No attributes found in schema "${path.basename(this.path)}".`);
     }
 
+    const { morphForeignKeySuffix = '_id', morphTypeSuffix = '_type' } = this.metadata;
+
     // Convert to type definitions
-    this.attributes = Object.keys(attributes).map(attribute =>
-      DefinitionFactory.factory(this.options, attribute, attributes[attribute]),
-    );
+    Object.keys(attributes).forEach(attribute => {
+      const definition = DefinitionFactory.factory(this.options, attribute, attributes[attribute]);
+
+      this.attributes.push(definition);
+
+      // Add additional fields for polymorphic relations
+      if (definition instanceof PolymorphDefinition) {
+        this.attributes.push(
+          DefinitionFactory.factory(this.options, attribute + morphForeignKeySuffix, {
+            nullable: definition.isNullable(),
+            type: 'union',
+            valueTypes: ['string', 'number'],
+          }),
+        );
+
+        this.attributes.push(
+          DefinitionFactory.factory(this.options, attribute + morphTypeSuffix, {
+            nullable: definition.isNullable(),
+            type: 'string',
+          }),
+        );
+      }
+    });
   }
 
   /**
@@ -144,7 +161,7 @@ export default class Schematic {
   /**
    * Set schema metadata.
    */
-  setMeta(metadata: MetadataField) {
+  setMetadata(metadata: MetadataField) {
     if (!isObject(metadata)) {
       this.throwError('Schema metadata must be an object of strings.');
     }

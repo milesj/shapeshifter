@@ -15,6 +15,7 @@ import EnumDefinition from './definitions/Enum';
 import InstanceDefinition from './definitions/Instance';
 import NumberDefinition from './definitions/Number';
 import ObjectDefinition from './definitions/Object';
+import PolymorphDefinition from './definitions/Polymorph';
 import ReferenceDefinition from './definitions/Reference';
 import ShapeDefinition from './definitions/Shape';
 import StringDefinition from './definitions/String';
@@ -287,6 +288,8 @@ export default class Renderer {
       return this.renderNumber(definition);
     } else if (definition instanceof ObjectDefinition) {
       return this.renderObject(definition, depth);
+    } else if (definition instanceof PolymorphDefinition) {
+      return this.renderPolymorph(definition, depth);
     } else if (definition instanceof ReferenceDefinition) {
       return this.renderReference(definition);
     } else if (definition instanceof ShapeDefinition) {
@@ -434,6 +437,19 @@ export default class Renderer {
       ),
       depth,
     );
+  }
+
+  /**
+   * Render a polymorph definition.
+   */
+  renderPolymorph(definition: PolymorphDefinition, depth: number): string {
+    definition.valueTypes.forEach(value => {
+      if (!(value instanceof ShapeDefinition || value instanceof ReferenceDefinition)) {
+        throw new TypeError('Polymorphic relations must be references or shape references.');
+      }
+    });
+
+    return this.renderUnion(definition, depth);
   }
 
   /**

@@ -18,6 +18,7 @@
     * [Self References](./definitions.md#self-references)
     * [Exported Schemas](./definitions.md#exported-schemas)
     * [Relation Type](./definitions.md#relation-type)
+  * [Polymorphic](./definitions.md#polymorphic)
   * [Instance Ofs](./definitions.md#instance-ofs)
 * [Schema Classes](./schema.md)
   * [Attributes](./schema.md#attributes)

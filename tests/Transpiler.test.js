@@ -44,6 +44,7 @@ const FORMATS = [
       'reference',
       'reference-self',
       'shape-reference',
+      'polymorph',
     ],
   },
   {
@@ -63,6 +64,7 @@ const FORMATS = [
       'reference',
       'reference-self',
       'shape-reference',
+      'polymorph',
     ],
   },
   {
