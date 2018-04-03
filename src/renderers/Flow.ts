@@ -10,6 +10,7 @@ import ArrayDefinition from '../definitions/Array';
 import BoolDefinition from '../definitions/Bool';
 import EnumDefinition from '../definitions/Enum';
 import InstanceDefinition from '../definitions/Instance';
+import KeyDefinition from '../definitions/Key';
 import NumberDefinition from '../definitions/Number';
 import ObjectDefinition from '../definitions/Object';
 import ReferenceDefinition from '../definitions/Reference';
@@ -21,7 +22,7 @@ import { Config, Options } from '../types';
 export default class FlowRenderer extends Renderer {
   suffix: string = 'Type';
 
-  afterParse() {
+  beforeParse() {
     this.builder.comments.add('/* @flow */');
   }
 
@@ -53,6 +54,14 @@ export default class FlowRenderer extends Renderer {
 
   renderInstance(definition: InstanceDefinition): string {
     return this.wrapNullable(definition, this.formatValue(definition.config.contract, 'function'));
+  }
+
+  renderKey(definition: KeyDefinition): string {
+    const union = this.renderUnion(definition.keyType, 0);
+
+    this.builder.header.add(`export type Key = ${union};`);
+
+    return this.wrapNullable(definition, 'Key');
   }
 
   renderNumber(definition: NumberDefinition): string {

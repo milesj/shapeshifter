@@ -77,6 +77,8 @@ export interface InstanceConfig extends Config {
   contract: string;
 }
 
+export interface KeyConfig extends Config {}
+
 export interface NumberConfig extends Config {}
 
 export interface ObjectConfig extends Config {

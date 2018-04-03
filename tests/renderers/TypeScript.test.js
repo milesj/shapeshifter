@@ -3,6 +3,7 @@ import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
 import InstanceDefinition from '../../src/definitions/Instance';
+import KeyDefinition from '../../src/definitions/Key';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
 import ReferenceDefinition from '../../src/definitions/Reference';
@@ -131,6 +132,26 @@ describe('TypeScriptRenderer', () => {
           }),
         ),
       ).toBe('FooBar');
+    });
+  });
+
+  describe('renderKey()', () => {
+    it('renders nullable', () => {
+      expect(renderer.renderKey(new KeyDefinition(options, 'foo', {}))).toBe('Key | null');
+
+      expect(Array.from(renderer.builder.header)).toEqual(['export type Key = string | number;']);
+    });
+
+    it('renders non-nullable', () => {
+      expect(
+        renderer.renderKey(
+          new KeyDefinition(options, 'foo', {
+            nullable: false,
+          }),
+        ),
+      ).toBe('Key');
+
+      expect(Array.from(renderer.builder.header)).toEqual(['export type Key = string | number;']);
     });
   });
 

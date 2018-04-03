@@ -10,15 +10,16 @@ import BoolDefinition from './definitions/Bool';
 import Definition from './Definition';
 import EnumDefinition from './definitions/Enum';
 import InstanceDefinition from './definitions/Instance';
-import isPrimitive from './helpers/isPrimitive';
+import KeyDefinition from './definitions/Key';
 import NumberDefinition from './definitions/Number';
-import normalizeType from './helpers/normalizeType';
 import ObjectDefinition from './definitions/Object';
 import PolymorphDefinition from './definitions/Polymorph';
 import ReferenceDefinition from './definitions/Reference';
 import ShapeDefinition from './definitions/Shape';
 import StringDefinition from './definitions/String';
 import UnionDefinition from './definitions/Union';
+import isPrimitive from './helpers/isPrimitive';
+import normalizeType from './helpers/normalizeType';
 import { Config, TypeDefinition, Options } from './types';
 
 export default class DefinitionFactory {
@@ -63,6 +64,9 @@ export default class DefinitionFactory {
 
       case 'instance':
         return new InstanceDefinition(options, attribute, config);
+
+      case 'key':
+        return new KeyDefinition(options, attribute, config);
 
       case 'number':
         return new NumberDefinition(options, attribute, config);

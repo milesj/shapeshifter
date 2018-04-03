@@ -2,6 +2,8 @@
 /* eslint-disable */
 /* @flow */
 
+export type Key = string | number;
+
 export type PolymorphVideoType = {
   path: ?string,
 };
@@ -12,6 +14,6 @@ export type PolymorphImageType = {
 
 export type PolymorphType = {
   item: PolymorphImageType | PolymorphVideoType | null,
-  item_id: string | number | null,
+  item_id: ?Key,
   item_type: ?string,
 };

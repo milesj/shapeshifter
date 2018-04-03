@@ -6,8 +6,11 @@
 import path from 'path';
 import Definition from './Definition';
 import DefinitionFactory from './DefinitionFactory';
+import KeyDefinition from './definitions/Key';
 import PolymorphDefinition from './definitions/Polymorph';
+import StringDefinition from './definitions/String';
 import isObject from './helpers/isObject';
+import toConfig from './helpers/toConfig';
 import {
   AttributesField,
   ConstantsField,
@@ -108,10 +111,21 @@ export default class Schematic {
       this.throwError(`No attributes found in schema "${path.basename(this.path)}".`);
     }
 
-    const { morphForeignKeySuffix = '_id', morphTypeSuffix = '_type' } = this.metadata;
+    const {
+      morphForeignKeySuffix = '_id',
+      morphTypeSuffix = '_type',
+      primaryKey = 'id',
+    } = this.metadata;
 
     // Convert to type definitions
     Object.keys(attributes).forEach(attribute => {
+      const config = toConfig(attributes[attribute]);
+
+      // Force primary key to key type
+      if (attribute === primaryKey) {
+        config.type = 'key';
+      }
+
       const definition = DefinitionFactory.factory(this.options, attribute, attributes[attribute]);
 
       this.attributes.push(definition);
@@ -119,17 +133,14 @@ export default class Schematic {
       // Add additional fields for polymorphic relations
       if (definition instanceof PolymorphDefinition) {
         this.attributes.push(
-          DefinitionFactory.factory(this.options, attribute + morphForeignKeySuffix, {
+          new KeyDefinition(this.options, attribute + morphForeignKeySuffix, {
             nullable: definition.isNullable(),
-            type: 'union',
-            valueTypes: ['string', 'number'],
           }),
         );
 
         this.attributes.push(
-          DefinitionFactory.factory(this.options, attribute + morphTypeSuffix, {
+          new StringDefinition(this.options, attribute + morphTypeSuffix, {
             nullable: definition.isNullable(),
-            type: 'string',
           }),
         );
       }

@@ -2,20 +2,22 @@
 /* eslint-disable */
 /* @flow */
 
+export type Key = string | number;
+
 export type CoreFooType = {
-  id: number | string | null,
+  id: ?Key,
   name: ?string,
   foo: ?string,
 };
 
 export type CoreBarType = {
-  id: number | string | null,
+  id: ?Key,
   name: ?string,
   bar: ?number,
 };
 
 export type CoreType = {
-  id: number | string | null,
+  id: ?Key,
   name: ?string,
   foo: ?CoreFooType,
   fooWithArg: CoreFooType,

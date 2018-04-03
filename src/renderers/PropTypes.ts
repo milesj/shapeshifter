@@ -10,6 +10,7 @@ import ArrayDefinition from '../definitions/Array';
 import BoolDefinition from '../definitions/Bool';
 import EnumDefinition from '../definitions/Enum';
 import InstanceDefinition from '../definitions/Instance';
+import KeyDefinition from '../definitions/Key';
 import NumberDefinition from '../definitions/Number';
 import ObjectDefinition from '../definitions/Object';
 import ReferenceDefinition from '../definitions/Reference';
@@ -73,6 +74,16 @@ export default class PropTypesRenderer extends Renderer {
       definition,
       this.wrapFunction('instanceOf', this.formatValue(contract, 'function')),
     );
+  }
+
+  renderKey(definition: KeyDefinition): string {
+    // Remove trailing isRequired
+    // eslint-disable-next-line no-magic-numbers
+    const union = this.renderUnion(definition.keyType, 0).slice(0, -11);
+
+    this.builder.header.add(`export const KeyShape = ${union};`);
+
+    return this.wrapNullable(definition, 'KeyShape');
   }
 
   renderNumber(definition: NumberDefinition): string {

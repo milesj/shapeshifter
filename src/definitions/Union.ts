@@ -6,6 +6,7 @@
 import optimal, { bool, string, array } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
+import toConfig from '../helpers/toConfig';
 import { Config, UnionConfig } from '../types';
 
 export default class UnionDefinition extends Definition<UnionConfig> {
@@ -29,7 +30,7 @@ export default class UnionDefinition extends Definition<UnionConfig> {
     );
 
     this.valueTypes = this.config.valueTypes.map((type, i) => {
-      const config = typeof type === 'string' ? { type } : type;
+      const config = toConfig(type);
 
       return DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, {
         ...config,

@@ -3,6 +3,11 @@
 
 import PropTypes from 'prop-types';
 
+export const KeyShape = PropTypes.oneOfType([
+  PropTypes.string.isRequired,
+  PropTypes.number.isRequired,
+]);
+
 export const PolymorphVideoShape = PropTypes.shape({
   path: PropTypes.string,
 });
@@ -16,9 +21,6 @@ export const PolymorphShape = PropTypes.shape({
     PolymorphImageShape.isRequired,
     PolymorphVideoShape.isRequired,
   ]),
-  item_id: PropTypes.oneOfType([
-    PropTypes.string.isRequired,
-    PropTypes.number.isRequired,
-  ]),
+  item_id: KeyShape,
   item_type: PropTypes.string,
 });

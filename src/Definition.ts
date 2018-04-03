@@ -61,7 +61,7 @@ export default class Definition<T extends Config> {
       this.config,
       {
         nullable: bool(),
-        type: string(normalizeType(name.toLowerCase())),
+        type: string(normalizeType(name.replace('Definition', '').toLowerCase() || 'unknown')),
       },
       {
         name: name || 'Definition',

@@ -13,6 +13,7 @@ import ArrayDefinition from './definitions/Array';
 import BoolDefinition from './definitions/Bool';
 import EnumDefinition from './definitions/Enum';
 import InstanceDefinition from './definitions/Instance';
+import KeyDefinition from './definitions/Key';
 import NumberDefinition from './definitions/Number';
 import ObjectDefinition from './definitions/Object';
 import PolymorphDefinition from './definitions/Polymorph';
@@ -275,6 +276,7 @@ export default class Renderer {
   /**
    * Render a definition to it's visual representation.
    */
+  // eslint-disable-next-line complexity
   renderAttribute(definition: Definition<Config>, depth: number = 0): string {
     if (definition instanceof ArrayDefinition) {
       return this.renderArray(definition, depth);
@@ -284,6 +286,8 @@ export default class Renderer {
       return this.renderEnum(definition, depth);
     } else if (definition instanceof InstanceDefinition) {
       return this.renderInstance(definition);
+    } else if (definition instanceof KeyDefinition) {
+      return this.renderKey(definition);
     } else if (definition instanceof NumberDefinition) {
       return this.renderNumber(definition);
     } else if (definition instanceof ObjectDefinition) {
@@ -389,6 +393,13 @@ export default class Renderer {
    */
   renderInstance(definition: InstanceDefinition): string {
     return this.unsupported('instance');
+  }
+
+  /**
+   * Render a key definition.
+   */
+  renderKey(definition: KeyDefinition): string {
+    return this.unsupported('key');
   }
 
   /**

@@ -95,6 +95,8 @@ export enum ObjectEnumFieldValueEnum {
   baz
 }
 
+export type Key = string | number;
+
 export enum ShapeStringEnumEnum {
   foo,
   bar,
@@ -198,7 +200,7 @@ export interface PolymorphImageInterface {
 
 export interface PolymorphInterface {
   item: PolymorphImageInterface | PolymorphVideoInterface | null;
-  item_id: string | number | null;
+  item_id: Key | null;
   item_type: string | null;
 }
 

@@ -8,6 +8,8 @@ export enum ArrayEnumFieldEnum {
   QUX
 }
 
+export type Key = string | number;
+
 export enum EnumFieldEnum {
   FOO,
   BAR,
@@ -67,19 +69,19 @@ export interface ArrayInterface {
 }
 
 export interface CoreFooInterface {
-  id: number | string | null;
+  id: Key | null;
   name: string | null;
   foo: string | null;
 }
 
 export interface CoreBarInterface {
-  id: number | string | null;
+  id: Key | null;
   name: string | null;
   bar: number | null;
 }
 
 export interface CoreInterface {
-  id: number | string | null;
+  id: Key | null;
   name: string | null;
   foo: CoreFooInterface | null;
   fooWithArg: CoreFooInterface;

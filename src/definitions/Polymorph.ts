@@ -6,6 +6,7 @@
 import optimal, { bool, string, array } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
+import toConfig from '../helpers/toConfig';
 import { Config, PolymorphConfig } from '../types';
 
 export default class PolymorphDefinition extends Definition<PolymorphConfig> {
@@ -29,7 +30,7 @@ export default class PolymorphDefinition extends Definition<PolymorphConfig> {
     );
 
     this.valueTypes = this.config.valueTypes.map((type, i) => {
-      const config = typeof type === 'string' ? { type } : type;
+      const config = toConfig(type);
 
       return DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, {
         ...config,

@@ -110,11 +110,9 @@ class GraphQLReader {
             this.primaryKey = field.name.value;
           }
 
-          // GQL denotes ID fields as strings, but we should accept integers as well
           return {
             nullable,
-            type: 'union',
-            valueTypes: ['number', 'string'],
+            type: 'key',
           };
 
         case 'Int':

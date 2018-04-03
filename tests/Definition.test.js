@@ -9,7 +9,7 @@ describe('Definition', () => {
     expect(def.config).toEqual({
       nullable: true,
       key: 'value',
-      type: 'definition',
+      type: 'unknown',
     });
   });
 

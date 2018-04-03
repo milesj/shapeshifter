@@ -22,6 +22,11 @@ export const INST_ENABLED = true;
 export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
+export const KeyShape = PropTypes.oneOfType([
+  PropTypes.string.isRequired,
+  PropTypes.number.isRequired,
+]);
+
 export const ArrayShape = PropTypes.shape({
   arrayField: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
   boolField: PropTypes.arrayOf(PropTypes.bool),
@@ -148,10 +153,7 @@ export const PolymorphShape = PropTypes.shape({
     PolymorphImageShape.isRequired,
     PolymorphVideoShape.isRequired,
   ]),
-  item_id: PropTypes.oneOfType([
-    PropTypes.string.isRequired,
-    PropTypes.number.isRequired,
-  ]),
+  item_id: KeyShape,
   item_type: PropTypes.string,
 });
 

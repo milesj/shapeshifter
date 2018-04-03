@@ -4,6 +4,7 @@ import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
 import FlowRenderer from '../../src/renderers/Flow';
 import InstanceDefinition from '../../src/definitions/Instance';
+import KeyDefinition from '../../src/definitions/Key';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
 import ReferenceDefinition from '../../src/definitions/Reference';
@@ -30,9 +31,9 @@ describe('FlowRenderer', () => {
     );
   });
 
-  describe('afterParse()', () => {
+  describe('beforeParse()', () => {
     it('adds flow comment', () => {
-      renderer.afterParse();
+      renderer.beforeParse();
 
       expect(Array.from(renderer.builder.comments)).toEqual(['/* @flow */']);
     });
@@ -143,6 +144,26 @@ describe('FlowRenderer', () => {
           }),
         ),
       ).toBe('FooBar');
+    });
+  });
+
+  describe('renderKey()', () => {
+    it('renders nullable', () => {
+      expect(renderer.renderKey(new KeyDefinition(options, 'foo', {}))).toBe('?Key');
+
+      expect(Array.from(renderer.builder.header)).toEqual(['export type Key = string | number;']);
+    });
+
+    it('renders non-nullable', () => {
+      expect(
+        renderer.renderKey(
+          new KeyDefinition(options, 'foo', {
+            nullable: false,
+          }),
+        ),
+      ).toBe('Key');
+
+      expect(Array.from(renderer.builder.header)).toEqual(['export type Key = string | number;']);
     });
   });
 

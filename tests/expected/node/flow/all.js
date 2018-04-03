@@ -22,6 +22,8 @@ export const INST_ENABLED = true;
 export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
+export type Key = string | number;
+
 export type ArrayType = {
   arrayField: ?Array<?Array<?string>>,
   boolField: ?Array<?boolean>,
@@ -89,7 +91,7 @@ export type PolymorphImageType = {
 
 export type PolymorphType = {
   item: PolymorphImageType | PolymorphVideoType | null,
-  item_id: string | number | null,
+  item_id: ?Key,
   item_type: ?string,
 };
 
