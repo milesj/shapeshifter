@@ -4,7 +4,14 @@
  */
 
 import isObject from './helpers/isObject';
-import { PrimaryKey, Relation, SchemaMap, SchemaExpandedMap, MetadataField } from './types';
+import {
+  PrimaryKey,
+  Relation,
+  RelationSuffixes,
+  SchemaMap,
+  SchemaExpandedMap,
+  MetadataField,
+} from './types';
 
 const BELONGS_TO: string = 'belongsTo';
 const BELONGS_TO_MANY: string = 'belongsToMany';
@@ -70,7 +77,12 @@ export default class Schema {
   /**
    * Map a one/many relational schema to the current schema.
    */
-  addRelation(attribute: string, schema: Schema, relation: string): this {
+  addRelation(
+    attribute: string,
+    schema: Schema,
+    relation: string,
+    params: Partial<Relation> = {},
+  ): this {
     if (process.env.NODE_ENV !== 'production') {
       if (!(schema instanceof Schema)) {
         throw new TypeError(`Relation "${attribute}" is not a valid schema.`);
@@ -83,6 +95,7 @@ export default class Schema {
 
     // Set relations
     this.relations.push({
+      ...params,
       attribute,
       collection:
         relation === BELONGS_TO_MANY || relation === HAS_MANY || relation === MORPH_TO_MANY,
@@ -135,7 +148,7 @@ export default class Schema {
       } else if (Array.isArray(schema)) {
         this.addRelation(attribute, schema[0], HAS_MANY);
       } else if (isObject(schema)) {
-        this.addRelation(attribute, schema.schema, schema.relation);
+        this.addRelation(attribute, schema.schema, schema.relation, schema);
       }
     });
 
@@ -159,14 +172,14 @@ export default class Schema {
   /**
    * Map morph-to nested entities by attribute name.
    */
-  morphTo(relations: SchemaMap): this {
-    return this.addRelations(relations, MORPH_TO);
+  morphTo(attribute: string, schema: Schema, suffixes: RelationSuffixes = {}): this {
+    return this.addRelation(attribute, schema, MORPH_TO, suffixes);
   }
 
   /**
    * Map morph-to-many nested entities by attribute name.
    */
-  morphToMany(relations: SchemaMap): this {
-    return this.addRelations(relations, MORPH_TO_MANY);
+  morphToMany(attribute: string, schema: Schema, suffixes: RelationSuffixes = {}): this {
+    return this.addRelation(attribute, schema, MORPH_TO_MANY, suffixes);
   }
 }

@@ -59,6 +59,47 @@ active: boolean;
 
 Alias names: `str`, `num`, `int`, `integer`, `float`, `bool`, `binary`
 
+## Keys
+
+A `key` type is the representation of a primary key or foreign key, like an auto-incrementing ID or
+UUID. It supports both integer and string fields.
+
+```json
+{
+  "id": "key"
+}
+```
+
+```graphql
+id: ID
+```
+
+This transpiles down to:
+
+```javascript
+// PropTypes
+const KeyShape = PropTypes.oneOfType([
+  PropTypes.string.isRequired,
+  PropTypes.number.isRequired,
+]);
+
+id: KeyShape,
+
+// Flow
+type Key = string | number;
+
+id: Key,
+
+// TypeScript
+type Key = string | number;
+
+id: Key;
+```
+
+Alias names: `pk`, `fk`
+
+> Key definitions will define a special key type alias for easy re-use.
+
 ## Arrays
 
 An `array` is a dynamic list of values, with the value's type defined by the `valueType` property.
@@ -335,8 +376,8 @@ error: string | number | Error;
 
 ## References
 
-The final type, `reference`, is the most powerful and versatile type. A reference provides a link to
-an external schematic file, permitting easy re-use and extensibility, while avoiding schematic
+The type `reference` is the most powerful and versatile type. A reference provides a link to an
+external schematic file, permitting easy re-use and extensibility, while avoiding schematic
 structure duplication across files.
 
 To make use of references, a `references` map must be defined in the root of the schematic. Each
@@ -451,7 +492,56 @@ many).
 
 ## Polymorphic
 
-TODO
+A `polymorph` type can be used for polymorphic relations through a union of possible types. When a
+polymorph is defined, for example `item` (which points to a type within the union), an associated
+`item_id` (the foreign key) and `item_type` (the name of a model or class) are also defined.
+
+```json
+{
+  "item": {
+    "type": "polymorph",
+    "valueTypes": [
+      {
+        "type": "shape",
+        "reference": "Image"
+      },
+      {
+        "type": "reference",
+        "reference": "Video"
+      }
+    ]
+  }
+}
+```
+
+This transpiles down to:
+
+```javascript
+// PropTypes
+item: PropTypes.oneOfType([
+  ImageShape,
+  VideoShape,
+]),
+item_id: KeyShape,
+item_type: PropTypes.string,
+
+// Flow
+item: Image | Shape,
+item_id: Key,
+item_type: string,
+
+// TypeScript
+item: Image | Shape;
+item_id: Key;
+item_type: string;
+```
+
+The `_id` and `_type` suffixes can be defined with configuration fields `keySuffix` and `typeSuffix`
+respectively.
+
+Alias names: `poly`, `morph`
+
+> Polymorphs are not supported by GraphQL.
 
 ## Instance Ofs
 
@@ -474,9 +564,9 @@ For the most part, this feature must be used in unison with [imports](#imports),
 object into scope.
 
 ```json
-"imports": [
-  { "default": "UserModel", "path": "../models/UserModel" }
-]
+{
+  "imports": [{ "default": "UserModel", "path": "../models/UserModel" }]
+}
 ```
 
 This transpiles down to:

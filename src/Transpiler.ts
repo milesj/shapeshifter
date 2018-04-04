@@ -85,7 +85,7 @@ export default class Transpiler {
     const schematics = [];
 
     // Use `require()` as it handles JSON and JS files easily
-    while (toResolve.length) {
+    while (toResolve.length > 0) {
       const { resolvePath, parentSchematic, refKey } = toResolve.shift()!;
       const pathExt = path.extname(resolvePath);
       let data = null;

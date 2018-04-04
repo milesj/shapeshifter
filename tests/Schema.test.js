@@ -147,6 +147,8 @@ describe('Schema', () => {
           schema: foo,
           relation: 'morphTo',
           collection: false,
+          keySuffix: '_id',
+          typeSuffix: '_type',
         },
       ]);
     });
@@ -162,6 +164,8 @@ describe('Schema', () => {
           schema: foo,
           relation: 'morphToMany',
           collection: true,
+          keySuffix: '_id',
+          typeSuffix: '_type',
         },
       ]);
     });
@@ -221,7 +225,7 @@ describe('Schema', () => {
     it('adds a schema and maps the attribute', () => {
       expect(schema.relations).toEqual([]);
 
-      schema.morphTo({ qux });
+      schema.morphTo('qux', qux);
 
       expect(schema.relations).toEqual([
         {
@@ -233,13 +237,33 @@ describe('Schema', () => {
       ]);
       expect(schema.attributes).toEqual(['qux']);
     });
+
+    it('can customize suffixes', () => {
+      expect(schema.relations).toEqual([]);
+
+      schema.morphTo('qux', qux, {
+        keySuffix: '_key',
+        typeSuffix: '_model',
+      });
+
+      expect(schema.relations).toEqual([
+        {
+          attribute: 'qux',
+          schema: qux,
+          relation: 'morphTo',
+          collection: false,
+          keySuffix: '_key',
+          typeSuffix: '_model',
+        },
+      ]);
+    });
   });
 
   describe('morphToMany()', () => {
     it('adds a schema and maps the attribute', () => {
       expect(schema.relations).toEqual([]);
 
-      schema.morphToMany({ qux });
+      schema.morphToMany('qux', qux);
 
       expect(schema.relations).toEqual([
         {
@@ -250,6 +274,26 @@ describe('Schema', () => {
         },
       ]);
       expect(schema.attributes).toEqual(['qux']);
+    });
+
+    it('can customize suffixes', () => {
+      expect(schema.relations).toEqual([]);
+
+      schema.morphToMany('qux', qux, {
+        keySuffix: '_key',
+        typeSuffix: '_model',
+      });
+
+      expect(schema.relations).toEqual([
+        {
+          attribute: 'qux',
+          schema: qux,
+          relation: 'morphToMany',
+          collection: true,
+          keySuffix: '_key',
+          typeSuffix: '_model',
+        },
+      ]);
     });
   });
 });

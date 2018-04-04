@@ -34,8 +34,6 @@ import {
   ReferenceConfig,
 } from './types';
 
-export type TemplateList = string[];
-
 export default class Renderer {
   builder: Builder;
 

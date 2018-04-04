@@ -30,6 +30,8 @@ The following properties are available on the `Schema` class instance.
   schema: schemaInstance,   // Reference schema class
   relation: Schema.HAS_ONE, // Relation type
   collection: false,        // Is it an array?
+  keySuffix: '_id',          // Foreign key suffix for polymorphic relations
+  typeSuffix: '_type',       // Type field suffix for polymorphic relations
 }
 ```
 
@@ -99,9 +101,7 @@ userSchema.define({
 
 ### Polymorphism
 
-Schemas support a rudimentary form of polymorphism through relations. When an attribute is defined,
-for example `item` (which points to another record/schema), an associated `item_id` (the foreign
-key) and `item_type` (the name of a model or class) are also defined.
+Schemas support a rudimentary form of polymorphism through relations.
 
 The generated output would look something like the following.
 

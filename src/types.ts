@@ -33,7 +33,12 @@ export interface SchemaExpandedMap {
   [attribute: string]: Schema | Schema[] | Relation;
 }
 
-export interface Relation {
+export interface RelationSuffixes {
+  keySuffix?: string;
+  typeSuffix?: string;
+}
+
+export interface Relation extends RelationSuffixes {
   attribute: string;
   collection: boolean;
   relation: string;
