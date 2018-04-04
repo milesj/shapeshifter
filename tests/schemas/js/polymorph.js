@@ -22,5 +22,20 @@ module.exports = {
         },
       ],
     },
+    product: {
+      type: 'polymorph',
+      keySuffix: '_key',
+      typeSuffix: '_model',
+      valueTypes: [
+        {
+          type: 'shape',
+          reference: 'Image',
+        },
+        {
+          type: 'reference',
+          reference: 'PolymorphVideo',
+        },
+      ],
+    },
   },
 };

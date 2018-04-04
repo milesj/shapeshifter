@@ -202,6 +202,9 @@ export interface PolymorphInterface {
   item: PolymorphImageInterface | PolymorphVideoInterface | null;
   item_id: Key | null;
   item_type: string | null;
+  product: PolymorphImageInterface | PolymorphVideoInterface | null;
+  product_key: Key | null;
+  product_model: string | null;
 }
 
 export interface PrimitiveInterface {

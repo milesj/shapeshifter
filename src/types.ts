@@ -87,6 +87,8 @@ export interface ObjectConfig extends Config {
 }
 
 export interface PolymorphConfig extends Config {
+  keySuffix?: string;
+  typeSuffix?: string;
   valueTypes: TypeDefinition[];
 }
 
@@ -114,8 +116,6 @@ export interface UnionConfig extends Config {
 // JSON Structure
 
 export interface MetadataField {
-  morphForeignKeySuffix?: string;
-  morphTypeSuffix?: string;
   primaryKey?: string;
   resourceName?: string;
 }

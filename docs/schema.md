@@ -139,6 +139,3 @@ post.define({
   attachments: morph([attachmentSchema]),
 });
 ```
-
-> The foreign key and type field suffixes can be customized with `morphForeignKeySuffix` and
-> `morphTypeSuffix` metadata fields, respectively.

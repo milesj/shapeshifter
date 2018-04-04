@@ -111,11 +111,7 @@ export default class Schematic {
       this.throwError(`No attributes found in schema "${path.basename(this.path)}".`);
     }
 
-    const {
-      morphForeignKeySuffix = '_id',
-      morphTypeSuffix = '_type',
-      primaryKey = 'id',
-    } = this.metadata;
+    const { primaryKey = 'id' } = this.metadata;
 
     // Convert to type definitions
     Object.keys(attributes).forEach(attribute => {
@@ -133,13 +129,13 @@ export default class Schematic {
       // Add additional fields for polymorphic relations
       if (definition instanceof PolymorphDefinition) {
         this.attributes.push(
-          new KeyDefinition(this.options, attribute + morphForeignKeySuffix, {
+          new KeyDefinition(this.options, attribute + definition.config.keySuffix, {
             nullable: definition.isNullable(),
           }),
         );
 
         this.attributes.push(
-          new StringDefinition(this.options, attribute + morphTypeSuffix, {
+          new StringDefinition(this.options, attribute + definition.config.typeSuffix, {
             nullable: definition.isNullable(),
           }),
         );

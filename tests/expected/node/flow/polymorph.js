@@ -16,4 +16,7 @@ export type PolymorphType = {
   item: PolymorphImageType | PolymorphVideoType | null,
   item_id: ?Key,
   item_type: ?string,
+  product: PolymorphImageType | PolymorphVideoType | null,
+  product_key: ?Key,
+  product_model: ?string,
 };

@@ -231,16 +231,7 @@ describe('Schema', () => {
           collection: false,
         },
       ]);
-      expect(schema.attributes).toEqual(['qux', 'qux_id', 'qux_type']);
-    });
-
-    it('can customize suffixes', () => {
-      schema.metadata.morphForeignKeySuffix = '_pk';
-      schema.metadata.morphTypeSuffix = '_model';
-
-      schema.morphTo({ qux });
-
-      expect(schema.attributes).toEqual(['qux', 'qux_pk', 'qux_model']);
+      expect(schema.attributes).toEqual(['qux']);
     });
   });
 

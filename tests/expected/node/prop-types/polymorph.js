@@ -23,4 +23,10 @@ export const PolymorphShape = PropTypes.shape({
   ]),
   item_id: KeyShape,
   item_type: PropTypes.string,
+  product: PropTypes.oneOfType([
+    PolymorphImageShape.isRequired,
+    PolymorphVideoShape.isRequired,
+  ]),
+  product_key: KeyShape,
+  product_model: PropTypes.string,
 });

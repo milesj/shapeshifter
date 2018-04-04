@@ -81,8 +81,6 @@ export default class Schema {
       }
     }
 
-    const { morphForeignKeySuffix = '_id', morphTypeSuffix = '_type' } = this.metadata;
-
     // Set relations
     this.relations.push({
       attribute,
@@ -95,13 +93,7 @@ export default class Schema {
     this.relationTypes[attribute] = relation;
 
     // Set attributes
-    const attributes = [attribute];
-
-    if (relation === MORPH_TO) {
-      attributes.push(attribute + morphForeignKeySuffix, attribute + morphTypeSuffix);
-    }
-
-    this.addAttributes(attributes);
+    this.addAttributes([attribute]);
 
     return this;
   }
