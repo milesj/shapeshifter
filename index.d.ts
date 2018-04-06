@@ -548,6 +548,11 @@ declare module 'shapeshifter/lib/readers/graphql' {
   export default function readWithGraphQL(path: string): SchemaStructure;
 
 }
+declare module 'shapeshifter/lib/readers/yaml' {
+  import { SchemaStructure } from 'shapeshifter/lib/types';
+  export default function readWithYaml(path: string): SchemaStructure;
+
+}
 declare module 'shapeshifter/lib/Transpiler' {
   import Schematic from 'shapeshifter/lib/Schematic';
   import { Options } from 'shapeshifter/lib/types';
