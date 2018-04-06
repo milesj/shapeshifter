@@ -6,18 +6,21 @@
 * CLI script is now `shapeshifter` instead of `shapeshifter build`.
   * Options are now dashed instead of camel cased.
 * Removed `-n` shorthand option.
-* Removed `--format` option in favor of 3 individual options.
+* Removed `--format` option in favor of 3 individual options (below).
 * Renamed `--types` option to `--definitions`.
 * Renamed `Transpiler` and `WebpackPlugin` option `format` to `renderers`.
   * Accepts an array of renderer names (flow, prop-types, typescript).
 
 #### 🚀 New
 
-* Can now generate and include multiple renderers (typed languages) in the output.
+* Can now generate and include multiple renderers (typed languages) in the same output.
   * Added individual options `--flow`, `--prop-types`, and `--typescript`, to opt into generation.
-* Added polymorphic attribute support.
+* Added polymorphic type.
   * `Schema`s can define polymorphic relations with `morphTo`.
-  * Schematics can define with the new "polymorph" field definition type.
+  * Schematics can define with the new "polymorph" type definition.
+* Added primary and foreign key type.
+  * Primary keys are automatically typed as `key`.
+  * Schematics can define with the new "key" type definition.
 * Added proper `null` support for TypeScript.
 * Updated `WebpackPlugin` to support Webpack 4.
 
@@ -26,7 +29,7 @@
 * Reworked unions and nullable types.
   * Direct union value types will no longer be nullable.
   * Union itself can be nullable.
-* Removed values from TypeScript string enums (will infer them instead).
+* Removed values from TypeScript string enums (will let TypeScript infer them instead).
 
 #### 🛠 Internal
 

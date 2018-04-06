@@ -139,16 +139,3 @@ your choosing, otherwise the output will be sent to the console.
   expressions, allowing them to be removed with dead code elimination.
 * `--typescript` (bool) - Generate TypeScript definitions. Defaults to "false".
 * `--use-define` (bool) - Update all schema relations to use `Schema#define`.
-
-## FAQ
-
-**Why `arrayOf`, `objectOf` over `array`, `object` PropTypes prop types?**
-
-I chose `arrayOf` and `objectOf` because they provide type safety and the assurance of the values
-found within the collection. Using non-type safe features would defeat the purpose of this library.
-
-**What about `node`, `element`, and `func` PropTypes prop types?**
-
-The `node` and `element` types represent DOM elements or PropTypes structures found within the
-application. These types don't really map to database tables or data structures very well, if at
-all.

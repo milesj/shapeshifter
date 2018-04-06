@@ -1,8 +1,8 @@
 # Schematic Structure
 
 Shapeshifter is powered by files known as schematics, which can be a JSON (`.json`), JavaScript
-(`.js`), or GraphQL file (`.gql`). Schematics must define a name, used to denote the name of the
-export, and set of attributes, used as as fields in which the schematic is defining.
+(`.js`), YAML (`.yml`), or GraphQL (`.gql`) file. Schematics must define a name, used to denote the
+name of the export, and set of attributes, used as as fields in which the schematic is defining.
 
 ```json
 {

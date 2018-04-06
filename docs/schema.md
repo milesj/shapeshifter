@@ -102,7 +102,7 @@ userSchema.define({
 });
 ```
 
-### Polymorphism
+## Polymorphic
 
 Schemas support a rudimentary form of polymorphism through relations and the
 [polymorph](./definitions.md#polymorphic) type. When a polymorph is defined, something like the

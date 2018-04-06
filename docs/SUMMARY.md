@@ -2,6 +2,7 @@
 
 * [Schematic Structure](./schematic.md)
   * [Attributes](./schematic.md#attributes)
+    * [Nullable](./schematic.md#nullable)
   * [Metadata](./schematic.md#metadata)
   * [Imports](./schematic.md#imports)
   * [Constants](./schematic.md#constants)
@@ -24,6 +25,8 @@
 * [Schema Classes](./schema.md)
   * [Attributes](./schema.md#attributes)
   * [Relations](./schema.md#relations)
+  * [Polymorphic](./schema.md#polymorphic)
 * [Auto-Transpilation](./bundle.md)
   * [Webpack](./bundle.md#webpack)
 * [GraphQL Support](./graphql.md)
+* [Changelog](https://github.com/milesj/shapeshifter/blob/master/CHANGELOG.md)
