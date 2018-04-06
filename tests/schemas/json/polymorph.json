@@ -14,10 +14,12 @@
       "valueTypes": [
         {
           "type": "shape",
+          "name": "App\\Model\\Image",
           "reference": "Image"
         },
         {
           "type": "reference",
+          "name": "App\\Model\\Video",
           "reference": "PolymorphVideo"
         }
       ]
@@ -29,10 +31,12 @@
       "valueTypes": [
         {
           "type": "shape",
+          "name": "Model::Image",
           "reference": "Image"
         },
         {
           "type": "reference",
+          "name": "Model::Video",
           "reference": "PolymorphVideo"
         }
       ]

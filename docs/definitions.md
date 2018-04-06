@@ -496,6 +496,10 @@ A `polymorph` type can be used for polymorphic relations through a union of poss
 polymorph is defined, for example `item` (which points to a type within the union), an associated
 `item_id` (the foreign key) and `item_type` (the name of a model or class) are also defined.
 
+The possible values within a polymorphic relation must be a [shape](#shapes) or
+[reference](#references) definition. Furthermore, each value requires a `name`, which is the name of
+the model/class/etc used for the association.
+
 ```json
 {
   "item": {
@@ -503,10 +507,12 @@ polymorph is defined, for example `item` (which points to a type within the unio
     "valueTypes": [
       {
         "type": "shape",
+        "name": "Image",
         "reference": "Image"
       },
       {
         "type": "reference",
+        "name": "Video",
         "reference": "Video"
       }
     ]
@@ -538,6 +544,16 @@ item_type: string;
 
 The `_id` and `_type` suffixes can be defined with configuration fields `keySuffix` and `typeSuffix`
 respectively.
+
+```json
+{
+  "type": "shape",
+  "name": "Image",
+  "reference": "Image",
+  "keySuffix": "_fk",
+  "typeSuffix": "_model"
+}
+```
 
 Alias names: `poly`, `morph`
 

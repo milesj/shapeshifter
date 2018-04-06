@@ -455,6 +455,8 @@ export default class Renderer {
     definition.valueTypes.forEach(value => {
       if (!(value instanceof ShapeDefinition || value instanceof ReferenceDefinition)) {
         throw new TypeError('Polymorphic relations must be references or shape references.');
+      } else if (!value.config.name) {
+        throw new Error('Each value within a polymorph relation requires a `name`.');
       }
     });
 

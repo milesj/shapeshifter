@@ -1,5 +1,4 @@
 import Schema from '../src/Schema';
-import morph from '../src/morph';
 
 describe('Schema', () => {
   let schema;
@@ -139,7 +138,7 @@ describe('Schema', () => {
     it('adds a morph to relation for a single schema', () => {
       expect(schema.relations).toEqual([]);
 
-      schema.define({ foo: morph(foo) });
+      schema.define({ foo: { types: { foo }, keySuffix: '_fk', typeSuffix: '_model' } });
 
       expect(schema.relations).toEqual([
         {
@@ -147,25 +146,11 @@ describe('Schema', () => {
           schema: foo,
           relation: 'morphTo',
           collection: false,
-          keySuffix: '_id',
-          typeSuffix: '_type',
-        },
-      ]);
-    });
-
-    it('adds a morph to many relation for a single schema', () => {
-      expect(schema.relations).toEqual([]);
-
-      schema.define({ foo: morph([foo]) });
-
-      expect(schema.relations).toEqual([
-        {
-          attribute: 'foo',
-          schema: foo,
-          relation: 'morphToMany',
-          collection: true,
-          keySuffix: '_id',
-          typeSuffix: '_type',
+          polymorph: {
+            keySuffix: '_fk',
+            type: 'foo',
+            typeSuffix: '_model',
+          },
         },
       ]);
     });
@@ -225,7 +210,7 @@ describe('Schema', () => {
     it('adds a schema and maps the attribute', () => {
       expect(schema.relations).toEqual([]);
 
-      schema.morphTo('qux', qux);
+      schema.morphTo('qux', { qux });
 
       expect(schema.relations).toEqual([
         {
@@ -233,6 +218,11 @@ describe('Schema', () => {
           schema: qux,
           relation: 'morphTo',
           collection: false,
+          polymorph: {
+            keySuffix: '_id',
+            type: 'qux',
+            typeSuffix: '_type',
+          },
         },
       ]);
       expect(schema.attributes).toEqual(['qux']);
@@ -241,10 +231,7 @@ describe('Schema', () => {
     it('can customize suffixes', () => {
       expect(schema.relations).toEqual([]);
 
-      schema.morphTo('qux', qux, {
-        keySuffix: '_key',
-        typeSuffix: '_model',
-      });
+      schema.morphTo('qux', { qux }, '_model', '_key');
 
       expect(schema.relations).toEqual([
         {
@@ -252,46 +239,11 @@ describe('Schema', () => {
           schema: qux,
           relation: 'morphTo',
           collection: false,
-          keySuffix: '_key',
-          typeSuffix: '_model',
-        },
-      ]);
-    });
-  });
-
-  describe('morphToMany()', () => {
-    it('adds a schema and maps the attribute', () => {
-      expect(schema.relations).toEqual([]);
-
-      schema.morphToMany('qux', qux);
-
-      expect(schema.relations).toEqual([
-        {
-          attribute: 'qux',
-          schema: qux,
-          relation: 'morphToMany',
-          collection: true,
-        },
-      ]);
-      expect(schema.attributes).toEqual(['qux']);
-    });
-
-    it('can customize suffixes', () => {
-      expect(schema.relations).toEqual([]);
-
-      schema.morphToMany('qux', qux, {
-        keySuffix: '_key',
-        typeSuffix: '_model',
-      });
-
-      expect(schema.relations).toEqual([
-        {
-          attribute: 'qux',
-          schema: qux,
-          relation: 'morphToMany',
-          collection: true,
-          keySuffix: '_key',
-          typeSuffix: '_model',
+          polymorph: {
+            keySuffix: '_key',
+            type: 'qux',
+            typeSuffix: '_model',
+          },
         },
       ]);
     });

@@ -20,14 +20,13 @@ declare module 'shapeshifter/lib/helpers/normalizeType' {
 
 }
 declare module 'shapeshifter/lib/Schema' {
-  import { PrimaryKey, Relation, SchemaMap, SchemaExpandedMap, MetadataField } from 'shapeshifter/lib/types';
+  import { PrimaryKey, Relation, PolymorphRelation, SchemaMap, DefineRelationMap, MetadataField } from 'shapeshifter/lib/types';
   export default class Schema {
       static HAS_ONE: string;
       static HAS_MANY: string;
       static BELONGS_TO: string;
       static BELONGS_TO_MANY: string;
       static MORPH_TO: string;
-      static MORPH_TO_MANY: string;
       attributes: string[];
       metadata: MetadataField;
       primaryKey: PrimaryKey;
@@ -38,15 +37,14 @@ declare module 'shapeshifter/lib/Schema' {
       resourceName: string;
       constructor(resourceName: string, primaryKey?: PrimaryKey | MetadataField, metadata?: MetadataField);
       addAttributes(attributes: string[]): this;
-      addRelation(attribute: string, schema: Schema, relation: string): this;
+      addRelation(attribute: string, schema: Schema, relation: string, polymorph?: PolymorphRelation): this;
       addRelations(schemas: SchemaMap, relation: string): this;
       belongsTo(relations: SchemaMap): this;
       belongsToMany(relations: SchemaMap): this;
-      define(relations: SchemaExpandedMap): this;
+      define(relations: DefineRelationMap): this;
       hasOne(relations: SchemaMap): this;
       hasMany(relations: SchemaMap): this;
-      morphTo(relations: SchemaMap): this;
-      morphToMany(relations: SchemaMap): this;
+      morphTo(attribute: string, schemas: SchemaMap, typeSuffix?: string, keySuffix?: string): this;
   }
 
 }
@@ -70,14 +68,24 @@ declare module 'shapeshifter/lib/types' {
   export interface SchemaMap {
       [attribute: string]: Schema;
   }
-  export interface SchemaExpandedMap {
-      [attribute: string]: Schema | Schema[] | Relation;
+  export interface DefineRelationMap {
+      [attribute: string]: Schema | Schema[] | {
+          keySuffix?: string;
+          types: SchemaMap;
+          typeSuffix?: string;
+      };
   }
   export interface Relation {
       attribute: string;
       collection: boolean;
+      polymorph?: PolymorphRelation;
       relation: string;
       schema: Schema;
+  }
+  export interface PolymorphRelation {
+      keySuffix: string;
+      type: string;
+      typeSuffix: string;
   }
   export type PrimaryKey = string | string[];
   export type TypeDefinition = string | ArrayConfig | BoolConfig | EnumConfig | InstanceConfig | NumberConfig | ObjectConfig | ReferenceConfig | ShapeConfig | StringConfig | UnionConfig;
@@ -97,6 +105,8 @@ declare module 'shapeshifter/lib/types' {
   export interface InstanceConfig extends Config {
       contract: string;
   }
+  export interface KeyConfig extends Config {
+  }
   export interface NumberConfig extends Config {
   }
   export interface ObjectConfig extends Config {
@@ -104,7 +114,11 @@ declare module 'shapeshifter/lib/types' {
       valueType: TypeDefinition;
   }
   export interface PolymorphConfig extends Config {
-      valueTypes: TypeDefinition[];
+      keySuffix?: string;
+      typeSuffix?: string;
+      valueTypes: (TypeDefinition & {
+          name: string;
+      })[];
   }
   export interface ReferenceConfig extends Config {
       export?: boolean;
@@ -125,8 +139,6 @@ declare module 'shapeshifter/lib/types' {
       valueTypes: TypeDefinition[];
   }
   export interface MetadataField {
-      morphForeignKeySuffix?: string;
-      morphTypeSuffix?: string;
       primaryKey?: string;
       resourceName?: string;
   }
@@ -219,8 +231,28 @@ declare module 'shapeshifter/lib/definitions/Instance' {
   }
 
 }
-declare module 'shapeshifter/lib/helpers/isPrimitive' {
-  export default function isPrimitive(value: string): boolean;
+declare module 'shapeshifter/lib/helpers/toConfig' {
+  import { Config } from 'shapeshifter/lib/types';
+  export default function toConfig(value: string | Config): Config;
+
+}
+declare module 'shapeshifter/lib/definitions/Union' {
+  import Definition from 'shapeshifter/lib/Definition';
+  import { Config, UnionConfig } from 'shapeshifter/lib/types';
+  export default class UnionDefinition extends Definition<UnionConfig> {
+      valueTypes: Definition<Config>[];
+      validateConfig(): void;
+  }
+
+}
+declare module 'shapeshifter/lib/definitions/Key' {
+  import Definition from 'shapeshifter/lib/Definition';
+  import UnionDefinition from 'shapeshifter/lib/definitions/Union';
+  import { KeyConfig } from 'shapeshifter/lib/types';
+  export default class KeyDefinition extends Definition<KeyConfig> {
+      keyType: UnionDefinition;
+      validateConfig(): void;
+  }
 
 }
 declare module 'shapeshifter/lib/definitions/Number' {
@@ -273,13 +305,8 @@ declare module 'shapeshifter/lib/definitions/String' {
   }
 
 }
-declare module 'shapeshifter/lib/definitions/Union' {
-  import Definition from 'shapeshifter/lib/Definition';
-  import { Config, UnionConfig } from 'shapeshifter/lib/types';
-  export default class UnionDefinition extends Definition<UnionConfig> {
-      valueTypes: Definition<Config>[];
-      validateConfig(): void;
-  }
+declare module 'shapeshifter/lib/helpers/isPrimitive' {
+  export default function isPrimitive(value: string): boolean;
 
 }
 declare module 'shapeshifter/lib/DefinitionFactory' {
@@ -339,6 +366,7 @@ declare module 'shapeshifter/lib/Renderer' {
   import BoolDefinition from 'shapeshifter/lib/definitions/Bool';
   import EnumDefinition from 'shapeshifter/lib/definitions/Enum';
   import InstanceDefinition from 'shapeshifter/lib/definitions/Instance';
+  import KeyDefinition from 'shapeshifter/lib/definitions/Key';
   import NumberDefinition from 'shapeshifter/lib/definitions/Number';
   import ObjectDefinition from 'shapeshifter/lib/definitions/Object';
   import PolymorphDefinition from 'shapeshifter/lib/definitions/Polymorph';
@@ -347,7 +375,6 @@ declare module 'shapeshifter/lib/Renderer' {
   import StringDefinition from 'shapeshifter/lib/definitions/String';
   import UnionDefinition from 'shapeshifter/lib/definitions/Union';
   import { Config, ImportStructure, MetadataField, Options, PrimitiveType } from 'shapeshifter/lib/types';
-  export type TemplateList = string[];
   export default class Renderer {
       builder: Builder;
       options: Options;
@@ -378,6 +405,7 @@ declare module 'shapeshifter/lib/Renderer' {
       renderEnum(definition: EnumDefinition, depth: number): string;
       renderImport(statement: ImportStructure): string;
       renderInstance(definition: InstanceDefinition): string;
+      renderKey(definition: KeyDefinition): string;
       renderNumber(definition: NumberDefinition): string;
       renderObject(definition: ObjectDefinition, depth: number): string;
       renderObjectProps(props: Definition<Config>[], depth?: number, sep?: string): string[];
@@ -407,6 +435,7 @@ declare module 'shapeshifter/lib/renderers/Flow' {
   import BoolDefinition from 'shapeshifter/lib/definitions/Bool';
   import EnumDefinition from 'shapeshifter/lib/definitions/Enum';
   import InstanceDefinition from 'shapeshifter/lib/definitions/Instance';
+  import KeyDefinition from 'shapeshifter/lib/definitions/Key';
   import NumberDefinition from 'shapeshifter/lib/definitions/Number';
   import ObjectDefinition from 'shapeshifter/lib/definitions/Object';
   import ReferenceDefinition from 'shapeshifter/lib/definitions/Reference';
@@ -416,12 +445,13 @@ declare module 'shapeshifter/lib/renderers/Flow' {
   import { Config } from 'shapeshifter/lib/types';
   export default class FlowRenderer extends Renderer {
       suffix: string;
-      afterParse(): void;
+      beforeParse(): void;
       render(setName: string, attributes?: Definition<Config>[]): string;
       renderArray(definition: ArrayDefinition, depth: number): string;
       renderBool(definition: BoolDefinition): string;
       renderEnum(definition: EnumDefinition, depth: number): string;
       renderInstance(definition: InstanceDefinition): string;
+      renderKey(definition: KeyDefinition): string;
       renderNumber(definition: NumberDefinition): string;
       renderObject(definition: ObjectDefinition, depth: number): string;
       renderReference(definition: ReferenceDefinition): string;
@@ -439,6 +469,7 @@ declare module 'shapeshifter/lib/renderers/PropTypes' {
   import BoolDefinition from 'shapeshifter/lib/definitions/Bool';
   import EnumDefinition from 'shapeshifter/lib/definitions/Enum';
   import InstanceDefinition from 'shapeshifter/lib/definitions/Instance';
+  import KeyDefinition from 'shapeshifter/lib/definitions/Key';
   import NumberDefinition from 'shapeshifter/lib/definitions/Number';
   import ObjectDefinition from 'shapeshifter/lib/definitions/Object';
   import ReferenceDefinition from 'shapeshifter/lib/definitions/Reference';
@@ -454,6 +485,7 @@ declare module 'shapeshifter/lib/renderers/PropTypes' {
       renderBool(definition: BoolDefinition): string;
       renderEnum(definition: EnumDefinition, depth: number): string;
       renderInstance(definition: InstanceDefinition): string;
+      renderKey(definition: KeyDefinition): string;
       renderNumber(definition: NumberDefinition): string;
       renderObject(definition: ObjectDefinition, depth: number): string;
       renderReference(definition: ReferenceDefinition): string;
@@ -472,6 +504,7 @@ declare module 'shapeshifter/lib/renderers/TypeScript' {
   import BoolDefinition from 'shapeshifter/lib/definitions/Bool';
   import EnumDefinition from 'shapeshifter/lib/definitions/Enum';
   import InstanceDefinition from 'shapeshifter/lib/definitions/Instance';
+  import KeyDefinition from 'shapeshifter/lib/definitions/Key';
   import NumberDefinition from 'shapeshifter/lib/definitions/Number';
   import ObjectDefinition from 'shapeshifter/lib/definitions/Object';
   import ReferenceDefinition from 'shapeshifter/lib/definitions/Reference';
@@ -486,6 +519,7 @@ declare module 'shapeshifter/lib/renderers/TypeScript' {
       renderBool(definition: BoolDefinition): string;
       renderEnum(definition: EnumDefinition, depth: number): string;
       renderInstance(definition: InstanceDefinition): string;
+      renderKey(definition: KeyDefinition): string;
       renderNumber(definition: NumberDefinition): string;
       renderObject(definition: ObjectDefinition, depth: number): string;
       renderReference(definition: ReferenceDefinition): string;
@@ -531,19 +565,9 @@ declare module 'shapeshifter/lib/Transpiler' {
   }
 
 }
-declare module 'shapeshifter/lib/morph' {
-  import Schema from 'shapeshifter/lib/Schema';
-  import { Relation } from 'shapeshifter/lib/types';
-  export default function morph(schema: Schema | Schema[]): Relation;
-
-}
 declare module 'shapeshifter' {
-  import Schema from 'shapeshifter/lib/Schema';
-  import morph from 'shapeshifter/lib/morph';
-  import { MetadataField, PrimaryKey, Relation } from 'shapeshifter/lib/types';
-  export { PrimaryKey, Relation, MetadataField };
-  export { morph };
-  export default Schema;
+  export { default } from 'shapeshifter/lib/Schema';
+  export { MetadataField, PrimaryKey, Relation } from 'shapeshifter/lib/types';
 
 }
 declare module 'shapeshifter/lib/bundlers/WebpackPlugin' {

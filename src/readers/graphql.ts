@@ -54,7 +54,7 @@ class GraphQLReader {
   constructor(doc: DocumentNode, ext: string) {
     this.fileExt = ext;
     this.document = doc;
-    this.schematic = this.document.definitions.pop()!;
+    this.schematic = Array.from(this.document.definitions).pop()!;
 
     if (!this.schematic) {
       /* istanbul ignore next No need to cover */
@@ -179,6 +179,10 @@ class GraphQLReader {
   }
 
   extractEnum(definition: EnumTypeDefinitionNode) {
+    if (!definition.values) {
+      return;
+    }
+
     this.enums[definition.name.value] = definition.values.map(
       ({ name: { value } }) => (value.match(/^\d+$/) ? Number(value) : String(value)),
     );
@@ -195,6 +199,10 @@ class GraphQLReader {
   }
 
   extractUnion(definition: UnionTypeDefinitionNode) {
+    if (!definition.types) {
+      return;
+    }
+
     const values: TypeDefinition[] = [];
 
     definition.types.forEach((type: NamedTypeNode) => {
@@ -220,6 +228,10 @@ class GraphQLReader {
 
   parseDefinitions() {
     this.document.definitions.forEach((definition: DefinitionNode) => {
+      if (definition === this.schematic) {
+        return;
+      }
+
       switch (definition.kind) {
         case Kind.ENUM_TYPE_DEFINITION:
           this.extractEnum(definition as EnumTypeDefinitionNode);

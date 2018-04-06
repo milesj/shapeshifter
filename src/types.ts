@@ -29,20 +29,29 @@ export interface SchemaMap {
   [attribute: string]: Schema;
 }
 
-export interface SchemaExpandedMap {
-  [attribute: string]: Schema | Schema[] | Relation;
+export interface DefineRelationMap {
+  [attribute: string]:
+    | Schema
+    | Schema[]
+    | {
+        keySuffix?: string;
+        types: SchemaMap;
+        typeSuffix?: string;
+      };
 }
 
-export interface RelationSuffixes {
-  keySuffix?: string;
-  typeSuffix?: string;
-}
-
-export interface Relation extends RelationSuffixes {
+export interface Relation {
   attribute: string;
   collection: boolean;
+  polymorph?: PolymorphRelation;
   relation: string;
   schema: Schema;
+}
+
+export interface PolymorphRelation {
+  keySuffix: string;
+  type: string;
+  typeSuffix: string;
 }
 
 export type PrimaryKey = string | string[];
@@ -94,7 +103,7 @@ export interface ObjectConfig extends Config {
 export interface PolymorphConfig extends Config {
   keySuffix?: string;
   typeSuffix?: string;
-  valueTypes: TypeDefinition[];
+  valueTypes: (TypeDefinition & { name: string })[];
 }
 
 export interface ReferenceConfig extends Config {

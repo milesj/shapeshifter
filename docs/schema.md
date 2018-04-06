@@ -30,14 +30,17 @@ The following properties are available on the `Schema` class instance.
   schema: schemaInstance,   // Reference schema class
   relation: Schema.HAS_ONE, // Relation type
   collection: false,        // Is it an array?
-  keySuffix: '_id',          // Foreign key suffix for polymorphic relations
-  typeSuffix: '_type',       // Type field suffix for polymorphic relations
+  polymorph: {
+    keySuffix: '_id',
+    type: 'ModelName',
+    typeSuffix: '_type',
+  },
 }
 ```
 
 * `relationTypes` (object) - Maps attribute names to relation types. A relation type is one of the
   following constants found on the `Schema` class: `HAS_ONE`, `HAS_MANY`, `BELONGS_TO`,
-  `BELONGS_TO_MANY`, `MORPH_TO`, and `MORPH_TO_MANY`.
+  `BELONGS_TO_MANY`, and `MORPH_TO`.
 
 > Schemas are not supported by GraphQL.
 
@@ -57,12 +60,12 @@ userSchema.addAttributes(['id', 'username', 'email', 'location']);
 ## Relations
 
 Unlike attributes, relations are always included in the output, as relations between entities (via
-schemas) are highly informational. Relations are divided into 4 categories: has one, has many,
-belongs to, and belongs to many (many to many).
+schemas) are highly informational. Relations are divided into 5 categories: has-one, has-many,
+belongs-to, belongs-to-many (many to many), and [polymorphic](#polymorphism) (below).
 
-Relations are generated based on [references](#references) found within the current schema. Assume
-we add a has many `posts` relation, and a has one `country` relation to the current `users` schema,
-we would generate the following output.
+Relations are generated based on [references](./definitions.md#references) found within the current
+schema. Assume we add a has-many `posts` relation, and a has-one `country` relation to the current
+`users` schema, we would generate the following output.
 
 ```javascript
 import Schema from 'shapeshifter';
@@ -101,41 +104,36 @@ userSchema.define({
 
 ### Polymorphism
 
-Schemas support a rudimentary form of polymorphism through relations.
-
-The generated output would look something like the following.
+Schemas support a rudimentary form of polymorphism through relations and the
+[polymorph](./definitions.md#polymorphic) type. When a polymorph is defined, something like the
+following output would be generated.
 
 ```js
-import Schema from 'shapeshifter';
-
-export const attachmentSchema = new Schema('attachments');
-
-export const ownerSchema = new Schema('owners');
-
-export const postSchema = new Schema('posts');
-
-attachmentSchema.morphTo({
-  owner: ownerSchema, // User, Bot, etc
+attachmentSchema.morphTo('item', {
+  Image: imageSchema,
+  Video: videoSchema,
+  PDF: pdfSchema,
 });
 
-post.morphToMany({
-  attachments: attachmentSchema, // Image, PDF, etc
+post.hasMany({
+  attachments: attachmentSchema,
 });
 ```
 
-If `--use-define` is passed on the command line, we need to use the `morph` function exported
-alongside the `Schema`.
+If `--use-define` is passed on the command line, the relation output will be modified to:
 
 ```javascript
-import Schema, { morph } from 'shapeshifter';
-
-// ...
-
 attachmentSchema.define({
-  owner: morph(ownerSchema),
+  item: {
+    types: {
+      Image: imageSchema,
+      Video: videoSchema,
+      PDF: pdfSchema,
+    },
+  }),
 });
 
 post.define({
-  attachments: morph([attachmentSchema]),
+  attachments: attachmentSchema,
 });
 ```

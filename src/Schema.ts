@@ -7,9 +7,9 @@ import isObject from './helpers/isObject';
 import {
   PrimaryKey,
   Relation,
-  RelationSuffixes,
+  PolymorphRelation,
   SchemaMap,
-  SchemaExpandedMap,
+  DefineRelationMap,
   MetadataField,
 } from './types';
 
@@ -18,7 +18,6 @@ const BELONGS_TO_MANY: string = 'belongsToMany';
 const HAS_ONE: string = 'hasOne';
 const HAS_MANY: string = 'hasMany';
 const MORPH_TO: string = 'morphTo';
-const MORPH_TO_MANY: string = 'morphToMany';
 
 export default class Schema {
   static HAS_ONE: string = HAS_ONE;
@@ -30,8 +29,6 @@ export default class Schema {
   static BELONGS_TO_MANY: string = BELONGS_TO_MANY;
 
   static MORPH_TO: string = MORPH_TO;
-
-  static MORPH_TO_MANY: string = MORPH_TO_MANY;
 
   attributes: string[] = [];
 
@@ -81,31 +78,32 @@ export default class Schema {
     attribute: string,
     schema: Schema,
     relation: string,
-    params: Partial<Relation> = {},
+    polymorph?: PolymorphRelation,
   ): this {
     if (process.env.NODE_ENV !== 'production') {
       if (!(schema instanceof Schema)) {
         throw new TypeError(`Relation "${attribute}" is not a valid schema.`);
-      } else if (this.relationTypes[attribute]) {
+      } else if (this.relationTypes[attribute] && this.relationTypes[attribute] !== relation) {
         throw new Error(
           `Relation "${attribute}" has already been mapped as "${this.relationTypes[attribute]}".`,
         );
       }
     }
 
-    // Set relations
-    this.relations.push({
-      ...params,
+    const params: Relation = {
       attribute,
-      collection:
-        relation === BELONGS_TO_MANY || relation === HAS_MANY || relation === MORPH_TO_MANY,
+      collection: relation === BELONGS_TO_MANY || relation === HAS_MANY,
       relation,
       schema,
-    });
+    };
 
+    if (polymorph) {
+      params.polymorph = polymorph;
+    }
+
+    this.relations.push(params);
     this.relationTypes[attribute] = relation;
 
-    // Set attributes
     this.addAttributes([attribute]);
 
     return this;
@@ -139,7 +137,7 @@ export default class Schema {
   /**
    * Define multiple relationships using a compact syntax.
    */
-  define(relations: SchemaExpandedMap): this {
+  define(relations: DefineRelationMap): this {
     Object.keys(relations).forEach((attribute: string) => {
       const schema = relations[attribute];
 
@@ -148,7 +146,7 @@ export default class Schema {
       } else if (Array.isArray(schema)) {
         this.addRelation(attribute, schema[0], HAS_MANY);
       } else if (isObject(schema)) {
-        this.addRelation(attribute, schema.schema, schema.relation, schema);
+        this.morphTo(attribute, schema.types, schema.typeSuffix, schema.keySuffix);
       }
     });
 
@@ -172,14 +170,20 @@ export default class Schema {
   /**
    * Map morph-to nested entities by attribute name.
    */
-  morphTo(attribute: string, schema: Schema, suffixes: RelationSuffixes = {}): this {
-    return this.addRelation(attribute, schema, MORPH_TO, suffixes);
-  }
+  morphTo(
+    attribute: string,
+    schemas: SchemaMap,
+    typeSuffix: string = '_type',
+    keySuffix: string = '_id',
+  ): this {
+    Object.keys(schemas).forEach((type: string) => {
+      this.addRelation(attribute, schemas[type], MORPH_TO, {
+        keySuffix,
+        type,
+        typeSuffix,
+      });
+    });
 
-  /**
-   * Map morph-to-many nested entities by attribute name.
-   */
-  morphToMany(attribute: string, schema: Schema, suffixes: RelationSuffixes = {}): this {
-    return this.addRelation(attribute, schema, MORPH_TO_MANY, suffixes);
+    return this;
   }
 }
