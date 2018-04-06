@@ -15,6 +15,7 @@
 
 * Can now generate and include multiple renderers (typed languages) in the same output.
   * Added individual options `--flow`, `--prop-types`, and `--typescript`, to opt into generation.
+* Can now define schematics using YAML.
 * Added polymorphic type.
   * `Schema`s can define polymorphic relations with `morphTo`.
   * Schematics can define with the new "polymorph" type definition.

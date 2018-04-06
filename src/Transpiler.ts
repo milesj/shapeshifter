@@ -11,6 +11,7 @@ import RendererFactory from './RendererFactory';
 import Schematic from './Schematic';
 import readWithNode from './readers/node';
 import readWithGraphQL from './readers/graphql';
+import readWithYaml from './readers/yaml';
 import { Options } from './types';
 
 type ResolveUnit = {
@@ -95,6 +96,8 @@ export default class Transpiler {
         data = readWithNode(resolvePath);
       } else if (pathExt === '.gql' || pathExt === '.graphql') {
         data = readWithGraphQL(resolvePath);
+      } else if (pathExt === '.yml' || pathExt === '.yaml') {
+        data = readWithYaml(resolvePath);
       } else {
         // eslint-disable-next-line no-continue
         continue;

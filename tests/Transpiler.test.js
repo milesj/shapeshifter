@@ -26,50 +26,42 @@ const RENDERERS = [
 ];
 
 // Supported schema file formats
+const cases = [
+  'array',
+  'enum',
+  'instance',
+  'object',
+  'primitive',
+  'shape',
+  'union',
+  'imports',
+  'constants',
+  'sets',
+  'reference',
+  'reference-self',
+  'shape-reference',
+  'polymorph',
+];
+
 const FORMATS = [
   {
     format: 'js',
-    reader: 'node',
-    cases: [
-      'array',
-      'enum',
-      'instance',
-      'object',
-      'primitive',
-      'shape',
-      'union',
-      'imports',
-      'constants',
-      'sets',
-      'reference',
-      'reference-self',
-      'shape-reference',
-      'polymorph',
-    ],
+    target: 'common',
+    cases,
   },
   {
     format: 'json',
-    reader: 'node',
-    cases: [
-      'array',
-      'enum',
-      'instance',
-      'object',
-      'primitive',
-      'shape',
-      'union',
-      'imports',
-      'constants',
-      'sets',
-      'reference',
-      'reference-self',
-      'shape-reference',
-      'polymorph',
-    ],
+    target: 'common',
+    cases,
+  },
+  {
+    format: 'yml',
+    target: 'common',
+    cases,
   },
   {
     format: 'gql',
-    reader: 'gql',
+    target: 'graphql',
     cases: ['array', 'enum', 'primitive', 'shape', 'union', 'reference', 'reference-self', 'core'],
   },
 ];
@@ -78,16 +70,16 @@ describe('Transpiler', () => {
   describe('transpile()', () => {
     RENDERERS.forEach(({ name, key, ext }) => {
       describe(`outputs ${name}`, () => {
-        FORMATS.forEach(({ format, reader, cases }) => {
-          if (cases.length === 0) {
+        FORMATS.forEach(({ format, target, cases: testCases }) => {
+          if (testCases.length === 0) {
             return;
           }
 
           describe(`from ${format.toUpperCase()} files`, () => {
-            cases.forEach(schema => {
+            testCases.forEach(schema => {
               it(`when rendering schema case "${schema}"`, () => {
                 const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
-                const expectedPath = `${__dirname}/expected/${reader}/${key}/${schema}.${ext}`;
+                const expectedPath = `${__dirname}/expected/${target}/${key}/${schema}.${ext}`;
 
                 const output = new Transpiler({
                   ...options,
@@ -102,7 +94,7 @@ describe('Transpiler', () => {
 
           it('when rendering an entire folder into a single file', () => {
             const actualPath = `${__dirname}/schemas/${format}/`;
-            const expectedPath = `${__dirname}/expected/${reader}/${key}/all.${ext}`;
+            const expectedPath = `${__dirname}/expected/${target}/${key}/all.${ext}`;
 
             const output = new Transpiler({
               ...options,

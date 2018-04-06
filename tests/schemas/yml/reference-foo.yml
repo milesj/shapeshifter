@@ -1,0 +1,10 @@
+---
+name: ReferenceFoo
+references:
+  bar: "./reference-bar.yml"
+attributes:
+  numberField: number
+  refField:
+    type: ref
+    reference: bar
+    nullable: false

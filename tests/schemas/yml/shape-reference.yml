@@ -1,0 +1,19 @@
+---
+name: ShapeReference
+shapes:
+  Price:
+    amount: number
+    nativeAmount: number
+    exchangeRate: number
+attributes:
+  fees:
+    type: shape
+    reference: Price
+  taxes:
+    type: shape
+    reference: Price
+    nullable: false
+  total:
+    type: shape
+    reference: Price
+    nullable: false
