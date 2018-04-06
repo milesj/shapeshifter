@@ -365,10 +365,11 @@ describe('Renderer', () => {
       ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(Array.from(renderer.builder.relations)).toEqual([
-        `quxSchema.addAttributes([
-  'first_name',
-  'last_name',
-]);`,
+        `quxSchema
+  .addAttributes([
+    'first_name',
+    'last_name',
+  ]);`,
       ]);
 
       renderer.options.includeAttributes = false;
@@ -418,9 +419,10 @@ describe('Renderer', () => {
       ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(Array.from(renderer.builder.relations)).toEqual([
-        `quxSchema.hasOne({
-  post: postsSchema,
-});`,
+        `quxSchema
+  .hasOne({
+    post: postsSchema,
+  });`,
       ]);
     });
 
@@ -442,9 +444,10 @@ describe('Renderer', () => {
       ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(Array.from(renderer.builder.relations)).toEqual([
-        `quxSchema.hasOne({
-  post: postsSchema,
-});`,
+        `quxSchema
+  .hasOne({
+    post: postsSchema,
+  });`,
       ]);
     });
 
@@ -469,9 +472,10 @@ describe('Renderer', () => {
       ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(Array.from(renderer.builder.relations)).toEqual([
-        `quxSchema.hasMany({
-  posts: postsSchema,
-});`,
+        `quxSchema
+  .hasMany({
+    posts: postsSchema,
+  });`,
       ]);
     });
 
@@ -501,11 +505,13 @@ describe('Renderer', () => {
       ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(Array.from(renderer.builder.relations)).toEqual([
-        `quxSchema.belongsTo({
-  post: postsSchema,
-}).belongsToMany({
-  posts: postsSchema,
-});`,
+        `quxSchema
+  .belongsTo({
+    post: postsSchema,
+  })
+  .belongsToMany({
+    posts: postsSchema,
+  });`,
       ]);
     });
 
@@ -537,16 +543,19 @@ describe('Renderer', () => {
       ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(Array.from(renderer.builder.relations)).toEqual([
-        `quxSchema.addAttributes([
-  'first_name',
-  'last_name',
-  'post',
-  'posts',
-]).hasMany({
-  posts: postsSchema,
-}).belongsTo({
-  post: postsSchema,
-});`,
+        `quxSchema
+  .belongsTo({
+    post: postsSchema,
+  })
+  .hasMany({
+    posts: postsSchema,
+  })
+  .addAttributes([
+    'first_name',
+    'last_name',
+    'post',
+    'posts',
+  ]);`,
       ]);
 
       renderer.options.includeAttributes = false;
@@ -579,32 +588,12 @@ describe('Renderer', () => {
       ).toBe("export const quxSchema = new Schema('quxs');");
 
       expect(Array.from(renderer.builder.relations)).toEqual([
-        `quxSchema.define({
-  post: postsSchema,
-  posts: [postsSchema],
-});`,
+        `quxSchema
+  .define({
+    post: postsSchema,
+    posts: [postsSchema],
+  });`,
       ]);
-    });
-
-    it('errors for invalid relation name', () => {
-      renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
-
-      expect(() =>
-        renderer.renderSchema(
-          'QuxSchema',
-          [
-            new StringDefinition(options, 'first_name'),
-            new StringDefinition(options, 'last_name'),
-            new ReferenceDefinition(options, 'post', {
-              reference: 'posts',
-              relation: 'watwat',
-            }),
-          ],
-          {
-            resourceName: 'quxs',
-          },
-        ),
-      ).toThrowError();
     });
   });
 

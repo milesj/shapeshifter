@@ -10,25 +10,38 @@ export const singleChildSchema = new Schema('single-child');
 
 export const parentSchema = new Schema('parents');
 
-multipleChildrenSchema.addAttributes([
-  'uuid',
-]);
+multipleChildrenSchema
+  .addAttributes([
+    'uuid',
+  ]);
 
-singleChildSchema.addAttributes([
-  'id',
-  'active',
-  'self',
-]).hasOne({
-  self: singleChildSchema,
-});
+singleChildSchema
+  .hasOne({
+    self: singleChildSchema,
+  })
+  .addAttributes([
+    'id',
+    'active',
+    'self',
+  ]);
 
-parentSchema.addAttributes([
-  'id',
-  'name',
-  'children',
-  'orphan',
-]).hasOne({
-  orphan: singleChildSchema,
-}).belongsToMany({
-  children: multipleChildrenSchema,
-});
+parentSchema
+  .morphTo({
+    Single: singleChildSchema,
+    'Model::Multiple': multipleChildrenSchema,
+  }, 'polymorph', '_type', '_fk')
+  .belongsToMany({
+    children: multipleChildrenSchema,
+  })
+  .hasOne({
+    orphan: singleChildSchema,
+  })
+  .addAttributes([
+    'id',
+    'name',
+    'children',
+    'orphan',
+    'polymorph',
+    'polymorph_fk',
+    'polymorph_type',
+  ]);

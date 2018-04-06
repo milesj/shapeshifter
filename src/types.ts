@@ -30,14 +30,7 @@ export interface SchemaMap {
 }
 
 export interface DefineRelationMap {
-  [attribute: string]:
-    | Schema
-    | Schema[]
-    | {
-        keySuffix?: string;
-        types: SchemaMap;
-        typeSuffix?: string;
-      };
+  [attribute: string]: Schema | Schema[];
 }
 
 export interface Relation {
@@ -101,6 +94,7 @@ export interface ObjectConfig extends Config {
 }
 
 export interface PolymorphConfig extends Config {
+  export?: boolean;
   keySuffix?: string;
   typeSuffix?: string;
   valueTypes: (TypeDefinition & { name: string })[];

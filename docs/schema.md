@@ -106,34 +106,24 @@ userSchema.define({
 
 Schemas support a rudimentary form of polymorphism through relations and the
 [polymorph](./definitions.md#polymorphic) type. When a polymorph is defined, something like the
-following output would be generated.
+following output would be generated, with the object being a map of all variants, and the attribute
+name.
 
 ```js
-attachmentSchema.morphTo('item', {
-  Image: imageSchema,
-  Video: videoSchema,
-  PDF: pdfSchema,
-});
-
-post.hasMany({
-  attachments: attachmentSchema,
-});
+attachmentSchema.morphTo(
+  {
+    Image: imageSchema,
+    Video: videoSchema,
+    PDF: pdfSchema,
+  },
+  'item',
+);
 ```
 
-If `--use-define` is passed on the command line, the relation output will be modified to:
+Type name and foreign key suffixes are customized with additional arguments.
 
-```javascript
-attachmentSchema.define({
-  item: {
-    types: {
-      Image: imageSchema,
-      Video: videoSchema,
-      PDF: pdfSchema,
-    },
-  }),
-});
-
-post.define({
-  attachments: attachmentSchema,
-});
+```js
+attachmentSchema.morphTo(schemas, 'item', '_model', '_uuid');
 ```
+
+> Polymorphic relations do not support the shorthand define syntax when using `--use-define`.

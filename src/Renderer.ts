@@ -89,6 +89,17 @@ export default class Renderer {
   }
 
   /**
+   * Format the property key of an object. If unsupported characters are used, wrap in quotes.
+   */
+  formatObjectProperty(value: string): string {
+    if (value.match(/^[a-z_]{1}\w+$/i)) {
+      return value;
+    }
+
+    return this.formatValue(value, 'string');
+  }
+
+  /**
    * Format a primitive value to it's visual representation.
    */
   formatValue(value: any, type: string = ''): string {
@@ -442,7 +453,7 @@ export default class Renderer {
   renderPlainObject(object: Struct, depth: number = 0): string {
     return this.formatObject(
       Object.keys(object).map(key =>
-        this.wrapProperty(key, this.formatValue(object[key]), depth + 1),
+        this.wrapProperty(this.formatObjectProperty(key), this.formatValue(object[key]), depth + 1),
       ),
       depth,
     );
@@ -496,13 +507,8 @@ export default class Renderer {
     const { primaryKey, resourceName, ...meta } = metadata;
     const { includeAttributes, useDefine } = this.options;
     const references = this.schematic.referenceSchematics;
-    const fields: string[] = [];
-    const relations: { [key: string]: string[] } = {
-      [Schema.HAS_ONE]: [],
-      [Schema.HAS_MANY]: [],
-      [Schema.BELONGS_TO]: [],
-      [Schema.BELONGS_TO_MANY]: [],
-    };
+    const attributesTemplate: string[] = [];
+    const relationsTemplate: string[] = [];
 
     if (!resourceName || typeof resourceName !== 'string') {
       throw new SyntaxError(
@@ -511,66 +517,83 @@ export default class Renderer {
       );
     }
 
-    let relationDefinition: ReferenceDefinition | null = null;
-    let relationType: string = '';
+    const getRelationSchemaName = (definition: Definition<Config>) => {
+      const relationName = definition.config.self
+        ? this.schematic.name
+        : references[definition.config.reference].name;
 
-    // eslint-disable-next-line complexity
+      return this.getSchemaInstanceName(this.getObjectName(relationName, 'Schema'));
+    };
+
+    // Separate relation definitions into buckets
+    const relations: { [type: string]: string[] } = {};
+
+    const mapDefinitionToRelation = (relation: string, definition?: Definition<Config>) => {
+      if (definition && definition instanceof ReferenceDefinition && definition.config.export) {
+        const relationType = definition.config.relation || relation;
+        let relationName = getRelationSchemaName(definition);
+
+        if (
+          useDefine &&
+          (relationType === Schema.HAS_MANY || relationType === Schema.BELONGS_TO_MANY)
+        ) {
+          relationName = `[${relationName}]`;
+        }
+
+        const property = this.wrapProperty(definition.attribute, relationName, 2);
+
+        if (relations[relationType]) {
+          relations[relationType].push(property);
+        } else {
+          relations[relationType] = [property];
+        }
+      }
+    };
+
     attributes.forEach(definition => {
-      relationDefinition = null;
-
       if (includeAttributes) {
-        fields.push(this.wrapItem(this.formatValue(definition.attribute, 'string'), 1));
+        attributesTemplate.push(this.wrapItem(this.formatValue(definition.attribute, 'string'), 2));
       }
 
       // Single
-      if (definition instanceof ReferenceDefinition) {
-        relationDefinition = definition;
-        relationType = Schema.HAS_ONE;
-      }
+      mapDefinitionToRelation(Schema.HAS_ONE, definition);
 
       // Multiple
-      if (
-        (definition instanceof ArrayDefinition || definition instanceof ObjectDefinition) &&
-        definition.valueType &&
-        definition.valueType instanceof ReferenceDefinition
-      ) {
-        relationDefinition = definition.valueType;
-        relationType = Schema.HAS_MANY;
+      if (definition instanceof ArrayDefinition || definition instanceof ObjectDefinition) {
+        mapDefinitionToRelation(Schema.HAS_MANY, definition.valueType);
       }
 
-      // Validate and format template
-      if (relationDefinition) {
-        /* istanbul ignore next Hard to test */
-        if (typeof relations[relationType] === 'undefined') {
-          throw new TypeError(
-            `Invalid relation type for reference attribute "${definition.attribute}".`,
-          );
-        }
-
-        const relationConfig: ReferenceConfig = relationDefinition.config;
-
-        if (!relationConfig.export) {
-          return;
-        }
-
-        // Format the output
-        const relationName = relationConfig.self
-          ? this.schematic.name
-          : references[relationConfig.reference].name;
-        const schemaName = this.getSchemaInstanceName(this.getObjectName(relationName, 'Schema'));
-        const isCollection =
-          relationType === Schema.HAS_MANY || relationType === Schema.BELONGS_TO_MANY;
-
-        relations[relationConfig.relation || relationType].push(
-          this.wrapProperty(
-            relationDefinition.attribute,
-            useDefine && isCollection ? `[${schemaName}]` : schemaName,
+      // Polymorph
+      if (definition instanceof PolymorphDefinition) {
+        const customKey = definition.config.keySuffix !== '_id';
+        const customType = definition.config.typeSuffix !== '_type';
+        const args = [
+          this.formatObject(
+            definition.valueTypes.map(valueDefinition =>
+              this.wrapProperty(
+                this.formatObjectProperty(valueDefinition.config.name),
+                getRelationSchemaName(valueDefinition),
+                2,
+              ),
+            ),
             1,
           ),
-        );
+          this.formatValue(definition.attribute, 'string'),
+        ];
+
+        if (customType || customKey) {
+          args.push(this.formatValue(definition.config.typeSuffix, 'string'));
+        }
+
+        if (customKey) {
+          args.push(this.formatValue(definition.config.keySuffix, 'string'));
+        }
+
+        relationsTemplate.push(`  .morphTo(${args.join(', ')})`);
       }
     });
 
+    // Format primary schema template
     const args = [this.formatValue(resourceName, 'string')];
 
     if (primaryKey) {
@@ -584,13 +607,7 @@ export default class Renderer {
     const schemaName = this.getSchemaInstanceName(name);
     const schemaTemplate = `export const ${schemaName} = new Schema(${args.join(', ')});`;
 
-    // Generate relations separately so that we avoid circular references
-    let relationTemplate = '';
-
-    if (fields.length > 0) {
-      relationTemplate += `.addAttributes(${this.formatArray(fields, 0)})`;
-    }
-
+    // Formate attributes and relations
     if (useDefine) {
       const useDefineList = Object.keys(relations).reduce(
         (joined: string[], relation: string) => [...joined, ...relations[relation]],
@@ -598,18 +615,22 @@ export default class Renderer {
       );
 
       if (useDefineList.length > 0) {
-        relationTemplate += `.define(${this.formatObject(useDefineList, 0)})`;
+        relationsTemplate.push(`  .define(${this.formatObject(useDefineList, 1)})`);
       }
     } else {
-      Object.keys(relations).forEach((relation: string) => {
-        if (relations[relation].length > 0) {
-          relationTemplate += `.${relation}(${this.formatObject(relations[relation], 0)})`;
-        }
+      Object.keys(relations).forEach(relation => {
+        const schemaMap = this.formatObject(relations[relation], 1);
+
+        relationsTemplate.push(`  .${relation}(${this.formatObject(relations[relation], 1)})`);
       });
     }
 
-    if (relationTemplate) {
-      this.builder.relations.add(`${schemaName}${relationTemplate};`);
+    if (attributesTemplate.length > 0) {
+      relationsTemplate.push(`  .addAttributes(${this.formatArray(attributesTemplate, 1)})`);
+    }
+
+    if (relationsTemplate.length > 0) {
+      this.builder.relations.add(`${schemaName}\n${relationsTemplate.join('\n')};`);
     }
 
     return `${schemaTemplate}`;

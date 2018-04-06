@@ -145,8 +145,6 @@ export default class Schema {
         this.addRelation(attribute, schema, HAS_ONE);
       } else if (Array.isArray(schema)) {
         this.addRelation(attribute, schema[0], HAS_MANY);
-      } else if (isObject(schema)) {
-        this.morphTo(attribute, schema.types, schema.typeSuffix, schema.keySuffix);
       }
     });
 
@@ -171,8 +169,8 @@ export default class Schema {
    * Map morph-to nested entities by attribute name.
    */
   morphTo(
-    attribute: string,
     schemas: SchemaMap,
+    attribute: string,
     typeSuffix: string = '_type',
     keySuffix: string = '_id',
   ): this {

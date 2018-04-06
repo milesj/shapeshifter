@@ -2,6 +2,8 @@
 /* eslint-disable */
 /* @flow */
 
+export type Key = string | number;
+
 export type MultipleChildrenType = {
   uuid: ?string,
 };
@@ -17,4 +19,7 @@ export type ParentType = {
   name: ?string,
   children: ?Array<?MultipleChildrenType>,
   orphan: ?SingleChildType,
+  polymorph: SingleChildType | MultipleChildrenType | null,
+  polymorph_fk: ?Key,
+  polymorph_type: ?string,
 };

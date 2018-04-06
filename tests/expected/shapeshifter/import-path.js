@@ -10,12 +10,19 @@ export const singleChildSchema = new Schema('single-child');
 
 export const parentSchema = new Schema('parents');
 
-singleChildSchema.hasOne({
-  self: singleChildSchema,
-});
+singleChildSchema
+  .hasOne({
+    self: singleChildSchema,
+  });
 
-parentSchema.hasOne({
-  orphan: singleChildSchema,
-}).belongsToMany({
-  children: multipleChildrenSchema,
-});
+parentSchema
+  .morphTo({
+    Single: singleChildSchema,
+    'Model::Multiple': multipleChildrenSchema,
+  }, 'polymorph', '_type', '_fk')
+  .belongsToMany({
+    children: multipleChildrenSchema,
+  })
+  .hasOne({
+    orphan: singleChildSchema,
+  });

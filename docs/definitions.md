@@ -507,7 +507,7 @@ the model/class/etc used for the association.
     "valueTypes": [
       {
         "type": "shape",
-        "name": "Image",
+        "name": "Model::Image",
         "reference": "Image"
       },
       {
@@ -543,15 +543,16 @@ item_type: string;
 ```
 
 The `_id` and `_type` suffixes can be defined with configuration fields `keySuffix` and `typeSuffix`
-respectively.
+respectively. Furthermore, the `export` field is also supported.
 
 ```json
 {
   "type": "shape",
-  "name": "Image",
+  "name": "Model.Image",
   "reference": "Image",
   "keySuffix": "_fk",
-  "typeSuffix": "_model"
+  "typeSuffix": "_model",
+  "export": false
 }
 ```
 

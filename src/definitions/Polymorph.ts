@@ -17,6 +17,7 @@ export default class PolymorphDefinition extends Definition<PolymorphConfig> {
     this.config = optimal(
       this.config,
       {
+        export: bool(true),
         keySuffix: string('_id'),
         nullable: bool(),
         type: string('polymorph'),

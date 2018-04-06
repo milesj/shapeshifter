@@ -44,7 +44,7 @@ declare module 'shapeshifter/lib/Schema' {
       define(relations: DefineRelationMap): this;
       hasOne(relations: SchemaMap): this;
       hasMany(relations: SchemaMap): this;
-      morphTo(attribute: string, schemas: SchemaMap, typeSuffix?: string, keySuffix?: string): this;
+      morphTo(schemas: SchemaMap, attribute: string, typeSuffix?: string, keySuffix?: string): this;
   }
 
 }
@@ -69,11 +69,7 @@ declare module 'shapeshifter/lib/types' {
       [attribute: string]: Schema;
   }
   export interface DefineRelationMap {
-      [attribute: string]: Schema | Schema[] | {
-          keySuffix?: string;
-          types: SchemaMap;
-          typeSuffix?: string;
-      };
+      [attribute: string]: Schema | Schema[];
   }
   export interface Relation {
       attribute: string;
@@ -114,6 +110,7 @@ declare module 'shapeshifter/lib/types' {
       valueType: TypeDefinition;
   }
   export interface PolymorphConfig extends Config {
+      export?: boolean;
       keySuffix?: string;
       typeSuffix?: string;
       valueTypes: (TypeDefinition & {
@@ -385,6 +382,7 @@ declare module 'shapeshifter/lib/Renderer' {
       beforeParse(): void;
       formatArray(items: string | string[], depth: number, itemSpacer?: string, indentSpacer?: string): string;
       formatObject(props: string | string[], depth: number, propSpacer?: string, indentSpacer?: string): string;
+      formatObjectProperty(value: string): string;
       formatValue(value: any, type?: string): string;
       getObjectName(...names: string[]): string;
       getSchemaInstanceName(name: string): string;

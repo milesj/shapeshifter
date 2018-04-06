@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 
 const PropTypePolyfill = () => {};
 
+export const KeyShape = PropTypes.oneOfType([
+  PropTypes.string.isRequired,
+  PropTypes.number.isRequired,
+]);
+
 export const MultipleChildrenShape = (process.env.NODE_ENV === 'production') ? PropTypePolyfill : PropTypes.shape({
   uuid: PropTypes.string,
 });
@@ -20,4 +25,10 @@ export const ParentShape = (process.env.NODE_ENV === 'production') ? PropTypePol
   name: PropTypes.string,
   children: PropTypes.arrayOf(MultipleChildrenShape),
   orphan: SingleChildShape,
+  polymorph: PropTypes.oneOfType([
+    SingleChildShape.isRequired,
+    MultipleChildrenShape.isRequired,
+  ]),
+  polymorph_fk: KeyShape,
+  polymorph_type: PropTypes.string,
 });

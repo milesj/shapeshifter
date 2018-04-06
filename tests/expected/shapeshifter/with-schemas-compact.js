@@ -10,11 +10,17 @@ export const singleChildSchema = new Schema('single-child');
 
 export const parentSchema = new Schema('parents');
 
-singleChildSchema.define({
-  self: singleChildSchema,
-});
+singleChildSchema
+  .define({
+    self: singleChildSchema,
+  });
 
-parentSchema.define({
-  orphan: singleChildSchema,
-  children: [multipleChildrenSchema],
-});
+parentSchema
+  .morphTo({
+    Single: singleChildSchema,
+    'Model::Multiple': multipleChildrenSchema,
+  }, 'polymorph', '_type', '_fk')
+  .define({
+    children: [multipleChildrenSchema],
+    orphan: singleChildSchema,
+  });

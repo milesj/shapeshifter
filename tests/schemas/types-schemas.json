@@ -21,6 +21,23 @@
     "orphan": {
       "type": "reference",
       "reference": "single"
+    },
+    "polymorph": {
+      "type": "polymorph",
+      "keySuffix": "_fk",
+      "typeSuffix": "_type",
+      "valueTypes": [
+        {
+          "type": "reference",
+          "name": "Single",
+          "reference": "single"
+        },
+        {
+          "type": "reference",
+          "name": "Model::Multiple",
+          "reference": "multiple"
+        }
+      ]
     }
   }
 }
