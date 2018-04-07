@@ -61,7 +61,7 @@ userSchema.addAttributes(['id', 'username', 'email', 'location']);
 
 Unlike attributes, relations are always included in the output, as relations between entities (via
 schemas) are highly informational. Relations are divided into 5 categories: has-one, has-many,
-belongs-to, belongs-to-many (many to many), and [polymorphic](#polymorphism) (below).
+belongs-to, belongs-to-many (many to many), and [polymorphic](#polymorphic) (below).
 
 Relations are generated based on [references](./definitions.md#references) found within the current
 schema. Assume we add a has-many `posts` relation, and a has-one `country` relation to the current
@@ -106,8 +106,8 @@ userSchema.define({
 
 Schemas support a rudimentary form of polymorphism through relations and the
 [polymorph](./definitions.md#polymorphic) type. When a polymorph is defined, something like the
-following output would be generated, with the object being a map of all variants, and the attribute
-name.
+following would be generated, with the object being a map of all variant types, and the associated
+attribute name.
 
 ```js
 attachmentSchema.morphTo(

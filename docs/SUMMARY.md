@@ -9,7 +9,7 @@
   * [Subsets](./schematic.md#subsets)
 * [Type Definitions](./definitions.md)
   * [Primitives](./definitions.md#primitives)
-  * [Keys](./definitions.md#key)
+  * [Keys](./definitions.md#keys)
   * [Arrays](./definitions.md#arrays)
   * [Objects](./definitions.md#objects)
   * [Enums](./definitions.md#enums)

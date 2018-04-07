@@ -37,7 +37,7 @@ type User {
 
 For brevity, the rest of the documenation will be in JSON and GraphQL.
 
-> GraphQL has limited functionality compared to JSON or JavaScript. Jump to the section on
+> GraphQL has limited functionality compared to other formats. Jump to the section on
 > [GraphQL](./graphql.md), and read the documentation thoroughly, for more information.
 
 ## Attributes

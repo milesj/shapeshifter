@@ -496,9 +496,9 @@ A `polymorph` type can be used for polymorphic relations through a union of poss
 polymorph is defined, for example `item` (which points to a type within the union), an associated
 `item_id` (the foreign key) and `item_type` (the name of a model or class) are also defined.
 
-The possible values within a polymorphic relation must be a [shape](#shapes) or
-[reference](#references) definition. Furthermore, each value requires a `name`, which is the name of
-the model/class/etc used for the association.
+The possible values within a polymorphic relation must be a [shape reference](#shape-references) or
+standard [reference](#references) definition. Furthermore, each value requires a `name`, which is
+the name of the model/class/type/etc used for the association.
 
 ```json
 {
@@ -542,8 +542,8 @@ item_id: Key;
 item_type: string;
 ```
 
-The `_id` and `_type` suffixes can be defined with configuration fields `keySuffix` and `typeSuffix`
-respectively. Furthermore, the `export` field is also supported.
+The `_id` and `_type` suffixes can be configured with `keySuffix` and `typeSuffix` respectively.
+Furthermore, the `export` field is also supported.
 
 ```json
 {
