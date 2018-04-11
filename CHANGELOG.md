@@ -1,4 +1,11 @@
-# 6.0.0
+# 6.1.0 - 04/10/18
+
+#### 🐞 Fixed
+
+* Added missing `@types` to dependency list.
+* Replaced `index.d.ts` with individual files generated with `--declaration`.
+
+# 6.0.0 - 04/06/18
 
 #### 💥 Breaking
 
