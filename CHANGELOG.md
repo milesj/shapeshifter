@@ -1,5 +1,9 @@
 # 6.1.0 - 04/10/18
 
+#### 🚀 New
+
+* Type `key` can now use shorthand syntax.
+
 #### 🐞 Fixed
 
 * Added missing `@types` to dependency list.

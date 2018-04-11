@@ -8,8 +8,8 @@ import normalizeType from './normalizeType';
 /**
  * Verify that a value is a primitive type.
  */
-export default function isPrimitive(value: string): boolean {
+export default function isPrimitive(value: string | object): boolean {
   const type = normalizeType(value);
 
-  return type === 'boolean' || type === 'number' || type === 'string';
+  return type === 'boolean' || type === 'number' || type === 'string' || type === 'key';
 }

@@ -8,7 +8,7 @@ describe('helpers/isPrimitive', () => {
   });
 
   it('returns true for primitive types', () => {
-    ['boolean', 'number', 'string'].forEach(value => {
+    ['boolean', 'number', 'string', 'key'].forEach(value => {
       expect(isPrimitive(value)).toBe(true);
     });
   });

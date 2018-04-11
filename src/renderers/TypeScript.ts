@@ -18,7 +18,6 @@ import ShapeDefinition from '../definitions/Shape';
 import StringDefinition from '../definitions/String';
 import UnionDefinition from '../definitions/Union';
 import indent from '../helpers/indent';
-import isPrimitive from '../helpers/isPrimitive';
 import normalizeType from '../helpers/normalizeType';
 import { Config, Options, PrimitiveType } from '../types';
 import DefinitionFactory from '../DefinitionFactory';

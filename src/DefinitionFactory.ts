@@ -35,7 +35,7 @@ export default class DefinitionFactory {
 
     // Convert primitives to configuration objects
     if (typeof baseConfig === 'string') {
-      if (isPrimitive(normalizeType(baseConfig))) {
+      if (isPrimitive(baseConfig)) {
         config.type = baseConfig;
       } else {
         throw new TypeError(`Invalid primitive type "${baseConfig}".`);
