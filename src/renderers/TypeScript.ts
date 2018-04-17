@@ -142,7 +142,9 @@ export default class TypeScriptRenderer extends Renderer {
   ): string {
     let superSchema = super.renderSchema(name, attributes, metadata);
 
-    superSchema = superSchema.replace('new Schema(', `new Schema<${name.slice(0, -'Schema'.length)}Interface>(`);
+    if (this.options.typescriptSchemaGenerics) {
+      superSchema = superSchema.replace('new Schema(', `new Schema<${name.slice(0, -'Schema'.length)}Interface>(`);
+    }
 
     return superSchema;
   }

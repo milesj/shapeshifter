@@ -70,6 +70,11 @@ app
         default: false,
         description: 'Generate TypeScript definitions.',
       },
+      'typescript-schema-generics': {
+        boolean: true,
+        default: false,
+        description: 'Types the schemas with the type interface',
+      },
       'use-define': {
         boolean: true,
         default: false,
@@ -94,6 +99,7 @@ app
         renderers: renderers.filter(Boolean),
         stripPropTypes: options.stripPropTypes,
         useDefine: options.useDefine,
+        typeScriptSchemaGenerics: options.typeScriptSchemaGenerics,
       })
         .transpile(options.paths)
         .then(function(output) {

@@ -138,4 +138,5 @@ your choosing, otherwise the output will be sent to the console.
 * `--strip-prop-types` (bool) - Wrap PropType definitions in `process.env.NODE_ENV` production
   expressions, allowing them to be removed with dead code elimination.
 * `--typescript` (bool) - Generate TypeScript definitions. Defaults to "false".
+* `--typescript-schema-generics` (bool) - Types the schemas with the type interface. Defaults to "false".
 * `--use-define` (bool) - Update all schema relations to use `Schema#define`.
