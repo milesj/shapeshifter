@@ -300,6 +300,16 @@ describe('TypeScriptRenderer', () => {
     });
   });
 
+  describe('renderSchema()', () => {
+    it('adds types to the schema generic', () => {
+      expect(
+        renderer.renderSchema('QuxSchema', [], {
+          resourceName: 'quxs',
+        }),
+      ).toBe("export const quxSchema = new Schema<QuxInterface>('quxs');");
+    });
+  });
+
   describe('wrapNullable()', () => {
     it('renders nullable', () => {
       expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('foo | null');

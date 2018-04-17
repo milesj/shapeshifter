@@ -19,7 +19,7 @@ import StringDefinition from '../definitions/String';
 import UnionDefinition from '../definitions/Union';
 import indent from '../helpers/indent';
 import normalizeType from '../helpers/normalizeType';
-import { Config, Options, PrimitiveType } from '../types';
+import { Config, Options, PrimitiveType, MetadataField } from '../types';
 import DefinitionFactory from '../DefinitionFactory';
 
 const ASCII_ALPHA_START: number = 65;
@@ -133,6 +133,18 @@ export default class TypeScriptRenderer extends Renderer {
         new Set(definition.valueTypes.map(item => this.renderAttribute(item, depth))),
       ).join(' | '),
     );
+  }
+
+  renderSchema(
+    name: string,
+    attributes: Definition<Config>[] = [],
+    metadata: MetadataField,
+  ): string {
+    let superSchema = super.renderSchema(name, attributes, metadata);
+
+    superSchema = superSchema.replace('new Schema(', `new Schema<${name.slice(0, -'Schema'.length)}Interface>(`);
+
+    return superSchema;
   }
 
   /**
