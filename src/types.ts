@@ -23,6 +23,7 @@ export interface Options extends Struct {
   renderers: RendererType[];
   stripPropTypes: boolean;
   useDefine: boolean;
+  typescriptSchemaGenerics: boolean;
 }
 
 export interface SchemaMap {

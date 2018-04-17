@@ -35,6 +35,7 @@ export default class Transpiler {
       renderers: array(string()).notEmpty(),
       stripPropTypes: bool(),
       useDefine: bool(),
+      typescriptSchemaGenerics: bool(),
     });
   }
 
