@@ -73,11 +73,11 @@
     "yargs": "^11.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.82.2",
-    "flow-bin": "^0.69.0",
+    "@milesj/build-tool-config": "^0.85.0",
+    "flow-bin": "^0.70.0",
     "prop-types": "^15.6.1",
     "typescript": "^2.8.1",
-    "webpack": "^4.5.0",
+    "webpack": "^4.6.0",
     "webpack-cli": "^2.0.14",
     "webpack-dev-server": "^3.1.3"
   },
