@@ -78,12 +78,12 @@ export default class Renderer {
    * Format a list (or string) of properties into an object respecting depth indentation.
    */
   formatObject(
-    props: string | string[],
+    properties: string | string[],
     depth: number,
     propSpacer: string = '\n',
     indentSpacer: string = '\n',
   ): string {
-    const value = Array.isArray(props) ? props.join(propSpacer) : props;
+    const value = Array.isArray(properties) ? properties.join(propSpacer) : properties;
 
     return `{${indentSpacer}${value}${indentSpacer}${indent(depth, this.options.indentCharacter)}}`;
   }
@@ -428,8 +428,12 @@ export default class Renderer {
   /**
    * Render a mapping of properties by formatting each value and prepending an indentation.
    */
-  renderObjectProps(props: Definition<Config>[], depth: number = 0, sep: string = ','): string[] {
-    return props.map(prop =>
+  renderObjectProps(
+    properties: Definition<Config>[],
+    depth: number = 0,
+    sep: string = ',',
+  ): string[] {
+    return properties.map(prop =>
       this.wrapProperty(this.wrapPropertyName(prop), this.renderAttribute(prop, depth), depth, sep),
     );
   }
