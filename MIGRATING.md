@@ -12,27 +12,27 @@ determines how to migrate properly. To rectify this problem, please follow these
 
 ## Common migration changes
 
-* Remove `func` and `function` type definitions from all schematics.
-* If importing files:
-  * Rename `SchemaReader` to `Schematic`.
-  * Rename `Factory.definition` to `DefinitionFactory.factory`.
-  * Rename `Factory.renderer` to `RendererFactory.factory`.
+- Remove `func` and `function` type definitions from all schematics.
+- If importing files:
+  - Rename `SchemaReader` to `Schematic`.
+  - Rename `Factory.definition` to `DefinitionFactory.factory`.
+  - Rename `Factory.renderer` to `RendererFactory.factory`.
 
 ## If every attribute SHOULD BE required
 
-* Do not pass `--nullable` on the command line.
-* Remove `"required": true` from all schematics.
-* Remove `"null": false` from all schematics.
-* Rename `"required": false` to `"nullable": true` in all schematics.
-* Rename `"null": true` to `"nullable": true` in all schematics.
+- Do not pass `--nullable` on the command line.
+- Remove `"required": true` from all schematics.
+- Remove `"null": false` from all schematics.
+- Rename `"required": false` to `"nullable": true` in all schematics.
+- Rename `"null": true` to `"nullable": true` in all schematics.
 
 ## If every attribute SHOULD NOT BE required
 
-* Pass `--nullable` on the command line.
-* Remove `"required": false` from all schematics.
-* Remove `"null": true` from all schematics.
-* Rename `"required": true` to `"nullable": false` in all schematics.
-* Rename `"null": false` to `"nullable": false` in all schematics.
+- Pass `--nullable` on the command line.
+- Remove `"required": false` from all schematics.
+- Remove `"null": true` from all schematics.
+- Rename `"required": true` to `"nullable": false` in all schematics.
+- Rename `"null": false` to `"nullable": false` in all schematics.
 
 ## TypeScript support
 

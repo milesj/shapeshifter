@@ -9,9 +9,9 @@ structures, resources, internal shapes, and more.
 
 ## Requirements
 
-* Node 4+
-* PropTypes 15+ / Flow 0.60+ / TypeScript 2.4+
-* IE 10+
+- Node 4+
+- PropTypes 15+ / Flow 0.60+ / TypeScript 2.4+
+- IE 10+
 
 ## Documentation
 
