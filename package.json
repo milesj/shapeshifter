@@ -68,17 +68,17 @@
     "@types/webpack": "^4.4.0",
     "@types/yargs": "^11.0.0",
     "graphql": "^0.13.2",
-    "js-yaml": "^3.11.0",
+    "js-yaml": "^3.12.0",
     "optimal": "^0.19.0",
     "yargs": "^11.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.98.0",
+    "@milesj/build-tool-config": "^0.100.1",
     "flow-bin": "^0.73.0",
     "prop-types": "^15.6.1",
-    "typescript": "^2.8.3",
-    "webpack": "^4.9.1",
-    "webpack-cli": "^2.1.4",
+    "typescript": "^2.9.1",
+    "webpack": "^4.11.1",
+    "webpack-cli": "^3.0.3",
     "webpack-dev-server": "^3.1.4"
   },
   "beemo": {
