@@ -6840,6 +6840,10 @@ optimal@^0.19.0:
   version "0.19.0"
   resolved "https://registry.npmjs.org/optimal/-/optimal-0.19.0.tgz#8ef66ba0795278d83bbde361d9880ffb1a403d2d"
 
+optimal@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.npmjs.org/optimal/-/optimal-0.20.0.tgz#4f7bbfb7691fd6b2089837df42f68868e9805926"
+
 optimist@0.6.1, optimist@^0.6.1:
   version "0.6.1"
   resolved "https://registry.npmjs.org/optimist/-/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
