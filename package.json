@@ -38,7 +38,7 @@
     "docs:install": "gitbook install",
     "eslint": "beemo eslint",
     "jest": "beemo jest",
-    "package": "yarn run clean && yarn run build && yarn test",
+    "package": "yarn run clean && yarn test && yarn run build",
     "prettier": "beemo prettier",
     "pretest": "yarn run type",
     "test": "yarn run jest",

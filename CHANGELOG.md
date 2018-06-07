@@ -1,3 +1,9 @@
+# 6.1.2 - 06/06/18
+
+#### 🐞 Fixed
+
+- Fixed missing buid issue.
+
 # 6.1.1 - 06/06/18
 
 #### 🛠 Internal
