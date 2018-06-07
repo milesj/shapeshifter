@@ -1,3 +1,10 @@
+# 6.1.1 - 06/06/18
+
+#### 🛠 Internal
+
+- Updated `optimal` to 1.0.
+- Tested against TypeScript 2.9 and Webpack 4.11.
+
 # 6.1.0 - 04/10/18
 
 #### 🚀 New
