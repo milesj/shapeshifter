@@ -15,20 +15,21 @@ import { userSchema } from 'shapeshifter/schematics';
 The plugin accepts an object with the following options -- with most of them being based on the
 [options passed to the command line](./README.md#options).
 
-* `schematicsSource` (string | string[]) - Absolute file system path to schematics source folder.
+- `schematicsSource` (string | string[]) - Absolute file system path to schematics source folder.
   _Required._
-* `schematicsImportPath` (string) - The fake import path to intercept. Defaults to
+- `schematicsImportPath` (string) - The fake import path to intercept. Defaults to
   `shapeshifter/schematics`.
-* `defaultNullable`
-* `disableEslint`
-* `importPath`
-* `includeAttributes`
-* `includeDefinitions`
-* `includeSchemas`
-* `indentCharacter`
-* `renderers`
-* `stripPropTypes`
-* `useDefine`
+- `defaultNullable`
+- `disableEslint`
+- `importPath`
+- `includeAttributes`
+- `includeDefinitions`
+- `includeSchemas`
+- `indentCharacter`
+- `inferPropTypesShape`
+- `renderers`
+- `stripPropTypes`
+- `useDefine`
 
 ## Webpack
 

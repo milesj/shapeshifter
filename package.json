@@ -101,7 +101,9 @@
     },
     "prettier": {
       "ignore": [
-        "tests/expected/**/*"
+        "tests/expected/**/*",
+        "book.json",
+        "package.json"
       ]
     }
   }

@@ -13,15 +13,15 @@ export const userSchema = new Schema('users', 'id');
 
 The following properties are available on the `Schema` class instance.
 
-* `resourceName` (string) - The resource name of the schema, passed as the first argument to the
+- `resourceName` (string) - The resource name of the schema, passed as the first argument to the
   constructor. This field is based on `meta.resourceName` in the schematic file.
-* `primaryKey` (string|string[]) - The name of the primary key in the current schema, passed as the
+- `primaryKey` (string|string[]) - The name of the primary key in the current schema, passed as the
   second argument to the constructor. Compound keys can be supported by passing an array of
   attribute names. This field is based on `meta.primaryKey` in the JSON schematic file. Defaults to
   "id".
-* `attributes` (string[]) - List of attribute names in the current schema.
-* `metadata` (object) - Extra metadata defined in the current schema.
-* `relations` (object[]) - List of relational objects that map specific attributes to externally
+- `attributes` (string[]) - List of attribute names in the current schema.
+- `metadata` (object) - Extra metadata defined in the current schema.
+- `relations` (object[]) - List of relational objects that map specific attributes to externally
   referenced schemas. The relational object follows this structure:
 
 ```javascript
@@ -38,7 +38,7 @@ The following properties are available on the `Schema` class instance.
 }
 ```
 
-* `relationTypes` (object) - Maps attribute names to relation types. A relation type is one of the
+- `relationTypes` (object) - Maps attribute names to relation types. A relation type is one of the
   following constants found on the `Schema` class: `HAS_ONE`, `HAS_MANY`, `BELONGS_TO`,
   `BELONGS_TO_MANY`, and `MORPH_TO`.
 

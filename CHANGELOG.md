@@ -1,3 +1,11 @@
+# 6.2.0 - 06/18/18
+
+#### 🚀 New
+
+- Added an `--infer-prop-types-shape` option for TypeScript, which will name both the interface and
+  PropTypes shape the same, so that automatic type inference is applied.
+- Updated `PropTypePolyfill` to `PropTypes.any` so that TypeScript and Flow type check correctly.
+
 # 6.1.2 - 06/06/18
 
 #### 🐞 Fixed

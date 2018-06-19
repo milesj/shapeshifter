@@ -82,9 +82,9 @@ export const userSchema = new Schema('users', 'id');
 
 ## Requirements
 
-* Node 4+
-* PropTypes 15+ / Flow 0.60+ / TypeScript 2.4+
-* IE 10+
+- Node 4+
+- PropTypes 15+ / Flow 0.60+ / TypeScript 2.4+
+- IE 10+
 
 ## Installation
 
@@ -121,21 +121,24 @@ your choosing, otherwise the output will be sent to the console.
 
 ### Options
 
-* `--attributes` (bool) - Include an attribute list in the schema class export. Defaults to "false".
-* `--definitions` (bool) - Include type annotations and definitions in the output. Defaults to
+- `--attributes` (bool) - Include an attribute list in the schema class export. Defaults to "false".
+- `--definitions` (bool) - Include type annotations and definitions in the output. Defaults to
   "false".
-* `--disable-eslint` (bool) - Prepend an eslint-disable comment to the top of the output. Defaults
+- `--disable-eslint` (bool) - Prepend an eslint-disable comment to the top of the output. Defaults
   to "false".
-* `--flow` (bool) - Generate Flow definitions. Defaults to "false".
-* `--indent` (string) - Defines the indentation characters to use in the generated output. Defaults
+- `--flow` (bool) - Generate Flow definitions. Defaults to "false".
+- `--indent` (string) - Defines the indentation characters to use in the generated output. Defaults
   to 2 spaces.
-* `--import` (string) - The import path to a `Schema` class, inserted at the top of every output
+- `--import` (string) - The import path to a `Schema` class, inserted at the top of every output
   file. Defaults to "shapeshifter".
-* `--nullable` (bool) - Marks all attributes as nullable by default. Not applicable to GraphQL.
+- `--nullable` (bool) - Marks all attributes as nullable by default. Not applicable to GraphQL.
   Defaults to false.
-* `--prop-types` (bool) - Generate PropTypes definitions. Defaults to "false".
-* `--schemas` (bool) - Include schema class exports in the output. Defaults to "false".
-* `--strip-prop-types` (bool) - Wrap PropType definitions in `process.env.NODE_ENV` production
+- `--prop-types` (bool) - Generate PropTypes definitions. Defaults to "false".
+- `--schemas` (bool) - Include schema class exports in the output. Defaults to "false".
+- `--strip-prop-types` (bool) - Wrap PropType definitions in `process.env.NODE_ENV` production
   expressions, allowing them to be removed with dead code elimination.
-* `--typescript` (bool) - Generate TypeScript definitions. Defaults to "false".
-* `--use-define` (bool) - Update all schema relations to use `Schema#define`.
+- `--infer-prop-types-shape` (bool) - When both `prop-types` and `typescript` definitions are used,
+  the TypeScript interface can be named to match the PropTypes shape, allowing for automatic type
+  inference. Defaults to "false". _(TypeScript only)_
+- `--typescript` (bool) - Generate TypeScript definitions. Defaults to "false".
+- `--use-define` (bool) - Update all schema relations to use `Schema#define`.
