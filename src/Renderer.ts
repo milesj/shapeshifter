@@ -609,7 +609,13 @@ export default class Renderer {
     }
 
     const schemaName = this.getSchemaInstanceName(name);
-    const schemaTemplate = `export const ${schemaName} = new Schema(${args.join(', ')});`;
+    const schemaGenerics = this.options.schemaGenerics
+      ? // eslint-disable-next-line no-magic-numbers
+        this.renderSchemaGenerics(name.slice(0, -6))
+      : '';
+    const schemaTemplate = `export const ${schemaName} = new Schema${schemaGenerics}(${args.join(
+      ', ',
+    )});`;
 
     // Formate attributes and relations
     if (useDefine) {
@@ -638,6 +644,13 @@ export default class Renderer {
     }
 
     return `${schemaTemplate}`;
+  }
+
+  /**
+   * Render the generics callsite for a schema.
+   */
+  renderSchemaGenerics(name: string): string {
+    return `<${name}${this.suffix}>`;
   }
 
   /**

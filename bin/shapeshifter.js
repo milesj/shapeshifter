@@ -40,6 +40,12 @@ app
         description: 'The indentation characters to use.',
         string: true,
       },
+      'infer-prop-types-shape': {
+        boolean: true,
+        default: false,
+        description:
+          'When using prop-types and typescript together, match the interface name with the prop-types shape name for automatic inference. (TypeScript only)',
+      },
       import: {
         default: 'shapeshifter',
         description: 'The default import path to a Schema class.',
@@ -60,16 +66,15 @@ app
         default: false,
         description: 'Include schema class exports in the output.',
       },
+      'schema-generics': {
+        boolean: true,
+        default: false,
+        description: 'Explicity type generic callsites for schemas. (TypeScript and Flow only)',
+      },
       'strip-prop-types': {
         boolean: true,
         default: false,
         description: 'Strip PropTypes shapes in production.',
-      },
-      'infer-prop-types-shape': {
-        boolean: true,
-        default: false,
-        description:
-          'When using prop-types and typescript together, match the interface name with the prop-types shape name for automatic inference. (TypeScript only)',
       },
       typescript: {
         boolean: true,
@@ -99,6 +104,7 @@ app
         indentCharacter: options.indent,
         inferPropTypesShape: options.inferPropTypesShape,
         renderers: renderers.filter(Boolean),
+        schemaGenerics: options.schemaGenerics,
         stripPropTypes: options.stripPropTypes,
         useDefine: options.useDefine,
       })

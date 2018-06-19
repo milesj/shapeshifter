@@ -302,6 +302,36 @@ describe('Transpiler', () => {
 
       expect(output).toBe(file(expectedPath));
     });
+
+    it('adds generics to flow schemas', () => {
+      const actualPath = `${__dirname}/schemas/types-schemas.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/flow/schema-generics.js`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeDefinitions: true,
+        includeSchemas: true,
+        schemaGenerics: true,
+        renderers: ['flow'],
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
+
+    it('adds generics to typescript schemas', () => {
+      const actualPath = `${__dirname}/schemas/types-schemas.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/typescript/schema-generics.ts`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeDefinitions: true,
+        includeSchemas: true,
+        schemaGenerics: true,
+        renderers: ['typescript'],
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
   });
 
   describe('extractSchematics()', () => {

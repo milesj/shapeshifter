@@ -22,6 +22,7 @@ export interface Options extends Struct {
   indentCharacter: string;
   inferPropTypesShape: boolean;
   renderers: RendererType[];
+  schemaGenerics: boolean;
   stripPropTypes: boolean;
   useDefine: boolean;
 }

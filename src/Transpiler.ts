@@ -34,6 +34,7 @@ export default class Transpiler {
       indentCharacter: string('  '),
       inferPropTypesShape: bool(),
       renderers: array(string()).notEmpty(),
+      schemaGenerics: bool(),
       stripPropTypes: bool(),
       useDefine: bool(),
     });

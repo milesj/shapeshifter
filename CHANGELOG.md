@@ -4,6 +4,8 @@
 
 - Added an `--infer-prop-types-shape` option for TypeScript, which will name both the interface and
   PropTypes shape the same, so that automatic type inference is applied.
+- Added a `--schema-generics` option for TypeScript/Flow, which will explicity define generic
+  callsites for schema instances.
 - Updated `PropTypePolyfill` to `PropTypes.any` so that TypeScript and Flow type check correctly.
 
 # 6.1.2 - 06/06/18

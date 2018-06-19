@@ -109,6 +109,10 @@ export default class PropTypesRenderer extends Renderer {
     return this.wrapNullable(definition, reference);
   }
 
+  renderSchemaGenerics(): string {
+    return ''; // Not supported
+  }
+
   renderShape(definition: ShapeDefinition, depth: number): string {
     const reference = this.renderShapeReference(definition);
 

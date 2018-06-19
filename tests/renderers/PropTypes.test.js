@@ -255,6 +255,18 @@ describe('PropTypesRenderer', () => {
     });
   });
 
+  describe('renderSchema()', () => {
+    it('doesnt render with generics', () => {
+      renderer.options.schemaGenerics = true;
+
+      expect(
+        renderer.renderSchema('QuxSchema', [], {
+          resourceName: 'quxs',
+        }),
+      ).toBe("export const quxSchema = new Schema('quxs');");
+    });
+  });
+
   describe('renderString()', () => {
     it('renders required', () => {
       expect(

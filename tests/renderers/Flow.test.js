@@ -247,6 +247,18 @@ describe('FlowRenderer', () => {
     });
   });
 
+  describe('renderSchema()', () => {
+    it('renders with generics', () => {
+      renderer.options.schemaGenerics = true;
+
+      expect(
+        renderer.renderSchema('QuxSchema', [], {
+          resourceName: 'quxs',
+        }),
+      ).toBe("export const quxSchema = new Schema<QuxType>('quxs');");
+    });
+  });
+
   describe('renderString()', () => {
     it('renders nullable', () => {
       expect(renderer.renderString(new StringDefinition(options, 'foo'))).toBe('?string');

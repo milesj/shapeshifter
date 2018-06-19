@@ -129,16 +129,18 @@ your choosing, otherwise the output will be sent to the console.
 - `--flow` (bool) - Generate Flow definitions. Defaults to "false".
 - `--indent` (string) - Defines the indentation characters to use in the generated output. Defaults
   to 2 spaces.
+- `--infer-prop-types-shape` (bool) - When both `prop-types` and `typescript` definitions are used,
+  the TypeScript interface can be named to match the PropTypes shape, allowing for automatic type
+  inference. Defaults to "false". _(TypeScript and Flow only)_
 - `--import` (string) - The import path to a `Schema` class, inserted at the top of every output
   file. Defaults to "shapeshifter".
 - `--nullable` (bool) - Marks all attributes as nullable by default. Not applicable to GraphQL.
   Defaults to false.
 - `--prop-types` (bool) - Generate PropTypes definitions. Defaults to "false".
 - `--schemas` (bool) - Include schema class exports in the output. Defaults to "false".
+- `--schema-generics` (bool) - Explicity type generic callsites for schemas. Defaults to "false".
+  _(TypeScript only)_
 - `--strip-prop-types` (bool) - Wrap PropType definitions in `process.env.NODE_ENV` production
   expressions, allowing them to be removed with dead code elimination.
-- `--infer-prop-types-shape` (bool) - When both `prop-types` and `typescript` definitions are used,
-  the TypeScript interface can be named to match the PropTypes shape, allowing for automatic type
-  inference. Defaults to "false". _(TypeScript only)_
 - `--typescript` (bool) - Generate TypeScript definitions. Defaults to "false".
 - `--use-define` (bool) - Update all schema relations to use `Schema#define`.
