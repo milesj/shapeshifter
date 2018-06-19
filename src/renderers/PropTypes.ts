@@ -24,17 +24,13 @@ export default class PropTypesRenderer extends Renderer {
 
   beforeParse() {
     this.builder.imports.add("import PropTypes from 'prop-types';");
-
-    if (this.options.stripPropTypes) {
-      this.builder.header.add('const PropTypePolyfill = () => {};');
-    }
   }
 
   render(setName: string, attributes: Definition<Config>[] = []): string {
     const shape = this.formatObject(this.renderObjectProps(attributes, 1), 0);
 
     if (this.options.stripPropTypes) {
-      return `export const ${setName} = (process.env.NODE_ENV === 'production') ? PropTypePolyfill : PropTypes.shape(${shape});`;
+      return `export const ${setName} = (process.env.NODE_ENV === 'production') ? PropTypes.any : PropTypes.shape(${shape});`;
     }
 
     return `export const ${setName} = PropTypes.shape(${shape});`;

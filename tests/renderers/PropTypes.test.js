@@ -37,27 +37,6 @@ describe('PropTypesRenderer', () => {
 
       expect(Array.from(renderer.builder.imports)).toEqual(["import PropTypes from 'prop-types';"]);
     });
-
-    it('adds production noop when stripPropTypes is true', () => {
-      const prodRenderer = new PropTypesRenderer(
-        { ...options, stripPropTypes: true },
-        new Builder(),
-        new Schematic(
-          './foo.json',
-          {
-            name: 'Foo',
-            attributes: { id: 'number' },
-          },
-          options,
-        ),
-      );
-
-      prodRenderer.beforeParse();
-
-      expect(Array.from(prodRenderer.builder.header)).toEqual([
-        'const PropTypePolyfill = () => {};',
-      ]);
-    });
   });
 
   describe('renderArray()', () => {
