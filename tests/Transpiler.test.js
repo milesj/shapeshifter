@@ -287,6 +287,21 @@ describe('Transpiler', () => {
 
       expect(output).toBe(file(expectedPath));
     });
+
+    it('infers prop types shapes for typescript', () => {
+      const actualPath = `${__dirname}/schemas/types-schemas.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/typescript/infer-prop-types.ts`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeDefinitions: true,
+        includeSchemas: true,
+        inferPropTypesShape: true,
+        renderers: ['prop-types', 'typescript'],
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
   });
 
   describe('extractSchematics()', () => {

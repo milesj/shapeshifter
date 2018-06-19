@@ -18,7 +18,10 @@ describe('PropTypesRenderer', () => {
 
   beforeEach(() => {
     renderer = new PropTypesRenderer(
-      options,
+      {
+        ...options,
+        renderers: ['prop-types'],
+      },
       new Builder(),
       new Schematic(
         '/foo.json',

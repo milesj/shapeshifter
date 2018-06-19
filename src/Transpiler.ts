@@ -32,6 +32,7 @@ export default class Transpiler {
       includeDefinitions: bool(),
       includeSchemas: bool(),
       indentCharacter: string('  '),
+      inferPropTypesShape: bool(),
       renderers: array(string()).notEmpty(),
       stripPropTypes: bool(),
       useDefine: bool(),

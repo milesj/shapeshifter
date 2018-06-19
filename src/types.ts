@@ -20,6 +20,7 @@ export interface Options extends Struct {
   includeDefinitions: boolean;
   includeSchemas: boolean;
   indentCharacter: string;
+  inferPropTypesShape: boolean;
   renderers: RendererType[];
   stripPropTypes: boolean;
   useDefine: boolean;

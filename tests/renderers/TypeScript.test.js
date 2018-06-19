@@ -18,7 +18,10 @@ describe('TypeScriptRenderer', () => {
 
   beforeEach(() => {
     renderer = new TypeScriptRenderer(
-      options,
+      {
+        ...options,
+        renderers: ['typescript'],
+      },
       new Builder(),
       new Schematic(
         '/foo.json',
@@ -29,6 +32,29 @@ describe('TypeScriptRenderer', () => {
         options,
       ),
     );
+  });
+
+  describe('beforeParse()', () => {
+    it('does not change suffix if not inferring', () => {
+      renderer.beforeParse();
+
+      expect(renderer.suffix).toBe('Interface');
+    });
+
+    it('does not change suffix if no prop types', () => {
+      renderer.options.inferPropTypesShape = true;
+      renderer.beforeParse();
+
+      expect(renderer.suffix).toBe('Interface');
+    });
+
+    it('changes suffix if inferring prop types', () => {
+      renderer.options.inferPropTypesShape = true;
+      renderer.options.renderers.push('prop-types');
+      renderer.beforeParse();
+
+      expect(renderer.suffix).toBe('Shape');
+    });
   });
 
   describe('renderArray()', () => {

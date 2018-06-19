@@ -65,6 +65,12 @@ app
         default: false,
         description: 'Strip PropTypes shapes in production.',
       },
+      'infer-prop-types-shape': {
+        boolean: true,
+        default: false,
+        description:
+          'When using prop-types and typescript together, match the interface name with the prop-types shape name for automatic inference. (TypeScript only)',
+      },
       typescript: {
         boolean: true,
         default: false,
@@ -91,6 +97,7 @@ app
         includeDefinitions: options.definitions,
         includeSchemas: options.schemas,
         indentCharacter: options.indent,
+        inferPropTypesShape: options.inferPropTypesShape,
         renderers: renderers.filter(Boolean),
         stripPropTypes: options.stripPropTypes,
         useDefine: options.useDefine,

@@ -12,4 +12,5 @@ export const options = {
   includeSchemas: false,
   includeAttributes: false,
   includeDefinitions: false,
+  inferPropTypesShape: false,
 };

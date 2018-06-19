@@ -18,7 +18,10 @@ describe('FlowRenderer', () => {
 
   beforeEach(() => {
     renderer = new FlowRenderer(
-      options,
+      {
+        ...options,
+        renderers: ['flow'],
+      },
       new Builder(),
       new Schematic(
         '/foo.json',
