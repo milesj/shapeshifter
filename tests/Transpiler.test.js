@@ -303,6 +303,22 @@ describe('Transpiler', () => {
       expect(output).toBe(file(expectedPath));
     });
 
+    it('infers prop types shapes and defined schema generics for typescript', () => {
+      const actualPath = `${__dirname}/schemas/types-schemas.json`;
+      const expectedPath = `${__dirname}/expected/shapeshifter/typescript/infer-and-schema-generics.ts`;
+
+      const output = new Transpiler({
+        ...otherOptions,
+        includeDefinitions: true,
+        includeSchemas: true,
+        inferPropTypesShape: true,
+        schemaGenerics: true,
+        renderers: ['prop-types', 'typescript'],
+      }).transpileFile(actualPath);
+
+      expect(output).toBe(file(expectedPath));
+    });
+
     it('adds generics to flow schemas', () => {
       const actualPath = `${__dirname}/schemas/types-schemas.json`;
       const expectedPath = `${__dirname}/expected/shapeshifter/flow/schema-generics.js`;

@@ -192,7 +192,8 @@ export default class Renderer {
 
     // Allow schematics to not require a Schema
     if (metadata.resourceName) {
-      this.builder.schemas.add(
+      this.builder.schemas.set(
+        name,
         this.renderSchema(this.getObjectName(name, 'Schema'), attributes, metadata),
       );
     }

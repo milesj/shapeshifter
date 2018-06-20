@@ -5,6 +5,8 @@
 
 export type TemplateList = Set<string>;
 
+export type TemplateMap = Map<string, string>;
+
 export default class Builder {
   imports: TemplateList = new Set();
 
@@ -16,7 +18,7 @@ export default class Builder {
 
   sets: TemplateList = new Set();
 
-  schemas: TemplateList = new Set();
+  schemas: TemplateMap = new Map();
 
   relations: TemplateList = new Set();
 }

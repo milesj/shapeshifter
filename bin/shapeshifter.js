@@ -89,8 +89,8 @@ app
     },
     function(options) {
       const renderers = [
+        options.propTypes ? 'prop-types' : '', // Always first
         options.flow ? 'flow' : '',
-        options.propTypes ? 'prop-types' : '',
         options.typescript ? 'typescript' : '',
       ];
 
