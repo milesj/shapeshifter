@@ -1,4 +1,10 @@
-# 6.2.0 - 06/18/18
+# 6.2.1 - 06/20/18
+
+#### 🐞 Fixed
+
+- Fixed missing build issue.
+
+# 6.2.0 - 06/19/18
 
 #### 🚀 New
 
@@ -12,7 +18,7 @@
 
 #### 🐞 Fixed
 
-- Fixed missing buid issue.
+- Fixed missing build issue.
 
 # 6.1.1 - 06/06/18
 
