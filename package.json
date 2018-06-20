@@ -70,7 +70,7 @@
     "yargs": "^11.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.102.3",
+    "@milesj/build-tool-config": "^0.103.0",
     "@types/webpack": "^4.4.1",
     "flow-bin": "^0.74.0",
     "prop-types": "^15.6.2",

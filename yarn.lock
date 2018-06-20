@@ -74,9 +74,9 @@
   dependencies:
     rimraf "^2.6.2"
 
-"@milesj/build-tool-config@^0.102.3":
-  version "0.102.3"
-  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.102.3.tgz#8f8b254f3e04c614fb6b1f54d6f7d8aeaea56df9"
+"@milesj/build-tool-config@^0.103.0":
+  version "0.103.0"
+  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.103.0.tgz#5885da63804a234f572100d8886f1182f04a3cbc"
   dependencies:
     "@beemo/cli" "^0.18.0"
     "@beemo/core" "^0.18.0"
@@ -86,7 +86,7 @@
     "@beemo/driver-prettier" "^0.18.0"
     "@beemo/driver-typescript" "^0.7.0"
     "@types/enzyme" "^3.1.10"
-    "@types/jest" "^23.1.0"
+    "@types/jest" "^23.1.1"
     babel-cli "^6.26.0"
     babel-core "^6.26.3"
     babel-jest "^23.0.1"
@@ -191,7 +191,7 @@
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/is-glob/-/is-glob-4.0.0.tgz#fb8a2bff539025d4dcd6d5efe7689e03341b876d"
 
-"@types/jest@^23.1.0":
+"@types/jest@^23.1.1":
   version "23.1.1"
   resolved "https://registry.npmjs.org/@types/jest/-/jest-23.1.1.tgz#c54ab1a5f41aa693c0957222dd10414416d0c87b"
 
