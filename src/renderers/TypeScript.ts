@@ -4,7 +4,6 @@
  */
 
 import Renderer from '../Renderer';
-import Schematic from '../Schematic';
 import Definition from '../Definition';
 import ArrayDefinition from '../definitions/Array';
 import BoolDefinition from '../definitions/Bool';
@@ -19,8 +18,7 @@ import StringDefinition from '../definitions/String';
 import UnionDefinition from '../definitions/Union';
 import indent from '../helpers/indent';
 import normalizeType from '../helpers/normalizeType';
-import { Config, Options, PrimitiveType } from '../types';
-import DefinitionFactory from '../DefinitionFactory';
+import { Config, PrimitiveType } from '../types';
 
 const ASCII_ALPHA_START: number = 65;
 
@@ -53,7 +51,7 @@ export default class TypeScriptRenderer extends Renderer {
     return this.wrapNullable(definition, 'boolean');
   }
 
-  renderEnum(definition: EnumDefinition, depth: number): string {
+  renderEnum(definition: EnumDefinition): string {
     const { indentCharacter: char } = this.options;
     const { values, valueType } = definition.config;
     const members: string[] = [];

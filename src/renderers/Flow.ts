@@ -4,7 +4,6 @@
  */
 
 import Renderer from '../Renderer';
-import Schematic from '../Schematic';
 import Definition from '../Definition';
 import ArrayDefinition from '../definitions/Array';
 import BoolDefinition from '../definitions/Bool';
@@ -17,7 +16,7 @@ import ReferenceDefinition from '../definitions/Reference';
 import ShapeDefinition from '../definitions/Shape';
 import StringDefinition from '../definitions/String';
 import UnionDefinition from '../definitions/Union';
-import { Config, Options } from '../types';
+import { Config } from '../types';
 
 export default class FlowRenderer extends Renderer {
   suffix: string = 'Type';

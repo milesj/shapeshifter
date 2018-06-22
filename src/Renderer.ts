@@ -3,6 +3,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+/* eslint-disable no-else-return */
+
 import { Struct } from 'optimal';
 import Builder from './Builder';
 import Definition from './Definition';
@@ -25,14 +27,7 @@ import indent from './helpers/indent';
 import isObject from './helpers/isObject';
 import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
-import {
-  Config,
-  ImportStructure,
-  MetadataField,
-  Options,
-  PrimitiveType,
-  ReferenceConfig,
-} from './types';
+import { Config, ImportStructure, MetadataField, Options, PrimitiveType } from './types';
 
 export default class Renderer {
   builder: Builder;
@@ -105,7 +100,9 @@ export default class Renderer {
   formatValue(value: any, type: string = ''): string {
     if (value === null) {
       return 'null';
-    } else if (Array.isArray(value)) {
+    }
+
+    if (Array.isArray(value)) {
       return this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
     }
 
@@ -630,8 +627,6 @@ export default class Renderer {
       }
     } else {
       Object.keys(relations).forEach(relation => {
-        const schemaMap = this.formatObject(relations[relation], 1);
-
         relationsTemplate.push(`  .${relation}(${this.formatObject(relations[relation], 1)})`);
       });
     }

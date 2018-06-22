@@ -3,6 +3,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+/* eslint-disable import/no-extraneous-dependencies */
+
 import path from 'path';
 import webpack from 'webpack';
 import { Options } from '../types';
