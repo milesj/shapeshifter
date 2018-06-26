@@ -1,3 +1,16 @@
+# 7.0.0
+
+#### 💥 Breaking
+
+- Split project into a monorepo using Yarn Workspaces.
+  - Webpack plugin and loader have moved to the
+    [shapeshifter-webpack](https://www.npmjs.com/package/shapeshifter-webpack) package.
+  - GraphQL parser has moved to the
+    [shapeshifter-parser-graphql](https://www.npmjs.com/package/shapeshifter-parser-graphql)
+    package.
+  - YAML parser has moved to the
+    [shapeshifter-parser-yaml](https://www.npmjs.com/package/shapeshifter-parser-yaml) package.
+
 # 6.2.1 - 06/20/18
 
 #### 🐞 Fixed
