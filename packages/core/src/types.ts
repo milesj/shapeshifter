@@ -8,6 +8,8 @@
 import { Struct } from 'optimal';
 import Schema from './Schema';
 
+export type Parser = (path: string) => SchemaStructure;
+
 export type PrimitiveType = string | number | boolean;
 
 export type RendererType = 'flow' | 'prop-types' | 'typescript';

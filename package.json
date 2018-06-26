@@ -18,15 +18,9 @@
     "prerelease": "yarn test && yarn run build",
     "release": "lerna publish"
   },
-  "dependencies": {
-    "@types/graphql": "^0.13.1",
-    "@types/js-yaml": "^3.11.1",
-    "graphql": "^0.13.2",
-    "js-yaml": "^3.12.0",
-    "lerna": "^2.11.0"
-  },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.105.0"
+    "@milesj/build-tool-config": "^0.105.0",
+    "lerna": "^2.11.0"
   },
   "workspaces": [
     "packages/*"

@@ -3,22 +3,21 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+/* eslint-disable global-require */
+
 import fs from 'fs';
 import path from 'path';
 import optimal, { array, bool, string } from 'optimal';
 import Builder, { TemplateList, TemplateMap } from './Builder';
 import RendererFactory from './RendererFactory';
 import Schematic from './Schematic';
-import readWithNode from './readers/node';
-import readWithGraphQL from './readers/graphql';
-import readWithYaml from './readers/yaml';
-import { Options } from './types';
+import { Options, Parser, SchemaStructure } from './types';
 
-type ResolveUnit = {
+interface ResolveUnit {
   parentSchematic?: Schematic;
   refKey?: string;
   resolvePath: string;
-};
+}
 
 export default class Transpiler {
   options: Options;
@@ -38,6 +37,35 @@ export default class Transpiler {
       stripPropTypes: bool(),
       useDefine: bool(),
     });
+  }
+
+  /**
+   * Default parser that handles JSON and JS files.
+   */
+  defaultParser(filePath: string): SchemaStructure {
+    // eslint-disable-next-line import/no-dynamic-require
+    return require(filePath);
+  }
+
+  /**
+   * Load parser for the current extension.
+   */
+  loadParser(ext: string): Parser {
+    if (ext === '.js' || ext === '.json') {
+      return this.defaultParser;
+    }
+
+    if (ext === '.gql' || ext === '.graphql') {
+      // eslint-disable-next-line import/no-extraneous-dependencies
+      return require('shapeshifter-parser-graphql');
+    }
+
+    if (ext === '.yml' || ext === '.yaml') {
+      // eslint-disable-next-line import/no-extraneous-dependencies
+      return require('shapeshifter-parser-yaml');
+    }
+
+    throw new Error(`Unknown extension "${ext}". No compatible parser found.`);
   }
 
   /**
@@ -87,24 +115,9 @@ export default class Transpiler {
     const toResolve: ResolveUnit[] = [{ resolvePath: filePath }];
     const schematics = [];
 
-    // Use `require()` as it handles JSON and JS files easily
     while (toResolve.length > 0) {
       const { resolvePath, parentSchematic, refKey } = toResolve.shift()!;
-      const pathExt = path.extname(resolvePath);
-      let data = null;
-
-      /* istanbul ignore else */
-      if (pathExt === '.js' || pathExt === '.json') {
-        data = readWithNode(resolvePath);
-      } else if (pathExt === '.gql' || pathExt === '.graphql') {
-        data = readWithGraphQL(resolvePath);
-      } else if (pathExt === '.yml' || pathExt === '.yaml') {
-        data = readWithYaml(resolvePath);
-      } else {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-
+      const data = this.loadParser(path.extname(resolvePath))(resolvePath);
       const schematic = new Schematic(resolvePath, data, this.options);
 
       schematics.unshift(schematic);

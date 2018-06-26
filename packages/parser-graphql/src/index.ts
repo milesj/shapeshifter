@@ -28,9 +28,9 @@ import {
   SchemaStructure,
   ShapesField,
   TypeDefinition,
-} from '../types';
+} from 'shapeshifter';
 
-class GraphQLReader {
+class GraphQLParser {
   document: DocumentNode;
 
   schematic: DefinitionNode;
@@ -273,6 +273,6 @@ class GraphQLReader {
   }
 }
 
-export default function readWithGraphQL(path: string): SchemaStructure {
-  return new GraphQLReader(parse(fs.readFileSync(path, 'utf8')), extname(path)).toSchematic();
+export default function parseGraphQL(path: string): SchemaStructure {
+  return new GraphQLParser(parse(fs.readFileSync(path, 'utf8')), extname(path)).toSchematic();
 }
