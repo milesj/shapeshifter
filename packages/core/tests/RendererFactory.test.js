@@ -2,7 +2,7 @@ import FlowRenderer from '../src/renderers/Flow';
 import PropTypesRenderer from '../src/renderers/PropTypes';
 import RendererFactory from '../src/RendererFactory';
 import TypeScriptRenderer from '../src/renderers/TypeScript';
-import { options } from './mocks';
+import { options } from '../../../tests/mocks';
 
 describe('RendererFactory', () => {
   describe('factory()', () => {

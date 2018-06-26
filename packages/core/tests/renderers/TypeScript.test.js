@@ -6,21 +6,21 @@ import InstanceDefinition from '../../src/definitions/Instance';
 import KeyDefinition from '../../src/definitions/Key';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
-import PropTypesRenderer from '../../src/renderers/PropTypes';
 import ReferenceDefinition from '../../src/definitions/Reference';
 import Schematic from '../../src/Schematic';
 import StringDefinition from '../../src/definitions/String';
+import TypeScriptRenderer from '../../src/renderers/TypeScript';
 import UnionDefinition from '../../src/definitions/Union';
-import { options } from '../mocks';
+import { options } from '../../../../tests/mocks';
 
-describe('PropTypesRenderer', () => {
+describe('TypeScriptRenderer', () => {
   let renderer;
 
   beforeEach(() => {
-    renderer = new PropTypesRenderer(
+    renderer = new TypeScriptRenderer(
       {
         ...options,
-        renderers: ['prop-types'],
+        renderers: ['typescript'],
       },
       new Builder(),
       new Schematic(
@@ -35,33 +35,51 @@ describe('PropTypesRenderer', () => {
   });
 
   describe('beforeParse()', () => {
-    it('adds PropTypes import', () => {
+    it('does not change suffix if not inferring', () => {
       renderer.beforeParse();
 
-      expect(Array.from(renderer.builder.imports)).toEqual(["import PropTypes from 'prop-types';"]);
+      expect(renderer.suffix).toBe('Interface');
+    });
+
+    it('does not change suffix if no prop types', () => {
+      renderer.options.inferPropTypesShape = true;
+      renderer.beforeParse();
+
+      expect(renderer.suffix).toBe('Interface');
+    });
+
+    it('changes suffix if inferring prop types', () => {
+      renderer.options.inferPropTypesShape = true;
+      renderer.options.renderers.push('prop-types');
+      renderer.beforeParse();
+
+      expect(renderer.suffix).toBe('Shape');
     });
   });
 
   describe('renderArray()', () => {
-    it('renders required', () => {
+    it('renders nullable', () => {
+      expect(
+        renderer.renderArray(
+          new ArrayDefinition(options, 'foo', {
+            valueType: 'string',
+          }),
+        ),
+      ).toBe('Array<string | null> | null');
+    });
+
+    it('renders non-nullable', () => {
       expect(
         renderer.renderArray(
           new ArrayDefinition(options, 'foo', {
             nullable: false,
-            valueType: 'string',
+            valueType: {
+              type: 'string',
+              nullable: false,
+            },
           }),
         ),
-      ).toBe('PropTypes.arrayOf(PropTypes.string).isRequired');
-    });
-
-    it('renders non-required', () => {
-      expect(
-        renderer.renderArray(
-          new ArrayDefinition(options, 'foo', {
-            valueType: 'string',
-          }),
-        ),
-      ).toBe('PropTypes.arrayOf(PropTypes.string)');
+      ).toBe('Array<string>');
     });
 
     it('handles non-primitive', () => {
@@ -74,7 +92,7 @@ describe('PropTypesRenderer', () => {
             },
           }),
         ),
-      ).toBe('PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))');
+      ).toBe('Array<{ [key: string]: string | null } | null> | null');
     });
 
     it('handles instance ofs', () => {
@@ -87,61 +105,51 @@ describe('PropTypesRenderer', () => {
             },
           }),
         ),
-      ).toBe('PropTypes.arrayOf(PropTypes.instanceOf(FooBar))');
+      ).toBe('Array<FooBar | null> | null');
     });
   });
 
   describe('renderBool()', () => {
-    it('renders required', () => {
+    it('renders nullable', () => {
+      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).toBe('boolean | null');
+    });
+
+    it('renders non-nullable', () => {
       expect(
         renderer.renderBool(
           new BoolDefinition(options, 'foo', {
             nullable: false,
           }),
         ),
-      ).toBe('PropTypes.bool.isRequired');
-    });
-
-    it('renders non-required', () => {
-      expect(renderer.renderBool(new BoolDefinition(options, 'foo'))).toBe('PropTypes.bool');
+      ).toBe('boolean');
     });
   });
 
   describe('renderEnum()', () => {
-    it('renders required', () => {
+    it('renders', () => {
       expect(
         renderer.renderEnum(
-          new EnumDefinition(options, 'foo', {
-            nullable: false,
+          new EnumDefinition(options, 'bar', {
             valueType: 'number',
             values: [1, 23, 164],
           }),
         ),
-      ).toBe(`PropTypes.oneOf([
-1,
-23,
-164,
-]).isRequired`);
-    });
-
-    it('renders non-required', () => {
-      expect(
-        renderer.renderEnum(
-          new EnumDefinition(options, 'foo', {
-            valueType: 'number',
-            values: [1, 23, 164],
-          }),
-        ),
-      ).toBe(`PropTypes.oneOf([
-1,
-23,
-164,
-])`);
+      ).toBe('FooBarEnum | null');
     });
   });
 
   describe('renderInstance()', () => {
-    it('renders required', () => {
+    it('renders nullable', () => {
+      expect(
+        renderer.renderInstance(
+          new InstanceDefinition(options, 'foo', {
+            contract: 'FooBar',
+          }),
+        ),
+      ).toBe('FooBar | null');
+    });
+
+    it('renders non-nullable', () => {
       expect(
         renderer.renderInstance(
           new InstanceDefinition(options, 'foo', {
@@ -149,30 +157,15 @@ describe('PropTypesRenderer', () => {
             contract: 'FooBar',
           }),
         ),
-      ).toBe('PropTypes.instanceOf(FooBar).isRequired');
-    });
-
-    it('renders non-required', () => {
-      expect(
-        renderer.renderInstance(
-          new InstanceDefinition(options, 'foo', {
-            contract: 'FooBar',
-          }),
-        ),
-      ).toBe('PropTypes.instanceOf(FooBar)');
+      ).toBe('FooBar');
     });
   });
 
   describe('renderKey()', () => {
     it('renders nullable', () => {
-      expect(renderer.renderKey(new KeyDefinition(options, 'foo', {}))).toBe('KeyShape');
+      expect(renderer.renderKey(new KeyDefinition(options, 'foo', {}))).toBe('Key | null');
 
-      expect(Array.from(renderer.builder.header)).toEqual([
-        `export const KeyShape = PropTypes.oneOfType([
-  PropTypes.string.isRequired,
-  PropTypes.number.isRequired,
-]);`,
-      ]);
+      expect(Array.from(renderer.builder.header)).toEqual(['export type Key = string | number;']);
     });
 
     it('renders non-nullable', () => {
@@ -182,35 +175,40 @@ describe('PropTypesRenderer', () => {
             nullable: false,
           }),
         ),
-      ).toBe('KeyShape.isRequired');
+      ).toBe('Key');
 
-      expect(Array.from(renderer.builder.header)).toEqual([
-        `export const KeyShape = PropTypes.oneOfType([
-  PropTypes.string.isRequired,
-  PropTypes.number.isRequired,
-]);`,
-      ]);
+      expect(Array.from(renderer.builder.header)).toEqual(['export type Key = string | number;']);
     });
   });
 
   describe('renderNumber()', () => {
-    it('renders required', () => {
+    it('renders nullable', () => {
+      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).toBe('number | null');
+    });
+
+    it('renders non-nullable', () => {
       expect(
         renderer.renderNumber(
           new NumberDefinition(options, 'foo', {
             nullable: false,
           }),
         ),
-      ).toBe('PropTypes.number.isRequired');
-    });
-
-    it('renders non-required', () => {
-      expect(renderer.renderNumber(new NumberDefinition(options, 'foo'))).toBe('PropTypes.number');
+      ).toBe('number');
     });
   });
 
   describe('renderObject()', () => {
-    it('renders required', () => {
+    it('renders nullable', () => {
+      expect(
+        renderer.renderObject(
+          new ObjectDefinition(options, 'foo', {
+            valueType: 'number',
+          }),
+        ),
+      ).toBe('{ [key: string]: number | null } | null');
+    });
+
+    it('renders non-nullable', () => {
       expect(
         renderer.renderObject(
           new ObjectDefinition(options, 'foo', {
@@ -218,22 +216,36 @@ describe('PropTypesRenderer', () => {
             valueType: 'number',
           }),
         ),
-      ).toBe('PropTypes.objectOf(PropTypes.number).isRequired');
+      ).toBe('{ [key: string]: number | null }');
     });
 
-    it('renders non-required', () => {
+    it('handles key type', () => {
       expect(
         renderer.renderObject(
           new ObjectDefinition(options, 'foo', {
-            valueType: 'number',
+            keyType: 'number',
+            valueType: {
+              type: 'array',
+              valueType: 'string',
+            },
           }),
         ),
-      ).toBe('PropTypes.objectOf(PropTypes.number)');
+      ).toBe('{ [key: number]: Array<string | null> | null } | null');
     });
   });
 
   describe('renderReference()', () => {
-    it('renders required', () => {
+    it('renders nullable', () => {
+      expect(
+        renderer.renderReference(
+          new ReferenceDefinition(options, 'foo', {
+            self: true,
+          }),
+        ),
+      ).toBe('FooInterface | null');
+    });
+
+    it('renders non-nullable', () => {
       expect(
         renderer.renderReference(
           new ReferenceDefinition(options, 'foo', {
@@ -241,45 +253,35 @@ describe('PropTypesRenderer', () => {
             self: true,
           }),
         ),
-      ).toBe('(...args) => FooShape(...args).isRequired');
-    });
-
-    it('renders non-required', () => {
-      expect(
-        renderer.renderReference(
-          new ReferenceDefinition(options, 'foo', {
-            self: true,
-          }),
-        ),
-      ).toBe('(...args) => FooShape(...args)');
+      ).toBe('FooInterface');
     });
   });
 
   describe('renderSchema()', () => {
-    it('doesnt render with generics', () => {
+    it('renders with generics', () => {
       renderer.options.schemaGenerics = true;
 
       expect(
         renderer.renderSchema('QuxSchema', [], {
           resourceName: 'quxs',
         }),
-      ).toBe("export const quxSchema = new Schema('quxs');");
+      ).toBe("export const quxSchema = new Schema<QuxInterface>('quxs');");
     });
   });
 
   describe('renderString()', () => {
-    it('renders required', () => {
+    it('renders nullable', () => {
+      expect(renderer.renderString(new StringDefinition(options, 'foo'))).toBe('string | null');
+    });
+
+    it('renders non-nullable', () => {
       expect(
         renderer.renderString(
           new StringDefinition(options, 'foo', {
             nullable: false,
           }),
         ),
-      ).toBe('PropTypes.string.isRequired');
-    });
-
-    it('renders non-required', () => {
-      expect(renderer.renderString(new StringDefinition(options, 'foo'))).toBe('PropTypes.string');
+      ).toBe('string');
     });
   });
 
@@ -293,7 +295,17 @@ describe('PropTypesRenderer', () => {
       },
     ];
 
-    it('renders required', () => {
+    it('renders nullable', () => {
+      expect(
+        renderer.renderUnion(
+          new UnionDefinition(options, 'foo', {
+            valueTypes,
+          }),
+        ),
+      ).toBe('string | boolean | Array<number | null> | null');
+    });
+
+    it('renders non-nullable', () => {
       expect(
         renderer.renderUnion(
           new UnionDefinition(options, 'foo', {
@@ -301,68 +313,38 @@ describe('PropTypesRenderer', () => {
             valueTypes,
           }),
         ),
-      ).toBe(`PropTypes.oneOfType([
-PropTypes.string.isRequired,
-PropTypes.bool.isRequired,
-PropTypes.arrayOf(PropTypes.number).isRequired,
-]).isRequired`);
-    });
-
-    it('renders non-required', () => {
-      expect(
-        renderer.renderUnion(
-          new UnionDefinition(options, 'foo', {
-            valueTypes,
-          }),
-        ),
-      ).toBe(`PropTypes.oneOfType([
-PropTypes.string.isRequired,
-PropTypes.bool.isRequired,
-PropTypes.arrayOf(PropTypes.number).isRequired,
-])`);
+      ).toBe('string | boolean | Array<number | null>');
     });
 
     it('handles nested unions', () => {
-      valueTypes.push({
-        type: 'union',
-        valueTypes: [
-          {
-            type: 'instance',
-            contract: 'FooBar',
-          },
-        ],
-      });
-
       expect(
         renderer.renderUnion(
           new UnionDefinition(options, 'foo', {
-            valueTypes,
+            valueTypes: [
+              ...valueTypes,
+              {
+                type: 'union',
+                valueTypes: [
+                  {
+                    type: 'instance',
+                    contract: 'FooBar',
+                  },
+                ],
+              },
+            ],
           }),
         ),
-      ).toBe(`PropTypes.oneOfType([
-PropTypes.string.isRequired,
-PropTypes.bool.isRequired,
-PropTypes.arrayOf(PropTypes.number).isRequired,
-PropTypes.oneOfType([
-PropTypes.instanceOf(FooBar).isRequired,
-]).isRequired,
-])`);
-    });
-  });
-
-  describe('wrapPropType()', () => {
-    it('adds prop type text', () => {
-      expect(renderer.wrapPropType({ isNullable: () => true }, 'foo')).toBe('PropTypes.foo');
+      ).toBe('string | boolean | Array<number | null> | FooBar | null');
     });
   });
 
   describe('wrapNullable()', () => {
-    it('renders required', () => {
-      expect(renderer.wrapNullable({ isNullable: () => false }, 'foo')).toBe('foo.isRequired');
+    it('renders nullable', () => {
+      expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('foo | null');
     });
 
-    it('renders non-required', () => {
-      expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('foo');
+    it('renders non-nullable', () => {
+      expect(renderer.wrapNullable({ isNullable: () => false }, 'foo')).toBe('foo');
     });
   });
 });

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Transpiler from '../src/Transpiler';
-import { options } from './mocks';
+import { options } from '../../../tests/mocks';
 
 function file(path) {
   return fs.readFileSync(path, 'utf8');

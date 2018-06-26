@@ -1,82 +1,38 @@
 {
-  "name": "shapeshifter",
-  "version": "6.2.1",
-  "description": "Generate relational schemas, PropTypes, Flow aliases, and TypeScript interfaces from JSON, JS, or GraphQL schematic files.",
-  "keywords": [
-    "generate",
-    "schema",
-    "schematic",
-    "react",
-    "prop",
-    "prop-types",
-    "flow",
-    "typescript",
-    "type",
-    "alias",
-    "definitions",
-    "interface",
-    "struct",
-    "shape",
-    "shift",
-    "shifter",
-    "transpile",
-    "entity",
-    "graphql"
-  ],
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
-  "module": "./esm/index.js",
-  "bin": "./bin/shapeshifter.js",
+  "name": "shapeshifter-root",
+  "private": true,
   "scripts": {
-    "babel": "beemo typescript --node --declaration",
-    "build": "yarn run babel",
-    "check": "flow check && tsc --noEmit --lib esnext,esnext.asynciterable ./tests/expected/graphql/typescript/*.ts ./tests/expected/common/typescript/*.ts",
-    "clean": "rimraf ./{lib,esm}/",
+    "build": "beemo typescript --workspaces=* --priority=core --node",
+    "check": "flow check && tsc --noEmit --lib esnext,esnext.asynciterable ./packages/core/tests/expected/graphql/typescript/*.ts ./packages/core/tests/expected/common/typescript/*.ts",
     "coverage": "yarn run jest --coverage",
     "docs": "gitbook build --debug",
     "docs:serve": "gitbook serve",
     "docs:install": "gitbook install",
     "eslint": "beemo eslint",
     "jest": "beemo jest",
-    "package": "yarn run clean && yarn test && yarn run build",
     "prettier": "beemo prettier",
     "pretest": "yarn run type",
     "test": "yarn run jest",
     "posttest": "yarn run eslint && yarn run check",
-    "type": "beemo typescript --noEmit",
-    "prerelease": "yarn run package",
-    "release": "np --yolo --no-yarn"
+    "type": "beemo typescript --workspaces=* --noEmit",
+    "prerelease": "yarn test && yarn run build",
+    "release": "lerna publish"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/milesj/shapeshifter.git"
-  },
-  "author": {
-    "name": "Miles Johnson",
-    "url": "http://milesj.me"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/milesj/shapeshifter/issues"
-  },
-  "homepage": "https://github.com/milesj/shapeshifter#readme",
   "dependencies": {
     "@types/graphql": "^0.13.1",
     "@types/js-yaml": "^3.11.1",
     "@types/webpack": "^4.4.3",
-    "@types/yargs": "^11.0.0",
     "graphql": "^0.13.2",
     "js-yaml": "^3.12.0",
-    "optimal": "^1.0.0",
-    "yargs": "^11.0.0"
+    "lerna": "^2.11.0"
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.105.0",
-    "flow-bin": "^0.75.0",
-    "prop-types": "^15.6.2",
-    "typescript": "^2.9.2",
     "webpack": "^4.12.1"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "beemo": {
     "module": "@milesj/build-tool-config",
     "drivers": [
@@ -88,17 +44,15 @@
     ],
     "eslint": {
       "ignore": [
-        "tests/expected/**/*",
+        "packages/core/tests/expected/**/*",
         "tests/bundle.js"
-      ],
-      "rules": {
-        "function-paren-newline": "off"
-      }
+      ]
     },
     "prettier": {
       "ignore": [
-        "tests/expected/**/*",
+        "package/core/tests/expected/**/*",
         "book.json",
+        "lerna.json",
         "package.json"
       ]
     }

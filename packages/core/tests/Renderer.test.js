@@ -5,7 +5,7 @@ import Renderer from '../src/Renderer';
 import Schematic from '../src/Schematic';
 import ShapeDefinition from '../src/definitions/Shape';
 import StringDefinition from '../src/definitions/String';
-import { options } from './mocks';
+import { options } from '../../../tests/mocks';
 
 describe('Renderer', () => {
   let renderer;

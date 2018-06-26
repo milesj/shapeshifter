@@ -1,4 +1,4 @@
-import { options } from '../mocks';
+import { options } from '../../../../tests/mocks';
 import EnumDefinition from '../../src/definitions/Enum';
 
 describe('definitions/Enum', () => {

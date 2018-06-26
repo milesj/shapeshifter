@@ -8,7 +8,7 @@ import ObjectDefinition from '../src/definitions/Object';
 import ShapeDefinition from '../src/definitions/Shape';
 import StringDefinition from '../src/definitions/String';
 import UnionDefinition from '../src/definitions/Union';
-import { options } from './mocks';
+import { options } from '../../../tests/mocks';
 
 describe('DefinitionFactory', () => {
   describe('factory()', () => {

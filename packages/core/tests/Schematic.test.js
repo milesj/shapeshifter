@@ -1,7 +1,7 @@
 import NumberDefinition from '../src/definitions/Number';
 import Schematic from '../src/Schematic';
 import StringDefinition from '../src/definitions/String';
-import { options } from './mocks';
+import { options } from '../../../tests/mocks';
 
 describe('Schematic', () => {
   const data = {

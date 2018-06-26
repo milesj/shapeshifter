@@ -1,4 +1,4 @@
-import { options } from '../mocks';
+import { options } from '../../../../tests/mocks';
 import ArrayDefinition from '../../src/definitions/Array';
 import StringDefinition from '../../src/definitions/String';
 

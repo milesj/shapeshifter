@@ -1,0 +1,45 @@
+{
+  "name": "shapeshifter",
+  "version": "6.2.1",
+  "description": "Generate relational schemas, PropTypes, Flow aliases, and TypeScript interfaces from JSON, JS, or GraphQL schematic files.",
+  "keywords": [
+    "generate",
+    "schema",
+    "schematic",
+    "react",
+    "prop",
+    "prop-types",
+    "flow",
+    "typescript",
+    "type",
+    "alias",
+    "definitions",
+    "interface",
+    "struct",
+    "shape",
+    "shift",
+    "shifter",
+    "transpile",
+    "entity",
+    "graphql"
+  ],
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "module": "./esm/index.js",
+  "bin": "./bin/shapeshifter.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/shapeshifter",
+  "license": "MIT",
+  "dependencies": {
+    "@types/yargs": "^11.0.0",
+    "optimal": "^1.0.0",
+    "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.75.0",
+    "prop-types": "^15.6.2",
+    "typescript": "^2.9.2"
+  }
+}

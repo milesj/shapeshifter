@@ -1,4 +1,4 @@
-import { options } from '../mocks';
+import { options } from '../../../../tests/mocks';
 import ShapeDefinition from '../../src/definitions/Shape';
 import NumberDefinition from '../../src/definitions/Number';
 import StringDefinition from '../../src/definitions/String';

@@ -1,24 +1,24 @@
-import { options } from '../mocks';
-import PolymorphDefinition from '../../src/definitions/Polymorph';
+import { options } from '../../../../tests/mocks';
+import UnionDefinition from '../../src/definitions/Union';
 import BoolDefinition from '../../src/definitions/Bool';
 import NumberDefinition from '../../src/definitions/Number';
 import StringDefinition from '../../src/definitions/String';
 
-describe('definitions/Polymorph', () => {
+describe('definitions/Union', () => {
   it('errors if `valueTypes` is not an array', () => {
-    expect(() => new PolymorphDefinition(options, 'foo', { valueTypes: 123 })).toThrowError(
-      'Invalid PolymorphDefinition field "valueTypes". Must be an array.',
+    expect(() => new UnionDefinition(options, 'foo', { valueTypes: 123 })).toThrowError(
+      'Invalid UnionDefinition field "valueTypes". Must be an array.',
     );
   });
 
   it('errors if `valueTypes` has no items', () => {
-    expect(() => new PolymorphDefinition(options, 'foo', { valueTypes: [] })).toThrowError(
-      'Invalid PolymorphDefinition field "valueTypes". Array cannot be empty.',
+    expect(() => new UnionDefinition(options, 'foo', { valueTypes: [] })).toThrowError(
+      'Invalid UnionDefinition field "valueTypes". Array cannot be empty.',
     );
   });
 
   it('creates an array of `Definition`s for `valueTypes`', () => {
-    const def = new PolymorphDefinition(options, 'foo', {
+    const def = new UnionDefinition(options, 'foo', {
       valueTypes: ['bool', 'number', 'string'],
     });
 

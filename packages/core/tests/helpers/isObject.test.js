@@ -1,5 +1,5 @@
 import isObject from '../../src/helpers/isObject';
-import { allValues } from '../mocks';
+import { allValues } from '../../../../tests/mocks';
 
 describe('helpers/isObject', () => {
   it('returns false for non-objects', () => {

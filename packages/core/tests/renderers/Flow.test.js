@@ -11,7 +11,7 @@ import ReferenceDefinition from '../../src/definitions/Reference';
 import Schematic from '../../src/Schematic';
 import StringDefinition from '../../src/definitions/String';
 import UnionDefinition from '../../src/definitions/Union';
-import { options } from '../mocks';
+import { options } from '../../../../tests/mocks';
 
 describe('FlowRenderer', () => {
   let renderer;
