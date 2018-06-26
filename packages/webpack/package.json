@@ -1,6 +1,6 @@
 {
   "name": "shapeshifter-webpack",
-  "version": "0.0.0",
+  "version": "1.0.0-0",
   "description": "Shapeshifter webpack plugin and loader.",
   "keywords": [
     "shapeshifter",
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",
-    "shapeshifter": "^7.0.0",
+    "shapeshifter": "^7.0.0-0",
     "webpack": "^4.12.1",
     "webpack-cli": "^3.0.8"
   },

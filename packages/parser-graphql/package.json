@@ -1,6 +1,6 @@
 {
   "name": "shapeshifter-parser-graphql",
-  "version": "0.0.0",
+  "version": "1.0.0-0",
   "description": "Parse Shapeshifter schematics in GraphQL.",
   "keywords": [
     "shapeshifter",
@@ -20,7 +20,7 @@
     "graphql": "^0.13.2"
   },
   "devDependencies": {
-    "shapeshifter": "^7.0.0"
+    "shapeshifter": "^7.0.0-0"
   },
   "peerDependencies": {
     "shapeshifter": "^7.0.0"
