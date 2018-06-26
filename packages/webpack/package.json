@@ -1,0 +1,30 @@
+{
+  "name": "shapeshifter-webpack",
+  "version": "0.0.0",
+  "description": "Shapeshifter webpack plugin and loader.",
+  "keywords": [
+    "shapeshifter",
+    "webpack",
+    "plugin",
+    "loader"
+  ],
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "module": "./esm/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/webpack",
+  "license": "MIT",
+  "dependencies": {
+    "@types/webpack": "^4.4.3"
+  },
+  "devDependencies": {
+    "shapeshifter": "^7.0.0",
+    "webpack": "^4.12.1"
+  },
+  "peerDependencies": {
+    "shapeshifter": "^7.0.0",
+    "webpack": "^4.0.0"
+  }
+}

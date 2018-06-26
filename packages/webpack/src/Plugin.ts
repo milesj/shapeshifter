@@ -3,25 +3,23 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
-
 import path from 'path';
 import webpack from 'webpack';
-import { Options } from '../types';
+import { Options } from 'shapeshifter';
 
-export interface WebpackPluginOptions extends Options {
+export interface ShapeshifterPluginOptions extends Options {
   schematicsImportPath?: string;
   schematicsSource: string | string[];
 }
 
-export default class WebpackPlugin {
+export default class ShapeshifterPlugin {
   options: Options;
 
   schematicsImportPath: string;
 
   schematicsSource: string[];
 
-  constructor(options: WebpackPluginOptions) {
+  constructor(options: ShapeshifterPluginOptions) {
     const { schematicsImportPath = 'shapeshifter/schematics', schematicsSource, ...opts } = options;
 
     if (!schematicsImportPath) {
@@ -55,7 +53,7 @@ export default class WebpackPlugin {
   handleResolve = (result: any, callback: any) => {
     if (result.rawRequest === this.schematicsImportPath) {
       result.loaders.push({
-        loader: path.join(__dirname, './webpackLoader.js'),
+        loader: path.join(__dirname, './Loader.js'),
         options: {
           ...this.options,
           schematicsSource: this.schematicsSource,

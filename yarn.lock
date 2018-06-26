@@ -8018,6 +8018,13 @@ sha@~2.0.1:
     graceful-fs "^4.1.2"
     readable-stream "^2.0.2"
 
+shapeshifter@^7.0.0:
+  version "6.2.1"
+  dependencies:
+    "@types/yargs" "^11.0.0"
+    optimal "^1.0.0"
+    yargs "^11.0.0"
+
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"
