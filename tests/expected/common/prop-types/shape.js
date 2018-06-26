@@ -46,7 +46,7 @@ export const ShapeShape = PropTypes.shape({
       PropTypes.shape({
         foo: PropTypes.string,
       }),
-    ])),
+    ])).isRequired,
   }),
   unionFields: PropTypes.shape({
     multiUnion: PropTypes.oneOfType([

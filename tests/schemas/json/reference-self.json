@@ -20,7 +20,8 @@
         "type": "reference",
         "self": true,
         "subset": "Basic"
-      }
+      },
+      "optional": false
     }
   }
 }

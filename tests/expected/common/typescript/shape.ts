@@ -49,7 +49,7 @@ export interface ShapeInterface {
     numberObj?: { [key: string]: number };
     boolObject?: { [key: string]: boolean };
     intStringObject?: { [key: number]: string };
-    unionObject?: { [key: string]: number | string | {
+    unionObject: { [key: string]: number | string | {
       foo?: string;
     } };
   };

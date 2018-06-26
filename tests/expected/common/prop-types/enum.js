@@ -14,7 +14,7 @@ export const EnumShape = PropTypes.shape({
   ]),
   intField: PropTypes.oneOf([
     123,
-  ]),
+  ]).isRequired,
   integerField: PropTypes.oneOf([
     1,
     2,

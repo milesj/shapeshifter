@@ -10,5 +10,5 @@ export type ReferenceSelfType = {
   stringField?: string,
   referenceField?: ReferenceSelfType,
   requiredRefField?: ?ReferenceSelfType,
-  subsetRefField?: Array<ReferenceSelfBasicType>,
+  subsetRefField: Array<ReferenceSelfBasicType>,
 };

@@ -21,6 +21,7 @@ module.exports = {
         self: true,
         subset: 'Basic',
       },
+      optional: false,
     },
   },
 };

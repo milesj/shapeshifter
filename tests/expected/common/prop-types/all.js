@@ -68,7 +68,7 @@ export const EnumShape = PropTypes.shape({
   ]),
   intField: PropTypes.oneOf([
     123,
-  ]),
+  ]).isRequired,
   integerField: PropTypes.oneOf([
     1,
     2,
@@ -201,7 +201,7 @@ export const ReferenceSelfShape = PropTypes.shape({
   stringField: PropTypes.string,
   referenceField: (...args) => ReferenceSelfShape(...args),
   requiredRefField: (...args) => ReferenceSelfShape(...args),
-  subsetRefField: PropTypes.arrayOf(ReferenceSelfBasicShape),
+  subsetRefField: PropTypes.arrayOf(ReferenceSelfBasicShape).isRequired,
 });
 
 export const ReferenceSetOnlyStringShape = PropTypes.shape({
@@ -292,7 +292,7 @@ export const ShapeShape = PropTypes.shape({
       PropTypes.shape({
         foo: PropTypes.string,
       }),
-    ])),
+    ])).isRequired,
   }),
   unionFields: PropTypes.shape({
     multiUnion: PropTypes.oneOfType([

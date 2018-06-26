@@ -11,5 +11,5 @@ export const ReferenceSelfShape = PropTypes.shape({
   stringField: PropTypes.string,
   referenceField: (...args) => ReferenceSelfShape(...args),
   requiredRefField: (...args) => ReferenceSelfShape(...args),
-  subsetRefField: PropTypes.arrayOf(ReferenceSelfBasicShape),
+  subsetRefField: PropTypes.arrayOf(ReferenceSelfBasicShape).isRequired,
 });

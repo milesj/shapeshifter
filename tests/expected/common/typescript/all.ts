@@ -155,7 +155,7 @@ export interface ConstantsInterface {
 export interface EnumInterface {
   boolField?: EnumBoolFieldEnum;
   booleanField?: EnumBooleanFieldEnum;
-  intField?: EnumIntFieldEnum;
+  intField: EnumIntFieldEnum;
   integerField?: EnumIntegerFieldEnum;
   numField?: EnumNumFieldEnum;
   numberField?: EnumNumberFieldEnum;
@@ -245,7 +245,7 @@ export interface ReferenceSelfInterface {
   stringField?: string;
   referenceField?: ReferenceSelfInterface;
   requiredRefField?: ReferenceSelfInterface | null;
-  subsetRefField?: Array<ReferenceSelfBasicInterface>;
+  subsetRefField: Array<ReferenceSelfBasicInterface>;
 }
 
 export interface ReferenceSetOnlyStringInterface {
@@ -322,7 +322,7 @@ export interface ShapeInterface {
     numberObj?: { [key: string]: number };
     boolObject?: { [key: string]: boolean };
     intStringObject?: { [key: number]: string };
-    unionObject?: { [key: string]: number | string | {
+    unionObject: { [key: string]: number | string | {
       foo?: string;
     } };
   };

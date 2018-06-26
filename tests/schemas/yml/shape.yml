@@ -84,6 +84,7 @@ attributes:
           - type: struct
             attributes:
               foo: string
+        optional: false
   unionFields:
     type: shape
     attributes:

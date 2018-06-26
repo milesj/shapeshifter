@@ -60,7 +60,7 @@ export enum EnumStringFieldEnum {
 export interface EnumInterface {
   boolField?: EnumBoolFieldEnum;
   booleanField?: EnumBooleanFieldEnum;
-  intField?: EnumIntFieldEnum;
+  intField: EnumIntFieldEnum;
   integerField?: EnumIntegerFieldEnum;
   numField?: EnumNumFieldEnum;
   numberField?: EnumNumberFieldEnum;

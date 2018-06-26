@@ -18,6 +18,7 @@ module.exports = {
         nullable: true,
       },
       values: [123],
+      optional: false,
     },
     integerField: {
       type: 'enum',

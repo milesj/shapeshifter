@@ -5,7 +5,7 @@
 export type EnumType = {
   boolField?: true | false,
   booleanField?: false | true,
-  intField?: 123,
+  intField: 123,
   integerField?: 1 | 2 | 3,
   numField?: 123 | 456 | 789,
   numberField?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10,

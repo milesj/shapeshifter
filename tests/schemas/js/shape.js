@@ -105,6 +105,7 @@ module.exports = {
               },
             ],
           },
+          optional: false,
         },
       },
     },
