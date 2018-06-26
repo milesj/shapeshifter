@@ -1,10 +1,13 @@
 import fs from 'fs';
+import path from 'path';
 import Transpiler from '../src/Transpiler';
 import { options } from '../../../tests/mocks';
 
-function file(path) {
-  return fs.readFileSync(path, 'utf8');
+function file(filePath) {
+  return fs.readFileSync(filePath, 'utf8');
 }
+
+const TEST_ROOT = path.join(__dirname, '../../../tests');
 
 // Supported renderers
 const RENDERERS = [
@@ -78,8 +81,8 @@ describe('Transpiler', () => {
           describe(`from ${format.toUpperCase()} files`, () => {
             testCases.forEach(schema => {
               it(`when rendering schema case "${schema}"`, () => {
-                const actualPath = `${__dirname}/schemas/${format}/${schema}.${format}`;
-                const expectedPath = `${__dirname}/expected/${target}/${key}/${schema}.${ext}`;
+                const actualPath = `${TEST_ROOT}/schemas/${format}/${schema}.${format}`;
+                const expectedPath = `${TEST_ROOT}/expected/${target}/${key}/${schema}.${ext}`;
 
                 const output = new Transpiler({
                   ...options,
@@ -93,8 +96,8 @@ describe('Transpiler', () => {
           });
 
           it('when rendering an entire folder into a single file', () => {
-            const actualPath = `${__dirname}/schemas/${format}/`;
-            const expectedPath = `${__dirname}/expected/${target}/${key}/all.${ext}`;
+            const actualPath = `${TEST_ROOT}/schemas/${format}/`;
+            const expectedPath = `${TEST_ROOT}/expected/${target}/${key}/all.${ext}`;
 
             const output = new Transpiler({
               ...options,
@@ -117,8 +120,8 @@ describe('Transpiler', () => {
     };
 
     it('can include types through configuration', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/with-types.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/with-types.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -129,8 +132,8 @@ describe('Transpiler', () => {
     });
 
     it('can omit types through configuration', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/no-types.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/no-types.js`;
 
       const output = new Transpiler({ ...otherOptions }).transpileFile(actualPath);
 
@@ -138,8 +141,8 @@ describe('Transpiler', () => {
     });
 
     it('can include schemas through configuration', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/with-schemas.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/with-schemas.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -150,8 +153,8 @@ describe('Transpiler', () => {
     });
 
     it('can include schemas with attributes through configuration', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/with-schemas-attributes.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/with-schemas-attributes.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -163,8 +166,8 @@ describe('Transpiler', () => {
     });
 
     it('can omit schemas through configuration', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/no-schemas.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/no-schemas.js`;
 
       const output = new Transpiler({ ...otherOptions }).transpileFile(actualPath);
 
@@ -172,8 +175,8 @@ describe('Transpiler', () => {
     });
 
     it('can include types and schemas through configuration', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/with-types-schemas.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/with-types-schemas.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -185,8 +188,8 @@ describe('Transpiler', () => {
     });
 
     it('can include extra metadata', () => {
-      const actualPath = `${__dirname}/schemas/extra-metadata.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/with-extra-metadata.js`;
+      const actualPath = `${TEST_ROOT}/schemas/extra-metadata.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/with-extra-metadata.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -197,8 +200,8 @@ describe('Transpiler', () => {
     });
 
     it('will omit schemas if no resource name is defined', () => {
-      const actualPath = `${__dirname}/schemas/optional-schema.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/optional-schema.js`;
+      const actualPath = `${TEST_ROOT}/schemas/optional-schema.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/optional-schema.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -210,8 +213,8 @@ describe('Transpiler', () => {
     });
 
     it('supports compound keys through the primary key metadata', () => {
-      const actualPath = `${__dirname}/schemas/compound-key.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/compound-key.js`;
+      const actualPath = `${TEST_ROOT}/schemas/compound-key.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/compound-key.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -223,8 +226,8 @@ describe('Transpiler', () => {
     });
 
     it('supports a compact view', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/with-schemas-compact.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/with-schemas-compact.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -236,8 +239,8 @@ describe('Transpiler', () => {
     });
 
     it('wraps prop types when in production', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/wrapped-prop-types.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/wrapped-prop-types.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -250,8 +253,8 @@ describe('Transpiler', () => {
     });
 
     it('can customize the import path through configuration', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/import-path.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/import-path.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -263,8 +266,8 @@ describe('Transpiler', () => {
     });
 
     it('can toggle eslint disable setting', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/eslint-enabled.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/eslint-enabled.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -275,8 +278,8 @@ describe('Transpiler', () => {
     });
 
     it('can render multiple languages', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/multiple-renderers.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/multiple-renderers.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -289,8 +292,8 @@ describe('Transpiler', () => {
     });
 
     it('infers prop types shapes for typescript', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/typescript/infer-prop-types.ts`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/typescript/infer-prop-types.ts`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -304,8 +307,8 @@ describe('Transpiler', () => {
     });
 
     it('infers prop types shapes and defined schema generics for typescript', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/typescript/infer-and-schema-generics.ts`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/typescript/infer-and-schema-generics.ts`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -320,8 +323,8 @@ describe('Transpiler', () => {
     });
 
     it('adds generics to flow schemas', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/flow/schema-generics.js`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/flow/schema-generics.js`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -335,8 +338,8 @@ describe('Transpiler', () => {
     });
 
     it('adds generics to typescript schemas', () => {
-      const actualPath = `${__dirname}/schemas/types-schemas.json`;
-      const expectedPath = `${__dirname}/expected/shapeshifter/typescript/schema-generics.ts`;
+      const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+      const expectedPath = `${TEST_ROOT}/expected/shapeshifter/typescript/schema-generics.ts`;
 
       const output = new Transpiler({
         ...otherOptions,
@@ -353,14 +356,14 @@ describe('Transpiler', () => {
   describe('extractSchematics()', () => {
     it('handles reference paths correctly', () => {
       const schematics = new Transpiler(options).extractSchematics(
-        `${__dirname}/schemas/json/reference.json`,
+        `${TEST_ROOT}/schemas/json/reference.json`,
       );
 
       expect(schematics.map(schematic => schematic.path)).toEqual([
-        `${__dirname}/schemas/json/reference-bar.json`,
-        `${__dirname}/schemas/json/reference-set.json`,
-        `${__dirname}/schemas/json/reference-foo.json`,
-        `${__dirname}/schemas/json/reference.json`,
+        `${TEST_ROOT}/schemas/json/reference-bar.json`,
+        `${TEST_ROOT}/schemas/json/reference-set.json`,
+        `${TEST_ROOT}/schemas/json/reference-foo.json`,
+        `${TEST_ROOT}/schemas/json/reference.json`,
       ]);
     });
   });
