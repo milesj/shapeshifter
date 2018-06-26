@@ -3,8 +3,6 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable no-else-return */
-
 import { Struct } from 'optimal';
 import Builder from './Builder';
 import Definition from './Definition';

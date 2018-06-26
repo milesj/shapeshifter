@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable complexity, no-else-return */
+/* eslint-disable complexity */
 
 import fs from 'fs';
 import { extname } from 'path';
