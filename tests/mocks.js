@@ -5,7 +5,7 @@ export const truthyValues = ['foo', 1, 1.1, true, [], {}];
 export const allValues = [...falsyValues, ...truthyValues];
 
 export const options = {
-  defaultNullable: true,
+  defaultNullable: false,
   defaultOptional: true,
   disableEslint: true,
   indentCharacter: '  ',
