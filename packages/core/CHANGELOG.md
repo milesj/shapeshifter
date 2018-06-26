@@ -21,6 +21,10 @@
   - Added `defaultOptional` option to transpiler and renderer.
   - TypeScript and Flow object properties are now suffixed with `?`.
 
+#### 🐞 Fixed
+
+- Transpiler will skip files that start with a period (`.eslintrc`, etc).
+
 # 6.2.1 - 06/20/18
 
 #### 🐞 Fixed

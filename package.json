@@ -13,6 +13,7 @@
     "prettier": "beemo prettier",
     "pretest": "yarn run type",
     "test": "yarn run jest",
+    "test:webpack": "webpack",
     "posttest": "yarn run eslint && yarn run check",
     "type": "beemo typescript --workspaces=* --noEmit",
     "prerelease": "yarn run build && yarn test",

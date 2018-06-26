@@ -1,7 +1,7 @@
 /* eslint-disable sort-keys */
 
 const path = require('path');
-const ShapeshifterPlugin = require('./lib/bundlers/WebpackPlugin').default;
+const ShapeshifterPlugin = require('shapeshifter-webpack').default;
 
 module.exports = {
   mode: 'development',
@@ -23,7 +23,7 @@ module.exports = {
     new ShapeshifterPlugin({
       // Overwrite "shapeshifter/schematics" for local testing
       schematicsImportPath: './bundle-schematics',
-      schematicsSource: path.join(__dirname, 'tests/schemas'),
+      schematicsSource: path.join(__dirname, 'tests/schemas/types-schemas.json'),
       defaultNullable: true,
       includeAttributes: true,
       includeDefinitions: true,

@@ -118,6 +118,12 @@ export default class Transpiler {
 
     while (toResolve.length > 0) {
       const { resolvePath, parentSchematic, refKey } = toResolve.shift()!;
+
+      if (path.basename(resolvePath).startsWith('.')) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
       const data = this.loadParser(path.extname(resolvePath))(resolvePath);
       const schematic = new Schematic(resolvePath, data, this.options);
 
