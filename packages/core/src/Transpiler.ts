@@ -57,12 +57,12 @@ export default class Transpiler {
 
     if (ext === '.gql' || ext === '.graphql') {
       // eslint-disable-next-line import/no-extraneous-dependencies
-      return require('shapeshifter-parser-graphql');
+      return require('shapeshifter-parser-graphql').default;
     }
 
     if (ext === '.yml' || ext === '.yaml') {
       // eslint-disable-next-line import/no-extraneous-dependencies
-      return require('shapeshifter-parser-yaml');
+      return require('shapeshifter-parser-yaml').default;
     }
 
     throw new Error(`Unknown extension "${ext}". No compatible parser found.`);
