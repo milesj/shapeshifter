@@ -3,3 +3,4 @@
 #### 🎉 Release
 
 - Initial release!
+- Requires Webpack 4.0.
