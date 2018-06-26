@@ -118,7 +118,7 @@ export default class PropTypesRenderer extends Renderer {
     }
 
     if (!definition.attributes) {
-      return this.wrapPropType(definition, this.wrapFunction('object'));
+      return this.wrapPropType(definition, 'object');
     }
 
     return this.wrapPropType(

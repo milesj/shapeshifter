@@ -86,7 +86,8 @@ export default class FlowRenderer extends Renderer {
     }
 
     if (!definition.attributes) {
-      return this.wrapNullable(definition, 'Object');
+      // @ts-ignore Allow
+      return this.renderObject(definition, depth);
     }
 
     return this.wrapNullable(

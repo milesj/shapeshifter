@@ -1,4 +1,5 @@
 import Builder from '../../src/Builder';
+import PropTypesRenderer from '../../src/renderers/PropTypes';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
@@ -6,11 +7,11 @@ import InstanceDefinition from '../../src/definitions/Instance';
 import KeyDefinition from '../../src/definitions/Key';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
-import PropTypesRenderer from '../../src/renderers/PropTypes';
 import ReferenceDefinition from '../../src/definitions/Reference';
-import Schematic from '../../src/Schematic';
 import StringDefinition from '../../src/definitions/String';
 import UnionDefinition from '../../src/definitions/Union';
+import ShapeDefinition from '../../src/definitions/Shape';
+import Schematic from '../../src/Schematic';
 import { options } from '../../../../tests/mocks';
 
 describe('PropTypesRenderer', () => {
@@ -89,6 +90,17 @@ describe('PropTypesRenderer', () => {
           }),
         ),
       ).toBe('PropTypes.arrayOf(PropTypes.instanceOf(FooBar))');
+    });
+
+    it('defaults to an any array', () => {
+      const def = new ArrayDefinition(options, 'foo', {
+        keyType: 'number',
+        valueType: 'string',
+      });
+
+      delete def.valueType;
+
+      expect(renderer.renderArray(def)).toBe('PropTypes.array');
     });
   });
 
@@ -239,6 +251,17 @@ describe('PropTypesRenderer', () => {
         ),
       ).toBe('PropTypes.objectOf(PropTypes.number)');
     });
+
+    it('defaults to object if no value', () => {
+      const def = new ObjectDefinition(options, 'foo', {
+        keyType: 'number',
+        valueType: 'string',
+      });
+
+      delete def.valueType;
+
+      expect(renderer.renderObject(def)).toBe('PropTypes.object');
+    });
   });
 
   describe('renderReference()', () => {
@@ -274,6 +297,18 @@ describe('PropTypesRenderer', () => {
           resourceName: 'quxs',
         }),
       ).toBe("export const quxSchema = new Schema('quxs');");
+    });
+  });
+
+  describe('renderShape()', () => {
+    it('defaults to object if no attributes', () => {
+      const def = new ShapeDefinition(options, 'foo', {
+        attributes: { foo: 'string' },
+      });
+
+      delete def.attributes;
+
+      expect(renderer.renderShape(def)).toBe('PropTypes.object');
     });
   });
 

@@ -117,7 +117,8 @@ export default class TypeScriptRenderer extends Renderer {
     }
 
     if (!definition.attributes) {
-      return this.wrapNullable(definition, 'object');
+      // @ts-ignore Allow
+      return this.renderObject(definition, depth);
     }
 
     return this.wrapNullable(

@@ -1,4 +1,5 @@
 import Builder from '../../src/Builder';
+import TypeScriptRenderer from '../../src/renderers/TypeScript';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
@@ -7,10 +8,10 @@ import KeyDefinition from '../../src/definitions/Key';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
 import ReferenceDefinition from '../../src/definitions/Reference';
-import Schematic from '../../src/Schematic';
 import StringDefinition from '../../src/definitions/String';
-import TypeScriptRenderer from '../../src/renderers/TypeScript';
 import UnionDefinition from '../../src/definitions/Union';
+import ShapeDefinition from '../../src/definitions/Shape';
+import Schematic from '../../src/Schematic';
 import { options } from '../../../../tests/mocks';
 
 describe('TypeScriptRenderer', () => {
@@ -107,6 +108,17 @@ describe('TypeScriptRenderer', () => {
           }),
         ),
       ).toBe('Array<FooBar>');
+    });
+
+    it('defaults value to any', () => {
+      const def = new ArrayDefinition(options, 'foo', {
+        keyType: 'number',
+        valueType: 'string',
+      });
+
+      delete def.valueType;
+
+      expect(renderer.renderArray(def)).toBe('Array<any>');
     });
   });
 
@@ -253,6 +265,28 @@ describe('TypeScriptRenderer', () => {
         ),
       ).toBe('{ [key: number]: Array<string> }');
     });
+
+    it('defaults key to string', () => {
+      const def = new ObjectDefinition(options, 'foo', {
+        keyType: 'number',
+        valueType: 'string',
+      });
+
+      delete def.keyType;
+
+      expect(renderer.renderObject(def)).toBe('{ [key: string]: string }');
+    });
+
+    it('defaults value to any', () => {
+      const def = new ObjectDefinition(options, 'foo', {
+        keyType: 'number',
+        valueType: 'string',
+      });
+
+      delete def.valueType;
+
+      expect(renderer.renderObject(def)).toBe('{ [key: number]: any }');
+    });
   });
 
   describe('renderReference()', () => {
@@ -288,6 +322,18 @@ describe('TypeScriptRenderer', () => {
           resourceName: 'quxs',
         }),
       ).toBe("export const quxSchema = new Schema<QuxInterface>('quxs');");
+    });
+  });
+
+  describe('renderShape()', () => {
+    it('defaults to object if no attributes', () => {
+      const def = new ShapeDefinition(options, 'foo', {
+        attributes: { foo: 'string' },
+      });
+
+      delete def.attributes;
+
+      expect(renderer.renderShape(def)).toBe('{ [key: string]: any }');
     });
   });
 

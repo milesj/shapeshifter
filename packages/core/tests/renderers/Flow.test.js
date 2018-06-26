@@ -1,16 +1,17 @@
 import Builder from '../../src/Builder';
+import FlowRenderer from '../../src/renderers/Flow';
 import ArrayDefinition from '../../src/definitions/Array';
 import BoolDefinition from '../../src/definitions/Bool';
 import EnumDefinition from '../../src/definitions/Enum';
-import FlowRenderer from '../../src/renderers/Flow';
 import InstanceDefinition from '../../src/definitions/Instance';
 import KeyDefinition from '../../src/definitions/Key';
 import NumberDefinition from '../../src/definitions/Number';
 import ObjectDefinition from '../../src/definitions/Object';
 import ReferenceDefinition from '../../src/definitions/Reference';
-import Schematic from '../../src/Schematic';
 import StringDefinition from '../../src/definitions/String';
 import UnionDefinition from '../../src/definitions/Union';
+import ShapeDefinition from '../../src/definitions/Shape';
+import Schematic from '../../src/Schematic';
 import { options } from '../../../../tests/mocks';
 
 describe('FlowRenderer', () => {
@@ -96,6 +97,17 @@ describe('FlowRenderer', () => {
           }),
         ),
       ).toBe('Array<FooBar>');
+    });
+
+    it('defaults value to any', () => {
+      const def = new ArrayDefinition(options, 'foo', {
+        keyType: 'number',
+        valueType: 'string',
+      });
+
+      delete def.valueType;
+
+      expect(renderer.renderArray(def)).toBe('Array<any>');
     });
   });
 
@@ -243,6 +255,28 @@ describe('FlowRenderer', () => {
         ),
       ).toBe('{ [key: number]: Array<string> }');
     });
+
+    it('defaults key to string', () => {
+      const def = new ObjectDefinition(options, 'foo', {
+        keyType: 'number',
+        valueType: 'string',
+      });
+
+      delete def.keyType;
+
+      expect(renderer.renderObject(def)).toBe('{ [key: string]: string }');
+    });
+
+    it('defaults value to any', () => {
+      const def = new ObjectDefinition(options, 'foo', {
+        keyType: 'number',
+        valueType: 'string',
+      });
+
+      delete def.valueType;
+
+      expect(renderer.renderObject(def)).toBe('{ [key: number]: any }');
+    });
   });
 
   describe('renderReference()', () => {
@@ -278,6 +312,18 @@ describe('FlowRenderer', () => {
           resourceName: 'quxs',
         }),
       ).toBe("export const quxSchema = new Schema<QuxType>('quxs');");
+    });
+  });
+
+  describe('renderShape()', () => {
+    it('defaults to object if no attributes', () => {
+      const def = new ShapeDefinition(options, 'foo', {
+        attributes: { foo: 'string' },
+      });
+
+      delete def.attributes;
+
+      expect(renderer.renderShape(def)).toBe('{ [key: string]: any }');
     });
   });
 
