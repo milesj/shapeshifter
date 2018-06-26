@@ -5,7 +5,9 @@
   "useWorkspaces": true,
   "commands": {
     "publish": {
-      "ignore": ["*.md"]
+      "ignore": [
+        "*.md"
+      ]
     }
   }
 }

@@ -50,7 +50,7 @@
     },
     "prettier": {
       "ignore": [
-        "package/core/tests/expected/**/*",
+        "packages/core/tests/expected/**/*",
         "book.json",
         "lerna.json",
         "package.json"
