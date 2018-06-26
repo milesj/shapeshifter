@@ -15,4 +15,5 @@ module.ignore_non_literal_requires=true
 suppress_comment=\\(.\\|\n\\)*\\$FlowIgnore
 
 [libs]
+./packages/core/index.js.flow
 ./tests/declarations.js.flow

@@ -20,6 +20,7 @@
   - Added `--optional` CLI option to mark all as optional.
   - Added `defaultOptional` option to transpiler and renderer.
   - TypeScript and Flow object properties are now suffixed with `?`.
+- Added Flow type definition at `index.js.flow`.
 
 #### 🐞 Fixed
 

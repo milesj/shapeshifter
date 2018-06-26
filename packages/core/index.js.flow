@@ -1,0 +1,65 @@
+declare module 'shapeshifter' {
+  declare export type SchemaMap = { [attribute: string]: Schema<> };
+
+  declare export type DefineRelationMap = { [attribute: string]: Schema<> | Schema<>[] };
+
+  declare export type PrimaryKey = string | string[];
+
+  declare export type Relation = {
+    attribute: string,
+    collection: boolean,
+    polymorph?: PolymorphRelation,
+    relation: string,
+    +schema: Schema<>,
+  };
+
+  declare export type PolymorphRelation = {
+    keySuffix: string,
+    type: string,
+    typeSuffix: string,
+  };
+
+  declare export type MetadataField = {
+    primaryKey?: string,
+    resourceName?: string,
+  };
+
+  declare export default class Schema<T = any> {
+    attributes: string[];
+    metadata: MetadataField;
+    primaryKey: PrimaryKey;
+    relations: Relation[];
+    relationTypes: { [key: string]: string };
+    resourceName: string;
+    static HAS_ONE: string;
+    static HAS_MANY: string;
+    static BELONGS_TO: string;
+    static BELONGS_TO_MANY: string;
+    static MORPH_TO: string;
+
+    constructor(
+      resourceName: string,
+      primaryKey?: PrimaryKey | MetadataField,
+      metadata?: MetadataField,
+    ): void;
+    addAttributes(attributes: string[]): this;
+    addRelation(
+      attribute: string,
+      schema: Schema<>,
+      relation: string,
+      polymorph?: PolymorphRelation,
+    ): this;
+    addRelations(schemas: SchemaMap, relation: string): this;
+    belongsTo(relations: SchemaMap): this;
+    belongsToMany(relations: SchemaMap): this;
+    define(relations: DefineRelationMap): this;
+    hasOne(relations: SchemaMap): this;
+    hasMany(relations: SchemaMap): this;
+    morphTo(
+      schemas: SchemaMap,
+      attribute: string,
+      typeSuffix?: string,
+      keySuffix?: string,
+    ): this;
+  }
+}
