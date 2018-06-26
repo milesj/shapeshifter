@@ -9,11 +9,11 @@ export const ReferenceBarShape = PropTypes.shape({
 
 export const ReferenceFooShape = PropTypes.shape({
   numberField: PropTypes.number,
-  refField: ReferenceBarShape.isRequired,
+  refField: ReferenceBarShape,
 });
 
 export const ReferenceShape = PropTypes.shape({
   stringField: PropTypes.string,
-  refField: ReferenceFooShape.isRequired,
+  refField: ReferenceFooShape,
   referenceField: ReferenceFooShape,
 });

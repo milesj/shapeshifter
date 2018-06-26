@@ -17,11 +17,11 @@ export const ArrayShape = PropTypes.shape({
     'BAZ',
     'QUX',
   ])),
-  numberField: PropTypes.arrayOf(PropTypes.number).isRequired,
+  numberField: PropTypes.arrayOf(PropTypes.number),
   shapeField: PropTypes.arrayOf(ArrayShapeObjectShape),
   stringField: PropTypes.arrayOf(PropTypes.string),
   unionField: PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.string.isRequired,
-    PropTypes.number.isRequired,
-  ]).isRequired),
+    PropTypes.string,
+    PropTypes.number,
+  ])),
 });

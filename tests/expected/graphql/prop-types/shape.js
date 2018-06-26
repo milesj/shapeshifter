@@ -9,8 +9,8 @@ export const ShapeBasicStructShape = PropTypes.shape({
 
 export const ShapePrimitiveStructShape = PropTypes.shape({
   string: PropTypes.string,
-  bool: PropTypes.bool.isRequired,
-  number: PropTypes.number.isRequired,
+  bool: PropTypes.bool,
+  number: PropTypes.number,
 });
 
 export const ShapeArrayStructShape = PropTypes.shape({
@@ -30,9 +30,9 @@ export const ShapeEnumStructShape = PropTypes.shape({
 
 export const ShapeUnionStructShape = PropTypes.shape({
   multiUnion: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.bool.isRequired,
-    ShapeEnumStructShape.isRequired,
+    PropTypes.number,
+    PropTypes.bool,
+    ShapeEnumStructShape,
   ]),
 });
 

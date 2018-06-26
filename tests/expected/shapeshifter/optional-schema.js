@@ -3,6 +3,6 @@
 /* @flow */
 
 export type OptionalSchemaType = {
-  id: ?number,
-  date: ?string,
+  id?: number,
+  date?: string,
 };

@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import Schema from 'shapeshifter';
 
 export const KeyShape = PropTypes.oneOfType([
-  PropTypes.string.isRequired,
-  PropTypes.number.isRequired,
+  PropTypes.string,
+  PropTypes.number,
 ]);
 
 export type Key = string | number;
@@ -39,7 +39,7 @@ export const MultipleChildrenShape = PropTypes.shape({
 });
 
 export interface MultipleChildrenShape {
-  uuid: string | null;
+  uuid?: string;
 }
 
 export const SingleChildShape = PropTypes.shape({
@@ -49,9 +49,9 @@ export const SingleChildShape = PropTypes.shape({
 });
 
 export interface SingleChildShape {
-  id: number | null;
-  active: boolean | null;
-  self: SingleChildShape | null;
+  id?: number;
+  active?: boolean;
+  self?: SingleChildShape;
 }
 
 export const ParentShape = PropTypes.shape({
@@ -60,19 +60,19 @@ export const ParentShape = PropTypes.shape({
   children: PropTypes.arrayOf(MultipleChildrenShape),
   orphan: SingleChildShape,
   polymorph: PropTypes.oneOfType([
-    SingleChildShape.isRequired,
-    MultipleChildrenShape.isRequired,
+    SingleChildShape,
+    MultipleChildrenShape,
   ]),
   polymorph_fk: KeyShape,
   polymorph_type: PropTypes.string,
 });
 
 export interface ParentShape {
-  id: number | null;
-  name: string | null;
-  children: Array<MultipleChildrenShape | null> | null;
-  orphan: SingleChildShape | null;
-  polymorph: SingleChildShape | MultipleChildrenShape | null;
-  polymorph_fk: Key | null;
-  polymorph_type: string | null;
+  id?: number;
+  name?: string;
+  children?: Array<MultipleChildrenShape>;
+  orphan?: SingleChildShape;
+  polymorph?: SingleChildShape | MultipleChildrenShape;
+  polymorph_fk?: Key;
+  polymorph_type?: string;
 }

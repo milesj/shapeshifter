@@ -8,7 +8,7 @@ export const ReferenceBarShape = PropTypes.shape({
 });
 
 export const ReferenceSetOnlyStringShape = PropTypes.shape({
-  stringField: PropTypes.string.isRequired,
+  stringField: PropTypes.string,
 });
 
 export const ReferenceSetShape = PropTypes.shape({
@@ -19,12 +19,12 @@ export const ReferenceSetShape = PropTypes.shape({
 
 export const ReferenceFooShape = PropTypes.shape({
   numberField: PropTypes.number,
-  refField: ReferenceBarShape.isRequired,
+  refField: ReferenceBarShape,
 });
 
 export const ReferenceShape = PropTypes.shape({
   stringField: PropTypes.string,
-  refField: ReferenceFooShape.isRequired,
+  refField: ReferenceFooShape,
   referenceField: ReferenceFooShape,
   subsetRefField: ReferenceSetOnlyStringShape,
 });

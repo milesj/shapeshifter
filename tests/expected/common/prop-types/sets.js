@@ -5,17 +5,17 @@ import PropTypes from 'prop-types';
 
 export const SetsBasicShape = PropTypes.shape({
   foo: PropTypes.string,
-  baz: PropTypes.bool.isRequired,
+  baz: PropTypes.bool,
 });
 
 export const SetsWithNullShape = PropTypes.shape({
-  foo: PropTypes.string.isRequired,
+  foo: PropTypes.string,
   qux: PropTypes.string,
 });
 
 export const SetsShape = PropTypes.shape({
   foo: PropTypes.string,
   bar: PropTypes.number,
-  baz: PropTypes.bool.isRequired,
-  qux: PropTypes.string.isRequired,
+  baz: PropTypes.bool,
+  qux: PropTypes.string,
 });

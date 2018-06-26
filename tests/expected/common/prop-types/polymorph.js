@@ -4,8 +4,8 @@
 import PropTypes from 'prop-types';
 
 export const KeyShape = PropTypes.oneOfType([
-  PropTypes.string.isRequired,
-  PropTypes.number.isRequired,
+  PropTypes.string,
+  PropTypes.number,
 ]);
 
 export const PolymorphVideoShape = PropTypes.shape({
@@ -18,14 +18,14 @@ export const PolymorphImageShape = PropTypes.shape({
 
 export const PolymorphShape = PropTypes.shape({
   item: PropTypes.oneOfType([
-    PolymorphImageShape.isRequired,
-    PolymorphVideoShape.isRequired,
+    PolymorphImageShape,
+    PolymorphVideoShape,
   ]),
   item_id: KeyShape,
   item_type: PropTypes.string,
   product: PropTypes.oneOfType([
-    PolymorphImageShape.isRequired,
-    PolymorphVideoShape.isRequired,
+    PolymorphImageShape,
+    PolymorphVideoShape,
   ]),
   product_key: KeyShape,
   product_model: PropTypes.string,

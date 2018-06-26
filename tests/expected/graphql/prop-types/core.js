@@ -4,8 +4,8 @@
 import PropTypes from 'prop-types';
 
 export const KeyShape = PropTypes.oneOfType([
-  PropTypes.string.isRequired,
-  PropTypes.number.isRequired,
+  PropTypes.string,
+  PropTypes.number,
 ]);
 
 export const CoreFooShape = PropTypes.shape({
@@ -24,7 +24,7 @@ export const CoreShape = PropTypes.shape({
   id: KeyShape,
   name: PropTypes.string,
   foo: CoreFooShape,
-  fooWithArg: CoreFooShape.isRequired,
+  fooWithArg: CoreFooShape,
   bar: CoreBarShape,
-  barWithArg: CoreBarShape.isRequired,
+  barWithArg: CoreBarShape,
 });

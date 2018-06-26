@@ -16,11 +16,11 @@ const RENDERERS = [
     key: 'flow',
     ext: 'js',
   },
-  // {
-  //   name: 'PropTypes',
-  //   key: 'prop-types',
-  //   ext: 'js',
-  // },
+  {
+    name: 'PropTypes',
+    key: 'prop-types',
+    ext: 'js',
+  },
   {
     name: 'TypeScript',
     key: 'typescript',
@@ -70,7 +70,7 @@ const FORMATS = [
 ];
 
 describe('Transpiler', () => {
-  describe.only('transpile()', () => {
+  describe('transpile()', () => {
     RENDERERS.forEach(({ name, key, ext }) => {
       describe(`outputs ${name}`, () => {
         FORMATS.forEach(({ format, target, cases: testCases }) => {

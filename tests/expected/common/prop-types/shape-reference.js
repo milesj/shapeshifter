@@ -11,6 +11,6 @@ export const ShapeReferencePriceShape = PropTypes.shape({
 
 export const ShapeReferenceShape = PropTypes.shape({
   fees: ShapeReferencePriceShape,
-  taxes: ShapeReferencePriceShape.isRequired,
-  total: ShapeReferencePriceShape.isRequired,
+  taxes: ShapeReferencePriceShape,
+  total: ShapeReferencePriceShape,
 });

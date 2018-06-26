@@ -29,21 +29,21 @@ parentSchema
   });
 
 export interface MultipleChildrenInterface {
-  uuid: string | null;
+  uuid?: string;
 }
 
 export interface SingleChildInterface {
-  id: number | null;
-  active: boolean | null;
-  self: SingleChildInterface | null;
+  id?: number;
+  active?: boolean;
+  self?: SingleChildInterface;
 }
 
 export interface ParentInterface {
-  id: number | null;
-  name: string | null;
-  children: Array<MultipleChildrenInterface | null> | null;
-  orphan: SingleChildInterface | null;
-  polymorph: SingleChildInterface | MultipleChildrenInterface | null;
-  polymorph_fk: Key | null;
-  polymorph_type: string | null;
+  id?: number;
+  name?: string;
+  children?: Array<MultipleChildrenInterface>;
+  orphan?: SingleChildInterface;
+  polymorph?: SingleChildInterface | MultipleChildrenInterface;
+  polymorph_fk?: Key;
+  polymorph_type?: string;
 }

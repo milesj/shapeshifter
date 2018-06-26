@@ -10,8 +10,8 @@ export const ShapeShape = PropTypes.shape({
   }),
   primitiveFields: PropTypes.shape({
     string: PropTypes.string,
-    bool: PropTypes.bool.isRequired,
-    number: PropTypes.number.isRequired,
+    bool: PropTypes.bool,
+    number: PropTypes.number,
   }),
   arrayFields: PropTypes.shape({
     numberArray: PropTypes.arrayOf(PropTypes.number),
@@ -41,19 +41,19 @@ export const ShapeShape = PropTypes.shape({
     boolObject: PropTypes.objectOf(PropTypes.bool),
     intStringObject: PropTypes.objectOf(PropTypes.string),
     unionObject: PropTypes.objectOf(PropTypes.oneOfType([
-      PropTypes.number.isRequired,
-      PropTypes.string.isRequired,
+      PropTypes.number,
+      PropTypes.string,
       PropTypes.shape({
         foo: PropTypes.string,
-      }).isRequired,
+      }),
     ])),
   }),
   unionFields: PropTypes.shape({
     multiUnion: PropTypes.oneOfType([
-      PropTypes.number.isRequired,
-      PropTypes.bool.isRequired,
-      PropTypes.instanceOf(ShapeClassName).isRequired,
-      PropTypes.objectOf(PropTypes.string).isRequired,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.instanceOf(ShapeClassName),
+      PropTypes.objectOf(PropTypes.string),
       PropTypes.shape({
         string: PropTypes.string,
         enum: PropTypes.oneOf([
@@ -61,7 +61,7 @@ export const ShapeShape = PropTypes.shape({
           456,
           789,
         ]),
-      }).isRequired,
+      }),
     ]),
   }),
 });

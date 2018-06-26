@@ -23,8 +23,8 @@ export const PRIMITIVE_VALUES = ['string', 123, true];
 export const PRIMITIVE_STR = 'primitive';
 
 export const KeyShape = PropTypes.oneOfType([
-  PropTypes.string.isRequired,
-  PropTypes.number.isRequired,
+  PropTypes.string,
+  PropTypes.number,
 ]);
 
 export const ArrayShape = PropTypes.shape({
@@ -36,7 +36,7 @@ export const ArrayShape = PropTypes.shape({
     'baz',
   ])),
   instanceField: PropTypes.arrayOf(PropTypes.instanceOf(ArrayDefault)),
-  numberField: PropTypes.arrayOf(PropTypes.number).isRequired,
+  numberField: PropTypes.arrayOf(PropTypes.number),
   objectField: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.number)),
   shapeField: PropTypes.arrayOf(PropTypes.shape({
     foo: PropTypes.string,
@@ -44,12 +44,12 @@ export const ArrayShape = PropTypes.shape({
   })),
   stringField: PropTypes.arrayOf(PropTypes.string),
   unionField: PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.string.isRequired,
+    PropTypes.string,
     PropTypes.oneOf([
       1,
       2,
       3,
-    ]).isRequired,
+    ]),
   ])),
 });
 
@@ -113,17 +113,17 @@ export const ImportsShape = PropTypes.shape({
 
 export const InstanceShape = PropTypes.shape({
   instField: PropTypes.instanceOf(InstanceClassName),
-  instanceField: PropTypes.instanceOf(InstanceDefault).isRequired,
+  instanceField: PropTypes.instanceOf(InstanceDefault),
 });
 
 export const ObjectShape = PropTypes.shape({
   arrayField: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
-  boolField: PropTypes.objectOf(PropTypes.bool).isRequired,
+  boolField: PropTypes.objectOf(PropTypes.bool),
   enumField: PropTypes.objectOf(PropTypes.oneOf([
     'foo',
     'bar',
     'baz',
-  ])).isRequired,
+  ])),
   instanceField: PropTypes.objectOf(PropTypes.instanceOf(ObjectDefault)),
   numberField: PropTypes.objectOf(PropTypes.number),
   objectField: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
@@ -133,8 +133,8 @@ export const ObjectShape = PropTypes.shape({
   })),
   stringField: PropTypes.objectOf(PropTypes.string),
   unionField: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.arrayOf(PropTypes.string).isRequired,
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.string),
   ])),
   objShorthandField: PropTypes.objectOf(PropTypes.string),
   objKeyTypeField: PropTypes.objectOf(PropTypes.string),
@@ -150,14 +150,14 @@ export const PolymorphImageShape = PropTypes.shape({
 
 export const PolymorphShape = PropTypes.shape({
   item: PropTypes.oneOfType([
-    PolymorphImageShape.isRequired,
-    PolymorphVideoShape.isRequired,
+    PolymorphImageShape,
+    PolymorphVideoShape,
   ]),
   item_id: KeyShape,
   item_type: PropTypes.string,
   product: PropTypes.oneOfType([
-    PolymorphImageShape.isRequired,
-    PolymorphVideoShape.isRequired,
+    PolymorphImageShape,
+    PolymorphVideoShape,
   ]),
   product_key: KeyShape,
   product_model: PropTypes.string,
@@ -165,23 +165,23 @@ export const PolymorphShape = PropTypes.shape({
 
 export const PrimitiveShape = PropTypes.shape({
   boolField: PropTypes.bool,
-  boolFieldExpanded: PropTypes.bool.isRequired,
+  boolFieldExpanded: PropTypes.bool,
   booleanField: PropTypes.bool,
-  booleanFieldExpanded: PropTypes.bool.isRequired,
+  booleanFieldExpanded: PropTypes.bool,
   intField: PropTypes.number,
-  intFieldExpanded: PropTypes.number.isRequired,
+  intFieldExpanded: PropTypes.number,
   integerField: PropTypes.number,
-  integerFieldExpanded: PropTypes.number.isRequired,
+  integerFieldExpanded: PropTypes.number,
   numField: PropTypes.number,
-  numFieldExpanded: PropTypes.number.isRequired,
+  numFieldExpanded: PropTypes.number,
   numberField: PropTypes.number,
-  numberFieldExpanded: PropTypes.number.isRequired,
+  numberFieldExpanded: PropTypes.number,
   floatField: PropTypes.number,
-  floatFieldExpanded: PropTypes.number.isRequired,
+  floatFieldExpanded: PropTypes.number,
   strField: PropTypes.string,
-  strFieldExpanded: PropTypes.string.isRequired,
+  strFieldExpanded: PropTypes.string,
   stringField: PropTypes.string,
-  stringFieldExpanded: PropTypes.string.isRequired,
+  stringFieldExpanded: PropTypes.string,
 });
 
 export const ReferenceBarShape = PropTypes.shape({
@@ -190,7 +190,7 @@ export const ReferenceBarShape = PropTypes.shape({
 
 export const ReferenceFooShape = PropTypes.shape({
   numberField: PropTypes.number,
-  refField: ReferenceBarShape.isRequired,
+  refField: ReferenceBarShape,
 });
 
 export const ReferenceSelfBasicShape = PropTypes.shape({
@@ -200,12 +200,12 @@ export const ReferenceSelfBasicShape = PropTypes.shape({
 export const ReferenceSelfShape = PropTypes.shape({
   stringField: PropTypes.string,
   referenceField: (...args) => ReferenceSelfShape(...args),
-  requiredRefField: (...args) => ReferenceSelfShape(...args).isRequired,
+  requiredRefField: (...args) => ReferenceSelfShape(...args),
   subsetRefField: PropTypes.arrayOf(ReferenceSelfBasicShape),
 });
 
 export const ReferenceSetOnlyStringShape = PropTypes.shape({
-  stringField: PropTypes.string.isRequired,
+  stringField: PropTypes.string,
 });
 
 export const ReferenceSetShape = PropTypes.shape({
@@ -216,26 +216,26 @@ export const ReferenceSetShape = PropTypes.shape({
 
 export const ReferenceShape = PropTypes.shape({
   stringField: PropTypes.string,
-  refField: ReferenceFooShape.isRequired,
+  refField: ReferenceFooShape,
   referenceField: ReferenceFooShape,
   subsetRefField: ReferenceSetOnlyStringShape,
 });
 
 export const SetsBasicShape = PropTypes.shape({
   foo: PropTypes.string,
-  baz: PropTypes.bool.isRequired,
+  baz: PropTypes.bool,
 });
 
 export const SetsWithNullShape = PropTypes.shape({
-  foo: PropTypes.string.isRequired,
+  foo: PropTypes.string,
   qux: PropTypes.string,
 });
 
 export const SetsShape = PropTypes.shape({
   foo: PropTypes.string,
   bar: PropTypes.number,
-  baz: PropTypes.bool.isRequired,
-  qux: PropTypes.string.isRequired,
+  baz: PropTypes.bool,
+  qux: PropTypes.string,
 });
 
 export const ShapeReferencePriceShape = PropTypes.shape({
@@ -246,8 +246,8 @@ export const ShapeReferencePriceShape = PropTypes.shape({
 
 export const ShapeReferenceShape = PropTypes.shape({
   fees: ShapeReferencePriceShape,
-  taxes: ShapeReferencePriceShape.isRequired,
-  total: ShapeReferencePriceShape.isRequired,
+  taxes: ShapeReferencePriceShape,
+  total: ShapeReferencePriceShape,
 });
 
 export const ShapeShape = PropTypes.shape({
@@ -256,8 +256,8 @@ export const ShapeShape = PropTypes.shape({
   }),
   primitiveFields: PropTypes.shape({
     string: PropTypes.string,
-    bool: PropTypes.bool.isRequired,
-    number: PropTypes.number.isRequired,
+    bool: PropTypes.bool,
+    number: PropTypes.number,
   }),
   arrayFields: PropTypes.shape({
     numberArray: PropTypes.arrayOf(PropTypes.number),
@@ -287,19 +287,19 @@ export const ShapeShape = PropTypes.shape({
     boolObject: PropTypes.objectOf(PropTypes.bool),
     intStringObject: PropTypes.objectOf(PropTypes.string),
     unionObject: PropTypes.objectOf(PropTypes.oneOfType([
-      PropTypes.number.isRequired,
-      PropTypes.string.isRequired,
+      PropTypes.number,
+      PropTypes.string,
       PropTypes.shape({
         foo: PropTypes.string,
-      }).isRequired,
+      }),
     ])),
   }),
   unionFields: PropTypes.shape({
     multiUnion: PropTypes.oneOfType([
-      PropTypes.number.isRequired,
-      PropTypes.bool.isRequired,
-      PropTypes.instanceOf(ShapeClassName).isRequired,
-      PropTypes.objectOf(PropTypes.string).isRequired,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.instanceOf(ShapeClassName),
+      PropTypes.objectOf(PropTypes.string),
       PropTypes.shape({
         string: PropTypes.string,
         enum: PropTypes.oneOf([
@@ -307,64 +307,64 @@ export const ShapeShape = PropTypes.shape({
           456,
           789,
         ]),
-      }).isRequired,
+      }),
     ]),
   }),
 });
 
 export const UnionShape = PropTypes.shape({
   arrayField: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string).isRequired,
-    PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
   ]),
   primitiveFields: PropTypes.oneOfType([
-    PropTypes.bool.isRequired,
-    PropTypes.number.isRequired,
+    PropTypes.bool,
+    PropTypes.number,
   ]),
   enumField: PropTypes.oneOfType([
     PropTypes.oneOf([
       'foo',
       'bar',
       'baz',
-    ]).isRequired,
+    ]),
     PropTypes.oneOf([
       789,
       456,
       123,
-    ]).isRequired,
+    ]),
   ]),
   instanceField: PropTypes.oneOfType([
-    PropTypes.instanceOf(UnionClassName).isRequired,
-    PropTypes.instanceOf(UnionDefault).isRequired,
+    PropTypes.instanceOf(UnionClassName),
+    PropTypes.instanceOf(UnionDefault),
   ]),
   objectField: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.number).isRequired,
-    PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+    PropTypes.objectOf(PropTypes.number),
+    PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
   ]),
   shapeField: PropTypes.oneOfType([
     PropTypes.shape({
       foo: PropTypes.string,
       bar: PropTypes.bool,
-    }).isRequired,
+    }),
     PropTypes.shape({
       qux: PropTypes.oneOfType([
-        PropTypes.string.isRequired,
-        PropTypes.bool.isRequired,
+        PropTypes.string,
+        PropTypes.bool,
       ]),
-    }).isRequired,
+    }),
   ]),
   unionField: PropTypes.oneOfType([
     PropTypes.oneOfType([
-      PropTypes.string.isRequired,
+      PropTypes.string,
       PropTypes.oneOf([
         1,
         2,
         3,
-      ]).isRequired,
-    ]).isRequired,
+      ]),
+    ]),
     PropTypes.oneOfType([
-      PropTypes.bool.isRequired,
-      PropTypes.number.isRequired,
-    ]).isRequired,
+      PropTypes.bool,
+      PropTypes.number,
+    ]),
   ]),
 });

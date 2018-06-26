@@ -4,8 +4,8 @@
 import PropTypes from 'prop-types';
 
 export const KeyShape = PropTypes.oneOfType([
-  PropTypes.string.isRequired,
-  PropTypes.number.isRequired,
+  PropTypes.string,
+  PropTypes.number,
 ]);
 
 export const MultipleChildrenShape = (process.env.NODE_ENV === 'production') ? PropTypes.any : PropTypes.shape({
@@ -24,8 +24,8 @@ export const ParentShape = (process.env.NODE_ENV === 'production') ? PropTypes.a
   children: PropTypes.arrayOf(MultipleChildrenShape),
   orphan: SingleChildShape,
   polymorph: PropTypes.oneOfType([
-    SingleChildShape.isRequired,
-    MultipleChildrenShape.isRequired,
+    SingleChildShape,
+    MultipleChildrenShape,
   ]),
   polymorph_fk: KeyShape,
   polymorph_type: PropTypes.string,

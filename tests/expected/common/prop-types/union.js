@@ -6,57 +6,57 @@ import UnionDefault, { UnionClassName } from '../stub';
 
 export const UnionShape = PropTypes.shape({
   arrayField: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string).isRequired,
-    PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
   ]),
   primitiveFields: PropTypes.oneOfType([
-    PropTypes.bool.isRequired,
-    PropTypes.number.isRequired,
+    PropTypes.bool,
+    PropTypes.number,
   ]),
   enumField: PropTypes.oneOfType([
     PropTypes.oneOf([
       'foo',
       'bar',
       'baz',
-    ]).isRequired,
+    ]),
     PropTypes.oneOf([
       789,
       456,
       123,
-    ]).isRequired,
+    ]),
   ]),
   instanceField: PropTypes.oneOfType([
-    PropTypes.instanceOf(UnionClassName).isRequired,
-    PropTypes.instanceOf(UnionDefault).isRequired,
+    PropTypes.instanceOf(UnionClassName),
+    PropTypes.instanceOf(UnionDefault),
   ]),
   objectField: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.number).isRequired,
-    PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+    PropTypes.objectOf(PropTypes.number),
+    PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
   ]),
   shapeField: PropTypes.oneOfType([
     PropTypes.shape({
       foo: PropTypes.string,
       bar: PropTypes.bool,
-    }).isRequired,
+    }),
     PropTypes.shape({
       qux: PropTypes.oneOfType([
-        PropTypes.string.isRequired,
-        PropTypes.bool.isRequired,
+        PropTypes.string,
+        PropTypes.bool,
       ]),
-    }).isRequired,
+    }),
   ]),
   unionField: PropTypes.oneOfType([
     PropTypes.oneOfType([
-      PropTypes.string.isRequired,
+      PropTypes.string,
       PropTypes.oneOf([
         1,
         2,
         3,
-      ]).isRequired,
-    ]).isRequired,
+      ]),
+    ]),
     PropTypes.oneOfType([
-      PropTypes.bool.isRequired,
-      PropTypes.number.isRequired,
-    ]).isRequired,
+      PropTypes.bool,
+      PropTypes.number,
+    ]),
   ]),
 });

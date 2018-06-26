@@ -7,8 +7,8 @@ import Schema from 'shapeshifter';
 export const compoundSupportSchema = new Schema('compounds', ['start_date', 'end_date', 'user_id']);
 
 export type CompoundSupportType = {
-  status: ?number,
-  user_id: ?number,
-  start_date: ?string,
-  end_date: ?string,
+  status?: number,
+  user_id?: number,
+  start_date?: string,
+  end_date?: string,
 };

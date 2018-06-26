@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 
 export const PrimitiveShape = PropTypes.shape({
   boolField: PropTypes.bool,
-  boolFieldExpanded: PropTypes.bool.isRequired,
+  boolFieldExpanded: PropTypes.bool,
   numberField: PropTypes.number,
-  numberFieldExpanded: PropTypes.number.isRequired,
+  numberFieldExpanded: PropTypes.number,
   floatField: PropTypes.number,
-  floatFieldExpanded: PropTypes.number.isRequired,
+  floatFieldExpanded: PropTypes.number,
   stringField: PropTypes.string,
-  stringFieldExpanded: PropTypes.string.isRequired,
+  stringFieldExpanded: PropTypes.string,
 });

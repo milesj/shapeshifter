@@ -15,7 +15,7 @@ export const ArrayShape = PropTypes.shape({
     'baz',
   ])),
   instanceField: PropTypes.arrayOf(PropTypes.instanceOf(ArrayDefault)),
-  numberField: PropTypes.arrayOf(PropTypes.number).isRequired,
+  numberField: PropTypes.arrayOf(PropTypes.number),
   objectField: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.number)),
   shapeField: PropTypes.arrayOf(PropTypes.shape({
     foo: PropTypes.string,
@@ -23,11 +23,11 @@ export const ArrayShape = PropTypes.shape({
   })),
   stringField: PropTypes.arrayOf(PropTypes.string),
   unionField: PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.string.isRequired,
+    PropTypes.string,
     PropTypes.oneOf([
       1,
       2,
       3,
-    ]).isRequired,
+    ]),
   ])),
 });

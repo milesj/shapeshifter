@@ -6,12 +6,12 @@ import ObjectDefault from '../stub';
 
 export const ObjectShape = PropTypes.shape({
   arrayField: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
-  boolField: PropTypes.objectOf(PropTypes.bool).isRequired,
+  boolField: PropTypes.objectOf(PropTypes.bool),
   enumField: PropTypes.objectOf(PropTypes.oneOf([
     'foo',
     'bar',
     'baz',
-  ])).isRequired,
+  ])),
   instanceField: PropTypes.objectOf(PropTypes.instanceOf(ObjectDefault)),
   numberField: PropTypes.objectOf(PropTypes.number),
   objectField: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)),
@@ -21,8 +21,8 @@ export const ObjectShape = PropTypes.shape({
   })),
   stringField: PropTypes.objectOf(PropTypes.string),
   unionField: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.arrayOf(PropTypes.string).isRequired,
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.string),
   ])),
   objShorthandField: PropTypes.objectOf(PropTypes.string),
   objKeyTypeField: PropTypes.objectOf(PropTypes.string),

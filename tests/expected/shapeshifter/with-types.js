@@ -5,21 +5,21 @@
 export type Key = string | number;
 
 export type MultipleChildrenType = {
-  uuid: ?string,
+  uuid?: string,
 };
 
 export type SingleChildType = {
-  id: ?number,
-  active: ?boolean,
-  self: ?SingleChildType,
+  id?: number,
+  active?: boolean,
+  self?: SingleChildType,
 };
 
 export type ParentType = {
-  id: ?number,
-  name: ?string,
-  children: ?Array<?MultipleChildrenType>,
-  orphan: ?SingleChildType,
-  polymorph: SingleChildType | MultipleChildrenType | null,
-  polymorph_fk: ?Key,
-  polymorph_type: ?string,
+  id?: number,
+  name?: string,
+  children?: Array<MultipleChildrenType>,
+  orphan?: SingleChildType,
+  polymorph?: SingleChildType | MultipleChildrenType,
+  polymorph_fk?: Key,
+  polymorph_type?: string,
 };
