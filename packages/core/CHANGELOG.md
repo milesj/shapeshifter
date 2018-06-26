@@ -10,6 +10,16 @@
     package.
   - YAML parser has moved to the
     [shapeshifter-parser-yaml](https://www.npmjs.com/package/shapeshifter-parser-yaml) package.
+- PropTypes `isRequired` is now controlled by the optional system (below) instead of nullable.
+
+#### 🚀 New
+
+- Added a new optional attribute system, which marks them as not required. This is an alternative
+  solution to nullable.
+  - Added `optional` config property to all type definitions and sets.
+  - Added `--optional` CLI option to mark all as optional.
+  - Added `defaultOptional` option to transpiler and renderer.
+  - TypeScript and Flow object properties are now suffixed with `?`.
 
 # 6.2.1 - 06/20/18
 

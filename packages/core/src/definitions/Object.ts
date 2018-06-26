@@ -19,6 +19,7 @@ export default class ObjectDefinition extends Definition<ObjectConfig> {
       {
         keyType: string('string'),
         nullable: bool(),
+        optional: bool(),
         type: string('object'),
         valueType: this.createUnionType(),
       },

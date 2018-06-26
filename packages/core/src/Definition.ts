@@ -22,6 +22,7 @@ export default class Definition<T extends Config> {
     this.attribute = attribute;
     this.config = {
       nullable: options.defaultNullable,
+      optional: options.defaultOptional,
       // @ts-ignore
       ...config,
     };
@@ -52,6 +53,13 @@ export default class Definition<T extends Config> {
   }
 
   /**
+   * Returns true if the attribute is not required.
+   */
+  isOptional(): boolean {
+    return this.config.optional || false;
+  }
+
+  /**
    * Validate the definition configuration.
    */
   validateConfig() {
@@ -61,6 +69,7 @@ export default class Definition<T extends Config> {
       this.config,
       {
         nullable: bool(),
+        optional: bool(),
         type: string(normalizeType(name.replace('Definition', '').toLowerCase() || 'unknown')),
       },
       {

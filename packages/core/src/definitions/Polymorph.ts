@@ -20,6 +20,7 @@ export default class PolymorphDefinition extends Definition<PolymorphConfig> {
         export: bool(true),
         keySuffix: string('_id'),
         nullable: bool(),
+        optional: bool(),
         type: string('polymorph'),
         typeSuffix: string('_type'),
         valueTypes: array(this.createUnionType())

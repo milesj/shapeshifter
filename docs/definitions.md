@@ -42,9 +42,9 @@ This transpiles down to:
 
 ```javascript
 // PropTypes
-name: PropTypes.string,
-status: PropTypes.number,
-active: PropTypes.bool,
+name: PropTypes.string.isRequired,
+status: PropTypes.number.isRequired,
+active: PropTypes.bool.isRequired,
 
 // Flow
 name: string,
@@ -81,7 +81,7 @@ This transpiles down to:
 const KeyShape = PropTypes.oneOfType([
   PropTypes.string.isRequired,
   PropTypes.number.isRequired,
-]);
+]).isRequired;
 
 id: KeyShape,
 
@@ -123,7 +123,7 @@ This transpiles down to:
 
 ```javascript
 // PropTypes
-messages: PropTypes.arrayOf(PropTypes.string),
+messages: PropTypes.arrayOf(PropTypes.string).isRequired,
 
 // Flow
 messages: string[],
@@ -157,7 +157,7 @@ This transpiles down to:
 
 ```javascript
 // PropTypes
-costs: PropTypes.objectOf(PropTypes.number),
+costs: PropTypes.objectOf(PropTypes.number).isRequired,
 
 // Flow
 costs: { [key: string]: number },
@@ -201,7 +201,7 @@ This transpiles down to:
 
 ```javascript
 // PropTypes
-words: PropTypes.oneOf(['foo', 'bar', 'baz']),
+words: PropTypes.oneOf(['foo', 'bar', 'baz']).isRequired,
 
 // Flow
 words: 'foo' | 'bar' | 'baz',
@@ -260,7 +260,7 @@ location: PropTypes.shape({
   lat: PropTypes.number.isRequired,
   long: PropTypes.number.isRequired,
   name: PropTypes.string,
-}),
+}).isRequired,
 
 // Flow
 location: {
@@ -363,7 +363,7 @@ error: PropTypes.oneOfType([
   PropTypes.string.isRequired,
   PropTypes.number.isRequired,
   PropTypes.instanceOf(Error).isRequired,
-]),
+]).isRequired,
 
 // Flow
 error: string | number | Error,
@@ -415,7 +415,7 @@ This transpiles to:
 
 ```javascript
 // PropTypes
-profile: ProfileShape,
+profile: ProfileShape.isRequired,
 
 // Flow
 profile: ProfileType,
@@ -525,11 +525,11 @@ This transpiles down to:
 ```javascript
 // PropTypes
 item: PropTypes.oneOfType([
-  ImageShape,
-  VideoShape,
-]),
-item_id: KeyShape,
-item_type: PropTypes.string,
+  ImageShape.isRequired,
+  VideoShape.isRequired,
+]).isRequired,
+item_id: KeyShape.isRequired,
+item_type: PropTypes.string.isRequired,
 
 // Flow
 item: Image | Shape,
@@ -592,7 +592,7 @@ This transpiles down to:
 import UserModel from '../models/UserModel';
 
 // PropTypes
-model: PropTypes.instanceOf(UserModel),
+model: PropTypes.instanceOf(UserModel).isRequired,
 
 // Flow
 model: UserModel,

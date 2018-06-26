@@ -16,6 +16,7 @@ export type RendererType = 'flow' | 'prop-types' | 'typescript';
 
 export interface Options extends Struct {
   defaultNullable: boolean;
+  defaultOptional: boolean;
   disableEslint: boolean;
   importPath: string;
   includeAttributes: boolean;
@@ -70,6 +71,7 @@ export type TypeDefinition =
 
 export interface Config extends Struct {
   nullable?: boolean;
+  optional?: boolean;
   type: string;
 }
 
@@ -153,6 +155,7 @@ export interface ShapesField {
 export interface SubsetStructure {
   attributes: string[];
   nullable?: { [key: string]: boolean };
+  optional?: { [key: string]: boolean };
 }
 
 export interface SubsetsField {

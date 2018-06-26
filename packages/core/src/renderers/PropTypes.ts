@@ -78,7 +78,7 @@ export default class PropTypesRenderer extends Renderer {
 
     this.builder.header.add(`export const KeyShape = ${union};`);
 
-    return this.wrapNullable(definition, 'KeyShape');
+    return this.wrapOptional(definition, 'KeyShape');
   }
 
   renderNumber(definition: NumberDefinition): string {
@@ -102,10 +102,10 @@ export default class PropTypesRenderer extends Renderer {
 
     // Wrap a function as we need to defer the variable reference
     if (self && !subset) {
-      return `(...args) => ${this.wrapNullable(definition, `${reference}(...args)`)}`;
+      return `(...args) => ${this.wrapOptional(definition, `${reference}(...args)`)}`;
     }
 
-    return this.wrapNullable(definition, reference);
+    return this.wrapOptional(definition, reference);
   }
 
   renderSchemaGenerics(): string {
@@ -116,7 +116,7 @@ export default class PropTypesRenderer extends Renderer {
     const reference = this.renderShapeReference(definition);
 
     if (reference) {
-      return this.wrapNullable(definition, reference);
+      return this.wrapOptional(definition, reference);
     }
 
     if (!definition.attributes) {
@@ -150,17 +150,13 @@ export default class PropTypesRenderer extends Renderer {
    * Render a definition into a PropType representation.
    */
   wrapPropType(definition: Definition<Config>, template: string): string {
-    return this.wrapNullable(definition, `PropTypes.${template}`);
+    return this.wrapOptional(definition, `PropTypes.${template}`);
   }
 
   /**
    * Wrap a definition template with required if applicable.
    */
-  wrapNullable(definition: Definition<Config>, template: string): string {
-    if (!definition.isNullable()) {
-      return `${template}.isRequired`;
-    }
-
-    return template;
+  wrapOptional(definition: Definition<Config>, template: string): string {
+    return definition.isNullable() || definition.isOptional() ? template : `${template}.isRequired`;
   }
 }

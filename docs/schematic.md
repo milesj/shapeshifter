@@ -74,9 +74,8 @@ All attribute type definitions support the `nullable` modifier, which accepts a 
 triggers the following:
 
 - Flow: Nullable fields will prepend `?` to each type.
-- PropTypes: Non-nullable fields will append `isRequired` to the prop type.
-- TypeScript: Nullable fields will append `| null` to each type. Best used with
-  `--strictNullChecks`.
+- PropTypes: Nullable fields will not append `isRequired` to the prop type.
+- TypeScript: Nullable fields will append `| null` to each type.
 
 ```json
 {
@@ -93,6 +92,26 @@ exclamation mark (`!`) to the type.
 ```graphql
 field: String!
 ```
+
+### Optional
+
+All attribute type definitions support the `optional` modifier, which accepts a boolean value, and
+triggers the following:
+
+- Flow: Optional properties will append `?` to each key.
+- PropTypes: Optional fields will not append `isRequired` to the prop type.
+- TypeScript: Optional properties will append `?` to each key.
+
+```json
+{
+  "field": {
+    "type": "string",
+    "optional": false
+  }
+}
+```
+
+> All fields are optional by default in GraphQL.
 
 ## Metadata
 
@@ -182,11 +201,11 @@ easily be used on the frontend, without introducing duplication.
 
 The `subsets` object allows for smaller sets of attributes to be defined and exported in the ES
 output. Each key in the object represents a unique name for the subset, while the value of each
-property can either be an array of [attribute names](#attributes), or an object of `attributes` and
-`nullable` (optional) properties.
+property can either be an array of [attribute names](#attributes), or an object of `attributes`,
+`nullable`, or `optional` properties.
 
-Unlike `nullable` properties found on type definitions, this property represents a mapping of
-attributes in the current subset to boolean values, which enable or disable the modifier.
+Unlike `nullable` and `optional` properties found on type definitions, this property represents a
+mapping of attributes in the current subset to boolean values, which enable or disable the modifier.
 
 ```json
 {

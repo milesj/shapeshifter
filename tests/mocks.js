@@ -6,6 +6,7 @@ export const allValues = [...falsyValues, ...truthyValues];
 
 export const options = {
   defaultNullable: true,
+  defaultOptional: true,
   disableEslint: true,
   indentCharacter: '  ',
   renderers: ['prop-types'],

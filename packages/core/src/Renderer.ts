@@ -225,6 +225,7 @@ export default class Renderer {
       }
 
       const nullable = subset.nullable || {};
+      const optional = subset.optional || {};
 
       subset.attributes.forEach(attribute => {
         let setConfig = baseAttributes[attribute];
@@ -242,6 +243,10 @@ export default class Renderer {
 
         if (attribute in nullable) {
           setConfig.nullable = nullable[attribute];
+        }
+
+        if (attribute in optional) {
+          setConfig.optional = optional[attribute];
         }
 
         setAttributes.push(DefinitionFactory.factory(this.options, attribute, setConfig));

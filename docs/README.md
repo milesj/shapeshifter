@@ -19,6 +19,7 @@ Take this user schematic for example.
     },
     "location": {
       "type": "shape",
+      "optional": true,
       "attributes": {
         "lat": "number",
         "long": "number"
@@ -40,7 +41,7 @@ export const UserShape = PropTypes.shape({
   location: PropTypes.shape({
     lat: PropTypes.number.isRequired,
     long: PropTypes.number.isRequired,
-  }).isRequired,
+  }),
 });
 ```
 
@@ -53,7 +54,7 @@ export type UserType = {
   id: number,
   username: string,
   email: ?string,
-  location: {
+  location?: {
     lat: number,
     long: number,
   },
@@ -67,7 +68,7 @@ export interface UserInterface {
   id: number;
   username: string;
   email: string | null;
-  location: {
+  location?: {
     lat: number,
     long: number,
   };
@@ -143,6 +144,8 @@ your choosing, otherwise the output will be sent to the console.
 - `--import` (string) - The import path to a `Schema` class, inserted at the top of every output
   file. Defaults to "shapeshifter".
 - `--nullable` (bool) - Marks all attributes as nullable by default. Not applicable to GraphQL.
+  Defaults to false.
+- `--optional` (bool) - Marks all attributes as optional by default. Not applicable to GraphQL.
   Defaults to false.
 - `--prop-types` (bool) - Generate PropTypes definitions. Defaults to "false".
 - `--schemas` (bool) - Include schema class exports in the output. Defaults to "false".

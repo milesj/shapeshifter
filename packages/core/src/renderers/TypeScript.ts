@@ -139,14 +139,11 @@ export default class TypeScriptRenderer extends Renderer {
     );
   }
 
-  /**
-   * Render a definition and wrap for TypeScript nullable support.
-   */
   wrapNullable(definition: Definition<Config>, template: string): string {
-    if (definition.isNullable()) {
-      return `${template} | null`;
-    }
+    return definition.isNullable() ? `${template} | null` : template;
+  }
 
-    return template;
+  wrapPropertyName(definition: Definition<Config>): string {
+    return definition.isOptional() ? `${definition.attribute}?` : definition.attribute;
   }
 }

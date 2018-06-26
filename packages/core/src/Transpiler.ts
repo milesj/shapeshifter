@@ -25,6 +25,7 @@ export default class Transpiler {
   constructor(options: Options) {
     this.options = optimal(options, {
       defaultNullable: bool(),
+      defaultOptional: bool(),
       disableEslint: bool(),
       importPath: string('shapeshifter'),
       includeAttributes: bool(),

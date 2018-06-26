@@ -107,14 +107,11 @@ export default class FlowRenderer extends Renderer {
     return definition.isNullable() && !template.endsWith('null') ? `${template} | null` : template;
   }
 
-  /**
-   * Render a definition and wrap for Flow nullable support.
-   */
   wrapNullable(definition: Definition<Config>, template: string): string {
-    if (definition.isNullable()) {
-      return `?${template}`;
-    }
+    return definition.isNullable() ? `?${template}` : template;
+  }
 
-    return template;
+  wrapPropertyName(definition: Definition<Config>): string {
+    return definition.isOptional() ? `${definition.attribute}?` : definition.attribute;
   }
 }

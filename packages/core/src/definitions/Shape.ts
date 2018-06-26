@@ -21,6 +21,7 @@ export default class ShapeDefinition extends Definition<ShapeConfig> {
           .xor('reference')
           .notEmpty(),
         nullable: bool(),
+        optional: bool(),
         reference: string()
           .xor('attributes')
           .empty(),

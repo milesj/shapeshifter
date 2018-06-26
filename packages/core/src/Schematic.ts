@@ -131,12 +131,14 @@ export default class Schematic {
         this.attributes.push(
           new KeyDefinition(this.options, attribute + definition.config.keySuffix, {
             nullable: definition.isNullable(),
+            optional: definition.isOptional(),
           }),
         );
 
         this.attributes.push(
           new StringDefinition(this.options, attribute + definition.config.typeSuffix, {
             nullable: definition.isNullable(),
+            optional: definition.isOptional(),
           }),
         );
       }

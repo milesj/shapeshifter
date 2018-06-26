@@ -54,7 +54,12 @@ app
       nullable: {
         boolean: true,
         default: false,
-        description: 'Mark attributes as nullable by default (recommended).',
+        description: 'Mark attributes as nullable by default.',
+      },
+      optional: {
+        boolean: true,
+        default: false,
+        description: 'Mark attributes as optional by default (recommended).',
       },
       'prop-types': {
         boolean: true,
@@ -96,6 +101,7 @@ app
 
       new Transpiler({
         defaultNullable: options.nullable,
+        defaultOptional: options.optional,
         disableEslint: options.disableEslint,
         importPath: options.import,
         includeAttributes: options.attributes,

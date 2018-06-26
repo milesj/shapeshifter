@@ -18,6 +18,7 @@ export default class UnionDefinition extends Definition<UnionConfig> {
       this.config,
       {
         nullable: bool(),
+        optional: bool(),
         type: string('union'),
         valueTypes: array(this.createUnionType())
           .notEmpty()

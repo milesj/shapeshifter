@@ -14,6 +14,7 @@ export default class ReferenceDefinition extends Definition<ReferenceConfig> {
       {
         export: bool(true),
         nullable: bool(),
+        optional: bool(),
         reference: string()
           .empty()
           .xor('self'),

@@ -16,6 +16,7 @@ export default class EnumDefinition extends Definition<EnumConfig> {
       this.config,
       {
         nullable: bool(),
+        optional: bool(),
         type: string('enum'),
         valueType: this.createUnionType(),
         // `valueType` must be validated before values

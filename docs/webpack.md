@@ -37,6 +37,7 @@ The plugin accepts an object with the following options -- with most of them bei
 - `schematicsImportPath` (string) - The fake import path to intercept. Defaults to
   `shapeshifter/schematics`.
 - `defaultNullable`
+- `defaultOptional`
 - `disableEslint`
 - `importPath`
 - `includeAttributes`

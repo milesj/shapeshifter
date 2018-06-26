@@ -14,6 +14,7 @@ export default class InstanceDefinition extends Definition<InstanceConfig> {
       {
         contract: string().required(),
         nullable: bool(),
+        optional: bool(),
         type: string('instance'),
       },
       {

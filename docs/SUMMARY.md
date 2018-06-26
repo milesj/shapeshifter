@@ -3,6 +3,7 @@
 - [Schematic Structure](./schematic.md)
   - [Attributes](./schematic.md#attributes)
     - [Nullable](./schematic.md#nullable)
+    - [Optional](./schematic.md#optional)
   - [Metadata](./schematic.md#metadata)
   - [Imports](./schematic.md#imports)
   - [Constants](./schematic.md#constants)
