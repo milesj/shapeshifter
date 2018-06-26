@@ -36,6 +36,7 @@ export default class UnionDefinition extends Definition<UnionConfig> {
       return DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, {
         ...config,
         nullable: false,
+        optional: true,
       });
     });
   }

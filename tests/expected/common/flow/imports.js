@@ -6,5 +6,5 @@ import DefaultName from '../stub';
 import AnotherDefault, { Baz, Qux } from '../stub';
 
 export type ImportsType = {
-  stringField: ?string,
+  stringField?: string,
 };

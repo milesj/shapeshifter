@@ -58,13 +58,13 @@ export enum EnumStringFieldEnum {
 }
 
 export interface EnumInterface {
-  boolField: EnumBoolFieldEnum | null;
-  booleanField: EnumBooleanFieldEnum | null;
-  intField: EnumIntFieldEnum | null;
-  integerField: EnumIntegerFieldEnum | null;
-  numField: EnumNumFieldEnum | null;
-  numberField: EnumNumberFieldEnum | null;
-  floatField: EnumFloatFieldEnum | null;
-  strField: EnumStrFieldEnum | null;
-  stringField: EnumStringFieldEnum | null;
+  boolField?: EnumBoolFieldEnum;
+  booleanField?: EnumBooleanFieldEnum;
+  intField?: EnumIntFieldEnum;
+  integerField?: EnumIntegerFieldEnum;
+  numField?: EnumNumFieldEnum;
+  numberField?: EnumNumberFieldEnum;
+  floatField?: EnumFloatFieldEnum;
+  strField?: EnumStrFieldEnum;
+  stringField?: EnumStringFieldEnum;
 }

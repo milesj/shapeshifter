@@ -5,22 +5,22 @@
 export type Key = string | number;
 
 export type CoreFooType = {
-  id: ?Key,
-  name: ?string,
-  foo: ?string,
+  id?: ?Key,
+  name?: ?string,
+  foo?: ?string,
 };
 
 export type CoreBarType = {
-  id: ?Key,
-  name: ?string,
-  bar: ?number,
+  id?: ?Key,
+  name?: ?string,
+  bar?: ?number,
 };
 
 export type CoreType = {
-  id: ?Key,
-  name: ?string,
-  foo: ?CoreFooType,
-  fooWithArg: CoreFooType,
-  bar: ?CoreBarType,
-  barWithArg: CoreBarType,
+  id?: ?Key,
+  name?: ?string,
+  foo?: ?CoreFooType,
+  fooWithArg?: CoreFooType,
+  bar?: ?CoreBarType,
+  barWithArg?: CoreBarType,
 };

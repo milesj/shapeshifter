@@ -4,22 +4,22 @@
 export type Key = string | number;
 
 export interface CoreFooInterface {
-  id: Key | null;
-  name: string | null;
-  foo: string | null;
+  id?: Key | null;
+  name?: string | null;
+  foo?: string | null;
 }
 
 export interface CoreBarInterface {
-  id: Key | null;
-  name: string | null;
-  bar: number | null;
+  id?: Key | null;
+  name?: string | null;
+  bar?: number | null;
 }
 
 export interface CoreInterface {
-  id: Key | null;
-  name: string | null;
-  foo: CoreFooInterface | null;
-  fooWithArg: CoreFooInterface;
-  bar: CoreBarInterface | null;
-  barWithArg: CoreBarInterface;
+  id?: Key | null;
+  name?: string | null;
+  foo?: CoreFooInterface | null;
+  fooWithArg?: CoreFooInterface;
+  bar?: CoreBarInterface | null;
+  barWithArg?: CoreBarInterface;
 }

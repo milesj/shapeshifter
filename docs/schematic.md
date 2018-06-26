@@ -111,8 +111,6 @@ triggers the following:
 }
 ```
 
-> All fields are optional by default in GraphQL.
-
 ## Metadata
 
 The `meta` object allows arbitrary metadata to be defined. Only two fields are supported currently,

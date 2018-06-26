@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 export interface ReferenceSelfInterface {
-  stringField: string | null;
-  referenceField: ReferenceSelfInterface | null;
-  requiredRefField: ReferenceSelfInterface;
+  stringField?: string | null;
+  referenceField?: ReferenceSelfInterface | null;
+  requiredRefField?: ReferenceSelfInterface;
 }

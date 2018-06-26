@@ -2,27 +2,27 @@
 /* eslint-disable */
 
 export interface ReferenceBarInterface {
-  boolField: boolean | null;
+  boolField?: boolean;
 }
 
 export interface ReferenceSetOnlyStringInterface {
-  stringField: string;
+  stringField?: string;
 }
 
 export interface ReferenceSetInterface {
-  boolField: boolean | null;
-  stringField: string | null;
-  numberField: number | null;
+  boolField?: boolean;
+  stringField?: string;
+  numberField?: number;
 }
 
 export interface ReferenceFooInterface {
-  numberField: number | null;
-  refField: ReferenceBarInterface;
+  numberField?: number;
+  refField?: ReferenceBarInterface;
 }
 
 export interface ReferenceInterface {
-  stringField: string | null;
-  refField: ReferenceFooInterface;
-  referenceField: ReferenceFooInterface | null;
-  subsetRefField: ReferenceSetOnlyStringInterface | null;
+  stringField?: string;
+  refField?: ReferenceFooInterface;
+  referenceField?: ReferenceFooInterface;
+  subsetRefField?: ReferenceSetOnlyStringInterface;
 }

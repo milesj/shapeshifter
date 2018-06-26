@@ -2,13 +2,13 @@
 /* eslint-disable */
 
 export interface ShapeReferencePriceInterface {
-  amount: number | null;
-  nativeAmount: number | null;
-  exchangeRate: number | null;
+  amount?: number;
+  nativeAmount?: number;
+  exchangeRate?: number;
 }
 
 export interface ShapeReferenceInterface {
-  fees: ShapeReferencePriceInterface | null;
-  taxes: ShapeReferencePriceInterface;
-  total: ShapeReferencePriceInterface;
+  fees?: ShapeReferencePriceInterface;
+  taxes?: ShapeReferencePriceInterface;
+  total?: ShapeReferencePriceInterface;
 }

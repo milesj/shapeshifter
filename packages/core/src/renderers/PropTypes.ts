@@ -72,9 +72,7 @@ export default class PropTypesRenderer extends Renderer {
   }
 
   renderKey(definition: KeyDefinition): string {
-    // Remove trailing isRequired
-    // eslint-disable-next-line no-magic-numbers
-    const union = this.renderUnion(definition.keyType, 0).slice(0, -11);
+    const union = this.renderUnion(definition.keyType, 0);
 
     this.builder.header.add(`export const KeyShape = ${union};`);
 

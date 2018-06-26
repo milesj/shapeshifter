@@ -3,20 +3,20 @@
 /* @flow */
 
 export type UnionFooStructType = {
-  foo: ?string,
+  foo?: ?string,
 };
 
 export type UnionBarStructType = {
-  bar: ?boolean,
+  bar?: ?boolean,
 };
 
 export type UnionBazStructType = {
-  baz: boolean | number | null,
+  baz?: boolean | number | null,
 };
 
 export type UnionType = {
-  primitiveField: boolean | number | null,
-  enumField: 'FOO' | 'BAR' | 'BAZ' | 'QUX' | null,
-  shapeField: UnionFooStructType | UnionBarStructType | UnionBazStructType | null,
-  unionField: boolean | number | 'FOO' | 'BAR' | 'BAZ' | 'QUX' | UnionFooStructType | UnionBarStructType | UnionBazStructType | null,
+  primitiveField?: boolean | number | null,
+  enumField?: 'FOO' | 'BAR' | 'BAZ' | 'QUX' | null,
+  shapeField?: UnionFooStructType | UnionBarStructType | UnionBazStructType | null,
+  unionField?: boolean | number | 'FOO' | 'BAR' | 'BAZ' | 'QUX' | UnionFooStructType | UnionBarStructType | UnionBazStructType | null,
 };

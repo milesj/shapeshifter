@@ -8,6 +8,6 @@ export const INST_STR = 'foobar';
 export const INST_ENABLED = true;
 
 export type InstanceType = {
-  instField: ?InstanceClassName,
-  instanceField: InstanceDefault,
+  instField?: InstanceClassName,
+  instanceField?: InstanceDefault,
 };

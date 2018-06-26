@@ -18,16 +18,16 @@ export enum ArrayUnionField1Enum {
 }
 
 export interface ArrayInterface {
-  arrayField: Array<Array<string | null> | null> | null;
-  boolField: Array<boolean | null> | null;
-  enumField: Array<ArrayEnumFieldEnum | null> | null;
-  instanceField: Array<ArrayDefault | null> | null;
-  numberField: Array<number | null>;
-  objectField: Array<{ [key: string]: number | null } | null> | null;
-  shapeField: Array<{
-    foo: string | null;
-    bar: boolean | null;
-  } | null> | null;
-  stringField: Array<string | null> | null;
-  unionField: Array<string | ArrayUnionField1Enum | null> | null;
+  arrayField?: Array<Array<string>>;
+  boolField?: Array<boolean>;
+  enumField?: Array<ArrayEnumFieldEnum>;
+  instanceField?: Array<ArrayDefault>;
+  numberField?: Array<number>;
+  objectField?: Array<{ [key: string]: number }>;
+  shapeField?: Array<{
+    foo?: string;
+    bar?: boolean;
+  }>;
+  stringField?: Array<string>;
+  unionField?: Array<string | ArrayUnionField1Enum>;
 }

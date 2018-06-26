@@ -2,18 +2,18 @@
 /* eslint-disable */
 
 export interface SetsBasicInterface {
-  foo: string | null;
-  baz: boolean;
+  foo?: string;
+  baz?: boolean;
 }
 
 export interface SetsWithNullInterface {
-  foo: string;
-  qux: string | null;
+  foo?: string;
+  qux?: string | null;
 }
 
 export interface SetsInterface {
-  foo: string | null;
-  bar: number | null;
-  baz: boolean;
-  qux: string;
+  foo?: string;
+  bar?: number;
+  baz?: boolean;
+  qux?: string;
 }

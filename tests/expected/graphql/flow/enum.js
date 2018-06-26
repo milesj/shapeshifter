@@ -3,5 +3,5 @@
 /* @flow */
 
 export type EnumType = {
-  field: 'FOO' | 'BAR' | 'BAZ' | 'QUX',
+  field?: 'FOO' | 'BAR' | 'BAZ' | 'QUX',
 };

@@ -77,7 +77,6 @@ class GraphQLParser {
     schematic: boolean = false,
   ): TypeDefinition {
     const kind = String(type.kind);
-    const optional = true;
 
     // Non-nullable
     if (kind === Kind.NON_NULL_TYPE) {
@@ -91,7 +90,6 @@ class GraphQLParser {
 
       return {
         nullable,
-        optional,
         type: 'array',
         valueType: this.buildAttribute(field, refinedType.type, true, schematic),
       };
@@ -114,7 +112,6 @@ class GraphQLParser {
 
           return {
             nullable,
-            optional,
             type: 'key',
           };
 
@@ -125,7 +122,6 @@ class GraphQLParser {
         case 'Boolean':
           return {
             nullable,
-            optional,
             type: value.toLowerCase(),
           };
 
@@ -134,7 +130,6 @@ class GraphQLParser {
           if (this.enums[value]) {
             return {
               nullable,
-              optional,
               type: 'enum',
               values: this.enums[value],
               valueType: typeof this.enums[value][0],
@@ -145,7 +140,6 @@ class GraphQLParser {
           if (this.shapes[value]) {
             return {
               nullable,
-              optional,
               reference: value,
               type: 'shape',
             };
@@ -155,7 +149,6 @@ class GraphQLParser {
           if (this.unions[value]) {
             return {
               nullable,
-              optional,
               type: 'union',
               valueTypes: this.unions[value],
             };
@@ -165,7 +158,6 @@ class GraphQLParser {
           if (value === this.name) {
             return {
               nullable,
-              optional,
               self: true,
               type: 'reference',
             };
@@ -176,7 +168,6 @@ class GraphQLParser {
 
           return {
             nullable,
-            optional,
             reference: value,
             type: 'reference',
           };

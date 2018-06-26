@@ -10,18 +10,18 @@ export enum ObjectEnumFieldValueEnum {
 }
 
 export interface ObjectInterface {
-  arrayField: { [key: string]: Array<string | null> | null } | null;
-  boolField: { [key: string]: boolean | null };
-  enumField: { [key: string]: ObjectEnumFieldValueEnum | null };
-  instanceField: { [key: string]: ObjectDefault | null } | null;
-  numberField: { [key: string]: number | null } | null;
-  objectField: { [key: string]: { [key: string]: number | null } | null } | null;
-  shapeField: { [key: string]: {
-    foo: string | null;
-    bar: boolean | null;
-  } | null } | null;
-  stringField: { [key: string]: string | null } | null;
-  unionField: { [key: string]: number | Array<string | null> | null } | null;
-  objShorthandField: { [key: string]: string | null } | null;
-  objKeyTypeField: { [key: number]: string | null } | null;
+  arrayField?: { [key: string]: Array<string> };
+  boolField?: { [key: string]: boolean };
+  enumField?: { [key: string]: ObjectEnumFieldValueEnum };
+  instanceField?: { [key: string]: ObjectDefault };
+  numberField?: { [key: string]: number };
+  objectField?: { [key: string]: { [key: string]: number } };
+  shapeField?: { [key: string]: {
+    foo?: string;
+    bar?: boolean;
+  } };
+  stringField?: { [key: string]: string };
+  unionField?: { [key: string]: number | Array<string> };
+  objShorthandField?: { [key: string]: string };
+  objKeyTypeField?: { [key: number]: string };
 }

@@ -22,20 +22,20 @@ export enum UnionUnionField11Enum {
 }
 
 export interface UnionFooStructInterface {
-  foo: string | null;
+  foo?: string | null;
 }
 
 export interface UnionBarStructInterface {
-  bar: boolean | null;
+  bar?: boolean | null;
 }
 
 export interface UnionBazStructInterface {
-  baz: boolean | number | null;
+  baz?: boolean | number | null;
 }
 
 export interface UnionInterface {
-  primitiveField: boolean | number | null;
-  enumField: UnionEnumField0Enum | UnionEnumField1Enum | null;
-  shapeField: UnionFooStructInterface | UnionBarStructInterface | UnionBazStructInterface | null;
-  unionField: boolean | number | UnionUnionField10Enum | UnionUnionField11Enum | UnionFooStructInterface | UnionBarStructInterface | UnionBazStructInterface | null;
+  primitiveField?: boolean | number | null;
+  enumField?: UnionEnumField0Enum | UnionEnumField1Enum | null;
+  shapeField?: UnionFooStructInterface | UnionBarStructInterface | UnionBazStructInterface | null;
+  unionField?: boolean | number | UnionUnionField10Enum | UnionUnionField11Enum | UnionFooStructInterface | UnionBarStructInterface | UnionBazStructInterface | null;
 }

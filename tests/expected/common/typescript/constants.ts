@@ -9,5 +9,5 @@ export const EMPTY_VALUE = null;
 export const PRIMITIVE_LIST = ['foo', 123, 456.78, false];
 
 export interface ConstantsInterface {
-  numberField: number | null;
+  numberField?: number;
 }

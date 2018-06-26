@@ -5,18 +5,18 @@
 export type Key = string | number;
 
 export type PolymorphVideoType = {
-  path: ?string,
+  path?: string,
 };
 
 export type PolymorphImageType = {
-  url: ?string,
+  url?: string,
 };
 
 export type PolymorphType = {
-  item: PolymorphImageType | PolymorphVideoType | null,
-  item_id: ?Key,
-  item_type: ?string,
-  product: PolymorphImageType | PolymorphVideoType | null,
-  product_key: ?Key,
-  product_model: ?string,
+  item?: PolymorphImageType | PolymorphVideoType,
+  item_id?: Key,
+  item_type?: string,
+  product?: PolymorphImageType | PolymorphVideoType,
+  product_key?: Key,
+  product_model?: string,
 };

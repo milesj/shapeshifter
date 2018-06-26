@@ -45,124 +45,124 @@ export enum UnionUnionField11Enum {
 }
 
 export interface ReferenceBarInterface {
-  boolField: boolean | null;
+  boolField?: boolean | null;
 }
 
 export interface ReferenceFooInterface {
-  numberField: number | null;
-  refField: ReferenceBarInterface;
+  numberField?: number | null;
+  refField?: ReferenceBarInterface;
 }
 
 export interface ArrayShapeObjectInterface {
-  foo: string | null;
-  bar: boolean | null;
+  foo?: string | null;
+  bar?: boolean | null;
 }
 
 export interface ArrayInterface {
-  arrayField: Array<Array<string | null> | null> | null;
-  boolField: Array<boolean | null> | null;
-  enumField: Array<ArrayEnumFieldEnum | null> | null;
-  numberField: Array<number | null>;
-  shapeField: Array<ArrayShapeObjectInterface | null> | null;
-  stringField: Array<string | null> | null;
-  unionField: Array<string | number> | null;
+  arrayField?: Array<Array<string | null> | null> | null;
+  boolField?: Array<boolean | null> | null;
+  enumField?: Array<ArrayEnumFieldEnum | null> | null;
+  numberField?: Array<number | null>;
+  shapeField?: Array<ArrayShapeObjectInterface | null> | null;
+  stringField?: Array<string | null> | null;
+  unionField?: Array<string | number> | null;
 }
 
 export interface CoreFooInterface {
-  id: Key | null;
-  name: string | null;
-  foo: string | null;
+  id?: Key | null;
+  name?: string | null;
+  foo?: string | null;
 }
 
 export interface CoreBarInterface {
-  id: Key | null;
-  name: string | null;
-  bar: number | null;
+  id?: Key | null;
+  name?: string | null;
+  bar?: number | null;
 }
 
 export interface CoreInterface {
-  id: Key | null;
-  name: string | null;
-  foo: CoreFooInterface | null;
-  fooWithArg: CoreFooInterface;
-  bar: CoreBarInterface | null;
-  barWithArg: CoreBarInterface;
+  id?: Key | null;
+  name?: string | null;
+  foo?: CoreFooInterface | null;
+  fooWithArg?: CoreFooInterface;
+  bar?: CoreBarInterface | null;
+  barWithArg?: CoreBarInterface;
 }
 
 export interface EnumInterface {
-  field: EnumFieldEnum | null;
+  field?: EnumFieldEnum | null;
 }
 
 export interface PrimitiveInterface {
-  boolField: boolean | null;
-  boolFieldExpanded: boolean;
-  numberField: number | null;
-  numberFieldExpanded: number;
-  floatField: number | null;
-  floatFieldExpanded: number;
-  stringField: string | null;
-  stringFieldExpanded: string;
+  boolField?: boolean | null;
+  boolFieldExpanded?: boolean;
+  numberField?: number | null;
+  numberFieldExpanded?: number;
+  floatField?: number | null;
+  floatFieldExpanded?: number;
+  stringField?: string | null;
+  stringFieldExpanded?: string;
 }
 
 export interface ReferenceSelfInterface {
-  stringField: string | null;
-  referenceField: ReferenceSelfInterface | null;
-  requiredRefField: ReferenceSelfInterface;
+  stringField?: string | null;
+  referenceField?: ReferenceSelfInterface | null;
+  requiredRefField?: ReferenceSelfInterface;
 }
 
 export interface ReferenceInterface {
-  stringField: string | null;
-  refField: ReferenceFooInterface;
-  referenceField: ReferenceFooInterface | null;
+  stringField?: string | null;
+  refField?: ReferenceFooInterface;
+  referenceField?: ReferenceFooInterface | null;
 }
 
 export interface ShapeBasicStructInterface {
-  foo: string | null;
+  foo?: string | null;
 }
 
 export interface ShapePrimitiveStructInterface {
-  string: string | null;
-  bool: boolean;
-  number: number;
+  string?: string | null;
+  bool?: boolean;
+  number?: number;
 }
 
 export interface ShapeArrayStructInterface {
-  numberArray: Array<number | null> | null;
-  stringArray: Array<string | null> | null;
-  shapeArray: Array<ShapeBasicStructInterface | null> | null;
+  numberArray?: Array<number | null> | null;
+  stringArray?: Array<string | null> | null;
+  shapeArray?: Array<ShapeBasicStructInterface | null> | null;
 }
 
 export interface ShapeEnumStructInterface {
-  stringEnum: ShapeStringEnumEnum | null;
+  stringEnum?: ShapeStringEnumEnum | null;
 }
 
 export interface ShapeUnionStructInterface {
-  multiUnion: number | boolean | ShapeEnumStructInterface | null;
+  multiUnion?: number | boolean | ShapeEnumStructInterface | null;
 }
 
 export interface ShapeInterface {
-  structAlias: ShapeBasicStructInterface | null;
-  primitiveFields: ShapePrimitiveStructInterface | null;
-  arrayFields: ShapeArrayStructInterface | null;
-  enumFields: ShapeEnumStructInterface | null;
-  unionFields: ShapeUnionStructInterface | null;
+  structAlias?: ShapeBasicStructInterface | null;
+  primitiveFields?: ShapePrimitiveStructInterface | null;
+  arrayFields?: ShapeArrayStructInterface | null;
+  enumFields?: ShapeEnumStructInterface | null;
+  unionFields?: ShapeUnionStructInterface | null;
 }
 
 export interface UnionFooStructInterface {
-  foo: string | null;
+  foo?: string | null;
 }
 
 export interface UnionBarStructInterface {
-  bar: boolean | null;
+  bar?: boolean | null;
 }
 
 export interface UnionBazStructInterface {
-  baz: boolean | number | null;
+  baz?: boolean | number | null;
 }
 
 export interface UnionInterface {
-  primitiveField: boolean | number | null;
-  enumField: UnionEnumField0Enum | UnionEnumField1Enum | null;
-  shapeField: UnionFooStructInterface | UnionBarStructInterface | UnionBazStructInterface | null;
-  unionField: boolean | number | UnionUnionField10Enum | UnionUnionField11Enum | UnionFooStructInterface | UnionBarStructInterface | UnionBazStructInterface | null;
+  primitiveField?: boolean | number | null;
+  enumField?: UnionEnumField0Enum | UnionEnumField1Enum | null;
+  shapeField?: UnionFooStructInterface | UnionBarStructInterface | UnionBazStructInterface | null;
+  unionField?: boolean | number | UnionUnionField10Enum | UnionUnionField11Enum | UnionFooStructInterface | UnionBarStructInterface | UnionBazStructInterface | null;
 }

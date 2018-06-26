@@ -31,6 +31,7 @@ export default class ObjectDefinition extends Definition<ObjectConfig> {
 
     this.keyType = DefinitionFactory.factory(this.options, `${this.attribute}_key`, {
       nullable: false,
+      optional: false,
       type: this.config.keyType,
     } as StringConfig);
 

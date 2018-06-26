@@ -16,6 +16,7 @@ export default class KeyDefinition extends Definition<KeyConfig> {
 
     this.keyType = new UnionDefinition(this.options, `${this.attribute}_key`, {
       nullable: false,
+      optional: true, // Prop types
       valueTypes: ['string', 'number'],
     });
   }

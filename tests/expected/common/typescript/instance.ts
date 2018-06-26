@@ -7,6 +7,6 @@ export const INST_STR = 'foobar';
 export const INST_ENABLED = true;
 
 export interface InstanceInterface {
-  instField: InstanceClassName | null;
-  instanceField: InstanceDefault;
+  instField?: InstanceClassName;
+  instanceField?: InstanceDefault;
 }

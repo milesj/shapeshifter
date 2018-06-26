@@ -48,6 +48,7 @@ describe('PropTypesRenderer', () => {
         renderer.renderArray(
           new ArrayDefinition(options, 'foo', {
             nullable: false,
+            optional: false,
             valueType: 'string',
           }),
         ),
@@ -97,6 +98,7 @@ describe('PropTypesRenderer', () => {
         renderer.renderBool(
           new BoolDefinition(options, 'foo', {
             nullable: false,
+            optional: false,
           }),
         ),
       ).toBe('PropTypes.bool.isRequired');
@@ -113,6 +115,7 @@ describe('PropTypesRenderer', () => {
         renderer.renderEnum(
           new EnumDefinition(options, 'foo', {
             nullable: false,
+            optional: false,
             valueType: 'number',
             values: [1, 23, 164],
           }),
@@ -146,6 +149,7 @@ describe('PropTypesRenderer', () => {
         renderer.renderInstance(
           new InstanceDefinition(options, 'foo', {
             nullable: false,
+            optional: false,
             contract: 'FooBar',
           }),
         ),
@@ -164,30 +168,33 @@ describe('PropTypesRenderer', () => {
   });
 
   describe('renderKey()', () => {
-    it('renders nullable', () => {
-      expect(renderer.renderKey(new KeyDefinition(options, 'foo', {}))).toBe('KeyShape');
+    it('renders nullable/optional', () => {
+      expect(
+        renderer.renderKey(new KeyDefinition(options, 'foo', { nullable: true, optional: true })),
+      ).toBe('KeyShape');
 
       expect(Array.from(renderer.builder.header)).toEqual([
         `export const KeyShape = PropTypes.oneOfType([
-  PropTypes.string.isRequired,
-  PropTypes.number.isRequired,
+  PropTypes.string,
+  PropTypes.number,
 ]);`,
       ]);
     });
 
-    it('renders non-nullable', () => {
+    it('renders non-nullable/optional', () => {
       expect(
         renderer.renderKey(
           new KeyDefinition(options, 'foo', {
             nullable: false,
+            optional: false,
           }),
         ),
       ).toBe('KeyShape.isRequired');
 
       expect(Array.from(renderer.builder.header)).toEqual([
         `export const KeyShape = PropTypes.oneOfType([
-  PropTypes.string.isRequired,
-  PropTypes.number.isRequired,
+  PropTypes.string,
+  PropTypes.number,
 ]);`,
       ]);
     });
@@ -199,6 +206,7 @@ describe('PropTypesRenderer', () => {
         renderer.renderNumber(
           new NumberDefinition(options, 'foo', {
             nullable: false,
+            optional: false,
           }),
         ),
       ).toBe('PropTypes.number.isRequired');
@@ -215,6 +223,7 @@ describe('PropTypesRenderer', () => {
         renderer.renderObject(
           new ObjectDefinition(options, 'foo', {
             nullable: false,
+            optional: false,
             valueType: 'number',
           }),
         ),
@@ -238,6 +247,7 @@ describe('PropTypesRenderer', () => {
         renderer.renderReference(
           new ReferenceDefinition(options, 'foo', {
             nullable: false,
+            optional: false,
             self: true,
           }),
         ),
@@ -273,6 +283,7 @@ describe('PropTypesRenderer', () => {
         renderer.renderString(
           new StringDefinition(options, 'foo', {
             nullable: false,
+            optional: false,
           }),
         ),
       ).toBe('PropTypes.string.isRequired');
@@ -298,13 +309,14 @@ describe('PropTypesRenderer', () => {
         renderer.renderUnion(
           new UnionDefinition(options, 'foo', {
             nullable: false,
+            optional: false,
             valueTypes,
           }),
         ),
       ).toBe(`PropTypes.oneOfType([
-PropTypes.string.isRequired,
-PropTypes.bool.isRequired,
-PropTypes.arrayOf(PropTypes.number).isRequired,
+PropTypes.string,
+PropTypes.bool,
+PropTypes.arrayOf(PropTypes.number),
 ]).isRequired`);
     });
 
@@ -316,9 +328,9 @@ PropTypes.arrayOf(PropTypes.number).isRequired,
           }),
         ),
       ).toBe(`PropTypes.oneOfType([
-PropTypes.string.isRequired,
-PropTypes.bool.isRequired,
-PropTypes.arrayOf(PropTypes.number).isRequired,
+PropTypes.string,
+PropTypes.bool,
+PropTypes.arrayOf(PropTypes.number),
 ])`);
     });
 
@@ -340,12 +352,12 @@ PropTypes.arrayOf(PropTypes.number).isRequired,
           }),
         ),
       ).toBe(`PropTypes.oneOfType([
-PropTypes.string.isRequired,
-PropTypes.bool.isRequired,
-PropTypes.arrayOf(PropTypes.number).isRequired,
+PropTypes.string,
+PropTypes.bool,
+PropTypes.arrayOf(PropTypes.number),
 PropTypes.oneOfType([
-PropTypes.instanceOf(FooBar).isRequired,
-]).isRequired,
+PropTypes.instanceOf(FooBar),
+]),
 ])`);
     });
   });
@@ -356,13 +368,17 @@ PropTypes.instanceOf(FooBar).isRequired,
     });
   });
 
-  describe('wrapNullable()', () => {
+  describe('wrapOptional()', () => {
     it('renders required', () => {
-      expect(renderer.wrapNullable({ isNullable: () => false }, 'foo')).toBe('foo.isRequired');
+      expect(
+        renderer.wrapOptional({ isNullable: () => false, isOptional: () => false }, 'foo'),
+      ).toBe('foo.isRequired');
     });
 
     it('renders non-required', () => {
-      expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('foo');
+      expect(
+        renderer.wrapOptional({ isNullable: () => false, isOptional: () => true }, 'foo'),
+      ).toBe('foo');
     });
   });
 });

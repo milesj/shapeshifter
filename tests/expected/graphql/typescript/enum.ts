@@ -9,5 +9,5 @@ export enum EnumFieldEnum {
 }
 
 export interface EnumInterface {
-  field: EnumFieldEnum | null;
+  field?: EnumFieldEnum | null;
 }

@@ -2,12 +2,12 @@
 /* eslint-disable */
 
 export interface ReferenceSelfBasicInterface {
-  stringField: string | null;
+  stringField?: string;
 }
 
 export interface ReferenceSelfInterface {
-  stringField: string | null;
-  referenceField: ReferenceSelfInterface | null;
-  requiredRefField: ReferenceSelfInterface;
-  subsetRefField: Array<ReferenceSelfBasicInterface | null> | null;
+  stringField?: string;
+  referenceField?: ReferenceSelfInterface;
+  requiredRefField?: ReferenceSelfInterface;
+  subsetRefField?: Array<ReferenceSelfBasicInterface>;
 }
