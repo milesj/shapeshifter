@@ -1,6 +1,6 @@
-# 1.0.0
+# 1.0.0 - 06/26/18
 
 #### 🎉 Release
 
 - Initial release!
-- Requires Webpack 4.0.
+- Removed Webpack 3.0 support.

@@ -1,4 +1,4 @@
-# 7.0.0
+# 7.0.0 - 06/26/18
 
 #### 💥 Breaking
 
@@ -10,7 +10,7 @@
     package.
   - YAML parser has moved to the
     [shapeshifter-parser-yaml](https://www.npmjs.com/package/shapeshifter-parser-yaml) package.
-- PropTypes `isRequired` is now controlled by the optional system (below) instead of nullable.
+- PropTypes `isRequired` is now controlled by the optional system (below), as well as nullable.
 
 #### 🚀 New
 
