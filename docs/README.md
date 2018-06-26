@@ -105,6 +105,14 @@ yarn add shapeshifter
 npm install shapeshifter --save
 ```
 
+### Parsers
+
+By default, Shapeshifter will parse `.json` or `.js` files. It can parse the following file types by
+installing additional dependencies.
+
+- [GraphQL](https://github.com/milesj/shapeshifter/tree/master/packages/parser-graphql)
+- [YAML](https://github.com/milesj/shapeshifter/tree/master/packages/parser-yaml)
+
 ## Usage
 
 Shapeshifter is provided as a binary which can be executed and piped like so.

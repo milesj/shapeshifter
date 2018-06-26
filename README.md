@@ -3,9 +3,9 @@
 [![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
 
 Shapeshifter is a command line tool for generating ECMAScript (ES) compatible files that export
-PropTypes, Flow aliases, and TypeScript interfaces, as well as relation schema classes from JS, JSON
-or GraphQL schematic files. Schematics can represent database tables, API endpoints, data
-structures, resources, internal shapes, and more.
+PropTypes, Flow aliases, and TypeScript interfaces, as well as relation schema classes from JS,
+JSON, GraphQL, or YAML schematic files. Schematics can represent database tables, API endpoints,
+data structures, resources, internal shapes, and more.
 
 ## Requirements
 

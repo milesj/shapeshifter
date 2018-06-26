@@ -26,7 +26,6 @@
   - [Attributes](./schema.md#attributes)
   - [Relations](./schema.md#relations)
   - [Polymorphic](./schema.md#polymorphic)
-- [Auto-Transpilation](./bundle.md)
-  - [Webpack](./bundle.md#webpack)
+- [Webpack Auto-Transpilation](./webpack.md)
 - [GraphQL Support](./graphql.md)
 - [Changelog](https://github.com/milesj/shapeshifter/blob/master/CHANGELOG.md)
