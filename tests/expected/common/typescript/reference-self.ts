@@ -8,6 +8,6 @@ export interface ReferenceSelfBasicInterface {
 export interface ReferenceSelfInterface {
   stringField?: string;
   referenceField?: ReferenceSelfInterface;
-  requiredRefField?: ReferenceSelfInterface;
+  requiredRefField?: ReferenceSelfInterface | null;
   subsetRefField?: Array<ReferenceSelfBasicInterface>;
 }

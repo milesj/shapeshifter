@@ -1,8 +1,6 @@
 {
   "name": "Union",
-  "imports": [
-    { "default": "UnionDefault", "named": ["UnionClassName"], "path": "../stub" }
-  ],
+  "imports": [{ "default": "UnionDefault", "named": ["UnionClassName"], "path": "../stub" }],
   "attributes": {
     "arrayField": {
       "type": "union",
@@ -22,10 +20,7 @@
     },
     "primitiveFields": {
       "type": "union",
-      "valueTypes": [
-        "bool",
-        "integer"
-      ]
+      "valueTypes": ["bool", "integer"]
     },
     "enumField": {
       "type": "union",
@@ -52,7 +47,7 @@
         {
           "type": "inst",
           "contract": "UnionDefault",
-          "nullable": false
+          "nullable": true
         }
       ]
     },
@@ -111,10 +106,7 @@
         },
         {
           "type": "union",
-          "valueTypes": [
-            "bool",
-            "int"
-          ]
+          "valueTypes": ["bool", "int"]
         }
       ]
     }

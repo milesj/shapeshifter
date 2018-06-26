@@ -42,7 +42,7 @@ attributes:
       contract: UnionClassName
     - type: inst
       contract: UnionDefault
-      nullable: false
+      nullable: true
   objectField:
     type: union
     valueTypes:

@@ -27,8 +27,8 @@ export interface ShapeInterface {
   };
   primitiveFields?: {
     string?: string;
-    bool?: boolean;
-    number?: number;
+    bool?: boolean | null;
+    number?: number | null;
   };
   arrayFields?: {
     numberArray?: Array<number>;

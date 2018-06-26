@@ -1,8 +1,6 @@
 {
   "name": "Shape",
-  "imports": [
-    { "default": "ShapeDefault", "named": ["ShapeClassName"], "path": "../stub" }
-  ],
+  "imports": [{ "default": "ShapeDefault", "named": ["ShapeClassName"], "path": "../stub" }],
   "attributes": {
     "structAlias": {
       "type": "struct",
@@ -16,11 +14,11 @@
         "string": "string",
         "bool": {
           "type": "bool",
-          "nullable": false
+          "nullable": true
         },
         "number": {
           "type": "number",
-          "nullable": false
+          "nullable": true
         }
       }
     },

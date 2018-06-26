@@ -3,7 +3,7 @@
 
 export interface SetsBasicInterface {
   foo?: string;
-  baz?: boolean;
+  baz?: boolean | null;
 }
 
 export interface SetsWithNullInterface {
@@ -14,6 +14,6 @@ export interface SetsWithNullInterface {
 export interface SetsInterface {
   foo?: string;
   bar?: number;
-  baz?: boolean;
-  qux?: string;
+  baz?: boolean | null;
+  qux?: string | null;
 }

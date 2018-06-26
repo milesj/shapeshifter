@@ -6,8 +6,8 @@ import ObjectDefault from '../stub';
 
 export type ObjectType = {
   arrayField?: { [key: string]: Array<string> },
-  boolField?: { [key: string]: boolean },
-  enumField?: { [key: string]: 'foo' | 'bar' | 'baz' },
+  boolField?: ?{ [key: string]: boolean },
+  enumField?: ?{ [key: string]: 'foo' | 'bar' | 'baz' },
   instanceField?: { [key: string]: ObjectDefault },
   numberField?: { [key: string]: number },
   objectField?: { [key: string]: { [key: string]: number } },

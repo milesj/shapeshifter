@@ -9,6 +9,6 @@ export interface ShapeReferencePriceInterface {
 
 export interface ShapeReferenceInterface {
   fees?: ShapeReferencePriceInterface;
-  taxes?: ShapeReferencePriceInterface;
-  total?: ShapeReferencePriceInterface;
+  taxes?: ShapeReferencePriceInterface | null;
+  total?: ShapeReferencePriceInterface | null;
 }

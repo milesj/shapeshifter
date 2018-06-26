@@ -1,8 +1,6 @@
 {
   "name": "Object",
-  "imports": [
-    { "default": "ObjectDefault", "path": "../stub" }
-  ],
+  "imports": [{ "default": "ObjectDefault", "path": "../stub" }],
   "attributes": {
     "arrayField": {
       "type": "object",
@@ -14,7 +12,7 @@
     "boolField": {
       "type": "object",
       "valueType": "bool",
-      "nullable": false
+      "nullable": true
     },
     "enumField": {
       "type": "object",
@@ -23,7 +21,7 @@
         "valueType": "string",
         "values": ["foo", "bar", "baz"]
       },
-      "nullable": false
+      "nullable": true
     },
     "instanceField": {
       "type": "object",

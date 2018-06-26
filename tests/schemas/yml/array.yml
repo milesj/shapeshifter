@@ -31,7 +31,7 @@ attributes:
   numberField:
     type: array
     valueType: number
-    nullable: false
+    nullable: true
   objectField:
     type: array
     valueType:
@@ -53,7 +53,7 @@ attributes:
       type: union
       valueTypes:
       - type: string
-        nullable: false
+        nullable: true
       - type: enum
         valueType: number
         values:

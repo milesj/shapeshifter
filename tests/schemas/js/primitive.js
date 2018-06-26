@@ -8,47 +8,47 @@ module.exports = {
     boolField: 'bool',
     boolFieldExpanded: {
       type: 'bool',
-      nullable: false,
+      nullable: true,
     },
     booleanField: 'boolean',
     booleanFieldExpanded: {
       type: 'boolean',
-      nullable: false,
+      nullable: true,
     },
     intField: 'int',
     intFieldExpanded: {
       type: 'int',
-      nullable: false,
+      nullable: true,
     },
     integerField: 'integer',
     integerFieldExpanded: {
       type: 'integer',
-      nullable: false,
+      nullable: true,
     },
     numField: 'num',
     numFieldExpanded: {
       type: 'num',
-      nullable: false,
+      nullable: true,
     },
     numberField: 'number',
     numberFieldExpanded: {
       type: 'number',
-      nullable: false,
+      nullable: true,
     },
     floatField: 'float',
     floatFieldExpanded: {
       type: 'float',
-      nullable: false,
+      nullable: true,
     },
     strField: 'str',
     strFieldExpanded: {
       type: 'str',
-      nullable: false,
+      nullable: true,
     },
     stringField: 'string',
     stringFieldExpanded: {
       type: 'string',
-      nullable: false,
+      nullable: true,
     },
   },
 };

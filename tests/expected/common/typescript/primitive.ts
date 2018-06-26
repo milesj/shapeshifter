@@ -6,21 +6,21 @@ export const PRIMITIVE_STR = 'primitive';
 
 export interface PrimitiveInterface {
   boolField?: boolean;
-  boolFieldExpanded?: boolean;
+  boolFieldExpanded?: boolean | null;
   booleanField?: boolean;
-  booleanFieldExpanded?: boolean;
+  booleanFieldExpanded?: boolean | null;
   intField?: number;
-  intFieldExpanded?: number;
+  intFieldExpanded?: number | null;
   integerField?: number;
-  integerFieldExpanded?: number;
+  integerFieldExpanded?: number | null;
   numField?: number;
-  numFieldExpanded?: number;
+  numFieldExpanded?: number | null;
   numberField?: number;
-  numberFieldExpanded?: number;
+  numberFieldExpanded?: number | null;
   floatField?: number;
-  floatFieldExpanded?: number;
+  floatFieldExpanded?: number | null;
   strField?: string;
-  strFieldExpanded?: string;
+  strFieldExpanded?: string | null;
   stringField?: string;
-  stringFieldExpanded?: string;
+  stringFieldExpanded?: string | null;
 }

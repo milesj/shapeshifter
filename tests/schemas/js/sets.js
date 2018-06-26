@@ -15,11 +15,11 @@ module.exports = {
     bar: 'number',
     baz: {
       type: 'boolean',
-      nullable: false,
+      nullable: true,
     },
     qux: {
       type: 'string',
-      nullable: false,
+      nullable: true,
     },
   },
 };

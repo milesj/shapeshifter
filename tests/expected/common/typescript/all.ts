@@ -138,7 +138,7 @@ export interface ArrayInterface {
   boolField?: Array<boolean>;
   enumField?: Array<ArrayEnumFieldEnum>;
   instanceField?: Array<ArrayDefault>;
-  numberField?: Array<number>;
+  numberField?: Array<number> | null;
   objectField?: Array<{ [key: string]: number }>;
   shapeField?: Array<{
     foo?: string;
@@ -170,13 +170,13 @@ export interface ImportsInterface {
 
 export interface InstanceInterface {
   instField?: InstanceClassName;
-  instanceField?: InstanceDefault;
+  instanceField?: InstanceDefault | null;
 }
 
 export interface ObjectInterface {
   arrayField?: { [key: string]: Array<string> };
-  boolField?: { [key: string]: boolean };
-  enumField?: { [key: string]: ObjectEnumFieldValueEnum };
+  boolField?: { [key: string]: boolean } | null;
+  enumField?: { [key: string]: ObjectEnumFieldValueEnum } | null;
   instanceField?: { [key: string]: ObjectDefault };
   numberField?: { [key: string]: number };
   objectField?: { [key: string]: { [key: string]: number } };
@@ -209,23 +209,23 @@ export interface PolymorphInterface {
 
 export interface PrimitiveInterface {
   boolField?: boolean;
-  boolFieldExpanded?: boolean;
+  boolFieldExpanded?: boolean | null;
   booleanField?: boolean;
-  booleanFieldExpanded?: boolean;
+  booleanFieldExpanded?: boolean | null;
   intField?: number;
-  intFieldExpanded?: number;
+  intFieldExpanded?: number | null;
   integerField?: number;
-  integerFieldExpanded?: number;
+  integerFieldExpanded?: number | null;
   numField?: number;
-  numFieldExpanded?: number;
+  numFieldExpanded?: number | null;
   numberField?: number;
-  numberFieldExpanded?: number;
+  numberFieldExpanded?: number | null;
   floatField?: number;
-  floatFieldExpanded?: number;
+  floatFieldExpanded?: number | null;
   strField?: string;
-  strFieldExpanded?: string;
+  strFieldExpanded?: string | null;
   stringField?: string;
-  stringFieldExpanded?: string;
+  stringFieldExpanded?: string | null;
 }
 
 export interface ReferenceBarInterface {
@@ -234,7 +234,7 @@ export interface ReferenceBarInterface {
 
 export interface ReferenceFooInterface {
   numberField?: number;
-  refField?: ReferenceBarInterface;
+  refField?: ReferenceBarInterface | null;
 }
 
 export interface ReferenceSelfBasicInterface {
@@ -244,7 +244,7 @@ export interface ReferenceSelfBasicInterface {
 export interface ReferenceSelfInterface {
   stringField?: string;
   referenceField?: ReferenceSelfInterface;
-  requiredRefField?: ReferenceSelfInterface;
+  requiredRefField?: ReferenceSelfInterface | null;
   subsetRefField?: Array<ReferenceSelfBasicInterface>;
 }
 
@@ -260,14 +260,14 @@ export interface ReferenceSetInterface {
 
 export interface ReferenceInterface {
   stringField?: string;
-  refField?: ReferenceFooInterface;
+  refField?: ReferenceFooInterface | null;
   referenceField?: ReferenceFooInterface;
   subsetRefField?: ReferenceSetOnlyStringInterface;
 }
 
 export interface SetsBasicInterface {
   foo?: string;
-  baz?: boolean;
+  baz?: boolean | null;
 }
 
 export interface SetsWithNullInterface {
@@ -278,8 +278,8 @@ export interface SetsWithNullInterface {
 export interface SetsInterface {
   foo?: string;
   bar?: number;
-  baz?: boolean;
-  qux?: string;
+  baz?: boolean | null;
+  qux?: string | null;
 }
 
 export interface ShapeReferencePriceInterface {
@@ -290,8 +290,8 @@ export interface ShapeReferencePriceInterface {
 
 export interface ShapeReferenceInterface {
   fees?: ShapeReferencePriceInterface;
-  taxes?: ShapeReferencePriceInterface;
-  total?: ShapeReferencePriceInterface;
+  taxes?: ShapeReferencePriceInterface | null;
+  total?: ShapeReferencePriceInterface | null;
 }
 
 export interface ShapeInterface {
@@ -300,8 +300,8 @@ export interface ShapeInterface {
   };
   primitiveFields?: {
     string?: string;
-    bool?: boolean;
-    number?: number;
+    bool?: boolean | null;
+    number?: number | null;
   };
   arrayFields?: {
     numberArray?: Array<number>;

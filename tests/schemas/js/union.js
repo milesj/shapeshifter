@@ -47,7 +47,7 @@ module.exports = {
         {
           type: 'inst',
           contract: 'UnionDefault',
-          nullable: false,
+          nullable: true,
         },
       ],
     },

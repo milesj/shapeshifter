@@ -22,7 +22,7 @@ export interface ArrayInterface {
   boolField?: Array<boolean>;
   enumField?: Array<ArrayEnumFieldEnum>;
   instanceField?: Array<ArrayDefault>;
-  numberField?: Array<number>;
+  numberField?: Array<number> | null;
   objectField?: Array<{ [key: string]: number }>;
   shapeField?: Array<{
     foo?: string;

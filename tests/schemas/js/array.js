@@ -34,7 +34,7 @@ module.exports = {
     numberField: {
       type: 'array',
       valueType: 'number',
-      nullable: false,
+      nullable: true,
     },
     objectField: {
       type: 'array',
@@ -64,7 +64,7 @@ module.exports = {
         valueTypes: [
           {
             type: 'string',
-            nullable: false,
+            nullable: true,
           },
           {
             type: 'enum',

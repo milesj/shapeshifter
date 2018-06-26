@@ -4,7 +4,7 @@
 
 export type SetsBasicType = {
   foo?: string,
-  baz?: boolean,
+  baz?: ?boolean,
 };
 
 export type SetsWithNullType = {
@@ -15,6 +15,6 @@ export type SetsWithNullType = {
 export type SetsType = {
   foo?: string,
   bar?: number,
-  baz?: boolean,
-  qux?: string,
+  baz?: ?boolean,
+  qux?: ?string,
 };

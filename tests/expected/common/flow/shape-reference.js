@@ -10,6 +10,6 @@ export type ShapeReferencePriceType = {
 
 export type ShapeReferenceType = {
   fees?: ShapeReferencePriceType,
-  taxes?: ShapeReferencePriceType,
-  total?: ShapeReferencePriceType,
+  taxes?: ?ShapeReferencePriceType,
+  total?: ?ShapeReferencePriceType,
 };

@@ -14,11 +14,11 @@ module.exports = {
         string: 'string',
         bool: {
           type: 'bool',
-          nullable: false,
+          nullable: true,
         },
         number: {
           type: 'number',
-          nullable: false,
+          nullable: true,
         },
       },
     },

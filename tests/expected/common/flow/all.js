@@ -29,7 +29,7 @@ export type ArrayType = {
   boolField?: Array<boolean>,
   enumField?: Array<'foo' | 'bar' | 'baz'>,
   instanceField?: Array<ArrayDefault>,
-  numberField?: Array<number>,
+  numberField?: ?Array<number>,
   objectField?: Array<{ [key: string]: number }>,
   shapeField?: Array<{
     foo?: string,
@@ -61,13 +61,13 @@ export type ImportsType = {
 
 export type InstanceType = {
   instField?: InstanceClassName,
-  instanceField?: InstanceDefault,
+  instanceField?: ?InstanceDefault,
 };
 
 export type ObjectType = {
   arrayField?: { [key: string]: Array<string> },
-  boolField?: { [key: string]: boolean },
-  enumField?: { [key: string]: 'foo' | 'bar' | 'baz' },
+  boolField?: ?{ [key: string]: boolean },
+  enumField?: ?{ [key: string]: 'foo' | 'bar' | 'baz' },
   instanceField?: { [key: string]: ObjectDefault },
   numberField?: { [key: string]: number },
   objectField?: { [key: string]: { [key: string]: number } },
@@ -100,23 +100,23 @@ export type PolymorphType = {
 
 export type PrimitiveType = {
   boolField?: boolean,
-  boolFieldExpanded?: boolean,
+  boolFieldExpanded?: ?boolean,
   booleanField?: boolean,
-  booleanFieldExpanded?: boolean,
+  booleanFieldExpanded?: ?boolean,
   intField?: number,
-  intFieldExpanded?: number,
+  intFieldExpanded?: ?number,
   integerField?: number,
-  integerFieldExpanded?: number,
+  integerFieldExpanded?: ?number,
   numField?: number,
-  numFieldExpanded?: number,
+  numFieldExpanded?: ?number,
   numberField?: number,
-  numberFieldExpanded?: number,
+  numberFieldExpanded?: ?number,
   floatField?: number,
-  floatFieldExpanded?: number,
+  floatFieldExpanded?: ?number,
   strField?: string,
-  strFieldExpanded?: string,
+  strFieldExpanded?: ?string,
   stringField?: string,
-  stringFieldExpanded?: string,
+  stringFieldExpanded?: ?string,
 };
 
 export type ReferenceBarType = {
@@ -125,7 +125,7 @@ export type ReferenceBarType = {
 
 export type ReferenceFooType = {
   numberField?: number,
-  refField?: ReferenceBarType,
+  refField?: ?ReferenceBarType,
 };
 
 export type ReferenceSelfBasicType = {
@@ -135,7 +135,7 @@ export type ReferenceSelfBasicType = {
 export type ReferenceSelfType = {
   stringField?: string,
   referenceField?: ReferenceSelfType,
-  requiredRefField?: ReferenceSelfType,
+  requiredRefField?: ?ReferenceSelfType,
   subsetRefField?: Array<ReferenceSelfBasicType>,
 };
 
@@ -151,14 +151,14 @@ export type ReferenceSetType = {
 
 export type ReferenceType = {
   stringField?: string,
-  refField?: ReferenceFooType,
+  refField?: ?ReferenceFooType,
   referenceField?: ReferenceFooType,
   subsetRefField?: ReferenceSetOnlyStringType,
 };
 
 export type SetsBasicType = {
   foo?: string,
-  baz?: boolean,
+  baz?: ?boolean,
 };
 
 export type SetsWithNullType = {
@@ -169,8 +169,8 @@ export type SetsWithNullType = {
 export type SetsType = {
   foo?: string,
   bar?: number,
-  baz?: boolean,
-  qux?: string,
+  baz?: ?boolean,
+  qux?: ?string,
 };
 
 export type ShapeReferencePriceType = {
@@ -181,8 +181,8 @@ export type ShapeReferencePriceType = {
 
 export type ShapeReferenceType = {
   fees?: ShapeReferencePriceType,
-  taxes?: ShapeReferencePriceType,
-  total?: ShapeReferencePriceType,
+  taxes?: ?ShapeReferencePriceType,
+  total?: ?ShapeReferencePriceType,
 };
 
 export type ShapeType = {
@@ -191,8 +191,8 @@ export type ShapeType = {
   },
   primitiveFields?: {
     string?: string,
-    bool?: boolean,
-    number?: number,
+    bool?: ?boolean,
+    number?: ?number,
   },
   arrayFields?: {
     numberArray?: Array<number>,

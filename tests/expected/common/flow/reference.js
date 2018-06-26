@@ -18,12 +18,12 @@ export type ReferenceSetType = {
 
 export type ReferenceFooType = {
   numberField?: number,
-  refField?: ReferenceBarType,
+  refField?: ?ReferenceBarType,
 };
 
 export type ReferenceType = {
   stringField?: string,
-  refField?: ReferenceFooType,
+  refField?: ?ReferenceFooType,
   referenceField?: ReferenceFooType,
   subsetRefField?: ReferenceSetOnlyStringType,
 };

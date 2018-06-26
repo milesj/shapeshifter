@@ -8,7 +8,7 @@ module.exports = {
     refField: {
       type: 'ref',
       reference: 'bar',
-      nullable: false,
+      nullable: true,
     },
   },
 };

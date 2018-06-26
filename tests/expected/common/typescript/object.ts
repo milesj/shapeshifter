@@ -11,8 +11,8 @@ export enum ObjectEnumFieldValueEnum {
 
 export interface ObjectInterface {
   arrayField?: { [key: string]: Array<string> };
-  boolField?: { [key: string]: boolean };
-  enumField?: { [key: string]: ObjectEnumFieldValueEnum };
+  boolField?: { [key: string]: boolean } | null;
+  enumField?: { [key: string]: ObjectEnumFieldValueEnum } | null;
   instanceField?: { [key: string]: ObjectDefault };
   numberField?: { [key: string]: number };
   objectField?: { [key: string]: { [key: string]: number } };

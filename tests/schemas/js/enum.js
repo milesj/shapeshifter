@@ -15,7 +15,7 @@ module.exports = {
       type: 'enum',
       valueType: {
         type: 'int',
-        nullable: false,
+        nullable: true,
       },
       values: [123],
     },

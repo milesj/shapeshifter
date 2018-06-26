@@ -12,7 +12,7 @@ attributes:
   boolField:
     type: object
     valueType: bool
-    nullable: false
+    nullable: true
   enumField:
     type: object
     valueType:
@@ -22,7 +22,7 @@ attributes:
       - foo
       - bar
       - baz
-    nullable: false
+    nullable: true
   instanceField:
     type: object
     valueType:

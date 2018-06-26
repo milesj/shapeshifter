@@ -8,5 +8,5 @@ export const INST_ENABLED = true;
 
 export interface InstanceInterface {
   instField?: InstanceClassName;
-  instanceField?: InstanceDefault;
+  instanceField?: InstanceDefault | null;
 }

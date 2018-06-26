@@ -15,4 +15,4 @@ attributes:
   instanceField:
     type: instance
     contract: InstanceDefault
-    nullable: false
+    nullable: true

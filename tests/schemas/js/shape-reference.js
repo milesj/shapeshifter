@@ -15,12 +15,12 @@ module.exports = {
     taxes: {
       type: 'shape',
       reference: 'price',
-      nullable: false,
+      nullable: true,
     },
     total: {
       type: 'shape',
       reference: 'price',
-      nullable: false,
+      nullable: true,
     },
   },
 };

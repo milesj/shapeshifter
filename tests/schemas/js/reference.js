@@ -9,7 +9,7 @@ module.exports = {
     refField: {
       type: 'ref',
       reference: 'foo',
-      nullable: false,
+      nullable: true,
     },
     referenceField: {
       type: 'reference',

@@ -12,8 +12,8 @@ attributes:
   taxes:
     type: shape
     reference: Price
-    nullable: false
+    nullable: true
   total:
     type: shape
     reference: Price
-    nullable: false
+    nullable: true

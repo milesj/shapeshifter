@@ -10,8 +10,8 @@ export type ShapeType = {
   },
   primitiveFields?: {
     string?: string,
-    bool?: boolean,
-    number?: number,
+    bool?: ?boolean,
+    number?: ?number,
   },
   arrayFields?: {
     numberArray?: Array<number>,

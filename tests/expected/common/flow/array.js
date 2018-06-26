@@ -11,7 +11,7 @@ export type ArrayType = {
   boolField?: Array<boolean>,
   enumField?: Array<'foo' | 'bar' | 'baz'>,
   instanceField?: Array<ArrayDefault>,
-  numberField?: Array<number>,
+  numberField?: ?Array<number>,
   objectField?: Array<{ [key: string]: number }>,
   shapeField?: Array<{
     foo?: string,

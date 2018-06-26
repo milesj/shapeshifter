@@ -17,12 +17,12 @@ export interface ReferenceSetInterface {
 
 export interface ReferenceFooInterface {
   numberField?: number;
-  refField?: ReferenceBarInterface;
+  refField?: ReferenceBarInterface | null;
 }
 
 export interface ReferenceInterface {
   stringField?: string;
-  refField?: ReferenceFooInterface;
+  refField?: ReferenceFooInterface | null;
   referenceField?: ReferenceFooInterface;
   subsetRefField?: ReferenceSetOnlyStringInterface;
 }

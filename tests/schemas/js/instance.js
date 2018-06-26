@@ -13,7 +13,7 @@ module.exports = {
     instanceField: {
       type: 'instance',
       contract: 'InstanceDefault',
-      nullable: false,
+      nullable: true,
     },
   },
 };
