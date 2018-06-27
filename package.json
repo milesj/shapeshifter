@@ -16,7 +16,7 @@
     "test:webpack": "webpack",
     "posttest": "yarn run eslint && yarn run check",
     "type": "beemo typescript --workspaces=* --noEmit",
-    "prerelease": "yarn run build && yarn test",
+    "prerelease": "yarn test && yarn run build",
     "release": "lerna publish"
   },
   "devDependencies": {
