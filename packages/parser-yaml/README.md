@@ -12,4 +12,4 @@ npm install shapeshifter-parser-yaml --save-dev
 
 ## Documentation
 
-[https://milesj.gitbooks.io/shapeshifter](https://milesj.gitbooks.io/shapeshifter)
+[https://milesj.gitbook.io/shapeshifter](https://milesj.gitbook.io/shapeshifter)

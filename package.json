@@ -5,9 +5,6 @@
     "build": "beemo typescript --workspaces=* --priority --node",
     "check": "flow check && tsc --noEmit --lib esnext,esnext.asynciterable ./tests/expected/graphql/typescript/*.ts ./tests/expected/common/typescript/*.ts",
     "coverage": "yarn run jest --coverage",
-    "docs": "gitbook build --debug",
-    "docs:serve": "gitbook serve",
-    "docs:install": "gitbook install",
     "eslint": "beemo eslint",
     "jest": "beemo jest",
     "prettier": "beemo prettier",
@@ -20,7 +17,7 @@
     "release": "lerna publish"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.108.3",
+    "@milesj/build-tool-config": "^0.109.0",
     "lerna": "^2.11.0"
   },
   "workspaces": [

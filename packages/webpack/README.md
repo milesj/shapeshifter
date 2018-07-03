@@ -12,4 +12,4 @@ npm install shapeshifter-webpack --save-dev
 
 ## Documentation
 
-[https://milesj.gitbooks.io/shapeshifter](https://milesj.gitbooks.io/shapeshifter/webpack.html)
+[https://milesj.gitbook.io/shapeshifter](https://milesj.gitbook.io/shapeshifter/webpack.html)
