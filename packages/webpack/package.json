@@ -17,12 +17,12 @@
   "repository": "https://github.com/milesj/interweave/tree/master/packages/webpack",
   "license": "MIT",
   "dependencies": {
-    "@types/webpack": "^4.4.3"
+    "@types/webpack": "^4.4.4"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",
     "shapeshifter": "^7.0.0",
-    "webpack": "^4.12.1",
+    "webpack": "^4.14.0",
     "webpack-cli": "^3.0.8"
   },
   "peerDependencies": {

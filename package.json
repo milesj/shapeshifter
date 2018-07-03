@@ -2,7 +2,7 @@
   "name": "shapeshifter-root",
   "private": true,
   "scripts": {
-    "build": "beemo typescript --workspaces=* --priority=core --node",
+    "build": "beemo typescript --workspaces=* --priority --node",
     "check": "flow check && tsc --noEmit --lib esnext,esnext.asynciterable ./tests/expected/graphql/typescript/*.ts ./tests/expected/common/typescript/*.ts",
     "coverage": "yarn run jest --coverage",
     "docs": "gitbook build --debug",
@@ -20,7 +20,7 @@
     "release": "lerna publish"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.105.0",
+    "@milesj/build-tool-config": "^0.108.3",
     "lerna": "^2.11.0"
   },
   "workspaces": [
@@ -31,12 +31,7 @@
     "drivers": [
       "babel",
       "eslint",
-      {
-        "driver": "jest",
-        "dependencies": [
-          "typescript"
-        ]
-      },
+      "jest",
       "prettier",
       "typescript"
     ],
@@ -48,10 +43,7 @@
     },
     "prettier": {
       "ignore": [
-        "tests/expected/**/*",
-        "book.json",
-        "lerna.json",
-        "package.json"
+        "tests/expected/**/*"
       ]
     }
   }

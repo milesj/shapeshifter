@@ -35,7 +35,7 @@
   "dependencies": {
     "@types/yargs": "^11.0.0",
     "optimal": "^1.0.0",
-    "yargs": "^11.0.0"
+    "yargs": "^12.0.1"
   },
   "devDependencies": {
     "flow-bin": "^0.75.0",
