@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Transpiler from '../src/Transpiler';
+import { RendererType } from '../src/types';
 import { options } from '../../../tests/mocks';
 
 function file(filePath) {
@@ -10,7 +11,11 @@ function file(filePath) {
 const TEST_ROOT = path.join(__dirname, '../../../tests');
 
 // Supported renderers
-const RENDERERS = [
+const RENDERERS: {
+  name: string;
+  key: RendererType;
+  ext: string;
+}[] = [
   {
     name: 'Flow',
     key: 'flow',
@@ -46,7 +51,11 @@ const cases = [
   'polymorph',
 ];
 
-const FORMATS = [
+const FORMATS: {
+  format: string;
+  target: string;
+  cases: string[];
+}[] = [
   {
     format: 'js',
     target: 'common',
@@ -115,7 +124,7 @@ describe('Transpiler', () => {
   // We only need to test functionality, not renderers here
   const otherOptions = {
     ...options,
-    renderers: ['flow'],
+    renderers: ['flow'] as RendererType[],
     includeDefinitions: false,
     includeSchemas: false,
   };

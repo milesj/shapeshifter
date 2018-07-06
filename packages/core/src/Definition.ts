@@ -17,7 +17,7 @@ export default class Definition<T extends Config> {
   /**
    * Represents a type definition for an attribute.
    */
-  constructor(options: Options, attribute: string, config: Partial<T>) {
+  constructor(options: Options, attribute: string, config: Partial<T> = {}) {
     this.options = options;
     this.attribute = attribute;
     this.config = {

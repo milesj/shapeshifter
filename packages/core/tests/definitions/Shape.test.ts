@@ -15,12 +15,14 @@ describe('definitions/Shape', () => {
   });
 
   it('errors if `reference` is not a string', () => {
+    // @ts-ignore
     expect(() => new ShapeDefinition(options, 'foo', { reference: 123 })).toThrowError(
       'Invalid ShapeDefinition field "reference". Must be a string.',
     );
   });
 
   it('errors if `attributes` is a non-object', () => {
+    // @ts-ignore
     expect(() => new ShapeDefinition(options, 'foo', { attributes: 'foo' })).toThrowError(
       'Invalid ShapeDefinition field "attributes". Must be a plain object.',
     );
@@ -33,6 +35,7 @@ describe('definitions/Shape', () => {
   });
 
   it('errors if `attributes` has the wrong values', () => {
+    // @ts-ignore
     expect(() => new ShapeDefinition(options, 'foo', { attributes: { foo: 123 } })).toThrowError(
       'Invalid ShapeDefinition field "attributes.foo". Type must be one of: string, shape',
     );

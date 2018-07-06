@@ -25,6 +25,7 @@ describe('definitions/Object', () => {
   it('errors if `keyType` is not a string', () => {
     truthyValues.filter(value => typeof value !== 'string').forEach(value => {
       expect(
+        // @ts-ignore
         () => new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' }),
       ).toThrowError('Invalid ObjectDefinition field "keyType". Must be a string.');
     });

@@ -19,6 +19,7 @@ describe('Schematic', () => {
   });
 
   it('errors if no `name` property', () => {
+    // @ts-ignore
     expect(() => new Schematic('/foo.json', {}, options)).toThrowError(
       '[foo.json] No name found in schema.',
     );
@@ -29,6 +30,7 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
+          // @ts-ignore
           {
             name: 'Foo',
           },
@@ -60,6 +62,7 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
+          // @ts-ignore
           {
             ...data,
             imports: true,
@@ -74,6 +77,7 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
+          // @ts-ignore
           {
             ...data,
             constants: 123,
@@ -88,6 +92,7 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
+          // @ts-ignore
           {
             ...data,
             subsets: 123,
@@ -102,6 +107,7 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
+          // @ts-ignore
           {
             ...data,
             references: 123,
@@ -116,6 +122,7 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
+          // @ts-ignore
           {
             ...data,
             meta: 123,
@@ -130,6 +137,7 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
+          // @ts-ignore
           {
             ...data,
             shapes: 123,

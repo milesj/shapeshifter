@@ -62,8 +62,8 @@ describe('Schema', () => {
 
     it('errors if been mapped before', () => {
       expect(() => {
-        schema.addRelation('foo', new Schema(), Schema.HAS_ONE);
-        schema.addRelation('foo', new Schema(), Schema.HAS_MANY);
+        schema.addRelation('foo', new Schema('foos'), Schema.HAS_ONE);
+        schema.addRelation('foo', new Schema('foos'), Schema.HAS_MANY);
       }).toThrowError('Relation "foo" has already been mapped as "hasOne".');
     });
   });

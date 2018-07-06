@@ -16,7 +16,7 @@
   "repository": "https://github.com/milesj/interweave/tree/master/packages/parser-yaml",
   "license": "MIT",
   "dependencies": {
-    "@types/js-yaml": "^3.11.1",
+    "@types/js-yaml": "^3.11.2",
     "js-yaml": "^3.12.0"
   },
   "devDependencies": {

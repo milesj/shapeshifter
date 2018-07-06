@@ -130,6 +130,7 @@ export interface UnionConfig extends Config {
 // JSON Structure
 
 export interface MetadataField {
+  [key: string]: string | undefined;
   primaryKey?: string;
   resourceName?: string;
 }

@@ -16,6 +16,7 @@ describe('definitions/Enum', () => {
 
   it('errors if `values` is not an array', () => {
     expect(
+      // @ts-ignore
       () => new EnumDefinition(options, 'foo', { valueType: 'string', values: 'string' }),
     ).toThrowError('Invalid EnumDefinition field "values". Must be an array.');
   });

@@ -357,7 +357,10 @@ describe('Renderer', () => {
       expect(
         renderer.renderSchema(
           'QuxSchema',
-          [new StringDefinition(options, 'first_name'), new StringDefinition(options, 'last_name')],
+          [
+            new StringDefinition(options, 'first_name', {}),
+            new StringDefinition(options, 'last_name', {}),
+          ],
           {
             resourceName: 'quxs',
           },
@@ -380,8 +383,8 @@ describe('Renderer', () => {
         renderer.renderSchema(
           'QuxSchema',
           [
-            new StringDefinition(options, 'first_name'),
-            new StringDefinition(options, 'last_name'),
+            new StringDefinition(options, 'first_name', {}),
+            new StringDefinition(options, 'last_name', {}),
             new ReferenceDefinition(options, 'post', {
               reference: 'posts',
               export: false,
@@ -408,8 +411,8 @@ describe('Renderer', () => {
         renderer.renderSchema(
           'QuxSchema',
           [
-            new StringDefinition(options, 'first_name'),
-            new StringDefinition(options, 'last_name'),
+            new StringDefinition(options, 'first_name', {}),
+            new StringDefinition(options, 'last_name', {}),
             new ReferenceDefinition(options, 'post', { reference: 'posts' }),
           ],
           {
@@ -434,8 +437,8 @@ describe('Renderer', () => {
           'QuxSchema',
           [
             new ReferenceDefinition(options, 'post', { reference: 'posts' }),
-            new StringDefinition(options, 'first_name'),
-            new StringDefinition(options, 'last_name'),
+            new StringDefinition(options, 'first_name', {}),
+            new StringDefinition(options, 'last_name', {}),
           ],
           {
             resourceName: 'quxs',
@@ -523,8 +526,8 @@ describe('Renderer', () => {
         renderer.renderSchema(
           'QuxSchema',
           [
-            new StringDefinition(options, 'first_name'),
-            new StringDefinition(options, 'last_name'),
+            new StringDefinition(options, 'first_name', {}),
+            new StringDefinition(options, 'last_name', {}),
             new ReferenceDefinition(options, 'post', {
               reference: 'posts',
               relation: 'belongsTo',
