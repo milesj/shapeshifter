@@ -1,7 +1,7 @@
 import Schema from '../src/Schema';
 
 describe('Schema', () => {
-  let schema;
+  let schema: Schema;
   const foo = new Schema('foos');
   const qux = new Schema('quxs', 'uuid');
 
@@ -56,6 +56,7 @@ describe('Schema', () => {
   describe('addRelation()', () => {
     it('errors if not a schema', () => {
       expect(() => {
+        // @ts-ignore
         schema.addRelation('foo', 'bar');
       }).toThrowError('Relation "foo" is not a valid schema.');
     });
@@ -141,6 +142,7 @@ describe('Schema', () => {
       }).toThrowError('Relation "foo" is not a valid schema.');
 
       expect(() => {
+        // @ts-ignore
         schema.define({ foo: [123] });
       }).toThrowError('Relation "foo" is not a valid schema.');
     });

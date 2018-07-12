@@ -15,7 +15,7 @@ import Schematic from '../../src/Schematic';
 import { options } from '../../../../tests/mocks';
 
 describe('FlowRenderer', () => {
-  let renderer;
+  let renderer: FlowRenderer;
 
   beforeEach(() => {
     renderer = new FlowRenderer(
@@ -54,6 +54,7 @@ describe('FlowRenderer', () => {
               nullable: true,
             },
           }),
+          0,
         ),
       ).toBe('?Array<?string>');
     });
@@ -65,6 +66,7 @@ describe('FlowRenderer', () => {
             nullable: false,
             valueType: 'string',
           }),
+          0,
         ),
       ).toBe('Array<string>');
     });
@@ -82,6 +84,7 @@ describe('FlowRenderer', () => {
               },
             },
           }),
+          0,
         ),
       ).toBe('Array<{ [key: string]: string }>');
     });
@@ -95,6 +98,7 @@ describe('FlowRenderer', () => {
               contract: 'FooBar',
             },
           }),
+          0,
         ),
       ).toBe('Array<FooBar>');
     });
@@ -107,7 +111,7 @@ describe('FlowRenderer', () => {
 
       delete def.valueType;
 
-      expect(renderer.renderArray(def)).toBe('Array<any>');
+      expect(renderer.renderArray(def, 0)).toBe('Array<any>');
     });
   });
 
@@ -141,6 +145,7 @@ describe('FlowRenderer', () => {
             valueType: 'number',
             values: [1, 23, 164],
           }),
+          0,
         ),
       ).toBe('1 | 23 | 164');
     });
@@ -226,6 +231,7 @@ describe('FlowRenderer', () => {
             nullable: true,
             valueType: 'number',
           }),
+          0,
         ),
       ).toBe('?{ [key: string]: number }');
     });
@@ -237,6 +243,7 @@ describe('FlowRenderer', () => {
             nullable: false,
             valueType: 'number',
           }),
+          0,
         ),
       ).toBe('{ [key: string]: number }');
     });
@@ -252,6 +259,7 @@ describe('FlowRenderer', () => {
               valueType: 'string',
             },
           }),
+          0,
         ),
       ).toBe('{ [key: number]: Array<string> }');
     });
@@ -264,7 +272,7 @@ describe('FlowRenderer', () => {
 
       delete def.keyType;
 
-      expect(renderer.renderObject(def)).toBe('{ [key: string]: string }');
+      expect(renderer.renderObject(def, 0)).toBe('{ [key: string]: string }');
     });
 
     it('defaults value to any', () => {
@@ -275,7 +283,7 @@ describe('FlowRenderer', () => {
 
       delete def.valueType;
 
-      expect(renderer.renderObject(def)).toBe('{ [key: number]: any }');
+      expect(renderer.renderObject(def, 0)).toBe('{ [key: number]: any }');
     });
   });
 
@@ -323,7 +331,7 @@ describe('FlowRenderer', () => {
 
       delete def.attributes;
 
-      expect(renderer.renderShape(def)).toBe('{ [key: string]: any }');
+      expect(renderer.renderShape(def, 0)).toBe('{ [key: string]: any }');
     });
   });
 
@@ -369,6 +377,7 @@ describe('FlowRenderer', () => {
             nullable: true,
             valueTypes,
           }),
+          0,
         ),
       ).toBe('string | boolean | Array<?number> | null');
     });
@@ -380,6 +389,7 @@ describe('FlowRenderer', () => {
             nullable: false,
             valueTypes,
           }),
+          0,
         ),
       ).toBe('string | boolean | Array<?number>');
     });
@@ -402,6 +412,7 @@ describe('FlowRenderer', () => {
             nullable: true,
             valueTypes,
           }),
+          0,
         ),
       ).toBe('string | boolean | Array<?number> | FooBar | null');
     });
@@ -409,10 +420,12 @@ describe('FlowRenderer', () => {
 
   describe('wrapNullable()', () => {
     it('renders nullable', () => {
+      // @ts-ignore
       expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('?foo');
     });
 
     it('renders non-nullable', () => {
+      // @ts-ignore
       expect(renderer.wrapNullable({ isNullable: () => false }, 'foo')).toBe('foo');
     });
   });

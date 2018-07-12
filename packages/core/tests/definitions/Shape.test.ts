@@ -49,7 +49,7 @@ describe('definitions/Shape', () => {
       },
     });
 
-    expect(def.attributes[0]).toBeInstanceOf(StringDefinition);
-    expect(def.attributes[1]).toBeInstanceOf(NumberDefinition);
+    expect(def.attributes![0]).toBeInstanceOf(StringDefinition);
+    expect(def.attributes![1]).toBeInstanceOf(NumberDefinition);
   });
 });

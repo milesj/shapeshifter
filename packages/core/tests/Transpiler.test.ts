@@ -4,7 +4,7 @@ import Transpiler from '../src/Transpiler';
 import { RendererType } from '../src/types';
 import { options } from '../../../tests/mocks';
 
-function file(filePath) {
+function file(filePath: string) {
   return fs.readFileSync(filePath, 'utf8');
 }
 

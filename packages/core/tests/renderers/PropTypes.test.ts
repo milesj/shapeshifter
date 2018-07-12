@@ -15,7 +15,7 @@ import Schematic from '../../src/Schematic';
 import { options } from '../../../../tests/mocks';
 
 describe('PropTypesRenderer', () => {
-  let renderer;
+  let renderer: PropTypesRenderer;
 
   beforeEach(() => {
     renderer = new PropTypesRenderer(
@@ -52,6 +52,7 @@ describe('PropTypesRenderer', () => {
             optional: false,
             valueType: 'string',
           }),
+          0,
         ),
       ).toBe('PropTypes.arrayOf(PropTypes.string).isRequired');
     });
@@ -62,6 +63,7 @@ describe('PropTypesRenderer', () => {
           new ArrayDefinition(options, 'foo', {
             valueType: 'string',
           }),
+          0,
         ),
       ).toBe('PropTypes.arrayOf(PropTypes.string)');
     });
@@ -75,6 +77,7 @@ describe('PropTypesRenderer', () => {
               valueType: 'string',
             },
           }),
+          0,
         ),
       ).toBe('PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))');
     });
@@ -88,6 +91,7 @@ describe('PropTypesRenderer', () => {
               contract: 'FooBar',
             },
           }),
+          0,
         ),
       ).toBe('PropTypes.arrayOf(PropTypes.instanceOf(FooBar))');
     });
@@ -100,7 +104,7 @@ describe('PropTypesRenderer', () => {
 
       delete def.valueType;
 
-      expect(renderer.renderArray(def)).toBe('PropTypes.array');
+      expect(renderer.renderArray(def, 0)).toBe('PropTypes.array');
     });
   });
 
@@ -131,11 +135,12 @@ describe('PropTypesRenderer', () => {
             valueType: 'number',
             values: [1, 23, 164],
           }),
+          0,
         ),
       ).toBe(`PropTypes.oneOf([
-1,
-23,
-164,
+  1,
+  23,
+  164,
 ]).isRequired`);
     });
 
@@ -146,11 +151,12 @@ describe('PropTypesRenderer', () => {
             valueType: 'number',
             values: [1, 23, 164],
           }),
+          0,
         ),
       ).toBe(`PropTypes.oneOf([
-1,
-23,
-164,
+  1,
+  23,
+  164,
 ])`);
     });
   });
@@ -238,6 +244,7 @@ describe('PropTypesRenderer', () => {
             optional: false,
             valueType: 'number',
           }),
+          0,
         ),
       ).toBe('PropTypes.objectOf(PropTypes.number).isRequired');
     });
@@ -248,6 +255,7 @@ describe('PropTypesRenderer', () => {
           new ObjectDefinition(options, 'foo', {
             valueType: 'number',
           }),
+          0,
         ),
       ).toBe('PropTypes.objectOf(PropTypes.number)');
     });
@@ -260,7 +268,7 @@ describe('PropTypesRenderer', () => {
 
       delete def.valueType;
 
-      expect(renderer.renderObject(def)).toBe('PropTypes.object');
+      expect(renderer.renderObject(def, 0)).toBe('PropTypes.object');
     });
   });
 
@@ -308,7 +316,7 @@ describe('PropTypesRenderer', () => {
 
       delete def.attributes;
 
-      expect(renderer.renderShape(def)).toBe('PropTypes.object');
+      expect(renderer.renderShape(def, 0)).toBe('PropTypes.object');
     });
   });
 
@@ -347,11 +355,12 @@ describe('PropTypesRenderer', () => {
             optional: false,
             valueTypes,
           }),
+          0,
         ),
       ).toBe(`PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.bool,
-PropTypes.arrayOf(PropTypes.number),
+  PropTypes.string,
+  PropTypes.bool,
+  PropTypes.arrayOf(PropTypes.number),
 ]).isRequired`);
     });
 
@@ -361,11 +370,12 @@ PropTypes.arrayOf(PropTypes.number),
           new UnionDefinition(options, 'foo', {
             valueTypes,
           }),
+          0,
         ),
       ).toBe(`PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.bool,
-PropTypes.arrayOf(PropTypes.number),
+  PropTypes.string,
+  PropTypes.bool,
+  PropTypes.arrayOf(PropTypes.number),
 ])`);
     });
 
@@ -385,20 +395,22 @@ PropTypes.arrayOf(PropTypes.number),
           new UnionDefinition(options, 'foo', {
             valueTypes,
           }),
+          0,
         ),
       ).toBe(`PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.bool,
-PropTypes.arrayOf(PropTypes.number),
-PropTypes.oneOfType([
-PropTypes.instanceOf(FooBar),
-]),
+  PropTypes.string,
+  PropTypes.bool,
+  PropTypes.arrayOf(PropTypes.number),
+  PropTypes.oneOfType([
+    PropTypes.instanceOf(FooBar),
+  ]),
 ])`);
     });
   });
 
   describe('wrapPropType()', () => {
     it('adds prop type text', () => {
+      // @ts-ignore
       expect(renderer.wrapPropType({ isNullable: () => true }, 'foo')).toBe('PropTypes.foo');
     });
   });
@@ -406,12 +418,14 @@ PropTypes.instanceOf(FooBar),
   describe('wrapOptional()', () => {
     it('renders required', () => {
       expect(
+        // @ts-ignore
         renderer.wrapOptional({ isNullable: () => false, isOptional: () => false }, 'foo'),
       ).toBe('foo.isRequired');
     });
 
     it('renders non-required', () => {
       expect(
+        // @ts-ignore
         renderer.wrapOptional({ isNullable: () => false, isOptional: () => true }, 'foo'),
       ).toBe('foo');
     });

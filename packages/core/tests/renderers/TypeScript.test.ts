@@ -15,7 +15,7 @@ import Schematic from '../../src/Schematic';
 import { options } from '../../../../tests/mocks';
 
 describe('TypeScriptRenderer', () => {
-  let renderer;
+  let renderer: TypeScriptRenderer;
 
   beforeEach(() => {
     renderer = new TypeScriptRenderer(
@@ -66,6 +66,7 @@ describe('TypeScriptRenderer', () => {
             nullable: true,
             valueType: 'string',
           }),
+          0,
         ),
       ).toBe('Array<string> | null');
     });
@@ -80,6 +81,7 @@ describe('TypeScriptRenderer', () => {
               nullable: false,
             },
           }),
+          0,
         ),
       ).toBe('Array<string>');
     });
@@ -93,6 +95,7 @@ describe('TypeScriptRenderer', () => {
               valueType: 'string',
             },
           }),
+          0,
         ),
       ).toBe('Array<{ [key: string]: string }>');
     });
@@ -106,6 +109,7 @@ describe('TypeScriptRenderer', () => {
               contract: 'FooBar',
             },
           }),
+          0,
         ),
       ).toBe('Array<FooBar>');
     });
@@ -118,7 +122,7 @@ describe('TypeScriptRenderer', () => {
 
       delete def.valueType;
 
-      expect(renderer.renderArray(def)).toBe('Array<any>');
+      expect(renderer.renderArray(def, 0)).toBe('Array<any>');
     });
   });
 
@@ -237,6 +241,7 @@ describe('TypeScriptRenderer', () => {
             nullable: true,
             valueType: 'number',
           }),
+          0,
         ),
       ).toBe('{ [key: string]: number } | null');
     });
@@ -248,6 +253,7 @@ describe('TypeScriptRenderer', () => {
             nullable: false,
             valueType: 'number',
           }),
+          0,
         ),
       ).toBe('{ [key: string]: number }');
     });
@@ -262,6 +268,7 @@ describe('TypeScriptRenderer', () => {
               valueType: 'string',
             },
           }),
+          0,
         ),
       ).toBe('{ [key: number]: Array<string> }');
     });
@@ -274,7 +281,7 @@ describe('TypeScriptRenderer', () => {
 
       delete def.keyType;
 
-      expect(renderer.renderObject(def)).toBe('{ [key: string]: string }');
+      expect(renderer.renderObject(def, 0)).toBe('{ [key: string]: string }');
     });
 
     it('defaults value to any', () => {
@@ -285,7 +292,7 @@ describe('TypeScriptRenderer', () => {
 
       delete def.valueType;
 
-      expect(renderer.renderObject(def)).toBe('{ [key: number]: any }');
+      expect(renderer.renderObject(def, 0)).toBe('{ [key: number]: any }');
     });
   });
 
@@ -333,7 +340,7 @@ describe('TypeScriptRenderer', () => {
 
       delete def.attributes;
 
-      expect(renderer.renderShape(def)).toBe('{ [key: string]: any }');
+      expect(renderer.renderShape(def, 0)).toBe('{ [key: string]: any }');
     });
   });
 
@@ -376,6 +383,7 @@ describe('TypeScriptRenderer', () => {
             nullable: true,
             valueTypes,
           }),
+          0,
         ),
       ).toBe('string | boolean | Array<number> | null');
     });
@@ -387,6 +395,7 @@ describe('TypeScriptRenderer', () => {
             nullable: false,
             valueTypes,
           }),
+          0,
         ),
       ).toBe('string | boolean | Array<number>');
     });
@@ -408,6 +417,7 @@ describe('TypeScriptRenderer', () => {
               },
             ],
           }),
+          0,
         ),
       ).toBe('string | boolean | Array<number> | FooBar');
     });
@@ -415,10 +425,12 @@ describe('TypeScriptRenderer', () => {
 
   describe('wrapNullable()', () => {
     it('renders nullable', () => {
+      // @ts-ignore
       expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('foo | null');
     });
 
     it('renders non-nullable', () => {
+      // @ts-ignore
       expect(renderer.wrapNullable({ isNullable: () => false }, 'foo')).toBe('foo');
     });
   });

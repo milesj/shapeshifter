@@ -1,14 +1,20 @@
 import Builder from '../src/Builder';
-import ArrayDefinition from '../src/definitions/Array';
-import ReferenceDefinition from '../src/definitions/Reference';
 import Renderer from '../src/Renderer';
 import Schematic from '../src/Schematic';
+import ArrayDefinition from '../src/definitions/Array';
+import ReferenceDefinition from '../src/definitions/Reference';
 import ShapeDefinition from '../src/definitions/Shape';
 import StringDefinition from '../src/definitions/String';
+import UnionDefinition from '../src/definitions/Union';
+import ObjectDefinition from '../src/definitions/Object';
+import NumberDefinition from '../src/definitions/Number';
+import InstanceDefinition from '../src/definitions/Instance';
+import EnumDefinition from '../src/definitions/Enum';
+import BoolDefinition from '../src/definitions/Bool';
 import { options } from '../../../tests/mocks';
 
 describe('Renderer', () => {
-  let renderer;
+  let renderer: Renderer;
 
   beforeEach(() => {
     renderer = new Renderer(
@@ -27,39 +33,39 @@ describe('Renderer', () => {
 
   describe('formatArray()', () => {
     it('formats a string into brackets', () => {
-      expect(renderer.formatArray(123, 0)).toBe('[\n123\n]');
+      expect(renderer.formatArray('123', 0)).toBe('[\n123\n]');
     });
 
     it('formats an array by joining', () => {
-      expect(renderer.formatArray([123, 456], 0)).toBe('[\n123\n456\n]');
-      expect(renderer.formatArray([123, 456], 0, ',')).toBe('[\n123,456\n]');
+      expect(renderer.formatArray(['123', '456'], 0)).toBe('[\n123\n456\n]');
+      expect(renderer.formatArray(['123', '456'], 0, ',')).toBe('[\n123,456\n]');
     });
 
     it('customizes the spacer characters', () => {
-      expect(renderer.formatArray([123, 456], 0, ',', '   ')).toBe('[   123,456   ]');
+      expect(renderer.formatArray(['123', '456'], 0, ',', '   ')).toBe('[   123,456   ]');
     });
 
     it('customizes the indentation', () => {
-      expect(renderer.formatArray([123, 456], 3)).toBe('[\n123\n456\n      ]');
+      expect(renderer.formatArray(['123', '456'], 3)).toBe('[\n123\n456\n      ]');
     });
   });
 
   describe('formatObject()', () => {
     it('formats a string into brackets', () => {
-      expect(renderer.formatObject(123, 0)).toBe('{\n123\n}');
+      expect(renderer.formatObject('123', 0)).toBe('{\n123\n}');
     });
 
     it('formats an array by joining', () => {
-      expect(renderer.formatObject([123, 456], 0)).toBe('{\n123\n456\n}');
-      expect(renderer.formatObject([123, 456], 0, ',')).toBe('{\n123,456\n}');
+      expect(renderer.formatObject(['123', '456'], 0)).toBe('{\n123\n456\n}');
+      expect(renderer.formatObject(['123', '456'], 0, ',')).toBe('{\n123,456\n}');
     });
 
     it('customizes the spacer characters', () => {
-      expect(renderer.formatObject([123, 456], 0, ',', '   ')).toBe('{   123,456   }');
+      expect(renderer.formatObject(['123', '456'], 0, ',', '   ')).toBe('{   123,456   }');
     });
 
     it('customizes the indentation', () => {
-      expect(renderer.formatObject([123, 456], 3)).toBe('{\n123\n456\n      }');
+      expect(renderer.formatObject(['123', '456'], 3)).toBe('{\n123\n456\n      }');
     });
   });
 
@@ -105,21 +111,21 @@ describe('Renderer', () => {
 
   describe('render()', () => {
     it('errors if not defined', () => {
-      expect(() => renderer.render()).toThrowError('Renderer not implemented.');
+      expect(() => renderer.render('')).toThrowError('Renderer not implemented.');
     });
   });
 
   describe('renderArray()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderArray()).toThrowError(
-        'The "array" definition is not supported by Renderer.',
-      );
+      expect(() =>
+        renderer.renderArray(new ArrayDefinition(options, 'foo', { valueType: 'string' }), 0),
+      ).toThrowError('The "array" definition is not supported by Renderer.');
     });
   });
 
   describe('renderBool()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderBool()).toThrowError(
+      expect(() => renderer.renderBool(new BoolDefinition(options, 'foo'))).toThrowError(
         'The "boolean" definition is not supported by Renderer.',
       );
     });
@@ -127,23 +133,26 @@ describe('Renderer', () => {
 
   describe('renderEnum()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderEnum()).toThrowError(
-        'The "enum" definition is not supported by Renderer.',
-      );
+      expect(() =>
+        renderer.renderEnum(
+          new EnumDefinition(options, 'foo', { valueType: 'string', values: ['foo'] }),
+          0,
+        ),
+      ).toThrowError('The "enum" definition is not supported by Renderer.');
     });
   });
 
   describe('renderInstance()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderInstance()).toThrowError(
-        'The "instance" definition is not supported by Renderer.',
-      );
+      expect(() =>
+        renderer.renderInstance(new InstanceDefinition(options, 'foo', { contract: 'Foo' })),
+      ).toThrowError('The "instance" definition is not supported by Renderer.');
     });
   });
 
   describe('renderNumber()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderNumber()).toThrowError(
+      expect(() => renderer.renderNumber(new NumberDefinition(options, 'foo'))).toThrowError(
         'The "number" definition is not supported by Renderer.',
       );
     });
@@ -151,23 +160,26 @@ describe('Renderer', () => {
 
   describe('renderObject()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderObject()).toThrowError(
-        'The "object" definition is not supported by Renderer.',
-      );
+      expect(() =>
+        renderer.renderObject(new ObjectDefinition(options, 'foo', { valueType: 'string' }), 0),
+      ).toThrowError('The "object" definition is not supported by Renderer.');
     });
   });
 
   describe('renderShape()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderShape()).toThrowError(
-        'The "shape" definition is not supported by Renderer.',
-      );
+      expect(() =>
+        renderer.renderShape(
+          new ShapeDefinition(options, 'foo', { attributes: { foo: 'string' } }),
+          0,
+        ),
+      ).toThrowError('The "shape" definition is not supported by Renderer.');
     });
   });
 
   describe('renderString()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderString()).toThrowError(
+      expect(() => renderer.renderString(new StringDefinition(options, 'foo'))).toThrowError(
         'The "string" definition is not supported by Renderer.',
       );
     });
@@ -175,14 +187,15 @@ describe('Renderer', () => {
 
   describe('renderUnion()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderUnion()).toThrowError(
-        'The "union" definition is not supported by Renderer.',
-      );
+      expect(() =>
+        renderer.renderUnion(new UnionDefinition(options, 'foo', { valueTypes: ['string'] }), 0),
+      ).toThrowError('The "union" definition is not supported by Renderer.');
     });
   });
 
   describe('renderAttribute()', () => {
     it('returns an empty string for invalid definition', () => {
+      // @ts-ignore
       expect(renderer.renderAttribute('foo')).toBe('');
     });
   });
@@ -205,12 +218,14 @@ describe('Renderer', () => {
 
   describe('renderImport()', () => {
     it('errors if no `path` is set', () => {
+      // @ts-ignore
       expect(() => renderer.renderImport({})).toThrowError(
         'Import statements require a file path.',
       );
     });
 
     it('errors if `named` is not an array', () => {
+      // @ts-ignore
       expect(() => renderer.renderImport({ path: '/', named: true })).toThrowError(
         'Named imports must be an array.',
       );
@@ -331,6 +346,7 @@ describe('Renderer', () => {
     });
 
     it('errors if invalid resource name', () => {
+      // @ts-ignore
       expect(() => renderer.renderSchema('QuxSchema', [], { resourceName: true })).toThrowError();
     });
 
@@ -405,6 +421,7 @@ describe('Renderer', () => {
     });
 
     it('renders template with one references', () => {
+      // @ts-ignore
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(
@@ -430,6 +447,7 @@ describe('Renderer', () => {
     });
 
     it('renders template and avoids duplication by following attributes', () => {
+      // @ts-ignore
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(
@@ -455,6 +473,7 @@ describe('Renderer', () => {
     });
 
     it('renders template with many references', () => {
+      // @ts-ignore
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(
@@ -483,6 +502,7 @@ describe('Renderer', () => {
     });
 
     it('renders template with one/many references and a custom relation name', () => {
+      // @ts-ignore
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(
@@ -520,6 +540,7 @@ describe('Renderer', () => {
 
     it('renders template with everything', () => {
       renderer.options.includeAttributes = true;
+      // @ts-ignore
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(
@@ -565,6 +586,7 @@ describe('Renderer', () => {
     });
 
     it('renders template using useDefine define syntax', () => {
+      // @ts-ignore
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
       renderer.options.useDefine = true;
 
