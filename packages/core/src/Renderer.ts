@@ -85,7 +85,7 @@ export default class Renderer {
    * Format the property key of an object. If unsupported characters are used, wrap in quotes.
    */
   formatObjectProperty(value: string): string {
-    if (value.match(/^[a-z_]{1}\w+$/i)) {
+    if (value.match(/^[a-z_]{1}\w+$/iu)) {
       return value;
     }
 

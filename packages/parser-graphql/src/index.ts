@@ -184,7 +184,7 @@ class GraphQLParser {
     }
 
     this.enums[definition.name.value] = definition.values.map(
-      ({ name: { value } }) => (value.match(/^\d+$/) ? Number(value) : String(value)),
+      ({ name: { value } }) => (value.match(/^\d+$/u) ? Number(value) : String(value)),
     );
   }
 
