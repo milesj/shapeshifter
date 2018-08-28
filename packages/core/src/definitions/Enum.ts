@@ -15,6 +15,7 @@ export default class EnumDefinition extends Definition<EnumConfig> {
     this.config = optimal(
       this.config,
       {
+        constant: bool(),
         nullable: bool(),
         optional: bool(),
         type: string('enum'),
@@ -35,6 +36,10 @@ export default class EnumDefinition extends Definition<EnumConfig> {
    * Validate a value matches the type in `valueType`.
    */
   validateValue(value: any, config: Struct) {
+    if (config.constant) {
+      return;
+    }
+
     // eslint-disable-next-line valid-typeof
     if (typeof value !== normalizeType(config.valueType)) {
       throw new TypeError('Enum values do not match the defined value type.');

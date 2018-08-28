@@ -84,6 +84,7 @@ export interface ArrayConfig extends Config {
 export interface BoolConfig extends Config {}
 
 export interface EnumConfig extends Config {
+  constant?: boolean;
   values: PrimitiveType[];
   valueType: string;
 }

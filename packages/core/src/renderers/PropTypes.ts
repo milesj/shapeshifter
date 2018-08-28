@@ -53,14 +53,20 @@ export default class PropTypesRenderer extends Renderer {
   }
 
   renderEnum(definition: EnumDefinition, depth: number): string {
-    const { values, valueType } = definition.config;
+    const { constants } = this.schematic;
+    const { constant, values, valueType } = definition.config;
+    const items = values.map(value =>
+      this.wrapItem(
+        constant && typeof value === 'string' && typeof constants[value] !== 'undefined'
+          ? value
+          : this.formatValue(value, valueType),
+        depth + 1,
+      ),
+    );
 
     return this.wrapPropType(
       definition,
-      this.wrapFunction(
-        'oneOf',
-        this.formatArray(this.renderArrayItems(values, depth + 1, valueType), depth),
-      ),
+      this.wrapFunction('oneOf', this.formatArray(items, depth)),
     );
   }
 

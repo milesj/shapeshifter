@@ -391,6 +391,20 @@ describe('Transpiler', () => {
 
     expect(output).toBe(file(expectedPath));
   });
+
+  it('references constants within enums', () => {
+    const actualPath = `${TEST_ROOT}/schemas/enum-constants.js`;
+    const expectedPath = `${TEST_ROOT}/expected/shapeshifter/prop-types/enum-constants.js`;
+
+    const output = new Transpiler({
+      ...otherOptions,
+      includeDefinitions: true,
+      includeSchemas: true,
+      renderers: ['prop-types'],
+    }).transpileFile(actualPath);
+
+    expect(output).toBe(file(expectedPath));
+  });
 });
 
 describe('extractSchematics()', () => {

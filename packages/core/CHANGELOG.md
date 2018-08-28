@@ -5,6 +5,8 @@
 - Added a `--[no-]enums` CLI option to toggle between enums and unions (TypeScript only).
 - Added a `--[no-]suffix` CLI option to toggle definition name suffixes. Be careful when using this
   with multiple renderers.
+- Added a `constant` config property to enum type defintions. When enabled, and `constants` are
+  used, any constants by name will be referenced.
 
 # 7.1.0 - 07/02/18
 

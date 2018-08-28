@@ -66,4 +66,15 @@ describe('definitions/Enum', () => {
       ).not.toThrowError();
     });
   });
+
+  it('does not error if `constant` is true', () => {
+    expect(
+      () =>
+        new EnumDefinition(options, 'foo', {
+          valueType: 'number',
+          values: ['foo', 'bar'],
+          constant: true,
+        }),
+    ).not.toThrowError();
+  });
 });

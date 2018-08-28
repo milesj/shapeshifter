@@ -214,9 +214,54 @@ export enum SchemaWordsEnum {
 }
 
 words: SchemaWordsEnum;
+
+// TypeScript with --no-enums
+words: 'foo' | 'bar' | 'baz',
 ```
 
 > Transpilation output slightly differs when using GraphQL.
+
+### Constant References
+
+If [constants](./schematic.md#constants) have been defined in the schematic, and used directly
+within an enum type definition, they can be activated using the `constant` config option. Once
+generated, all enums (when applicable) will reference the constant instead of defining a literal
+value.
+
+```js
+// Schematic
+const FOO = 1;
+const BAR = 2;
+const BAZ = 3;
+
+module.exports = {
+  name: 'Enums',
+  constants: {
+    FOO,
+    BAR,
+    BAZ,
+  },
+  attributes: {
+    consts: {
+      type: 'enum',
+      valueType: 'number',
+      values: ['FOO', 'BAR', 'BAZ'],
+      constant: true,
+    },
+  },
+};
+
+// PropTypes
+import PropTypes from 'prop-types';
+
+export const FOO = 1;
+export const BAR = 2;
+export const BAZ = 3;
+
+export const EnumsShape = PropTypes.shape({
+  consts: PropTypes.oneOf([FOO, BAR, BAZ]),
+});
+```
 
 ## Shapes
 
