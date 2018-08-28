@@ -135,7 +135,7 @@ your choosing, otherwise the output will be sent to the console.
   "false".
 - `--disable-eslint` (bool) - Prepend an eslint-disable comment to the top of the output. Defaults
   to "false".
-- `--[no-]enums` (bool) - Toggle between enums and unions (TypeScript only). Defaults to "true".
+- `--[no-]enums` (bool) - Toggle between enums and unions. Defaults to "true". _(TypeScript only)_
 - `--flow` (bool) - Generate Flow definitions. Defaults to "false".
 - `--indent` (string) - Defines the indentation characters to use in the generated output. Defaults
   to 2 spaces.
