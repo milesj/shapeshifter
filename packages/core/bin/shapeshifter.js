@@ -30,6 +30,11 @@ app
         default: false,
         description: 'Prepend an eslint-disable comment to the top of the output.',
       },
+      enums: {
+        boolean: true,
+        default: true,
+        description: 'Generate enums over unions when applicable. (TypeScript only)',
+      },
       flow: {
         boolean: true,
         default: false,
@@ -103,6 +108,7 @@ app
         defaultNullable: options.nullable,
         defaultOptional: options.optional,
         disableEslint: options.disableEslint,
+        enums: options.enums,
         importPath: options.import,
         includeAttributes: options.attributes,
         includeDefinitions: options.definitions,

@@ -1,0 +1,15 @@
+{
+  "name": "Enums",
+  "attributes": {
+    "str": {
+      "type": "enum",
+      "valueType": "string",
+      "values": ["foo", "bar", "baz"]
+    },
+    "num": {
+      "type": "enum",
+      "valueType": "number",
+      "values": [1, 2, 3]
+    }
+  }
+}

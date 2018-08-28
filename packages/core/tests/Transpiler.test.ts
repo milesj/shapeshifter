@@ -361,6 +361,20 @@ describe('Transpiler', () => {
 
     expect(output).toBe(file(expectedPath));
   });
+
+  it('generates unions over enums', () => {
+    const actualPath = `${TEST_ROOT}/schemas/enums.json`;
+    const expectedPath = `${TEST_ROOT}/expected/shapeshifter/typescript/enums.ts`;
+
+    const output = new Transpiler({
+      ...otherOptions,
+      includeDefinitions: true,
+      enums: false,
+      renderers: ['typescript'],
+    }).transpileFile(actualPath);
+
+    expect(output).toBe(file(expectedPath));
+  });
 });
 
 describe('extractSchematics()', () => {

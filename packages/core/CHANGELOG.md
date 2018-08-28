@@ -1,3 +1,9 @@
+# 7.2.0 - 08/27/18
+
+#### 🚀 New
+
+- Added a `--[no-]enums` CLI option to toggle between enums and unions (TypeScript only).
+
 # 7.1.0 - 07/02/18
 
 #### 🛠 Internal

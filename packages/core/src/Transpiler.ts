@@ -27,6 +27,7 @@ export default class Transpiler {
       defaultNullable: bool(),
       defaultOptional: bool(),
       disableEslint: bool(),
+      enums: bool(true),
       importPath: string('shapeshifter'),
       includeAttributes: bool(),
       includeDefinitions: bool(),

@@ -51,9 +51,15 @@ export default class TypeScriptRenderer extends Renderer {
     return this.wrapNullable(definition, 'boolean');
   }
 
-  renderEnum(definition: EnumDefinition): string {
-    const { indentCharacter: char } = this.options;
+  renderEnum(definition: EnumDefinition, depth: number): string {
+    const { enums, indentCharacter: char } = this.options;
     const { values, valueType } = definition.config;
+
+    // Use a union
+    if (!enums) {
+      return values.map(item => this.renderOrFormat(item, depth, valueType)).join(' | ');
+    }
+
     const members: string[] = [];
     const enumName = this.getObjectName(this.schematic.name, definition.attribute, 'Enum');
     let currentChar = ASCII_ALPHA_START;

@@ -155,8 +155,23 @@ describe('TypeScriptRenderer', () => {
             valueType: 'number',
             values: [1, 23, 164],
           }),
+          0,
         ),
       ).toBe('FooBarEnum');
+    });
+
+    it('renders a union', () => {
+      renderer.options.enums = false;
+
+      expect(
+        renderer.renderEnum(
+          new EnumDefinition(options, 'bar', {
+            valueType: 'number',
+            values: [1, 23, 164],
+          }),
+          0,
+        ),
+      ).toBe('1 | 23 | 164');
     });
   });
 

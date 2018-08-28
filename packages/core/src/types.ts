@@ -17,6 +17,7 @@ export interface Options {
   defaultNullable: boolean;
   defaultOptional: boolean;
   disableEslint: boolean;
+  enums: boolean;
   importPath: string;
   includeAttributes: boolean;
   includeDefinitions: boolean;
@@ -25,7 +26,6 @@ export interface Options {
   inferPropTypesShape: boolean;
   renderers: RendererType[];
   schemaGenerics: boolean;
-  // stringEnums: boolean;
   stripPropTypes: boolean;
   useDefine: boolean;
 }

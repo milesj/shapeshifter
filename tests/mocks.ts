@@ -10,6 +10,7 @@ export const options: Options = {
   defaultNullable: false,
   defaultOptional: true,
   disableEslint: true,
+  enums: true,
   indentCharacter: '  ',
   importPath: 'shapeshifter',
   includeSchemas: false,
