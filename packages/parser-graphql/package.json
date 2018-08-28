@@ -13,7 +13,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/parser-graphql",
+  "repository": "https://github.com/milesj/shapeshifter/tree/master/packages/parser-graphql",
   "license": "MIT",
   "dependencies": {
     "@types/graphql": "^0.13.4",

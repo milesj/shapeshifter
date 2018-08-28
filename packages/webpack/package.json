@@ -14,7 +14,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/webpack",
+  "repository": "https://github.com/milesj/shapeshifter/tree/master/packages/webpack",
   "license": "MIT",
   "dependencies": {
     "@types/webpack": "^4.4.9"

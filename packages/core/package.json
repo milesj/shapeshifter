@@ -30,7 +30,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/core",
+  "repository": "https://github.com/milesj/shapeshifter/tree/master/packages/core",
   "license": "MIT",
   "dependencies": {
     "@types/yargs": "^11.1.1",
