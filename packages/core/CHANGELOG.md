@@ -8,6 +8,10 @@
 - Added a `constant` config property to enum type defintions. When enabled, and `constants` are
   used, any constants by name will be referenced.
 
+#### 🐞 Fixed
+
+- Resolved an incorrect URL in the `package.json`.
+
 # 7.1.0 - 07/02/18
 
 #### 🛠 Internal
