@@ -19,9 +19,11 @@ import UnionDefinition from '../definitions/Union';
 import { Config } from '../types';
 
 export default class PropTypesRenderer extends Renderer {
-  suffix: string = 'Shape';
-
   beforeParse() {
+    if (this.options.suffix) {
+      this.suffix = 'Shape';
+    }
+
     this.builder.imports.add("import PropTypes from 'prop-types';");
   }
 
@@ -73,10 +75,11 @@ export default class PropTypesRenderer extends Renderer {
 
   renderKey(definition: KeyDefinition): string {
     const union = this.renderUnion(definition.keyType, 0);
+    const name = `Key${this.suffix}`;
 
-    this.builder.header.add(`export const KeyShape = ${union};`);
+    this.builder.header.add(`export const ${name} = ${union};`);
 
-    return this.wrapOptional(definition, 'KeyShape');
+    return this.wrapOptional(definition, name);
   }
 
   renderNumber(definition: NumberDefinition): string {

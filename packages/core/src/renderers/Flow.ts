@@ -19,9 +19,11 @@ import UnionDefinition from '../definitions/Union';
 import { Config } from '../types';
 
 export default class FlowRenderer extends Renderer {
-  suffix: string = 'Type';
-
   beforeParse() {
+    if (this.options.suffix) {
+      this.suffix = 'Type';
+    }
+
     this.builder.comments.add('/* @flow */');
   }
 

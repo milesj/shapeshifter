@@ -86,6 +86,11 @@ app
         default: false,
         description: 'Strip PropTypes shapes in production.',
       },
+      suffix: {
+        boolean: true,
+        default: true,
+        description: 'Append a suffix to every type definition.',
+      },
       typescript: {
         boolean: true,
         default: false,
@@ -118,6 +123,7 @@ app
         renderers: renderers.filter(Boolean),
         schemaGenerics: options.schemaGenerics,
         stripPropTypes: options.stripPropTypes,
+        suffix: options.suffix,
         useDefine: options.useDefine,
       })
         .transpile(options.paths)

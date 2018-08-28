@@ -20,5 +20,6 @@ export const options: Options = {
   renderers: ['prop-types'],
   schemaGenerics: false,
   stripPropTypes: false,
+  suffix: true,
   useDefine: false,
 };

@@ -37,6 +37,7 @@ export default class Transpiler {
       renderers: array(string()).notEmpty(),
       schemaGenerics: bool(),
       stripPropTypes: bool(),
+      suffix: bool(true),
       useDefine: bool(),
     });
   }

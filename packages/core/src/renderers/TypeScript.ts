@@ -23,11 +23,13 @@ import { Config, PrimitiveType } from '../types';
 const ASCII_ALPHA_START: number = 65;
 
 export default class TypeScriptRenderer extends Renderer {
-  suffix: string = 'Interface';
-
   beforeParse() {
-    if (this.options.inferPropTypesShape && this.options.renderers.indexOf('prop-types') >= 0) {
-      this.suffix = 'Shape';
+    if (this.options.suffix) {
+      if (this.options.inferPropTypesShape && this.options.renderers.indexOf('prop-types') >= 0) {
+        this.suffix = 'Shape';
+      } else {
+        this.suffix = 'Interface';
+      }
     }
   }
 

@@ -27,6 +27,7 @@ export interface Options {
   renderers: RendererType[];
   schemaGenerics: boolean;
   stripPropTypes: boolean;
+  suffix: boolean;
   useDefine: boolean;
 }
 

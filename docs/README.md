@@ -135,6 +135,7 @@ your choosing, otherwise the output will be sent to the console.
   "false".
 - `--disable-eslint` (bool) - Prepend an eslint-disable comment to the top of the output. Defaults
   to "false".
+- `--[no-]enums` (bool) - Toggle between enums and unions (TypeScript only). Defaults to "true".
 - `--flow` (bool) - Generate Flow definitions. Defaults to "false".
 - `--indent` (string) - Defines the indentation characters to use in the generated output. Defaults
   to 2 spaces.
@@ -153,5 +154,7 @@ your choosing, otherwise the output will be sent to the console.
   _(TypeScript only)_
 - `--strip-prop-types` (bool) - Wrap PropType definitions in `process.env.NODE_ENV` production
   expressions, allowing them to be removed with dead code elimination.
+- `--[no-]suffix` (bool) - Toggle definition name suffixes. Be careful when using this with multiple
+  renderers. Defaults to "true".
 - `--typescript` (bool) - Generate TypeScript definitions. Defaults to "false".
 - `--use-define` (bool) - Update all schema relations to use `Schema#define`.

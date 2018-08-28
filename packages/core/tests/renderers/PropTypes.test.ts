@@ -33,6 +33,8 @@ describe('PropTypesRenderer', () => {
         options,
       ),
     );
+
+    renderer.beforeParse();
   });
 
   describe('beforeParse()', () => {
@@ -40,6 +42,14 @@ describe('PropTypesRenderer', () => {
       renderer.beforeParse();
 
       expect(Array.from(renderer.builder.imports)).toEqual(["import PropTypes from 'prop-types';"]);
+    });
+
+    it('doesnt set suffix', () => {
+      renderer.suffix = ''; // Reset
+      renderer.options.suffix = false;
+      renderer.beforeParse();
+
+      expect(renderer.suffix).toBe('');
     });
   });
 
@@ -215,6 +225,26 @@ describe('PropTypesRenderer', () => {
 ]);`,
       ]);
     });
+
+    it('renders with no suffix', () => {
+      renderer.suffix = '';
+
+      expect(
+        renderer.renderKey(
+          new KeyDefinition(options, 'foo', {
+            nullable: false,
+            optional: false,
+          }),
+        ),
+      ).toBe('Key.isRequired');
+
+      expect(Array.from(renderer.builder.header)).toEqual([
+        `export const Key = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.number,
+]);`,
+      ]);
+    });
   });
 
   describe('renderNumber()', () => {
@@ -292,6 +322,18 @@ describe('PropTypesRenderer', () => {
           }),
         ),
       ).toBe('(...args) => FooShape(...args)');
+    });
+
+    it('renders with no suffix', () => {
+      renderer.suffix = '';
+
+      expect(
+        renderer.renderReference(
+          new ReferenceDefinition(options, 'foo', {
+            self: true,
+          }),
+        ),
+      ).toBe('(...args) => Foo(...args)');
     });
   });
 

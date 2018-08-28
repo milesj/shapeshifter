@@ -316,6 +316,22 @@ describe('Transpiler', () => {
     expect(output).toBe(file(expectedPath));
   });
 
+  it('infers prop types shapes with no name suffixes', () => {
+    const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
+    const expectedPath = `${TEST_ROOT}/expected/shapeshifter/typescript/infer-no-suffix.ts`;
+
+    const output = new Transpiler({
+      ...otherOptions,
+      includeDefinitions: true,
+      includeSchemas: true,
+      inferPropTypesShape: true,
+      suffix: false,
+      renderers: ['prop-types', 'typescript'],
+    }).transpileFile(actualPath);
+
+    expect(output).toBe(file(expectedPath));
+  });
+
   it('infers prop types shapes and defined schema generics for typescript', () => {
     const actualPath = `${TEST_ROOT}/schemas/types-schemas.json`;
     const expectedPath = `${TEST_ROOT}/expected/shapeshifter/typescript/infer-and-schema-generics.ts`;

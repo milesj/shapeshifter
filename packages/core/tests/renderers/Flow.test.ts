@@ -33,6 +33,8 @@ describe('FlowRenderer', () => {
         options,
       ),
     );
+
+    renderer.beforeParse();
   });
 
   describe('beforeParse()', () => {
@@ -40,6 +42,14 @@ describe('FlowRenderer', () => {
       renderer.beforeParse();
 
       expect(Array.from(renderer.builder.comments)).toEqual(['/* @flow */']);
+    });
+
+    it('doesnt set suffix', () => {
+      renderer.suffix = ''; // Reset
+      renderer.options.suffix = false;
+      renderer.beforeParse();
+
+      expect(renderer.suffix).toBe('');
     });
   });
 
@@ -308,6 +318,19 @@ describe('FlowRenderer', () => {
         ),
       ).toBe('FooType');
     });
+
+    it('renders with no suffix', () => {
+      renderer.suffix = '';
+
+      expect(
+        renderer.renderReference(
+          new ReferenceDefinition(options, 'foo', {
+            nullable: false,
+            self: true,
+          }),
+        ),
+      ).toBe('Foo');
+    });
   });
 
   describe('renderSchema()', () => {
@@ -319,6 +342,17 @@ describe('FlowRenderer', () => {
           resourceName: 'quxs',
         }),
       ).toBe("export const quxSchema = new Schema<QuxType>('quxs');");
+    });
+
+    it('renders with generics and no suffix', () => {
+      renderer.options.schemaGenerics = true;
+      renderer.suffix = '';
+
+      expect(
+        renderer.renderSchema('QuxSchema', [], {
+          resourceName: 'quxs',
+        }),
+      ).toBe("export const quxSchema = new Schema<Qux>('quxs');");
     });
   });
 

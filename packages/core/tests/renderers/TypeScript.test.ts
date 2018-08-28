@@ -33,6 +33,8 @@ describe('TypeScriptRenderer', () => {
         options,
       ),
     );
+
+    renderer.beforeParse();
   });
 
   describe('beforeParse()', () => {
@@ -55,6 +57,14 @@ describe('TypeScriptRenderer', () => {
       renderer.beforeParse();
 
       expect(renderer.suffix).toBe('Shape');
+    });
+
+    it('doesnt set suffix', () => {
+      renderer.suffix = ''; // Reset
+      renderer.options.suffix = false;
+      renderer.beforeParse();
+
+      expect(renderer.suffix).toBe('');
     });
   });
 
@@ -332,6 +342,19 @@ describe('TypeScriptRenderer', () => {
         ),
       ).toBe('FooInterface');
     });
+
+    it('renders with no suffix', () => {
+      renderer.suffix = '';
+
+      expect(
+        renderer.renderReference(
+          new ReferenceDefinition(options, 'foo', {
+            nullable: false,
+            self: true,
+          }),
+        ),
+      ).toBe('Foo');
+    });
   });
 
   describe('renderSchema()', () => {
@@ -343,6 +366,17 @@ describe('TypeScriptRenderer', () => {
           resourceName: 'quxs',
         }),
       ).toBe("export const quxSchema = new Schema<QuxInterface>('quxs');");
+    });
+
+    it('renders with generics and no suffix', () => {
+      renderer.options.schemaGenerics = true;
+      renderer.suffix = '';
+
+      expect(
+        renderer.renderSchema('QuxSchema', [], {
+          resourceName: 'quxs',
+        }),
+      ).toBe("export const quxSchema = new Schema<Qux>('quxs');");
     });
   });
 

@@ -3,6 +3,8 @@
 #### 🚀 New
 
 - Added a `--[no-]enums` CLI option to toggle between enums and unions (TypeScript only).
+- Added a `--[no-]suffix` CLI option to toggle definition name suffixes. Be careful when using this
+  with multiple renderers.
 
 # 7.1.0 - 07/02/18
 
