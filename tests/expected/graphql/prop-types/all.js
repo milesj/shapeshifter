@@ -191,3 +191,7 @@ export const UnionShape = PropTypes.shape({
     ]),
   ]),
 });
+
+export const UnsupportedNodesShape = PropTypes.shape({
+  name: PropTypes.string,
+});

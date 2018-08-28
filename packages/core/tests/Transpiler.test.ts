@@ -74,7 +74,17 @@ const FORMATS: {
   {
     format: 'gql',
     target: 'graphql',
-    cases: ['array', 'enum', 'primitive', 'shape', 'union', 'reference', 'reference-self', 'core'],
+    cases: [
+      'array',
+      'enum',
+      'primitive',
+      'shape',
+      'union',
+      'reference',
+      'reference-self',
+      'core',
+      'unsupported-nodes',
+    ],
   },
 ];
 

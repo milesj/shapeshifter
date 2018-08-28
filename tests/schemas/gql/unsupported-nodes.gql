@@ -1,0 +1,13 @@
+enum Role {
+  ADMIN
+  MOD
+}
+
+directive @auth(role: Role, roles: [Role]) on FIELD | FIELD_DEFINITION
+
+scalar DateTime
+
+type UnsupportedNodes {
+  at: DateTime
+  name: String
+}

@@ -166,3 +166,7 @@ export interface UnionInterface {
   shapeField?: UnionFooStructInterface | UnionBarStructInterface | UnionBazStructInterface | null;
   unionField?: boolean | number | UnionUnionField10Enum | UnionUnionField11Enum | UnionFooStructInterface | UnionBarStructInterface | UnionBazStructInterface | null;
 }
+
+export interface UnsupportedNodesInterface {
+  name?: string | null;
+}

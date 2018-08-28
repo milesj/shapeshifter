@@ -126,3 +126,7 @@ export type UnionType = {
   shapeField?: UnionFooStructType | UnionBarStructType | UnionBazStructType | null,
   unionField?: boolean | number | 'FOO' | 'BAR' | 'BAZ' | 'QUX' | UnionFooStructType | UnionBarStructType | UnionBazStructType | null,
 };
+
+export type UnsupportedNodesType = {
+  name?: ?string,
+};

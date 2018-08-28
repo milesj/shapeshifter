@@ -21,6 +21,7 @@ import {
   EnumTypeDefinitionNode,
   ObjectTypeDefinitionNode,
   UnionTypeDefinitionNode,
+  ScalarTypeDefinitionNode,
 } from 'graphql';
 import {
   AttributesField,
@@ -46,6 +47,8 @@ class GraphQLParser {
   references: ReferencesField = {};
 
   enums: { [key: string]: (string | number)[] } = {};
+
+  scalars: { [key: string]: boolean } = {};
 
   shapes: ShapesField = {};
 
@@ -75,7 +78,7 @@ class GraphQLParser {
     type: TypeNode,
     nullable: boolean = true,
     schematic: boolean = false,
-  ): TypeDefinition {
+  ): TypeDefinition | null {
     const kind = String(type.kind);
 
     // Non-nullable
@@ -126,6 +129,11 @@ class GraphQLParser {
           };
 
         default:
+          // Scalar
+          if (this.scalars[value]) {
+            return null;
+          }
+
           // Enum
           if (this.enums[value]) {
             return {
@@ -174,8 +182,7 @@ class GraphQLParser {
       }
     }
 
-    /* istanbul ignore next No need to cover */
-    throw new TypeError(`Unsupported GraphQL attribute type "${field.name.value}".`);
+    return null;
   }
 
   extractEnum(definition: EnumTypeDefinitionNode) {
@@ -192,7 +199,11 @@ class GraphQLParser {
     const attributes: { [key: string]: TypeDefinition } = {};
 
     (definition.fields || []).forEach((field: FieldDefinitionNode) => {
-      attributes[field.name.value] = this.buildAttribute(field, field.type);
+      const attr = this.buildAttribute(field, field.type);
+
+      if (attr) {
+        attributes[field.name.value] = attr;
+      }
     });
 
     this.shapes[definition.name.value] = attributes;
@@ -206,7 +217,11 @@ class GraphQLParser {
     const values: TypeDefinition[] = [];
 
     definition.types.forEach((type: NamedTypeNode) => {
-      values.push(this.buildAttribute(definition, type));
+      const attr = this.buildAttribute(definition, type);
+
+      if (attr) {
+        values.push(attr);
+      }
     });
 
     this.unions[definition.name.value] = values;
@@ -217,12 +232,11 @@ class GraphQLParser {
     const { fields = [] } = this.schematic;
 
     fields.forEach((fieldDefinition: FieldDefinitionNode) => {
-      this.attributes[fieldDefinition.name.value] = this.buildAttribute(
-        fieldDefinition,
-        fieldDefinition.type,
-        true,
-        true,
-      );
+      const attr = this.buildAttribute(fieldDefinition, fieldDefinition.type, true, true);
+
+      if (attr) {
+        this.attributes[fieldDefinition.name.value] = attr;
+      }
     });
   }
 
@@ -245,17 +259,16 @@ class GraphQLParser {
           this.extractUnion(definition as UnionTypeDefinitionNode);
           break;
 
+        case Kind.SCALAR_TYPE_DEFINITION:
+          this.scalars[(definition as ScalarTypeDefinitionNode).name.value] = true;
+          break;
+
         case Kind.INTERFACE_TYPE_DEFINITION:
           // Ignore interfaces
           break;
 
-        default: {
-          // @ts-ignore
-          const name = definition.name.value;
-
-          /* istanbul ignore next No need to cover */
-          throw new TypeError(`Unsupported GraphQL definition "${name}".`);
-        }
+        default:
+          break;
       }
     });
   }
