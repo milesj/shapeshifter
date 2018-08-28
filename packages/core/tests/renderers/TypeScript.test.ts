@@ -116,7 +116,6 @@ describe('TypeScriptRenderer', () => {
 
     it('defaults value to any', () => {
       const def = new ArrayDefinition(options, 'foo', {
-        keyType: 'number',
         valueType: 'string',
       });
 

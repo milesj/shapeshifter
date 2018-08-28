@@ -522,7 +522,7 @@ export default class Renderer {
       );
     }
 
-    const getRelationSchemaName = (definition: Definition<Config>) => {
+    const getRelationSchemaName = (definition: ReferenceDefinition) => {
       const relationName = definition.config.self
         ? this.schematic.name
         : references[definition.config.reference].name;
@@ -576,8 +576,8 @@ export default class Renderer {
           this.formatObject(
             definition.valueTypes.map(valueDefinition =>
               this.wrapProperty(
-                this.formatObjectProperty(valueDefinition.config.name),
-                getRelationSchemaName(valueDefinition),
+                this.formatObjectProperty(valueDefinition.config.name!),
+                getRelationSchemaName(valueDefinition as ReferenceDefinition),
                 2,
               ),
             ),

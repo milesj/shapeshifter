@@ -3,6 +3,7 @@ import { options } from '../../../tests/mocks';
 
 describe('Definition', () => {
   it('inherits default config and sets attribute', () => {
+    // @ts-ignore Allow unknown
     const def = new Definition(options, 'foo', { key: 'value' });
 
     expect(def.attribute).toBe('foo');

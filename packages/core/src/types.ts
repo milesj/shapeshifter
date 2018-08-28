@@ -5,7 +5,6 @@
 
 /* eslint-disable typescript/no-empty-interface */
 
-import { Struct } from 'optimal';
 import Schema from './Schema';
 
 export type Parser = (path: string) => SchemaStructure;
@@ -14,7 +13,7 @@ export type PrimitiveType = string | number | boolean;
 
 export type RendererType = 'flow' | 'prop-types' | 'typescript';
 
-export interface Options extends Struct {
+export interface Options {
   defaultNullable: boolean;
   defaultOptional: boolean;
   disableEslint: boolean;
@@ -26,6 +25,7 @@ export interface Options extends Struct {
   inferPropTypesShape: boolean;
   renderers: RendererType[];
   schemaGenerics: boolean;
+  // stringEnums: boolean;
   stripPropTypes: boolean;
   useDefine: boolean;
 }
@@ -69,7 +69,8 @@ export type TypeDefinition =
   | StringConfig
   | UnionConfig;
 
-export interface Config extends Struct {
+export interface Config {
+  name?: string;
   nullable?: boolean;
   optional?: boolean;
   type: string;
@@ -103,7 +104,7 @@ export interface PolymorphConfig extends Config {
   export?: boolean;
   keySuffix?: string;
   typeSuffix?: string;
-  valueTypes: (TypeDefinition & { name: string })[];
+  valueTypes: TypeDefinition[];
 }
 
 export interface ReferenceConfig extends Config {

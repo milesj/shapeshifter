@@ -98,7 +98,6 @@ describe('PropTypesRenderer', () => {
 
     it('defaults to an any array', () => {
       const def = new ArrayDefinition(options, 'foo', {
-        keyType: 'number',
         valueType: 'string',
       });
 
