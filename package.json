@@ -17,8 +17,8 @@
     "release": "lerna publish"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.117.1",
-    "lerna": "^3.0.4"
+    "@milesj/build-tool-config": "^0.119.0",
+    "lerna": "^3.1.4"
   },
   "workspaces": [
     "packages/*"
