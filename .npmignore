@@ -26,8 +26,10 @@ node_modules/
 .eslintignore
 .eslintrc.js
 .flowconfig
+.gitbook.yaml
 .prettierignore
 .travis.yml
+babel.config.js
 book.json
 jest.config.js
 prettier.config.js

@@ -33,13 +33,14 @@
   "repository": "https://github.com/milesj/shapeshifter/tree/master/packages/core",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.0.0",
     "@types/yargs": "^11.1.1",
-    "optimal": "^1.0.0",
+    "optimal": "^1.1.1",
     "yargs": "^12.0.1"
   },
   "devDependencies": {
-    "flow-bin": "^0.79.1",
+    "flow-bin": "^0.80.0",
     "prop-types": "^15.6.2",
-    "typescript": "^3.0.1"
+    "typescript": "^3.0.3"
   }
 }

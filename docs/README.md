@@ -83,9 +83,9 @@ export const userSchema = new Schema('users', 'id');
 
 ## Requirements
 
-- Node 4+
+- Node 8.9+
 - PropTypes 15+ / Flow 0.60+ / TypeScript 2.4+
-- IE 10+
+- IE 11+
 
 ## Installation
 

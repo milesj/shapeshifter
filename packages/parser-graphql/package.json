@@ -16,8 +16,9 @@
   "repository": "https://github.com/milesj/shapeshifter/tree/master/packages/parser-graphql",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.0.0",
     "@types/graphql": "^0.13.4",
-    "graphql": "^0.13.2"
+    "graphql": "^14.0.0"
   },
   "devDependencies": {
     "shapeshifter": "^7.2.0"

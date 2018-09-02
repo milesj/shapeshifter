@@ -17,14 +17,14 @@
     "release": "lerna publish"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.119.0",
-    "lerna": "^3.1.4"
+    "@milesj/build-tools": "^0.0.10",
+    "lerna": "^3.2.1"
   },
   "workspaces": [
     "packages/*"
   ],
   "beemo": {
-    "module": "@milesj/build-tool-config",
+    "module": "@milesj/build-tools",
     "drivers": [
       "babel",
       "eslint",
