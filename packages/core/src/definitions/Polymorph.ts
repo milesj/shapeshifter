@@ -10,7 +10,8 @@ import toConfig from '../helpers/toConfig';
 import { Config, PolymorphConfig } from '../types';
 
 export default class PolymorphDefinition extends Definition<PolymorphConfig> {
-  valueTypes: Definition<Config>[] = [];
+  // @ts-ignore Set after instantiation
+  valueTypes: Definition<Config>[];
 
   validateConfig() {
     this.config = optimal(

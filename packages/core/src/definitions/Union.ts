@@ -10,7 +10,8 @@ import toConfig from '../helpers/toConfig';
 import { Config, UnionConfig } from '../types';
 
 export default class UnionDefinition extends Definition<UnionConfig> {
-  valueTypes: Definition<Config>[] = [];
+  // @ts-ignore Set after instantiation
+  valueTypes: Definition<Config>[];
 
   validateConfig() {
     this.config = optimal(
