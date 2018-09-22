@@ -34,12 +34,12 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@types/yargs": "^11.1.1",
+    "@types/yargs": "^12.0.0",
     "optimal": "^1.1.1",
-    "yargs": "^12.0.1"
+    "yargs": "^12.0.2"
   },
   "devDependencies": {
-    "flow-bin": "^0.80.0",
+    "flow-bin": "^0.81.0",
     "prop-types": "^15.6.2",
     "typescript": "^3.0.3"
   }
