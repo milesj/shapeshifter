@@ -58,7 +58,7 @@ export default class FlowRenderer extends Renderer {
   }
 
   renderKey(definition: KeyDefinition): string {
-    const union = this.renderUnion(definition.keyType, 0);
+    const union = this.renderUnion(definition.keyType!, 0);
 
     this.builder.header.add(`export type Key = ${union};`);
 

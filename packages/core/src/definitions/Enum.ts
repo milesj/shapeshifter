@@ -8,10 +8,12 @@
 import optimal, { bool, string, array, custom, Struct } from 'optimal';
 import Definition from '../Definition';
 import normalizeType from '../helpers/normalizeType';
-import { EnumConfig } from '../types';
+import { Options, EnumConfig } from '../types';
 
 export default class EnumDefinition extends Definition<EnumConfig> {
-  validateConfig() {
+  constructor(options: Options, attribute: string, config: Partial<EnumConfig> = {}) {
+    super(options, attribute, config, false);
+
     this.config = optimal(
       this.config,
       {

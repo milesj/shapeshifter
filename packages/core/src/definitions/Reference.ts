@@ -5,10 +5,12 @@
 
 import optimal, { bool, string } from 'optimal';
 import Definition from '../Definition';
-import { ReferenceConfig } from '../types';
+import { Options, ReferenceConfig } from '../types';
 
 export default class ReferenceDefinition extends Definition<ReferenceConfig> {
-  validateConfig() {
+  constructor(options: Options, attribute: string, config: Partial<ReferenceConfig> = {}) {
+    super(options, attribute, config, false);
+
     this.config = optimal(
       this.config,
       {

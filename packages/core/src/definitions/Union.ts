@@ -7,13 +7,14 @@ import optimal, { bool, string, array } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 import toConfig from '../helpers/toConfig';
-import { Config, UnionConfig } from '../types';
+import { Config, Options, UnionConfig } from '../types';
 
 export default class UnionDefinition extends Definition<UnionConfig> {
-  // @ts-ignore Set after instantiation
-  valueTypes: Definition<Config>[];
+  valueTypes: Definition<Config>[] = [];
 
-  validateConfig() {
+  constructor(options: Options, attribute: string, config: Partial<UnionConfig> = {}) {
+    super(options, attribute, config, false);
+
     this.config = optimal(
       this.config,
       {
@@ -31,10 +32,10 @@ export default class UnionDefinition extends Definition<UnionConfig> {
     );
 
     this.valueTypes = this.config.valueTypes.map((type, i) => {
-      const config = toConfig(type);
+      const valueConfig = toConfig(type);
 
       return DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, {
-        ...config,
+        ...valueConfig,
         nullable: false,
         optional: true,
       });

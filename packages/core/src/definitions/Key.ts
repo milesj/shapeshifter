@@ -5,14 +5,13 @@
 
 import Definition from '../Definition';
 import UnionDefinition from './Union';
-import { KeyConfig } from '../types';
+import { Options, KeyConfig } from '../types';
 
 export default class KeyDefinition extends Definition<KeyConfig> {
-  // @ts-ignore Set after instantiation
   keyType: UnionDefinition;
 
-  validateConfig() {
-    super.validateConfig();
+  constructor(options: Options, attribute: string, config: Partial<KeyConfig> = {}) {
+    super(options, attribute, config);
 
     this.keyType = new UnionDefinition(this.options, `${this.attribute}_key`, {
       nullable: false,

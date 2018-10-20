@@ -6,12 +6,14 @@
 import optimal, { bool, string } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
-import { Config, ArrayConfig } from '../types';
+import { Config, Options, ArrayConfig } from '../types';
 
 export default class ArrayDefinition extends Definition<ArrayConfig> {
-  valueType?: Definition<Config>;
+  valueType: Definition<Config>;
 
-  validateConfig() {
+  constructor(options: Options, attribute: string, config: Partial<ArrayConfig> = {}) {
+    super(options, attribute, config, false);
+
     this.config = optimal(
       this.config,
       {

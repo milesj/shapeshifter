@@ -32,9 +32,6 @@
       "prettier",
       "typescript"
     ],
-    "settings": {
-      "node": true
-    },
     "eslint": {
       "ignore": [
         "tests/expected/**/*",

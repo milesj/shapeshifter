@@ -80,7 +80,7 @@ export default class PropTypesRenderer extends Renderer {
   }
 
   renderKey(definition: KeyDefinition): string {
-    const union = this.renderUnion(definition.keyType, 0);
+    const union = this.renderUnion(definition.keyType!, 0);
     const name = `Key${this.suffix}`;
 
     this.builder.header.add(`export const ${name} = ${union};`);

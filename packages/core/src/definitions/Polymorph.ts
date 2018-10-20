@@ -7,13 +7,14 @@ import optimal, { bool, string, array } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
 import toConfig from '../helpers/toConfig';
-import { Config, PolymorphConfig } from '../types';
+import { Config, Options, PolymorphConfig } from '../types';
 
 export default class PolymorphDefinition extends Definition<PolymorphConfig> {
-  // @ts-ignore Set after instantiation
   valueTypes: Definition<Config>[];
 
-  validateConfig() {
+  constructor(options: Options, attribute: string, config: Partial<PolymorphConfig> = {}) {
+    super(options, attribute, config, false);
+
     this.config = optimal(
       this.config,
       {
@@ -34,10 +35,10 @@ export default class PolymorphDefinition extends Definition<PolymorphConfig> {
     );
 
     this.valueTypes = this.config.valueTypes.map((type, i) => {
-      const config = toConfig(type);
+      const valueConfig = toConfig(type);
 
       return DefinitionFactory.factory(this.options, `${this.attribute}_${i}`, {
-        ...config,
+        ...valueConfig,
         nullable: false,
       });
     });

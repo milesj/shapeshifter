@@ -6,14 +6,16 @@
 import optimal, { bool, string } from 'optimal';
 import Definition from '../Definition';
 import DefinitionFactory from '../DefinitionFactory';
-import { Config, ObjectConfig, StringConfig } from '../types';
+import { Config, Options, ObjectConfig, StringConfig } from '../types';
 
 export default class ObjectDefinition extends Definition<ObjectConfig> {
-  keyType?: Definition<Config>;
+  keyType: Definition<Config>;
 
-  valueType?: Definition<Config>;
+  valueType: Definition<Config>;
 
-  validateConfig() {
+  constructor(options: Options, attribute: string, config: Partial<ObjectConfig> = {}) {
+    super(options, attribute, config, false);
+
     this.config = optimal(
       this.config,
       {
