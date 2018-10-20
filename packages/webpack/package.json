@@ -17,13 +17,13 @@
   "repository": "https://github.com/milesj/shapeshifter/tree/master/packages/webpack",
   "license": "MIT",
   "dependencies": {
-    "@types/webpack": "^4.4.11"
+    "@types/webpack": "^4.4.17"
   },
   "devDependencies": {
-    "babel-loader": "^8.0.0",
+    "babel-loader": "^8.0.4",
     "shapeshifter": "^7.2.0",
-    "webpack": "^4.17.1",
-    "webpack-cli": "^3.1.0"
+    "webpack": "^4.21.0",
+    "webpack-cli": "^3.1.2"
   },
   "peerDependencies": {
     "shapeshifter": "^7.0.0",

@@ -62,9 +62,9 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
-          // @ts-ignore
           {
             ...data,
+            // @ts-ignore
             imports: true,
           },
           options,
@@ -77,9 +77,9 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
-          // @ts-ignore
           {
             ...data,
+            // @ts-ignore
             constants: 123,
           },
           options,
@@ -92,9 +92,9 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
-          // @ts-ignore
           {
             ...data,
+            // @ts-ignore
             subsets: 123,
           },
           options,
@@ -107,9 +107,9 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
-          // @ts-ignore
           {
             ...data,
+            // @ts-ignore
             references: 123,
           },
           options,
@@ -122,9 +122,9 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
-          // @ts-ignore
           {
             ...data,
+            // @ts-ignore
             meta: 123,
           },
           options,
@@ -137,9 +137,9 @@ describe('Schematic', () => {
       () =>
         new Schematic(
           '/foo.json',
-          // @ts-ignore
           {
             ...data,
+            // @ts-ignore
             shapes: 123,
           },
           options,
