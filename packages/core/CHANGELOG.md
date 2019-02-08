@@ -1,4 +1,4 @@
-# 7.2.0 - 08/27/18
+# 7.2.0 - 2018-08-27
 
 #### 🚀 New
 
@@ -12,13 +12,13 @@
 
 - Resolved an incorrect URL in the `package.json`.
 
-# 7.1.0 - 07/02/18
+# 7.1.0 - 2018-07-02
 
 #### 🛠 Internal
 
 - Updated `yargs` to 12.0.
 
-# 7.0.0 - 06/26/18
+# 7.0.0 - 2018-06-26
 
 #### 💥 Breaking
 
@@ -46,13 +46,13 @@
 
 - Transpiler will skip files that start with a period (`.eslintrc`, etc).
 
-# 6.2.1 - 06/20/18
+# 6.2.1 - 2018-06-20
 
 #### 🐞 Fixed
 
 - Fixed missing build issue.
 
-# 6.2.0 - 06/19/18
+# 6.2.0 - 2018-06-19
 
 #### 🚀 New
 
@@ -62,20 +62,20 @@
   callsites for schema instances.
 - Updated `PropTypePolyfill` to `PropTypes.any` so that TypeScript and Flow type check correctly.
 
-# 6.1.2 - 06/06/18
+# 6.1.2 - 2018-06-06
 
 #### 🐞 Fixed
 
 - Fixed missing build issue.
 
-# 6.1.1 - 06/06/18
+# 6.1.1 - 2018-06-06
 
 #### 🛠 Internal
 
 - Updated `optimal` to 1.0.
 - Tested against TypeScript 2.9 and Webpack 4.11.
 
-# 6.1.0 - 04/10/18
+# 6.1.0 - 2018-04-10
 
 #### 🚀 New
 
@@ -86,7 +86,7 @@
 - Added missing `@types` to dependency list.
 - Replaced `index.d.ts` with individual files generated with `--declaration`.
 
-# 6.0.0 - 04/06/18
+# 6.0.0 - 2018-04-06
 
 #### 💥 Breaking
 
@@ -125,13 +125,13 @@
 - Converted from Flow to TypeScript.
 - Replaced Vorpal with Yargs.
 
-# 5.1.0 - 11/10/17
+# 5.1.0 - 2017-11-10
 
 #### 🚀 New
 
 - The `eslint-disable` comment atop the output file is now controlled by a `--disableEslint` flag.
 
-# 5.0.0 - 9/28/17
+# 5.0.0 - 2017-09-28
 
 #### 💥 Breaking
 
@@ -146,25 +146,25 @@
 - Integrated `optimal` for options validation.
 - Moved Flowtype definitions to flow-typed/ folder.
 
-# 4.2.1 - 7/2/17
+# 4.2.1 - 2017-02-17
 
 - Fixed an issue with the lib/ build.
 
-# 4.2.0 - 7/2/17
+# 4.2.0 - 2017-02-17
 
 - Schematics can now be auto-transpiled through a build or bundle process.
 - Added a new `WebpackPlugin` plugin for auto-transpilation.
 - Added a new `importPath` option, allowing the output import to be customized.
 - Added an `eslint-disable` comment to the top of the output file.
 
-# 4.1.0 - 5/10/17
+# 4.1.0 - 2017-05-10
 
 - Updated IE requirement to 10+.
 - Updated to include src/ files in the published package.
 - Updated `Relation.schema` Flowtype definition to be covariant and allow subclasses.
 - Moved Flowtype definition to root of project.
 
-# 4.0.0 - 4/17/17
+# 4.0.0 - 2017-04-17
 
 - Updated React requirement to v15.5.
 - Updated PropTypes to use the new `prop-types` package.
@@ -176,23 +176,23 @@
 - Added a `--useDefine` flag that will use `Schema#define` while rendering.
 - Added a `--stripPropTypes` flag that will wrap PropType definitions in `process.env.NODE_ENV`.
 
-# 3.2.1 - 2/17/17
+# 3.2.1 - 2017-02-17
 
 - Fixed an issue with the `graphql` dependency not being listed.
 
-# 3.2.0 - 2/2/17
+# 3.2.0 - 2017-02-02
 
 - Added compound key support. Simply pass an array of attribute names to `meta.primaryKey`.
 - Updated `Renderer#formatValue` to accept an array of values, which internally calls `formatArray`.
 
-# 3.1.0 - 1/30/17
+# 3.1.0 - 2017-01-30
 
 - Extra metadata in the schematic `meta` field will now be passed to the `Schema` instance.
 - Added `Schema#metadata` to hold the extra metadata object.
 - Added `Renderer#renderPlainObject` for rendering plain JS objects.
 - Updated shape references to throw an error if the shape definition does not exist.
 
-# 3.0.0 - 1/16/17
+# 3.0.0 - 2017-01-16
 
 - Added GraphQL support through the use of `.gql` files to read from (instead of JSON).
 - Updated TypeScript requirement to v2.0 and Flowtype to v0.30.
@@ -204,34 +204,34 @@
 - Renamed and split `Factory` into `DefinitionFactory` and `RendererFactory`.
 - Fixed an issue in which nullable flags could not be passed to enum value types.
 
-# 2.3.0 - 12/16/16
+# 2.3.0 - 2016-12-16
 
 - Added a new shape reference feature, which allows for local reusable shapes in a JSON schema.
 - Updated the visuals of errors and stack traces on the command line.
 
-# 2.2.2 - 9/23/16
+# 2.2.2 - 2016-09-23
 
 - Added Flowtype definitions to the `libs/` output folder.
 - Updated develop dependency TypeScript to v2.0.
 
-# 2.2.1 - 9/12/16
+# 2.2.1 - 2016-09-12
 
 - Fixed an issue in which relations were being output multiple times.
 
-# 2.2.0 - 9/10/16
+# 2.2.0 - 2016-09-10
 
 - Updated references to toggle schema exporting via the `export` property.
 - Updated references to choose the relation type when schema exporting.
 - Fixed issues with self reference schema exports.
 - Fixed issues with circular references.
 
-# 2.1.0 - 9/6/16
+# 2.1.0 - 2016-09-06
 
 - Added `belongsTo()` and `belongsToMany()` to `Schema`.
 - Added `collection` boolean to the schema relation object.
 - Fixed the lib/ build process.
 
-# 2.0.0 - 9/6/16
+# 2.0.0 - 2016-09-06
 
 - Added new `--schemas`, `--attributes`, and `--types` options to the CLI.
 - Added new entity schema mapping through the new `Schema` class.
@@ -247,14 +247,14 @@
 - Renamed previous `Schema` class to `SchemaReader`.
 - Refactored how object name formatting worked.
 
-# 1.2.0 - 7/31/16
+# 1.2.0 - 2016-07-31
 
 - Added support for `self` (recursive) references.
 
-# 1.1.0 - 7/22/16
+# 1.1.0 - 2016-07-22
 
 - TypeScript enum names are automatically generated.
 
-# 1.0.0 - 7/20/16
+# 1.0.0 - 2016-07-20
 
 - Initial release!

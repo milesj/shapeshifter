@@ -1,4 +1,4 @@
-# 1.0.1 - 08/27/18
+# 1.0.1 - 2018-08-27
 
 #### 🐞 Fixed
 
@@ -6,7 +6,7 @@
   `scalar`).
 - Resolved an incorrect URL in the `package.json`.
 
-# 1.0.0 - 06/26/18
+# 1.0.0 - 2018-06-26
 
 #### 🎉 Release
 
