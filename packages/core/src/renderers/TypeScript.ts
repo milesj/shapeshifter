@@ -20,7 +20,7 @@ import indent from '../helpers/indent';
 import normalizeType from '../helpers/normalizeType';
 import { Config, PrimitiveType } from '../types';
 
-const ASCII_ALPHA_START: number = 65;
+const ASCII_ALPHA_START = 65;
 
 export default class TypeScriptRenderer extends Renderer {
   beforeParse() {

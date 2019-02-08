@@ -13,11 +13,11 @@ import {
   MetadataField,
 } from './types';
 
-const BELONGS_TO: string = 'belongsTo';
-const BELONGS_TO_MANY: string = 'belongsToMany';
-const HAS_ONE: string = 'hasOne';
-const HAS_MANY: string = 'hasMany';
-const MORPH_TO: string = 'morphTo';
+const BELONGS_TO = 'belongsTo';
+const BELONGS_TO_MANY = 'belongsToMany';
+const HAS_ONE = 'hasOne';
+const HAS_MANY = 'hasMany';
+const MORPH_TO = 'morphTo';
 
 export default class Schema<T = any> {
   static HAS_ONE: string = HAS_ONE;

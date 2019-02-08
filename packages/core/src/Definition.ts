@@ -30,7 +30,7 @@ export default class Definition<T extends Config> {
       optional: options.defaultOptional,
       // @ts-ignore
       ...config,
-    };
+    } as any;
 
     if (validate) {
       this.validateConfig();

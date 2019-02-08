@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable typescript/no-empty-interface */
+/* eslint-disable @typescript-eslint/no-empty-interface */
 
 import Schema from './Schema';
 
