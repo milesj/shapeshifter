@@ -1,3 +1,9 @@
+# 1.1.0 - 2019-02-07
+
+#### 🚀 New
+
+- Added EcmaScript module support via `esm/` built files.
+
 # 1.0.1 - 2018-08-27
 
 #### 🐞 Fixed

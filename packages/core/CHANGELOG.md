@@ -1,3 +1,14 @@
+# 7.3.0 - 2019-02-07
+
+#### 🚀 New
+
+- Added EcmaScript module support via `esm/` built files.
+
+#### 🛠 Internal
+
+- Updated dependencies.
+- Updated `optimal` to v2.1 from v1.
+
 # 7.2.0 - 2018-08-27
 
 #### 🚀 New
