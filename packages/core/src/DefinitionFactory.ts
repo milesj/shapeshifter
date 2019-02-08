@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2018, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 /* eslint-disable complexity */
 
 import ArrayDefinition from './definitions/Array';

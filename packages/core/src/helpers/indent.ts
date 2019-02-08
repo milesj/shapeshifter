@@ -1,9 +1,4 @@
 /**
- * @copyright   2016-2018, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
-/**
  * Create a string that represents indentation using the defined depth.
  */
 export default function indent(startingDepth: number, character: string = '  '): string {

@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2018, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 import optimal, { bool, string, shape, union, UnionBuilder } from 'optimal';
 import normalizeType from './helpers/normalizeType';
 import { Config, Options } from './types';

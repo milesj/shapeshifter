@@ -1,10 +1,4 @@
 #! /usr/bin/env node
-
-/**
- * @copyright   2016-2018, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 /* eslint-disable */
 
 const app = require('yargs');

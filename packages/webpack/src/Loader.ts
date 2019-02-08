@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2018, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 /* eslint-disable babel/no-invalid-this, promise/no-callback-in-promise */
 
 import webpack from 'webpack';

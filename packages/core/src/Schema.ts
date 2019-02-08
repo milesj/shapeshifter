@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2018, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 import isObject from './helpers/isObject';
 import {
   PrimaryKey,

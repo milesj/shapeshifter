@@ -1,5 +1,5 @@
 /**
- * @copyright   2016-2018, Miles Johnson
+ * @copyright   2016-2019, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  */
 
@@ -190,8 +190,8 @@ class GraphQLParser {
       return;
     }
 
-    this.enums[definition.name.value] = definition.values.map(
-      ({ name: { value } }) => (value.match(/^\d+$/u) ? Number(value) : String(value)),
+    this.enums[definition.name.value] = definition.values.map(({ name: { value } }) =>
+      value.match(/^\d+$/u) ? Number(value) : String(value),
     );
   }
 
