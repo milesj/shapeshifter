@@ -19,7 +19,7 @@ export default class ArrayDefinition extends Definition<ArrayConfig> {
       {
         nullable: bool(),
         optional: bool(),
-        type: string('array'),
+        type: string('array').notEmpty(),
         valueType: this.createUnionType(),
       },
       {

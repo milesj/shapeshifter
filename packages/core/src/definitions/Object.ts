@@ -19,10 +19,10 @@ export default class ObjectDefinition extends Definition<ObjectConfig> {
     this.config = optimal(
       this.config,
       {
-        keyType: string('string'),
+        keyType: string('string').notEmpty(),
         nullable: bool(),
         optional: bool(),
-        type: string('object'),
+        type: string('object').notEmpty(),
         valueType: this.createUnionType(),
       },
       {

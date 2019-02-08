@@ -5,7 +5,7 @@
 
 /* eslint-disable sort-keys */
 
-import optimal, { bool, string, array, custom, Struct } from 'optimal';
+import optimal, { bool, string, array, custom } from 'optimal';
 import Definition from '../Definition';
 import normalizeType from '../helpers/normalizeType';
 import { Options, EnumConfig } from '../types';
@@ -20,10 +20,10 @@ export default class EnumDefinition extends Definition<EnumConfig> {
         constant: bool(),
         nullable: bool(),
         optional: bool(),
-        type: string('enum'),
+        type: string('enum').notEmpty(),
         valueType: this.createUnionType(),
         // `valueType` must be validated before values
-        values: array(custom(this.validateValue))
+        values: array(custom(this.validateValue, ''))
           .notEmpty()
           .required(),
       },
@@ -37,7 +37,7 @@ export default class EnumDefinition extends Definition<EnumConfig> {
   /**
    * Validate a value matches the type in `valueType`.
    */
-  validateValue(value: any, config: Struct) {
+  validateValue(value: any, config: { [key: string]: any }) {
     if (config.constant) {
       return;
     }

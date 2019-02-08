@@ -120,7 +120,7 @@ export interface ReferenceConfig extends Config {
 export interface ShapeConfig extends Config {
   attributes: {
     [key: string]: TypeDefinition;
-  };
+  } | null;
   reference?: string;
 }
 

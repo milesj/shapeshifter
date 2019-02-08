@@ -17,16 +17,14 @@ export default class ShapeDefinition extends Definition<ShapeConfig> {
     this.config = optimal(
       this.config,
       {
-        attributes: object(this.createUnionType(), null)
-          .nullable()
+        attributes: object(this.createUnionType(), null as any)
           .xor('reference')
-          .notEmpty(),
+          .notEmpty()
+          .nullable(),
         nullable: bool(),
         optional: bool(),
-        reference: string()
-          .xor('attributes')
-          .empty(),
-        type: string('shape'),
+        reference: string().xor('attributes'),
+        type: string('shape').notEmpty(),
       },
       {
         name: 'ShapeDefinition',

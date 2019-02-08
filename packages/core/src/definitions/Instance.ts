@@ -14,10 +14,12 @@ export default class InstanceDefinition extends Definition<InstanceConfig> {
     this.config = optimal(
       this.config,
       {
-        contract: string().required(),
+        contract: string()
+          .required()
+          .notEmpty(),
         nullable: bool(),
         optional: bool(),
-        type: string('instance'),
+        type: string('instance').notEmpty(),
       },
       {
         name: 'InstanceDefinition',

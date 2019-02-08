@@ -3,7 +3,6 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import { Struct } from 'optimal';
 import Builder from './Builder';
 import Definition from './Definition';
 import DefinitionFactory from './DefinitionFactory';
@@ -455,10 +454,14 @@ export default class Renderer {
   /**
    * Render a plain JS object.
    */
-  renderPlainObject(object: Struct, depth: number = 0): string {
+  renderPlainObject(object: object, depth: number = 0): string {
     return this.formatObject(
       Object.keys(object).map(key =>
-        this.wrapProperty(this.formatObjectProperty(key), this.formatValue(object[key]), depth + 1),
+        this.wrapProperty(
+          this.formatObjectProperty(key),
+          this.formatValue((object as any)[key]),
+          depth + 1,
+        ),
       ),
       depth,
     );

@@ -43,9 +43,11 @@ export default class Definition<T extends Config> {
   createUnionType(defaultValue: any = null): UnionBuilder {
     return union(
       [
-        string(),
+        string().notEmpty(),
         shape({
-          type: string().required(),
+          type: string()
+            .notEmpty()
+            .required(),
         }),
       ],
       defaultValue,
@@ -77,12 +79,14 @@ export default class Definition<T extends Config> {
       {
         nullable: bool(),
         optional: bool(),
-        type: string(normalizeType(name.replace('Definition', '').toLowerCase() || 'unknown')),
+        type: string(
+          normalizeType(name.replace('Definition', '').toLowerCase() || 'unknown'),
+        ).notEmpty(),
       },
       {
         name: name || 'Definition',
         unknown: true,
       },
-    );
+    ) as any;
   }
 }

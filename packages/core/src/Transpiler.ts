@@ -11,7 +11,7 @@ import optimal, { array, bool, string } from 'optimal';
 import Builder, { TemplateList, TemplateMap } from './Builder';
 import RendererFactory from './RendererFactory';
 import Schematic from './Schematic';
-import { Options, Parser, SchemaStructure } from './types';
+import { Options, Parser, SchemaStructure, RendererType } from './types';
 
 interface ResolveUnit {
   parentSchematic?: Schematic;
@@ -28,13 +28,13 @@ export default class Transpiler {
       defaultOptional: bool(),
       disableEslint: bool(),
       enums: bool(true),
-      importPath: string('shapeshifter'),
+      importPath: string('shapeshifter').notEmpty(),
       includeAttributes: bool(),
       includeDefinitions: bool(),
       includeSchemas: bool(),
-      indentCharacter: string('  '),
+      indentCharacter: string('  ').notEmpty(),
       inferPropTypesShape: bool(),
-      renderers: array(string()).notEmpty(),
+      renderers: array(string<RendererType>()).notEmpty(),
       schemaGenerics: bool(),
       stripPropTypes: bool(),
       suffix: bool(true),

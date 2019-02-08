@@ -19,11 +19,11 @@ export default class PolymorphDefinition extends Definition<PolymorphConfig> {
       this.config,
       {
         export: bool(true),
-        keySuffix: string('_id'),
+        keySuffix: string('_id').notEmpty(),
         nullable: bool(),
         optional: bool(),
-        type: string('polymorph'),
-        typeSuffix: string('_type'),
+        type: string('polymorph').notEmpty(),
+        typeSuffix: string('_type').notEmpty(),
         valueTypes: array(this.createUnionType())
           .notEmpty()
           .required(),

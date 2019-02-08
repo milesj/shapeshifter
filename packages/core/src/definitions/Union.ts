@@ -20,7 +20,7 @@ export default class UnionDefinition extends Definition<UnionConfig> {
       {
         nullable: bool(),
         optional: bool(),
-        type: string('union'),
+        type: string('union').notEmpty(),
         valueTypes: array(this.createUnionType())
           .notEmpty()
           .required(),

@@ -17,12 +17,10 @@ export default class ReferenceDefinition extends Definition<ReferenceConfig> {
         export: bool(true),
         nullable: bool(),
         optional: bool(),
-        reference: string()
-          .empty()
-          .xor('self'),
-        relation: string().empty(),
+        reference: string().xor('self'),
+        relation: string(),
         self: bool().xor('reference'),
-        subset: string().empty(),
+        subset: string(),
         type: string('reference'),
       },
       {
