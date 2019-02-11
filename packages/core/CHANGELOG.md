@@ -2,7 +2,7 @@
 
 #### 🚀 New
 
-- Added EcmaScript module support via `esm/` built files.
+- Added ECMAScript module support via `esm/` built files.
 
 #### 🛠 Internal
 

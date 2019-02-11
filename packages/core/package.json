@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "flow-bin": "^0.92.1",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.7.0",
     "typescript": "^3.3.3"
   }
 }

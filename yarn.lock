@@ -780,10 +780,10 @@
     semver "^5.6.0"
     yargs "^12.0.5"
 
-"@beemo/core@^0.27.1":
-  version "0.27.1"
-  resolved "https://registry.npmjs.org/@beemo/core/-/core-0.27.1.tgz#a554e3bf6f41ea556d6adb909169f5b66620cd78"
-  integrity sha512-ThkJjElVAhUk1wr9Y73mJgZ3y/8nl4de2qcPC35D/LM6aE+KX9lZSvmn8KMDhE5CuxX1O/PxV2RGvhkOOC+WwA==
+"@beemo/core@^0.27.2":
+  version "0.27.2"
+  resolved "https://registry.npmjs.org/@beemo/core/-/core-0.27.2.tgz#715d7572c8386a80ee136cfa206ee431e3f19aec"
+  integrity sha512-UdVapcvbqSN/TXvheJr9KEVTWrOyJ/039v7TwRWHnEOKb8rzVj/RmAW94ontgXqnLL+Xft+5KxSzGpRieC6LAA==
   dependencies:
     "@boost/core" "^1.8.0"
     "@types/execa" "^0.9.0"
@@ -1498,10 +1498,10 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@milesj/build-tool-config@^0.147.2":
-  version "0.147.2"
-  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.147.2.tgz#e3f82a71ab5b471739b831abaafec42ad9d11986"
-  integrity sha512-rOmN9ZixyZyxzGpMfLpoC4my2v4fSwltifzGySBBt3M+2NSDx3fBH83IkTlEg1hM81dwbFCVfUOCt3wBpTWyNg==
+"@milesj/build-tool-config@^0.147.6":
+  version "0.147.6"
+  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.147.6.tgz#9aaabbb2e58355f8504379ed3dccf4296ea282f3"
+  integrity sha512-8R26l24my7JYk3tFyi6kr6z4Tdr6JNceekiOCecwA4VscjIMAQ2SxayWJRpNO/LEYksJuJME9lZh42ksJTtT2w==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.2.2"
@@ -1544,14 +1544,14 @@
     react-test-renderer "^16.8.1"
     typescript "~3.3.1"
 
-"@milesj/build-tool-runtime@^0.23.0":
-  version "0.23.0"
-  resolved "https://registry.npmjs.org/@milesj/build-tool-runtime/-/build-tool-runtime-0.23.0.tgz#47015f155932ab7e59d6f229c450d80529a64979"
-  integrity sha512-77TD0jxkRiNBoQn/OejVNTcb9MpTvlaA1ak7+naVdNGeHh+VdZQ6yLWUwvEU/w+ty1m/McY6lvEg6l6Um0PnZw==
+"@milesj/build-tool-runtime@^0.23.1":
+  version "0.23.1"
+  resolved "https://registry.npmjs.org/@milesj/build-tool-runtime/-/build-tool-runtime-0.23.1.tgz#e5f77479a9cbb9d5dbc813488e9a1dffdcdde6fa"
+  integrity sha512-A1mxugKu6Gwv0G/SCtaEYV4pDQDzvmi36sAvn/CMuMr8XEUOwcV0Dig1xzSOVNktNTnq8NUHSIvOVewvUG4PvQ==
   dependencies:
     "@babel/core" "^7.2.2"
     "@beemo/cli" "^0.27.0"
-    "@beemo/core" "^0.27.1"
+    "@beemo/core" "^0.27.2"
     "@beemo/driver-babel" "^0.27.0"
     "@beemo/driver-eslint" "^0.27.0"
     "@beemo/driver-jest" "^0.27.0"
@@ -1562,13 +1562,13 @@
     prettier "^1.16.4"
     typescript "^3.3.3"
 
-"@milesj/build-tools@^0.25.2":
-  version "0.25.2"
-  resolved "https://registry.npmjs.org/@milesj/build-tools/-/build-tools-0.25.2.tgz#d6ec68c77344f2ed37beaa90754c438665b31109"
-  integrity sha512-eES7YthPHj+4dCY9MTxrV7oHaRcfWbdBKCGeHVab7apA9KwCJg4QOD+BwazDt6tXS2wD0gRPnwu78e9XpfQMMA==
+"@milesj/build-tools@^0.25.6":
+  version "0.25.6"
+  resolved "https://registry.npmjs.org/@milesj/build-tools/-/build-tools-0.25.6.tgz#20e14550c909c3aaf5f66ae84a66acd4b59909b9"
+  integrity sha512-kptgyCK31LqJlF7SFvz9OJmHENNHYWgI8isp4yAe1OkwIqbCWR0hf+hFl+XoWSN0F08ijV+Mb3yp5xBm0h8qmQ==
   dependencies:
-    "@milesj/build-tool-config" "^0.147.2"
-    "@milesj/build-tool-runtime" "^0.23.0"
+    "@milesj/build-tool-config" "^0.147.6"
+    "@milesj/build-tool-runtime" "^0.23.1"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -8045,6 +8045,14 @@ prop-types@^15.6.2:
   dependencies:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
+
+prop-types@^15.7.0:
+  version "15.7.0"
+  resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.0.tgz#cc45233a8ccef80f4a2e3a6bf575bee4e19b4a50"
+  integrity sha512-rlfizAIb1WrkMkbFm3uk7cZGqeVPOhHHMj3gy9FUHE+Ha5lKvbIzj9ygvLdG8Cv2CQEhQnP5djXS7pbmTOpBqw==
+  dependencies:
+    object-assign "^4.1.1"
+    react-is "^16.8.1"
 
 proto-list@~1.2.1:
   version "1.2.4"
