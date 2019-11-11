@@ -1,5 +1,5 @@
 import Definition from '../src/Definition';
-import { options } from '../../../tests/mocks';
+import { options } from './mocks';
 
 describe('Definition', () => {
   it('inherits default config and sets attribute', () => {

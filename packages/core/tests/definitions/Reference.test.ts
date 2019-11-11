@@ -1,4 +1,4 @@
-import { options, truthyValues } from '../../../../tests/mocks';
+import { options, truthyValues } from '../mocks';
 import ReferenceDefinition from '../../src/definitions/Reference';
 
 describe('definitions/Reference', () => {

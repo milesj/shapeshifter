@@ -1,4 +1,4 @@
-import { options } from '../../../../tests/mocks';
+import { options } from '../mocks';
 import PolymorphDefinition from '../../src/definitions/Polymorph';
 import BoolDefinition from '../../src/definitions/Bool';
 import NumberDefinition from '../../src/definitions/Number';

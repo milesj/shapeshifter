@@ -81,7 +81,7 @@ export interface BoolConfig extends Config {}
 export interface EnumConfig extends Config {
   constant?: boolean;
   values: PrimitiveType[];
-  valueType: string;
+  valueType: TypeDefinition;
 }
 
 export interface InstanceConfig extends Config {

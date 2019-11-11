@@ -1,4 +1,4 @@
-import { options } from '../../../../tests/mocks';
+import { options } from '../mocks';
 import UnionDefinition from '../../src/definitions/Union';
 import BoolDefinition from '../../src/definitions/Bool';
 import NumberDefinition from '../../src/definitions/Number';

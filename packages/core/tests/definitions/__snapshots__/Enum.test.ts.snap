@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`definitions/Enum errors if \`valueType\` is empty 1`] = `
+"Invalid EnumDefinition field \\"valueType\\". Type must be one of: string, shape. Received string with the following invalidations:
+ - String cannot be empty."
+`;

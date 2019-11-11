@@ -1,4 +1,4 @@
-import { options } from '../../../../tests/mocks';
+import { options } from '../mocks';
 import EnumDefinition from '../../src/definitions/Enum';
 
 describe('definitions/Enum', () => {
@@ -9,9 +9,9 @@ describe('definitions/Enum', () => {
   });
 
   it('errors if `valueType` is empty', () => {
-    expect(() => new EnumDefinition(options, 'foo', { valueType: '' })).toThrowError(
-      'Invalid EnumDefinition field "valueType". String cannot be empty.',
-    );
+    expect(
+      () => new EnumDefinition(options, 'foo', { valueType: '' }),
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('errors if `values` is not an array', () => {

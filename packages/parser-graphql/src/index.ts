@@ -94,7 +94,7 @@ class GraphQLParser {
       return {
         nullable,
         type: 'array',
-        valueType: this.buildAttribute(field, refinedType.type, true, schematic),
+        valueType: this.buildAttribute(field, refinedType.type, true, schematic)!,
       };
 
       // Named

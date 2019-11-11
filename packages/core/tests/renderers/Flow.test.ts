@@ -12,7 +12,7 @@ import StringDefinition from '../../src/definitions/String';
 import UnionDefinition from '../../src/definitions/Union';
 import ShapeDefinition from '../../src/definitions/Shape';
 import Schematic from '../../src/Schematic';
-import { options } from '../../../../tests/mocks';
+import { options } from '../mocks';
 
 describe('FlowRenderer', () => {
   let renderer: FlowRenderer;

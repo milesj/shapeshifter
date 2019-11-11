@@ -1,11 +1,13 @@
 import isObject from '../../src/helpers/isObject';
-import { allValues } from '../../../../tests/mocks';
+import { allValues } from '../mocks';
 
 describe('helpers/isObject', () => {
   it('returns false for non-objects', () => {
-    allValues.filter(value => typeof value !== 'object').forEach(value => {
-      expect(isObject(value)).toBe(false);
-    });
+    allValues
+      .filter(value => typeof value !== 'object')
+      .forEach(value => {
+        expect(isObject(value)).toBe(false);
+      });
   });
 
   it('returns false for arrays', () => {

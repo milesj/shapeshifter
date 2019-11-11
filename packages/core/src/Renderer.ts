@@ -19,7 +19,14 @@ import indent from './helpers/indent';
 import isObject from './helpers/isObject';
 import formatName from './helpers/formatName';
 import normalizeType from './helpers/normalizeType';
-import { Config, ImportStructure, MetadataField, Options, PrimitiveType } from './types';
+import {
+  Config,
+  ImportStructure,
+  MetadataField,
+  Options,
+  PrimitiveType,
+  TypeDefinition,
+} from './types';
 
 export default class Renderer {
   builder: Builder;
@@ -89,13 +96,18 @@ export default class Renderer {
   /**
    * Format a primitive value to it's visual representation.
    */
-  formatValue(value: any, type: string = ''): string {
+  formatValue(value: any, type: TypeDefinition = ''): string {
     if (value === null) {
       return 'null';
     }
 
     if (Array.isArray(value)) {
-      return this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
+      return this.formatArray(
+        value.map(v => this.formatValue(v)),
+        0,
+        ', ',
+        '',
+      );
     }
 
     const actualType = normalizeType(type || typeof value);
@@ -348,7 +360,12 @@ export default class Renderer {
     let constValue;
 
     if (Array.isArray(value)) {
-      constValue = this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
+      constValue = this.formatArray(
+        value.map(v => this.formatValue(v)),
+        0,
+        ', ',
+        '',
+      );
     } else {
       constValue = this.formatValue(value);
     }
@@ -439,7 +456,7 @@ export default class Renderer {
   renderOrFormat(
     value: PrimitiveType | Definition<Config>,
     depth: number,
-    valueType: string = '',
+    valueType: TypeDefinition = '',
   ): string {
     return value instanceof Definition
       ? this.renderAttribute(value, depth)

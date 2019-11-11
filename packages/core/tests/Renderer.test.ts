@@ -11,7 +11,7 @@ import NumberDefinition from '../src/definitions/Number';
 import InstanceDefinition from '../src/definitions/Instance';
 import EnumDefinition from '../src/definitions/Enum';
 import BoolDefinition from '../src/definitions/Bool';
-import { options } from '../../../tests/mocks';
+import { options } from './mocks';
 
 describe('Renderer', () => {
   let renderer: Renderer;

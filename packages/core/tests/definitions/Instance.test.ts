@@ -1,4 +1,4 @@
-import { options, truthyValues } from '../../../../tests/mocks';
+import { options, truthyValues } from '../mocks';
 import InstanceDefinition from '../../src/definitions/Instance';
 
 describe('definitions/Instance', () => {
@@ -15,11 +15,13 @@ describe('definitions/Instance', () => {
   });
 
   it('errors if `contract` is not a string', () => {
-    truthyValues.filter(value => typeof value !== 'string').forEach(value => {
-      // @ts-ignore
-      expect(() => new InstanceDefinition(options, 'foo', { contract: value })).toThrowError(
-        'Invalid InstanceDefinition field "contract". Must be a string.',
-      );
-    });
+    truthyValues
+      .filter(value => typeof value !== 'string')
+      .forEach(value => {
+        // @ts-ignore
+        expect(() => new InstanceDefinition(options, 'foo', { contract: value })).toThrowError(
+          'Invalid InstanceDefinition field "contract". Must be a string.',
+        );
+      });
   });
 });

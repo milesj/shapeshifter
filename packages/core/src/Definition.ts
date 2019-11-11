@@ -35,8 +35,8 @@ export default class Definition<T extends Config> {
   /**
    * Create an option for type definitions that can be a string or object.
    */
-  createUnionType(defaultValue: any = null): UnionBuilder {
-    return union(
+  createUnionType(defaultValue: any = null): UnionBuilder<string | { type: string }> {
+    return union<string | { type: string }>(
       [
         string().notEmpty(),
         shape({

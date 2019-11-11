@@ -4,7 +4,7 @@ import RendererFactory from '../src/RendererFactory';
 import TypeScriptRenderer from '../src/renderers/TypeScript';
 import Builder from '../src/Builder';
 import Schematic from '../src/Schematic';
-import { options } from '../../../tests/mocks';
+import { options } from './mocks';
 
 describe('RendererFactory', () => {
   describe('factory()', () => {

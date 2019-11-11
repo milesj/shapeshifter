@@ -2,7 +2,7 @@
   "name": "shapeshifter-root",
   "private": true,
   "scripts": {
-    "build": "beemo run-script build",
+    "build": "yarn run type",
     "check": "flow check && tsc --noEmit --lib esnext,esnext.asynciterable ./tests/expected/graphql/typescript/*.ts ./tests/expected/common/typescript/*.ts",
     "coverage": "yarn run jest --coverage",
     "eslint": "beemo eslint",
@@ -12,13 +12,13 @@
     "test": "yarn run jest",
     "test:webpack": "webpack",
     "posttest": "yarn run eslint && yarn run check",
-    "type": "beemo typescript --workspaces=* --no-priority --noEmit",
+    "type": "beemo typescript --build --reference-workspaces",
     "prerelease": "yarn test && yarn run build",
     "release": "lerna publish"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^0.25.6",
-    "lerna": "^3.11.0"
+    "@milesj/build-tools": "^0.59.1",
+    "lerna": "^3.18.4"
   },
   "workspaces": [
     "packages/*"

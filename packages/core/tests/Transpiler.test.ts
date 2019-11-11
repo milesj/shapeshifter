@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import Transpiler from '../src/Transpiler';
 import { RendererType } from '../src/types';
-import { options } from '../../../tests/mocks';
+import { options } from './mocks';
 
 function file(filePath: string) {
   return fs.readFileSync(filePath, 'utf8');

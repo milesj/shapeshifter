@@ -1,4 +1,4 @@
-import { options, truthyValues } from '../../../../tests/mocks';
+import { options, truthyValues } from '../mocks';
 import ObjectDefinition from '../../src/definitions/Object';
 import NumberDefinition from '../../src/definitions/Number';
 import StringDefinition from '../../src/definitions/String';
@@ -11,9 +11,9 @@ describe('definitions/Object', () => {
   });
 
   it('errors if `valueType` is empty', () => {
-    expect(() => new ObjectDefinition(options, 'foo', { valueType: '' })).toThrowError(
-      'Invalid ObjectDefinition field "valueType". String cannot be empty.',
-    );
+    expect(
+      () => new ObjectDefinition(options, 'foo', { valueType: '' }),
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('errors if `keyType` is empty', () => {
@@ -23,12 +23,14 @@ describe('definitions/Object', () => {
   });
 
   it('errors if `keyType` is not a string', () => {
-    truthyValues.filter(value => typeof value !== 'string').forEach(value => {
-      expect(
-        // @ts-ignore
-        () => new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' }),
-      ).toThrowError('Invalid ObjectDefinition field "keyType". Must be a string.');
-    });
+    truthyValues
+      .filter(value => typeof value !== 'string')
+      .forEach(value => {
+        expect(
+          // @ts-ignore
+          () => new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' }),
+        ).toThrowError('Invalid ObjectDefinition field "keyType". Must be a string.');
+      });
   });
 
   it('creates a `Definition` for the `valueType`', () => {

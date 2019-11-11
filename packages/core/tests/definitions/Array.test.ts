@@ -1,4 +1,4 @@
-import { options } from '../../../../tests/mocks';
+import { options } from '../mocks';
 import ArrayDefinition from '../../src/definitions/Array';
 import StringDefinition from '../../src/definitions/String';
 
@@ -10,9 +10,9 @@ describe('definitions/Array', () => {
   });
 
   it('errors if `valueType` is empty', () => {
-    expect(() => new ArrayDefinition(options, 'foo', { valueType: '' })).toThrowError(
-      'Invalid ArrayDefinition field "valueType". String cannot be empty.',
-    );
+    expect(
+      () => new ArrayDefinition(options, 'foo', { valueType: '' }),
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('errors if `valueType` is the wrong type', () => {

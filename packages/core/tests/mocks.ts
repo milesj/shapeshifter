@@ -1,4 +1,4 @@
-import { Options } from '../packages/core/src/types';
+import { Options } from '../src/types';
 
 export const falsyValues = [0, 0.0, '', false, null, undefined, NaN];
 
