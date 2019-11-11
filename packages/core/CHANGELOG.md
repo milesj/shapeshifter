@@ -1,23 +1,35 @@
-# 7.3.1 - 2019-02-17
+## 7.4.0 - 2019-11-10
 
-#### 🐞 Fixed
+#### 📦 Dependencies
+
+- Updated `optimal` to v3.2.
+- Updated `yargs` to v14.2.
+- Removed `@babel/runtime`.
+
+#### 🛠 Internals
+
+- **[TS]** Switched to project references.
+
+### 7.3.1 - 2019-02-17
+
+#### 🐞 Fixes
 
 - Added missing `@babel/runtime` package.
 
-# 7.3.0 - 2019-02-07
+## 7.3.0 - 2019-02-07
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Added ECMAScript module support via `esm/` built files.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Updated dependencies.
 - Updated `optimal` to v2.1 from v1.
 
-# 7.2.0 - 2018-08-27
+## 7.2.0 - 2018-08-27
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Added a `--[no-]enums` CLI option to toggle between enums and unions (TypeScript only).
 - Added a `--[no-]suffix` CLI option to toggle definition name suffixes. Be careful when using this
@@ -25,13 +37,13 @@
 - Added a `constant` config property to enum type defintions. When enabled, and `constants` are
   used, any constants by name will be referenced.
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Resolved an incorrect URL in the `package.json`.
 
-# 7.1.0 - 2018-07-02
+## 7.1.0 - 2018-07-02
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Updated `yargs` to 12.0.
 
@@ -49,7 +61,7 @@
     [shapeshifter-parser-yaml](https://www.npmjs.com/package/shapeshifter-parser-yaml) package.
 - PropTypes `isRequired` is now controlled by the optional system (below), as well as nullable.
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Added a new optional attribute system, which marks them as not required. This is an alternative
   solution to nullable.
@@ -59,19 +71,19 @@
   - TypeScript and Flow object properties are now suffixed with `?`.
 - Added Flow type definition at `index.js.flow`.
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Transpiler will skip files that start with a period (`.eslintrc`, etc).
 
-# 6.2.1 - 2018-06-20
+### 6.2.1 - 2018-06-20
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Fixed missing build issue.
 
-# 6.2.0 - 2018-06-19
+## 6.2.0 - 2018-06-19
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Added an `--infer-prop-types-shape` option for TypeScript, which will name both the interface and
   PropTypes shape the same, so that automatic type inference is applied.
@@ -79,26 +91,26 @@
   callsites for schema instances.
 - Updated `PropTypePolyfill` to `PropTypes.any` so that TypeScript and Flow type check correctly.
 
-# 6.1.2 - 2018-06-06
+### 6.1.2 - 2018-06-06
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Fixed missing build issue.
 
-# 6.1.1 - 2018-06-06
+### 6.1.1 - 2018-06-06
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Updated `optimal` to 1.0.
 - Tested against TypeScript 2.9 and Webpack 4.11.
 
-# 6.1.0 - 2018-04-10
+## 6.1.0 - 2018-04-10
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Type `key` can now use shorthand syntax.
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Added missing `@types` to dependency list.
 - Replaced `index.d.ts` with individual files generated with `--declaration`.
@@ -116,7 +128,7 @@
 - Renamed `Transpiler` and `WebpackPlugin` option `format` to `renderers`.
   - Accepts an array of renderer names (flow, prop-types, typescript).
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Can now generate and include multiple renderers (typed languages) in the same output.
   - Added individual options `--flow`, `--prop-types`, and `--typescript`, to opt into generation.
@@ -130,21 +142,21 @@
 - Added proper `null` support for TypeScript.
 - Updated `WebpackPlugin` to support Webpack 4.
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Reworked unions and nullable types.
   - Direct union value types will no longer be nullable.
   - Union itself can be nullable.
 - Removed values from TypeScript string enums (will let TypeScript infer them instead).
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Converted from Flow to TypeScript.
 - Replaced Vorpal with Yargs.
 
-# 5.1.0 - 2017-11-10
+## 5.1.0 - 2017-11-10
 
-#### 🚀 New
+#### 🚀 Updates
 
 - The `eslint-disable` comment atop the output file is now controlled by a `--disableEslint` flag.
 
@@ -154,27 +166,27 @@
 
 - Transpiled schema instance variables are now in camel case form. `UserSchema` -> `userSchema`.
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Will now correctly call `process.exit()` when transpilation fails.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Integrated `optimal` for options validation.
 - Moved Flowtype definitions to flow-typed/ folder.
 
-# 4.2.1 - 2017-02-17
+### 4.2.1 - 2017-02-17
 
 - Fixed an issue with the lib/ build.
 
-# 4.2.0 - 2017-02-17
+## 4.2.0 - 2017-02-17
 
 - Schematics can now be auto-transpiled through a build or bundle process.
 - Added a new `WebpackPlugin` plugin for auto-transpilation.
 - Added a new `importPath` option, allowing the output import to be customized.
 - Added an `eslint-disable` comment to the top of the output file.
 
-# 4.1.0 - 2017-05-10
+## 4.1.0 - 2017-05-10
 
 - Updated IE requirement to 10+.
 - Updated to include src/ files in the published package.
@@ -193,16 +205,16 @@
 - Added a `--useDefine` flag that will use `Schema#define` while rendering.
 - Added a `--stripPropTypes` flag that will wrap PropType definitions in `process.env.NODE_ENV`.
 
-# 3.2.1 - 2017-02-17
+### 3.2.1 - 2017-02-17
 
 - Fixed an issue with the `graphql` dependency not being listed.
 
-# 3.2.0 - 2017-02-02
+## 3.2.0 - 2017-02-02
 
 - Added compound key support. Simply pass an array of attribute names to `meta.primaryKey`.
 - Updated `Renderer#formatValue` to accept an array of values, which internally calls `formatArray`.
 
-# 3.1.0 - 2017-01-30
+## 3.1.0 - 2017-01-30
 
 - Extra metadata in the schematic `meta` field will now be passed to the `Schema` instance.
 - Added `Schema#metadata` to hold the extra metadata object.
@@ -221,28 +233,28 @@
 - Renamed and split `Factory` into `DefinitionFactory` and `RendererFactory`.
 - Fixed an issue in which nullable flags could not be passed to enum value types.
 
-# 2.3.0 - 2016-12-16
+## 2.3.0 - 2016-12-16
 
 - Added a new shape reference feature, which allows for local reusable shapes in a JSON schema.
 - Updated the visuals of errors and stack traces on the command line.
 
-# 2.2.2 - 2016-09-23
+### 2.2.2 - 2016-09-23
 
 - Added Flowtype definitions to the `libs/` output folder.
 - Updated develop dependency TypeScript to v2.0.
 
-# 2.2.1 - 2016-09-12
+### 2.2.1 - 2016-09-12
 
 - Fixed an issue in which relations were being output multiple times.
 
-# 2.2.0 - 2016-09-10
+## 2.2.0 - 2016-09-10
 
 - Updated references to toggle schema exporting via the `export` property.
 - Updated references to choose the relation type when schema exporting.
 - Fixed issues with self reference schema exports.
 - Fixed issues with circular references.
 
-# 2.1.0 - 2016-09-06
+## 2.1.0 - 2016-09-06
 
 - Added `belongsTo()` and `belongsToMany()` to `Schema`.
 - Added `collection` boolean to the schema relation object.
@@ -264,11 +276,11 @@
 - Renamed previous `Schema` class to `SchemaReader`.
 - Refactored how object name formatting worked.
 
-# 1.2.0 - 2016-07-31
+## 1.2.0 - 2016-07-31
 
 - Added support for `self` (recursive) references.
 
-# 1.1.0 - 2016-07-22
+## 1.1.0 - 2016-07-22
 
 - TypeScript enum names are automatically generated.
 

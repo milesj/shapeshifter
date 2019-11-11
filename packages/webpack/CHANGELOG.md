@@ -1,18 +1,25 @@
-# 1.1.1 - 2019-02-17
+## 1.2.0 - 2019-11-10
 
-#### 🐞 Fixed
+#### 📦 Dependencies
+
+- Updated dependencies.
+- Removed `@babel/runtime`.
+
+### 1.1.1 - 2019-02-17
+
+#### 🐞 Fixes
 
 - Added missing `@babel/runtime` package.
 
-# 1.1.0 - 2019-02-07
+## 1.1.0 - 2019-02-07
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Added EcmaScript module support via `esm/` built files.
 
-# 1.0.1 - 2018-08-27
+### 1.0.1 - 2018-08-27
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Resolved an incorrect URL in the `package.json`.
 
