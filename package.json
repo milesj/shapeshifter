@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@milesj/build-tools": "^0.59.1",
+    "conventional-changelog-beemo": "^1.5.1",
     "lerna": "^3.18.4"
   },
   "workspaces": [
