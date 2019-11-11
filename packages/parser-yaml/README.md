@@ -1,6 +1,6 @@
 # YAML Parser for Shapeshifter
 
-[![Build Status](https://travis-ci.org/milesj/shapeshifter.svg?branch=master)](https://travis-ci.org/milesj/shapeshifter)
+[![Build Status](https://github.com/milesj/shapeshifter/workflows/Build/badge.svg)](https://github.com/milesj/shapeshifter/actions?query=branch%3Amaster)
 [![npm version](https://badge.fury.io/js/shapeshifter-parser-yaml.svg)](https://www.npmjs.com/package/shapeshifter-parser-yaml)
 [![npm deps](https://david-dm.org/milesj/shapeshifter.svg?path=packages/parser-yaml)](https://www.npmjs.com/package/shapeshifter-parser-yaml)
 
