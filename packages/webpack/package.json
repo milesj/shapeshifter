@@ -17,10 +17,10 @@
   "repository": "https://github.com/milesj/shapeshifter/tree/master/packages/webpack",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.7.2",
-    "@types/webpack": "^4.39.8"
+    "@types/webpack": "*"
   },
   "devDependencies": {
+    "@types/webpack": "^4.39.8",
     "babel-loader": "^8.0.6",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
