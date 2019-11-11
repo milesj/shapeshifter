@@ -4,7 +4,7 @@ import StringDefinition from '../../src/definitions/String';
 
 describe('definitions/Array', () => {
   it('errors if `valueType` is missing', () => {
-    expect(() => new ArrayDefinition(options, 'foo', {})).toThrowError(
+    expect(() => new ArrayDefinition(options, 'foo', {})).toThrow(
       'Invalid ArrayDefinition field "valueType". Field is required and must be defined.',
     );
   });
@@ -17,7 +17,7 @@ describe('definitions/Array', () => {
 
   it('errors if `valueType` is the wrong type', () => {
     // @ts-ignore
-    expect(() => new ArrayDefinition(options, 'foo', { valueType: 123 })).toThrowError(
+    expect(() => new ArrayDefinition(options, 'foo', { valueType: 123 })).toThrow(
       'Invalid ArrayDefinition field "valueType". Type must be one of: string, shape',
     );
   });

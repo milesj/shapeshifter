@@ -7,13 +7,13 @@ import StringDefinition from '../../src/definitions/String';
 describe('definitions/Polymorph', () => {
   it('errors if `valueTypes` is not an array', () => {
     // @ts-ignore
-    expect(() => new PolymorphDefinition(options, 'foo', { valueTypes: 123 })).toThrowError(
+    expect(() => new PolymorphDefinition(options, 'foo', { valueTypes: 123 })).toThrow(
       'Invalid PolymorphDefinition field "valueTypes". Must be an array.',
     );
   });
 
   it('errors if `valueTypes` has no items', () => {
-    expect(() => new PolymorphDefinition(options, 'foo', { valueTypes: [] })).toThrowError(
+    expect(() => new PolymorphDefinition(options, 'foo', { valueTypes: [] })).toThrow(
       'Invalid PolymorphDefinition field "valueTypes". Array cannot be empty.',
     );
   });

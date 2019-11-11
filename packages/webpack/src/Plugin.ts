@@ -36,7 +36,8 @@ export default class ShapeshifterPlugin {
     });
   }
 
-  handleResolve = (result: any, callback: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleResolve = (result: any, callback: (...args: unknown[]) => void) => {
     if (result.rawRequest === this.schematicsImportPath) {
       result.loaders.push({
         loader: path.join(__dirname, './Loader.js'),

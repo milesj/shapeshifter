@@ -16,6 +16,7 @@ import {
   SchemaStructure,
   ShapesField,
   SubsetsField,
+  Config,
 } from './types';
 
 export default class Schematic {
@@ -29,7 +30,7 @@ export default class Schematic {
 
   metadata: MetadataField = {};
 
-  attributes: Definition<any>[] = [];
+  attributes: Definition<Config>[] = [];
 
   constants: ConstantsField = {};
 

@@ -7,13 +7,13 @@ import StringDefinition from '../../src/definitions/String';
 describe('definitions/Union', () => {
   it('errors if `valueTypes` is not an array', () => {
     // @ts-ignore
-    expect(() => new UnionDefinition(options, 'foo', { valueTypes: 123 })).toThrowError(
+    expect(() => new UnionDefinition(options, 'foo', { valueTypes: 123 })).toThrow(
       'Invalid UnionDefinition field "valueTypes". Must be an array.',
     );
   });
 
   it('errors if `valueTypes` has no items', () => {
-    expect(() => new UnionDefinition(options, 'foo', { valueTypes: [] })).toThrowError(
+    expect(() => new UnionDefinition(options, 'foo', { valueTypes: [] })).toThrow(
       'Invalid UnionDefinition field "valueTypes". Array cannot be empty.',
     );
   });

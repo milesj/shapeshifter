@@ -14,7 +14,7 @@ const HAS_ONE = 'hasOne';
 const HAS_MANY = 'hasMany';
 const MORPH_TO = 'morphTo';
 
-export default class Schema<T = any> {
+export default class Schema<T = unknown> {
   static HAS_ONE: string = HAS_ONE;
 
   static HAS_MANY: string = HAS_MANY;

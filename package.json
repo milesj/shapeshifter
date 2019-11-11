@@ -43,5 +43,8 @@
         "tests/expected/**/*"
       ]
     }
-  }
+  },
+  "browserslist": [
+    "ie 11"
+  ]
 }

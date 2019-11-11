@@ -93,7 +93,7 @@ describe('Renderer', () => {
     });
 
     it('errors on invalid types', () => {
-      expect(() => renderer.formatValue('foo', 'what')).toThrowError(
+      expect(() => renderer.formatValue('foo', 'what')).toThrow(
         'Unknown type "what" passed to formatValue().',
       );
     });
@@ -111,7 +111,7 @@ describe('Renderer', () => {
 
   describe('render()', () => {
     it('errors if not defined', () => {
-      expect(() => renderer.render('')).toThrowError('Renderer not implemented.');
+      expect(() => renderer.render('')).toThrow('Renderer not implemented.');
     });
   });
 
@@ -119,13 +119,13 @@ describe('Renderer', () => {
     it('errors for not supported', () => {
       expect(() =>
         renderer.renderArray(new ArrayDefinition(options, 'foo', { valueType: 'string' }), 0),
-      ).toThrowError('The "array" definition is not supported by Renderer.');
+      ).toThrow('The "array" definition is not supported by Renderer.');
     });
   });
 
   describe('renderBool()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderBool(new BoolDefinition(options, 'foo'))).toThrowError(
+      expect(() => renderer.renderBool(new BoolDefinition(options, 'foo'))).toThrow(
         'The "boolean" definition is not supported by Renderer.',
       );
     });
@@ -138,7 +138,7 @@ describe('Renderer', () => {
           new EnumDefinition(options, 'foo', { valueType: 'string', values: ['foo'] }),
           0,
         ),
-      ).toThrowError('The "enum" definition is not supported by Renderer.');
+      ).toThrow('The "enum" definition is not supported by Renderer.');
     });
   });
 
@@ -146,13 +146,13 @@ describe('Renderer', () => {
     it('errors for not supported', () => {
       expect(() =>
         renderer.renderInstance(new InstanceDefinition(options, 'foo', { contract: 'Foo' })),
-      ).toThrowError('The "instance" definition is not supported by Renderer.');
+      ).toThrow('The "instance" definition is not supported by Renderer.');
     });
   });
 
   describe('renderNumber()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderNumber(new NumberDefinition(options, 'foo'))).toThrowError(
+      expect(() => renderer.renderNumber(new NumberDefinition(options, 'foo'))).toThrow(
         'The "number" definition is not supported by Renderer.',
       );
     });
@@ -162,7 +162,7 @@ describe('Renderer', () => {
     it('errors for not supported', () => {
       expect(() =>
         renderer.renderObject(new ObjectDefinition(options, 'foo', { valueType: 'string' }), 0),
-      ).toThrowError('The "object" definition is not supported by Renderer.');
+      ).toThrow('The "object" definition is not supported by Renderer.');
     });
   });
 
@@ -173,13 +173,13 @@ describe('Renderer', () => {
           new ShapeDefinition(options, 'foo', { attributes: { foo: 'string' } }),
           0,
         ),
-      ).toThrowError('The "shape" definition is not supported by Renderer.');
+      ).toThrow('The "shape" definition is not supported by Renderer.');
     });
   });
 
   describe('renderString()', () => {
     it('errors for not supported', () => {
-      expect(() => renderer.renderString(new StringDefinition(options, 'foo'))).toThrowError(
+      expect(() => renderer.renderString(new StringDefinition(options, 'foo'))).toThrow(
         'The "string" definition is not supported by Renderer.',
       );
     });
@@ -189,7 +189,7 @@ describe('Renderer', () => {
     it('errors for not supported', () => {
       expect(() =>
         renderer.renderUnion(new UnionDefinition(options, 'foo', { valueTypes: ['string'] }), 0),
-      ).toThrowError('The "union" definition is not supported by Renderer.');
+      ).toThrow('The "union" definition is not supported by Renderer.');
     });
   });
 
@@ -219,20 +219,18 @@ describe('Renderer', () => {
   describe('renderImport()', () => {
     it('errors if no `path` is set', () => {
       // @ts-ignore
-      expect(() => renderer.renderImport({})).toThrowError(
-        'Import statements require a file path.',
-      );
+      expect(() => renderer.renderImport({})).toThrow('Import statements require a file path.');
     });
 
     it('errors if `named` is not an array', () => {
       // @ts-ignore
-      expect(() => renderer.renderImport({ path: '/', named: true })).toThrowError(
+      expect(() => renderer.renderImport({ path: '/', named: true })).toThrow(
         'Named imports must be an array.',
       );
     });
 
     it('errors if no named or default imports', () => {
-      expect(() => renderer.renderImport({ path: '/', named: [] })).toThrowError(
+      expect(() => renderer.renderImport({ path: '/', named: [] })).toThrow(
         'Import statements require either a default export or named exports.',
       );
     });
@@ -302,7 +300,7 @@ describe('Renderer', () => {
             reference: 'foo',
           }),
         ),
-      ).toThrowError('The shape reference "foo" does not exist in the "foo Bar-Baz" schema.');
+      ).toThrow('The shape reference "foo" does not exist in the "foo Bar-Baz" schema.');
     });
   });
 
@@ -316,7 +314,7 @@ describe('Renderer', () => {
             reference: 'foo',
           }),
         ),
-      ).toThrowError('The reference "foo" does not exist in the "foo Bar-Baz" schema.');
+      ).toThrow('The reference "foo" does not exist in the "foo Bar-Baz" schema.');
     });
 
     it('errors if subset doesnt exist', () => {
@@ -336,18 +334,22 @@ describe('Renderer', () => {
             subset: 'sub',
           }),
         ),
-      ).toThrowError('The reference "bar" does not contain a subset named "sub".');
+      ).toThrow('The reference "bar" does not contain a subset named "sub".');
     });
   });
 
   describe('renderSchema()', () => {
     it('errors if no resource name', () => {
-      expect(() => renderer.renderSchema('QuxSchema', [], {})).toThrowError();
+      expect(() => renderer.renderSchema('QuxSchema', [], {})).toThrow(
+        'Schema QuxSchema requires a "meta.resourceName" property to be defined. The resource name is a unique key found within a URL.',
+      );
     });
 
     it('errors if invalid resource name', () => {
       // @ts-ignore
-      expect(() => renderer.renderSchema('QuxSchema', [], { resourceName: true })).toThrowError();
+      expect(() => renderer.renderSchema('QuxSchema', [], { resourceName: true })).toThrow(
+        'Schema QuxSchema requires a "meta.resourceName" property to be defined. The resource name is a unique key found within a URL.',
+      );
     });
 
     it('renders template', () => {

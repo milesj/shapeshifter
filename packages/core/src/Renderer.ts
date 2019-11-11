@@ -96,18 +96,13 @@ export default class Renderer {
   /**
    * Format a primitive value to it's visual representation.
    */
-  formatValue(value: any, type: TypeDefinition = ''): string {
+  formatValue(value: unknown, type: TypeDefinition = ''): string {
     if (value === null) {
       return 'null';
     }
 
     if (Array.isArray(value)) {
-      return this.formatArray(
-        value.map(v => this.formatValue(v)),
-        0,
-        ', ',
-        '',
-      );
+      return this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
     }
 
     const actualType = normalizeType(type || typeof value);
@@ -121,7 +116,7 @@ export default class Renderer {
         return `${String(value)}`;
 
       case 'number':
-        return `${parseFloat(value)}`;
+        return `${parseFloat(String(value))}`;
 
       default:
         throw new TypeError(`Unknown type "${actualType}" passed to formatValue().`);
@@ -360,12 +355,7 @@ export default class Renderer {
     let constValue;
 
     if (Array.isArray(value)) {
-      constValue = this.formatArray(
-        value.map(v => this.formatValue(v)),
-        0,
-        ', ',
-        '',
-      );
+      constValue = this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
     } else {
       constValue = this.formatValue(value);
     }
@@ -468,12 +458,8 @@ export default class Renderer {
    */
   renderPlainObject(object: object, depth: number = 0): string {
     return this.formatObject(
-      Object.keys(object).map(key =>
-        this.wrapProperty(
-          this.formatObjectProperty(key),
-          this.formatValue((object as any)[key]),
-          depth + 1,
-        ),
+      Object.entries(object).map(([key, value]) =>
+        this.wrapProperty(this.formatObjectProperty(key), this.formatValue(value), depth + 1),
       ),
       depth,
     );
@@ -519,11 +505,7 @@ export default class Renderer {
   /**
    * Render a class schema.
    */
-  renderSchema(
-    name: string,
-    attributes: Definition<Config>[] = [],
-    metadata: MetadataField,
-  ): string {
+  renderSchema(name: string, attributes: Definition<Config>[], metadata: MetadataField): string {
     const { primaryKey, resourceName, ...meta } = metadata;
     const { includeAttributes, useDefine } = this.options;
     const references = this.schematic.referenceSchematics;

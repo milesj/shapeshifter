@@ -5,7 +5,7 @@ import StringDefinition from '../../src/definitions/String';
 
 describe('definitions/Object', () => {
   it('errors if `valueType` is missing', () => {
-    expect(() => new ObjectDefinition(options, 'foo', {})).toThrowError(
+    expect(() => new ObjectDefinition(options, 'foo', {})).toThrow(
       'Invalid ObjectDefinition field "valueType". Field is required and must be defined.',
     );
   });
@@ -19,7 +19,7 @@ describe('definitions/Object', () => {
   it('errors if `keyType` is empty', () => {
     expect(
       () => new ObjectDefinition(options, 'foo', { keyType: '', valueType: 'string' }),
-    ).toThrowError('Invalid ObjectDefinition field "keyType". String cannot be empty.');
+    ).toThrow('Invalid ObjectDefinition field "keyType". String cannot be empty.');
   });
 
   it('errors if `keyType` is not a string', () => {
@@ -29,7 +29,7 @@ describe('definitions/Object', () => {
         expect(
           // @ts-ignore
           () => new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' }),
-        ).toThrowError('Invalid ObjectDefinition field "keyType". Must be a string.');
+        ).toThrow('Invalid ObjectDefinition field "keyType". Must be a string.');
       });
   });
 

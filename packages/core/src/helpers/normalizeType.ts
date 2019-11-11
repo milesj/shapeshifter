@@ -1,4 +1,5 @@
 import isObject from './isObject';
+import { Config } from '../types';
 
 // Use a hash map for faster lookups
 const ALIAS_MAP: { [key: string]: string } = {
@@ -25,10 +26,10 @@ const ALIAS_MAP: { [key: string]: string } = {
 /**
  * Expand and return the valid type name for all aliases and shorthands.
  */
-export default function normalizeType(baseType: any): string {
-  let type = baseType;
+export default function normalizeType(baseType: unknown): string {
+  let type = String(baseType);
 
-  if (isObject(baseType)) {
+  if (isObject<Config>(baseType)) {
     ({ type } = baseType);
   }
 

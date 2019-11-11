@@ -20,7 +20,7 @@ const ASCII_ALPHA_START = 65;
 export default class TypeScriptRenderer extends Renderer {
   beforeParse() {
     if (this.options.suffix) {
-      if (this.options.inferPropTypesShape && this.options.renderers.indexOf('prop-types') >= 0) {
+      if (this.options.inferPropTypesShape && this.options.renderers.includes('prop-types')) {
         this.suffix = 'Shape';
       } else {
         this.suffix = 'Interface';

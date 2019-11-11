@@ -20,12 +20,12 @@ export default class Definition<T extends Config> {
   ) {
     this.options = options;
     this.attribute = attribute;
+    // @ts-ignore
     this.config = {
       nullable: options.defaultNullable,
       optional: options.defaultOptional,
-      // @ts-ignore
       ...config,
-    } as any;
+    };
 
     if (validate) {
       this.validateConfig();
@@ -35,7 +35,7 @@ export default class Definition<T extends Config> {
   /**
    * Create an option for type definitions that can be a string or object.
    */
-  createUnionType(defaultValue: any = null): UnionBuilder<string | { type: string }> {
+  createUnionType(defaultValue: unknown = null): UnionBuilder<string | { type: string }> {
     return union<string | { type: string }>(
       [
         string().notEmpty(),
@@ -82,6 +82,6 @@ export default class Definition<T extends Config> {
         name: name || 'Definition',
         unknown: true,
       },
-    ) as any;
+    ) as T;
   }
 }

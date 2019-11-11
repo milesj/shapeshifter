@@ -3,7 +3,7 @@ import ReferenceDefinition from '../../src/definitions/Reference';
 
 describe('definitions/Reference', () => {
   it('errors if `reference` and `self` are neither defined', () => {
-    expect(() => new ReferenceDefinition(options, 'foo', {})).toThrowError(
+    expect(() => new ReferenceDefinition(options, 'foo', {})).toThrow(
       'ReferenceDefinition. Only one of these fields may be defined: reference, self',
     );
   });
@@ -11,7 +11,7 @@ describe('definitions/Reference', () => {
   it('errors if `reference` and `self` are both defined', () => {
     expect(
       () => new ReferenceDefinition(options, 'foo', { reference: '', self: false }),
-    ).toThrowError('ReferenceDefinition. Only one of these fields may be defined: reference, self');
+    ).toThrow('ReferenceDefinition. Only one of these fields may be defined: reference, self');
   });
 
   it('errors if `reference` is not a string', () => {
@@ -19,7 +19,7 @@ describe('definitions/Reference', () => {
       .filter(value => typeof value !== 'string')
       .forEach(value => {
         // @ts-ignore
-        expect(() => new ReferenceDefinition(options, 'foo', { reference: value })).toThrowError(
+        expect(() => new ReferenceDefinition(options, 'foo', { reference: value })).toThrow(
           'Invalid ReferenceDefinition field "reference". Must be a string.',
         );
       });
@@ -30,7 +30,7 @@ describe('definitions/Reference', () => {
       .filter(value => typeof value !== 'boolean')
       .forEach(value => {
         // @ts-ignore
-        expect(() => new ReferenceDefinition(options, 'foo', { self: value })).toThrowError(
+        expect(() => new ReferenceDefinition(options, 'foo', { self: value })).toThrow(
           'Invalid ReferenceDefinition field "self". Must be a boolean.',
         );
       });
@@ -43,7 +43,7 @@ describe('definitions/Reference', () => {
         expect(
           // @ts-ignore
           () => new ReferenceDefinition(options, 'foo', { reference: 'foo', subset: value }),
-        ).toThrowError('Invalid ReferenceDefinition field "subset". Must be a string.');
+        ).toThrow('Invalid ReferenceDefinition field "subset". Must be a string.');
       });
   });
 
@@ -54,7 +54,7 @@ describe('definitions/Reference', () => {
         expect(
           // @ts-ignore
           () => new ReferenceDefinition(options, 'foo', { reference: 'foo', export: value }),
-        ).toThrowError('Invalid ReferenceDefinition field "export". Must be a boolean.');
+        ).toThrow('Invalid ReferenceDefinition field "export". Must be a boolean.');
       });
   });
 });

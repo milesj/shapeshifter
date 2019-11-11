@@ -20,7 +20,7 @@ describe('Schematic', () => {
 
   it('errors if no `name` property', () => {
     // @ts-ignore
-    expect(() => new Schematic('/foo.json', {}, options)).toThrowError(
+    expect(() => new Schematic('/foo.json', {}, options)).toThrow(
       '[foo.json] No name found in schema.',
     );
   });
@@ -36,7 +36,7 @@ describe('Schematic', () => {
           },
           options,
         ),
-    ).toThrowError('[Foo] No attributes found in schema "foo.json".');
+    ).toThrow('[Foo] No attributes found in schema "foo.json".');
   });
 
   it('errors if no `attributes` defined', () => {
@@ -50,11 +50,11 @@ describe('Schematic', () => {
           },
           options,
         ),
-    ).toThrowError('[Foo] No attributes found in schema "foo.json".');
+    ).toThrow('[Foo] No attributes found in schema "foo.json".');
   });
 
   it('does not error if `name` and `attributes` are defined', () => {
-    expect(() => new Schematic('/foo.json', data, options)).not.toThrowError();
+    expect(() => new Schematic('/foo.json', data, options)).not.toThrow();
   });
 
   it('errors if `imports` is defined and not an array', () => {
@@ -69,7 +69,7 @@ describe('Schematic', () => {
           },
           options,
         ),
-    ).toThrowError('[Foo] Schema imports must be an array of import declarations.');
+    ).toThrow('[Foo] Schema imports must be an array of import declarations.');
   });
 
   it('errors if `constants` is defined and not an object', () => {
@@ -84,7 +84,7 @@ describe('Schematic', () => {
           },
           options,
         ),
-    ).toThrowError('[Foo] Schema constants must be an object that maps to primitive values.');
+    ).toThrow('[Foo] Schema constants must be an object that maps to primitive values.');
   });
 
   it('errors if `subsets` is defined and not an object', () => {
@@ -99,7 +99,7 @@ describe('Schematic', () => {
           },
           options,
         ),
-    ).toThrowError('[Foo] Schema subsets must be an object.');
+    ).toThrow('[Foo] Schema subsets must be an object.');
   });
 
   it('errors if `references` is defined and not an object', () => {
@@ -114,7 +114,7 @@ describe('Schematic', () => {
           },
           options,
         ),
-    ).toThrowError('[Foo] Schema references must be an object that maps to other schemas.');
+    ).toThrow('[Foo] Schema references must be an object that maps to other schemas.');
   });
 
   it('errors if `meta` is defined and not an object', () => {
@@ -129,7 +129,7 @@ describe('Schematic', () => {
           },
           options,
         ),
-    ).toThrowError('[Foo] Schema metadata must be an object of strings.');
+    ).toThrow('[Foo] Schema metadata must be an object of strings.');
   });
 
   it('errors if `shapes` is defined and not an object', () => {
@@ -144,7 +144,7 @@ describe('Schematic', () => {
           },
           options,
         ),
-    ).toThrowError('[Foo] Schema shapes must be an object.');
+    ).toThrow('[Foo] Schema shapes must be an object.');
   });
 
   it('creates an array of `Definition`s for `attributes`', () => {

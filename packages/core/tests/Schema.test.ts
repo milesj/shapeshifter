@@ -58,14 +58,14 @@ describe('Schema', () => {
       expect(() => {
         // @ts-ignore
         schema.addRelation('foo', 'bar');
-      }).toThrowError('Relation "foo" is not a valid schema.');
+      }).toThrow('Relation "foo" is not a valid schema.');
     });
 
     it('errors if been mapped before', () => {
       expect(() => {
         schema.addRelation('foo', new Schema('foos'), Schema.HAS_ONE);
         schema.addRelation('foo', new Schema('foos'), Schema.HAS_MANY);
-      }).toThrowError('Relation "foo" has already been mapped as "hasOne".');
+      }).toThrow('Relation "foo" has already been mapped as "hasOne".');
     });
   });
 
@@ -139,12 +139,12 @@ describe('Schema', () => {
     it('errors if schema array is not valid', () => {
       expect(() => {
         schema.define({ foo: [] });
-      }).toThrowError('Relation "foo" is not a valid schema.');
+      }).toThrow('Relation "foo" is not a valid schema.');
 
       expect(() => {
         // @ts-ignore
         schema.define({ foo: [123] });
-      }).toThrowError('Relation "foo" is not a valid schema.');
+      }).toThrow('Relation "foo" is not a valid schema.');
     });
   });
 

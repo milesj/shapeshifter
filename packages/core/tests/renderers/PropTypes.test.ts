@@ -13,6 +13,7 @@ import UnionDefinition from '../../src/definitions/Union';
 import ShapeDefinition from '../../src/definitions/Shape';
 import Schematic from '../../src/Schematic';
 import { options } from '../mocks';
+import { TypeDefinition } from '../../src/types';
 
 describe('PropTypesRenderer', () => {
   let renderer: PropTypesRenderer;
@@ -379,7 +380,7 @@ describe('PropTypesRenderer', () => {
   });
 
   describe('renderUnion()', () => {
-    const valueTypes: any[] = [
+    const valueTypes: TypeDefinition[] = [
       'string',
       { type: 'bool' },
       {

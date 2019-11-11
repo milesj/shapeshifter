@@ -32,13 +32,15 @@ export default class EnumDefinition extends Definition<EnumConfig> {
   /**
    * Validate a value matches the type in `valueType`.
    */
-  validateValue(value: any, config: { [key: string]: any }) {
-    if (config.constant) {
+  validateValue(value: unknown, config: object) {
+    const cfg = config as EnumConfig;
+
+    if (cfg.constant) {
       return;
     }
 
     // eslint-disable-next-line valid-typeof
-    if (typeof value !== normalizeType(config.valueType)) {
+    if (typeof value !== normalizeType(cfg.valueType)) {
       throw new TypeError('Enum values do not match the defined value type.');
     }
   }

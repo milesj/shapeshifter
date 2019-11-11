@@ -29,14 +29,14 @@ describe('Definition', () => {
 
   it('validates nullable', () => {
     // @ts-ignore
-    expect(() => new Definition(options, 'foo', { nullable: 'string' })).toThrowError(
+    expect(() => new Definition(options, 'foo', { nullable: 'string' })).toThrow(
       'Invalid Definition field "nullable". Must be a boolean.',
     );
   });
 
   it('validates optional', () => {
     // @ts-ignore
-    expect(() => new Definition(options, 'foo', { optional: 'string' })).toThrowError(
+    expect(() => new Definition(options, 'foo', { optional: 'string' })).toThrow(
       'Invalid Definition field "optional". Must be a boolean.',
     );
   });

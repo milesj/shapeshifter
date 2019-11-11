@@ -19,26 +19,26 @@ describe('DefinitionFactory', () => {
     it('errors on invalid type', () => {
       expect(() =>
         DefinitionFactory.factory(options, 'foo', { type: 'fakedefinition' }),
-      ).toThrowError('Type "fakedefinition" not supported.');
+      ).toThrow('Type "fakedefinition" not supported.');
     });
 
     it('errors on invalid primitives', () => {
-      expect(() => DefinitionFactory.factory(options, 'foo', 'array')).toThrowError(
+      expect(() => DefinitionFactory.factory(options, 'foo', 'array')).toThrow(
         'Invalid primitive type "array".',
       );
 
-      expect(() => DefinitionFactory.factory(options, 'foo', 'bar')).toThrowError(
+      expect(() => DefinitionFactory.factory(options, 'foo', 'bar')).toThrow(
         'Invalid primitive type "bar".',
       );
     });
 
     it('errors on missing object type', () => {
       // @ts-ignore
-      expect(() => DefinitionFactory.factory(options, 'foo', { noType: 'hah' })).toThrowError(
+      expect(() => DefinitionFactory.factory(options, 'foo', { noType: 'hah' })).toThrow(
         'Definitions require a "type" property.',
       );
 
-      expect(() => DefinitionFactory.factory(options, 'foo', { type: '' })).toThrowError(
+      expect(() => DefinitionFactory.factory(options, 'foo', { type: '' })).toThrow(
         'Definitions require a "type" property.',
       );
     });
