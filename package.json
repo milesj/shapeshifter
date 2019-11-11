@@ -10,6 +10,7 @@
     "prettier": "beemo prettier",
     "pretest": "yarn run type",
     "test": "yarn run jest",
+    "test:bin": "shapeshifter --attributes --definitions --schemas --schema-generics --typescript ./tests/schemas/types-schemas.json",
     "test:webpack": "webpack",
     "posttest": "yarn run eslint && yarn run check",
     "type": "beemo typescript --build --reference-workspaces",
