@@ -28,5 +28,9 @@
   "peerDependencies": {
     "shapeshifter": "^7.0.0",
     "webpack": "^4.0.0"
+  },
+  "funding": {
+    "type": "ko-fi",
+    "url": "https://ko-fi.com/milesjohnson"
   }
 }

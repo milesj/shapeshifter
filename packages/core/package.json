@@ -40,5 +40,9 @@
     "@types/yargs": "^13.0.3",
     "flow-bin": "^0.111.3",
     "typescript": "^3.7.2"
+  },
+  "funding": {
+    "type": "ko-fi",
+    "url": "https://ko-fi.com/milesjohnson"
   }
 }
