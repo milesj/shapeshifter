@@ -128,9 +128,9 @@ export interface UnionConfig extends Config {
 // JSON Structure
 
 export interface MetadataField {
+  [key: string]: string | undefined;
   primaryKey?: string;
   resourceName?: string;
-  [key: string]: string | undefined;
 }
 
 export interface ConstantsField {

@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys */
 
-import optimal, { bool, string, array, custom } from 'optimal';
+import optimal, { bool, string, array, custom, Schema } from 'optimal';
 import Definition from '../Definition';
 import normalizeType from '../helpers/normalizeType';
 import { Options, EnumConfig } from '../types';
@@ -32,8 +32,8 @@ export default class EnumDefinition extends Definition<EnumConfig> {
   /**
    * Validate a value matches the type in `valueType`.
    */
-  validateValue(value: unknown, config: object) {
-    const cfg = config as EnumConfig;
+  validateValue(value: unknown, schema: Schema<EnumConfig>) {
+    const cfg = schema.struct;
 
     if (cfg.constant) {
       return;

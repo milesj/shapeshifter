@@ -9,9 +9,9 @@ describe('definitions/Reference', () => {
   });
 
   it('errors if `reference` and `self` are both defined', () => {
-    expect(
-      () => new ReferenceDefinition(options, 'foo', { reference: '', self: false }),
-    ).toThrow('ReferenceDefinition. Only one of these fields may be defined: reference, self');
+    expect(() => new ReferenceDefinition(options, 'foo', { reference: '', self: false })).toThrow(
+      'ReferenceDefinition. Only one of these fields may be defined: reference, self',
+    );
   });
 
   it('errors if `reference` is not a string', () => {

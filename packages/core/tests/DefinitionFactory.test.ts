@@ -17,9 +17,9 @@ describe('DefinitionFactory', () => {
     });
 
     it('errors on invalid type', () => {
-      expect(() =>
-        DefinitionFactory.factory(options, 'foo', { type: 'fakedefinition' }),
-      ).toThrow('Type "fakedefinition" not supported.');
+      expect(() => DefinitionFactory.factory(options, 'foo', { type: 'fakedefinition' })).toThrow(
+        'Type "fakedefinition" not supported.',
+      );
     });
 
     it('errors on invalid primitives', () => {

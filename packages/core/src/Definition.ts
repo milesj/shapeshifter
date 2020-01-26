@@ -1,4 +1,4 @@
-import optimal, { bool, string, shape, union, UnionBuilder } from 'optimal';
+import optimal, { bool, string, shape, union, UnionPredicate } from 'optimal';
 import normalizeType from './helpers/normalizeType';
 import { Config, Options } from './types';
 
@@ -35,7 +35,9 @@ export default class Definition<T extends Config> {
   /**
    * Create an option for type definitions that can be a string or object.
    */
-  createUnionType(defaultValue: unknown = null): UnionBuilder<string | { type: string }> {
+  createUnionType(
+    defaultValue: string | { type: string } = '',
+  ): UnionPredicate<string | { type: string }> {
     return union<string | { type: string }>(
       [
         string().notEmpty(),

@@ -102,7 +102,12 @@ export default class Renderer {
     }
 
     if (Array.isArray(value)) {
-      return this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
+      return this.formatArray(
+        value.map(v => this.formatValue(v)),
+        0,
+        ', ',
+        '',
+      );
     }
 
     const actualType = normalizeType(type || typeof value);
@@ -355,7 +360,12 @@ export default class Renderer {
     let constValue;
 
     if (Array.isArray(value)) {
-      constValue = this.formatArray(value.map(v => this.formatValue(v)), 0, ', ', '');
+      constValue = this.formatArray(
+        value.map(v => this.formatValue(v)),
+        0,
+        ', ',
+        '',
+      );
     } else {
       constValue = this.formatValue(value);
     }

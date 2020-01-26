@@ -22,9 +22,9 @@ describe('definitions/Enum', () => {
   });
 
   it('errors if `values` is empty', () => {
-    expect(
-      () => new EnumDefinition(options, 'foo', { valueType: 'string', values: [] }),
-    ).toThrow('Invalid EnumDefinition field "values". Array cannot be empty.');
+    expect(() => new EnumDefinition(options, 'foo', { valueType: 'string', values: [] })).toThrow(
+      'Invalid EnumDefinition field "values". Array cannot be empty.',
+    );
   });
 
   describe('errors if `values` do not match the type in `valueType`', () => {
