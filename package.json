@@ -1,6 +1,7 @@
 {
   "name": "shapeshifter-root",
   "private": true,
+  "version": "0.0.0",
   "scripts": {
     "build": "yarn run type",
     "check": "flow check && tsc --noEmit --lib esnext,esnext.asynciterable ./tests/expected/graphql/typescript/*.ts ./tests/expected/common/typescript/*.ts",
@@ -17,8 +18,11 @@
     "prerelease": "yarn test && yarn run build",
     "release": "lerna publish"
   },
+  "engines": {
+    "node": ">=10.10.0"
+  },
   "devDependencies": {
-    "@milesj/build-tools": "^1.0.0",
+    "@milesj/build-tools": "^2.0.0",
     "conventional-changelog-beemo": "^1.6.0",
     "lerna": "^3.20.2"
   },
