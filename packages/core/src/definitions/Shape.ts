@@ -9,11 +9,9 @@ export default class ShapeDefinition extends Definition<ShapeConfig> {
   constructor(options: Options, attribute: string, config: Partial<ShapeConfig> = {}) {
     super(options, attribute, config, false);
 
-    // @ts-expect-error
     this.config = optimal(
       this.config,
       {
-        // @ts-expect-error
         attributes: object(this.createUnionType(), null).xor('reference').notEmpty().nullable(),
         nullable: bool(),
         optional: bool(),

@@ -19,7 +19,6 @@ describe('definitions/Polymorph', () => {
   });
 
   it('creates an array of `Definition`s for `valueTypes`', () => {
-    // @ts-expect-error
     const def = new PolymorphDefinition(options, 'foo', {
       valueTypes: ['bool', 'number', 'string'],
     });
