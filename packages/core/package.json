@@ -1,6 +1,6 @@
 {
   "name": "shapeshifter",
-  "version": "7.5.0",
+  "version": "7.5.1",
   "description": "Generate relational schemas, PropTypes, Flow aliases, and TypeScript interfaces from JSON, JS, or GraphQL schematic files.",
   "keywords": [
     "generate",
