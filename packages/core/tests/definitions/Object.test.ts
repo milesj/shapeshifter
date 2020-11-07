@@ -27,7 +27,7 @@ describe('definitions/Object', () => {
       .filter(value => typeof value !== 'string')
       .forEach(value => {
         expect(
-          // @ts-ignore
+          // @ts-expect-error
           () => new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' }),
         ).toThrow('Invalid ObjectDefinition field "keyType". Must be a string.');
       });

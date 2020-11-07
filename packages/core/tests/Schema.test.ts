@@ -56,7 +56,7 @@ describe('Schema', () => {
   describe('addRelation()', () => {
     it('errors if not a schema', () => {
       expect(() => {
-        // @ts-ignore
+        // @ts-expect-error
         schema.addRelation('foo', 'bar');
       }).toThrow('Relation "foo" is not a valid schema.');
     });
@@ -142,7 +142,7 @@ describe('Schema', () => {
       }).toThrow('Relation "foo" is not a valid schema.');
 
       expect(() => {
-        // @ts-ignore
+        // @ts-expect-error
         schema.define({ foo: [123] });
       }).toThrow('Relation "foo" is not a valid schema.');
     });

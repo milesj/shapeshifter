@@ -1,6 +1,6 @@
 import { Options } from '../src/types';
 
-export const falsyValues = [0, 0, '', false, null, undefined, NaN];
+export const falsyValues = [0, 0, '', false, null, undefined, Number.NaN];
 
 // eslint-disable-next-line no-magic-numbers
 export const truthyValues = ['foo', 1, 1.1, true, [], {}];

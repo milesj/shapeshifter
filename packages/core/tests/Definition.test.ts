@@ -3,7 +3,7 @@ import { options } from './mocks';
 
 describe('Definition', () => {
   it('inherits default config and sets attribute', () => {
-    // @ts-ignore Allow unknown
+    // @ts-expect-error Allow unknown
     const def = new Definition(options, 'foo', { key: 'value' });
 
     expect(def.attribute).toBe('foo');
@@ -28,14 +28,14 @@ describe('Definition', () => {
   });
 
   it('validates nullable', () => {
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new Definition(options, 'foo', { nullable: 'string' })).toThrow(
       'Invalid Definition field "nullable". Must be a boolean.',
     );
   });
 
   it('validates optional', () => {
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new Definition(options, 'foo', { optional: 'string' })).toThrow(
       'Invalid Definition field "optional". Must be a boolean.',
     );

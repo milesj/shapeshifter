@@ -22,9 +22,9 @@
     "node": ">=10.10.0"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^2.0.0",
-    "conventional-changelog-beemo": "^1.6.0",
-    "lerna": "^3.20.2"
+    "@milesj/build-tools": "^2.13.1",
+    "conventional-changelog-beemo": "^2.0.0",
+    "lerna": "^3.22.1"
   },
   "workspaces": [
     "packages/*"

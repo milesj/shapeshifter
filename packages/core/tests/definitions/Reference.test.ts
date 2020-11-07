@@ -18,7 +18,7 @@ describe('definitions/Reference', () => {
     truthyValues
       .filter(value => typeof value !== 'string')
       .forEach(value => {
-        // @ts-ignore
+        // @ts-expect-error
         expect(() => new ReferenceDefinition(options, 'foo', { reference: value })).toThrow(
           'Invalid ReferenceDefinition field "reference". Must be a string.',
         );
@@ -29,7 +29,7 @@ describe('definitions/Reference', () => {
     truthyValues
       .filter(value => typeof value !== 'boolean')
       .forEach(value => {
-        // @ts-ignore
+        // @ts-expect-error
         expect(() => new ReferenceDefinition(options, 'foo', { self: value })).toThrow(
           'Invalid ReferenceDefinition field "self". Must be a boolean.',
         );
@@ -41,7 +41,7 @@ describe('definitions/Reference', () => {
       .filter(value => typeof value !== 'string')
       .forEach(value => {
         expect(
-          // @ts-ignore
+          // @ts-expect-error
           () => new ReferenceDefinition(options, 'foo', { reference: 'foo', subset: value }),
         ).toThrow('Invalid ReferenceDefinition field "subset". Must be a string.');
       });
@@ -52,7 +52,7 @@ describe('definitions/Reference', () => {
       .filter(value => typeof value !== 'boolean')
       .forEach(value => {
         expect(
-          // @ts-ignore
+          // @ts-expect-error
           () => new ReferenceDefinition(options, 'foo', { reference: 'foo', export: value }),
         ).toThrow('Invalid ReferenceDefinition field "export". Must be a boolean.');
       });

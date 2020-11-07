@@ -1,3 +1,9 @@
+### 7.5.1 - 2020-11-06
+
+#### 📦 Dependencies
+
+- Updated all to latest.
+
 ## 7.5.0 - 2020-01-26
 
 #### 📦 Dependencies

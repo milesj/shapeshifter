@@ -83,7 +83,7 @@ export default class FlowRenderer extends Renderer {
     }
 
     if (!definition.attributes) {
-      // @ts-ignore Allow
+      // @ts-expect-error Allow
       return this.renderObject(definition, depth);
     }
 

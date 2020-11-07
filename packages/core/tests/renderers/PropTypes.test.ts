@@ -112,6 +112,7 @@ describe('PropTypesRenderer', () => {
         valueType: 'string',
       });
 
+      // @ts-expect-error
       delete def.valueType;
 
       expect(renderer.renderArray(def, 0)).toBe('PropTypes.array');
@@ -296,6 +297,7 @@ describe('PropTypesRenderer', () => {
         valueType: 'string',
       });
 
+      // @ts-expect-error
       delete def.valueType;
 
       expect(renderer.renderObject(def, 0)).toBe('PropTypes.object');
@@ -356,6 +358,7 @@ describe('PropTypesRenderer', () => {
         attributes: { foo: 'string' },
       });
 
+      // @ts-expect-error
       delete def.attributes;
 
       expect(renderer.renderShape(def, 0)).toBe('PropTypes.object');
@@ -452,7 +455,7 @@ describe('PropTypesRenderer', () => {
 
   describe('wrapPropType()', () => {
     it('adds prop type text', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(renderer.wrapPropType({ isNullable: () => true }, 'foo')).toBe('PropTypes.foo');
     });
   });
@@ -460,14 +463,14 @@ describe('PropTypesRenderer', () => {
   describe('wrapOptional()', () => {
     it('renders required', () => {
       expect(
-        // @ts-ignore
+        // @ts-expect-error
         renderer.wrapOptional({ isNullable: () => false, isOptional: () => false }, 'foo'),
       ).toBe('foo.isRequired');
     });
 
     it('renders non-required', () => {
       expect(
-        // @ts-ignore
+        // @ts-expect-error
         renderer.wrapOptional({ isNullable: () => false, isOptional: () => true }, 'foo'),
       ).toBe('foo');
     });

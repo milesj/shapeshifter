@@ -16,7 +16,7 @@ describe('definitions/Array', () => {
   });
 
   it('errors if `valueType` is the wrong type', () => {
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new ArrayDefinition(options, 'foo', { valueType: 123 })).toThrow(
       'Invalid ArrayDefinition field "valueType". Type must be one of: string, shape',
     );

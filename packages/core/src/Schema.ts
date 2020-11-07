@@ -14,6 +14,7 @@ const HAS_ONE = 'hasOne';
 const HAS_MANY = 'hasMany';
 const MORPH_TO = 'morphTo';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default class Schema<T = unknown> {
   static HAS_ONE: string = HAS_ONE;
 

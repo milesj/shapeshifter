@@ -119,6 +119,7 @@ describe('FlowRenderer', () => {
         valueType: 'string',
       });
 
+      // @ts-expect-error
       delete def.valueType;
 
       expect(renderer.renderArray(def, 0)).toBe('Array<any>');
@@ -280,6 +281,7 @@ describe('FlowRenderer', () => {
         valueType: 'string',
       });
 
+      // @ts-expect-error
       delete def.keyType;
 
       expect(renderer.renderObject(def, 0)).toBe('{ [key: string]: string }');
@@ -291,6 +293,7 @@ describe('FlowRenderer', () => {
         valueType: 'string',
       });
 
+      // @ts-expect-error
       delete def.valueType;
 
       expect(renderer.renderObject(def, 0)).toBe('{ [key: number]: any }');
@@ -363,6 +366,7 @@ describe('FlowRenderer', () => {
         attributes: { foo: 'string' },
       });
 
+      // @ts-expect-error
       delete def.attributes;
 
       expect(renderer.renderShape(def, 0)).toBe('{ [key: string]: any }');
@@ -454,12 +458,12 @@ describe('FlowRenderer', () => {
 
   describe('wrapNullable()', () => {
     it('renders nullable', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('?foo');
     });
 
     it('renders non-nullable', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(renderer.wrapNullable({ isNullable: () => false }, 'foo')).toBe('foo');
     });
   });

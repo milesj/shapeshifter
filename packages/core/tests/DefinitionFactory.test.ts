@@ -33,7 +33,7 @@ describe('DefinitionFactory', () => {
     });
 
     it('errors on missing object type', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(() => DefinitionFactory.factory(options, 'foo', { noType: 'hah' })).toThrow(
         'Definitions require a "type" property.',
       );

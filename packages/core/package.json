@@ -34,12 +34,12 @@
   "license": "MIT",
   "dependencies": {
     "optimal": "^4.2.0",
-    "yargs": "^15.3.0"
+    "yargs": "^16.1.0"
   },
   "devDependencies": {
-    "@types/yargs": "^15.0.4",
-    "flow-bin": "^0.120.1",
-    "typescript": "^3.8.3"
+    "@types/yargs": "^15.0.9",
+    "flow-bin": "^0.137.0",
+    "typescript": "^4.0.5"
   },
   "funding": {
     "type": "ko-fi",

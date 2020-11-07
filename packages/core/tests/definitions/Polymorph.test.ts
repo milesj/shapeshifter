@@ -6,7 +6,7 @@ import StringDefinition from '../../src/definitions/String';
 
 describe('definitions/Polymorph', () => {
   it('errors if `valueTypes` is not an array', () => {
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new PolymorphDefinition(options, 'foo', { valueTypes: 123 })).toThrow(
       'Invalid PolymorphDefinition field "valueTypes". Must be an array.',
     );
@@ -19,7 +19,7 @@ describe('definitions/Polymorph', () => {
   });
 
   it('creates an array of `Definition`s for `valueTypes`', () => {
-    // @ts-ignore
+    // @ts-expect-error
     const def = new PolymorphDefinition(options, 'foo', {
       valueTypes: ['bool', 'number', 'string'],
     });

@@ -20,7 +20,7 @@ export default class Definition<T extends Config> {
   ) {
     this.options = options;
     this.attribute = attribute;
-    // @ts-ignore
+    // @ts-expect-error
     this.config = {
       nullable: options.defaultNullable,
       optional: options.defaultOptional,

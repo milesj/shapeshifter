@@ -13,7 +13,7 @@ export default class Builder {
 
   sets: TemplateList = new Set();
 
-  schemas: TemplateMap = new Map();
+  schemas: TemplateMap = new Map<string, string>();
 
   relations: TemplateList = new Set();
 }

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable no-use-before-define, @typescript-eslint/no-empty-interface */
 
 import Schema from './Schema';
 

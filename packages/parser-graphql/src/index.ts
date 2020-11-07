@@ -228,7 +228,7 @@ class GraphQLParser {
   }
 
   parseAttributes() {
-    // @ts-ignore
+    // @ts-expect-error
     const { fields = [] } = this.schematic;
 
     fields.forEach((fieldDefinition: FieldDefinitionNode) => {

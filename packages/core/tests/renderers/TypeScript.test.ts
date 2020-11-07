@@ -129,6 +129,7 @@ describe('TypeScriptRenderer', () => {
         valueType: 'string',
       });
 
+      // @ts-expect-error
       delete def.valueType;
 
       expect(renderer.renderArray(def, 0)).toBe('Array<any>');
@@ -303,6 +304,7 @@ describe('TypeScriptRenderer', () => {
         valueType: 'string',
       });
 
+      // @ts-expect-error
       delete def.keyType;
 
       expect(renderer.renderObject(def, 0)).toBe('{ [key: string]: string }');
@@ -314,6 +316,7 @@ describe('TypeScriptRenderer', () => {
         valueType: 'string',
       });
 
+      // @ts-expect-error
       delete def.valueType;
 
       expect(renderer.renderObject(def, 0)).toBe('{ [key: number]: any }');
@@ -386,6 +389,7 @@ describe('TypeScriptRenderer', () => {
         attributes: { foo: 'string' },
       });
 
+      // @ts-expect-error
       delete def.attributes;
 
       expect(renderer.renderShape(def, 0)).toBe('{ [key: string]: any }');
@@ -473,12 +477,12 @@ describe('TypeScriptRenderer', () => {
 
   describe('wrapNullable()', () => {
     it('renders nullable', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(renderer.wrapNullable({ isNullable: () => true }, 'foo')).toBe('foo | null');
     });
 
     it('renders non-nullable', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(renderer.wrapNullable({ isNullable: () => false }, 'foo')).toBe('foo');
     });
   });

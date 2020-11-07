@@ -195,7 +195,7 @@ describe('Renderer', () => {
 
   describe('renderAttribute()', () => {
     it('returns an empty string for invalid definition', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(renderer.renderAttribute('foo')).toBe('');
     });
   });
@@ -218,12 +218,12 @@ describe('Renderer', () => {
 
   describe('renderImport()', () => {
     it('errors if no `path` is set', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(() => renderer.renderImport({})).toThrow('Import statements require a file path.');
     });
 
     it('errors if `named` is not an array', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(() => renderer.renderImport({ path: '/', named: true })).toThrow(
         'Named imports must be an array.',
       );
@@ -346,7 +346,7 @@ describe('Renderer', () => {
     });
 
     it('errors if invalid resource name', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(() => renderer.renderSchema('QuxSchema', [], { resourceName: true })).toThrow(
         'Schema QuxSchema requires a "meta.resourceName" property to be defined. The resource name is a unique key found within a URL.',
       );
@@ -423,7 +423,7 @@ describe('Renderer', () => {
     });
 
     it('renders template with one references', () => {
-      // @ts-ignore
+      // @ts-expect-error
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(
@@ -449,7 +449,7 @@ describe('Renderer', () => {
     });
 
     it('renders template and avoids duplication by following attributes', () => {
-      // @ts-ignore
+      // @ts-expect-error
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(
@@ -475,7 +475,7 @@ describe('Renderer', () => {
     });
 
     it('renders template with many references', () => {
-      // @ts-ignore
+      // @ts-expect-error
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(
@@ -504,7 +504,7 @@ describe('Renderer', () => {
     });
 
     it('renders template with one/many references and a custom relation name', () => {
-      // @ts-ignore
+      // @ts-expect-error
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(
@@ -542,7 +542,7 @@ describe('Renderer', () => {
 
     it('renders template with everything', () => {
       renderer.options.includeAttributes = true;
-      // @ts-ignore
+      // @ts-expect-error
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
 
       expect(
@@ -588,7 +588,7 @@ describe('Renderer', () => {
     });
 
     it('renders template using useDefine define syntax', () => {
-      // @ts-ignore
+      // @ts-expect-error
       renderer.schematic.referenceSchematics.posts = { name: 'Posts' };
       renderer.options.useDefine = true;
 

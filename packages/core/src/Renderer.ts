@@ -121,7 +121,7 @@ export default class Renderer {
         return `${String(value)}`;
 
       case 'number':
-        return `${parseFloat(String(value))}`;
+        return `${Number.parseFloat(String(value))}`;
 
       default:
         throw new TypeError(`Unknown type "${actualType}" passed to formatValue().`);

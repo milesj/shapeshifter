@@ -25,7 +25,7 @@ describe('RendererFactory', () => {
     });
 
     it('errors for invalid renderer', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(() => RendererFactory.factory('foo', options, new Builder(), schematic)).toThrow(
         'Renderer "foo" not supported.',
       );

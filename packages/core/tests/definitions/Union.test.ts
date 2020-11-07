@@ -6,7 +6,7 @@ import StringDefinition from '../../src/definitions/String';
 
 describe('definitions/Union', () => {
   it('errors if `valueTypes` is not an array', () => {
-    // @ts-ignore
+    // @ts-expect-error
     expect(() => new UnionDefinition(options, 'foo', { valueTypes: 123 })).toThrow(
       'Invalid UnionDefinition field "valueTypes". Must be an array.',
     );

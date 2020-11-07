@@ -120,7 +120,7 @@ export default class TypeScriptRenderer extends Renderer {
     }
 
     if (!definition.attributes) {
-      // @ts-ignore Allow
+      // @ts-expect-error Allow
       return this.renderObject(definition, depth);
     }
 
