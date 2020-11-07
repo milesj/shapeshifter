@@ -15,7 +15,7 @@
     "test": "yarn run jest",
     "test:bin": "shapeshifter --attributes --definitions --schemas --schema-generics --typescript ./tests/schemas/types-schemas.json",
     "test:webpack": "webpack",
-    "posttest": "yarn run lint && yarn run check",
+    "posttest": "yarn run lint",
     "type": "beemo typescript --build --reference-workspaces",
     "prerelease": "yarn test && yarn run build",
     "release": "lerna publish"
