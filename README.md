@@ -1,4 +1,6 @@
-# Shapeshifter
+# Shapeshifter (DEPRECATED)
+
+> This project is no longer being maintained!
 
 [![Build Status](https://github.com/milesj/shapeshifter/workflows/Build/badge.svg)](https://github.com/milesj/shapeshifter/actions?query=branch%3Amaster)
 [![npm version](https://badge.fury.io/js/shapeshifter.svg)](https://www.npmjs.com/package/shapeshifter)
