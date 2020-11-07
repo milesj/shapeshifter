@@ -2,6 +2,7 @@
 
 #### 📦 Dependencies
 
+- Updated `graphql` to v15.4.
 - Updated all to latest.
 
 ## 1.3.0 - 2020-01-26
