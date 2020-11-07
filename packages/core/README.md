@@ -17,4 +17,4 @@ data structures, resources, internal shapes, and more.
 
 ## Documentation
 
-[https://milesj.gitbook.io/shapeshifter](https://milesj.gitbook.io/shapeshifter)
+[https://github.com/milesj/shapeshifter/tree/master/docs](https://github.com/milesj/shapeshifter/tree/master/docs)
