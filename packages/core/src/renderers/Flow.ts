@@ -45,7 +45,7 @@ export default class FlowRenderer extends Renderer {
   renderEnum(definition: EnumDefinition, depth: number): string {
     const { values, valueType } = definition.config;
 
-    return values.map(item => this.renderOrFormat(item, depth, valueType)).join(' | ');
+    return values.map((item) => this.renderOrFormat(item, depth, valueType)).join(' | ');
   }
 
   renderInstance(definition: InstanceDefinition): string {
@@ -99,7 +99,7 @@ export default class FlowRenderer extends Renderer {
 
   renderUnion(definition: UnionDefinition, depth: number): string {
     const template = Array.from(
-      new Set(definition.valueTypes.map(item => this.renderAttribute(item, depth))),
+      new Set(definition.valueTypes.map((item) => this.renderAttribute(item, depth))),
     ).join(' | ');
 
     return definition.isNullable() && !template.endsWith('null') ? `${template} | null` : template;

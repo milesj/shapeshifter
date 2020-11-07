@@ -54,7 +54,7 @@ export default class TypeScriptRenderer extends Renderer {
 
     // Use a union
     if (!enums) {
-      return values.map(item => this.renderOrFormat(item, depth, valueType)).join(' | ');
+      return values.map((item) => this.renderOrFormat(item, depth, valueType)).join(' | ');
     }
 
     const members: string[] = [];
@@ -138,7 +138,7 @@ export default class TypeScriptRenderer extends Renderer {
     return this.wrapNullable(
       definition,
       Array.from(
-        new Set(definition.valueTypes.map(item => this.renderAttribute(item, depth))),
+        new Set(definition.valueTypes.map((item) => this.renderAttribute(item, depth))),
       ).join(' | '),
     );
   }

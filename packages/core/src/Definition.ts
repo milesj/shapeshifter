@@ -42,9 +42,7 @@ export default class Definition<T extends Config> {
       [
         string().notEmpty(),
         shape({
-          type: string()
-            .notEmpty()
-            .required(),
+          type: string().notEmpty().required(),
         }),
       ],
       defaultValue,

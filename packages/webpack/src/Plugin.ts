@@ -31,7 +31,7 @@ export default class ShapeshifterPlugin {
   }
 
   apply(compiler: webpack.Compiler) {
-    compiler.hooks.normalModuleFactory.tap('ShapeshifterWebpackPlugin', nmf => {
+    compiler.hooks.normalModuleFactory.tap('ShapeshifterWebpackPlugin', (nmf) => {
       nmf.hooks.afterResolve.tapAsync('ShapeshifterWebpackPlugin', this.handleResolve);
     });
   }

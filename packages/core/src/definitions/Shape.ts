@@ -14,10 +14,7 @@ export default class ShapeDefinition extends Definition<ShapeConfig> {
       this.config,
       {
         // @ts-expect-error
-        attributes: object(this.createUnionType(), null)
-          .xor('reference')
-          .notEmpty()
-          .nullable(),
+        attributes: object(this.createUnionType(), null).xor('reference').notEmpty().nullable(),
         nullable: bool(),
         optional: bool(),
         reference: string().xor('attributes'),
@@ -32,7 +29,7 @@ export default class ShapeDefinition extends Definition<ShapeConfig> {
     const { attributes } = this.config;
 
     if (attributes) {
-      this.attributes = Object.keys(attributes).map(attr =>
+      this.attributes = Object.keys(attributes).map((attr) =>
         DefinitionFactory.factory(this.options, attr, attributes[attr]),
       );
     }

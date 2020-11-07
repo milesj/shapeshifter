@@ -96,7 +96,7 @@ app
         description: 'Reduce the output of schema ORM definitions.',
       },
     },
-    function(options) {
+    function (options) {
       const renderers = [
         options.propTypes ? 'prop-types' : '', // Always first
         options.flow ? 'flow' : '',
@@ -121,10 +121,10 @@ app
         useDefine: options.useDefine,
       })
         .transpile(options.paths)
-        .then(function(output) {
+        .then(function (output) {
           console.log(output);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.error(error.message);
           process.exitCode = 1;
         });

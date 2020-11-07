@@ -16,8 +16,8 @@ describe('definitions/Reference', () => {
 
   it('errors if `reference` is not a string', () => {
     truthyValues
-      .filter(value => typeof value !== 'string')
-      .forEach(value => {
+      .filter((value) => typeof value !== 'string')
+      .forEach((value) => {
         // @ts-expect-error
         expect(() => new ReferenceDefinition(options, 'foo', { reference: value })).toThrow(
           'Invalid ReferenceDefinition field "reference". Must be a string.',
@@ -27,8 +27,8 @@ describe('definitions/Reference', () => {
 
   it('errors if `self` is not a boolean', () => {
     truthyValues
-      .filter(value => typeof value !== 'boolean')
-      .forEach(value => {
+      .filter((value) => typeof value !== 'boolean')
+      .forEach((value) => {
         // @ts-expect-error
         expect(() => new ReferenceDefinition(options, 'foo', { self: value })).toThrow(
           'Invalid ReferenceDefinition field "self". Must be a boolean.',
@@ -38,8 +38,8 @@ describe('definitions/Reference', () => {
 
   it('errors if `subset` is not a string', () => {
     truthyValues
-      .filter(value => typeof value !== 'string')
-      .forEach(value => {
+      .filter((value) => typeof value !== 'string')
+      .forEach((value) => {
         expect(
           // @ts-expect-error
           () => new ReferenceDefinition(options, 'foo', { reference: 'foo', subset: value }),
@@ -49,8 +49,8 @@ describe('definitions/Reference', () => {
 
   it('errors if `export` is not a boolean', () => {
     truthyValues
-      .filter(value => typeof value !== 'boolean')
-      .forEach(value => {
+      .filter((value) => typeof value !== 'boolean')
+      .forEach((value) => {
         expect(
           // @ts-expect-error
           () => new ReferenceDefinition(options, 'foo', { reference: 'foo', export: value }),

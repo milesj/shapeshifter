@@ -18,9 +18,7 @@ export default class EnumDefinition extends Definition<EnumConfig> {
         type: string('enum').notEmpty(),
         valueType: this.createUnionType(),
         // `valueType` must be validated before values
-        values: array(custom(this.validateValue, ''))
-          .notEmpty()
-          .required(),
+        values: array(custom(this.validateValue, '')).notEmpty().required(),
       },
       {
         name: 'EnumDefinition',

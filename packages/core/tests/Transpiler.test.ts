@@ -98,7 +98,7 @@ describe('Transpiler', () => {
           }
 
           describe(`from ${format.toUpperCase()} files`, () => {
-            testCases.forEach(schema => {
+            testCases.forEach((schema) => {
               it(`when rendering schema case "${schema}"`, () => {
                 const actualPath = `${TEST_ROOT}/schemas/${format}/${schema}.${format}`;
                 const expectedPath = `${TEST_ROOT}/expected/${target}/${key}/${schema}.${ext}`;
@@ -423,7 +423,7 @@ describe('extractSchematics()', () => {
       `${TEST_ROOT}/schemas/json/reference.json`,
     );
 
-    expect(schematics.map(schematic => schematic.path)).toEqual([
+    expect(schematics.map((schematic) => schematic.path)).toEqual([
       `${TEST_ROOT}/schemas/json/reference-bar.json`,
       `${TEST_ROOT}/schemas/json/reference-set.json`,
       `${TEST_ROOT}/schemas/json/reference-foo.json`,

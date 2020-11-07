@@ -16,8 +16,8 @@ describe('definitions/Instance', () => {
 
   it('errors if `contract` is not a string', () => {
     truthyValues
-      .filter(value => typeof value !== 'string')
-      .forEach(value => {
+      .filter((value) => typeof value !== 'string')
+      .forEach((value) => {
         // @ts-expect-error
         expect(() => new InstanceDefinition(options, 'foo', { contract: value })).toThrow(
           'Invalid InstanceDefinition field "contract". Must be a string.',

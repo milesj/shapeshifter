@@ -103,7 +103,7 @@ export default class Renderer {
 
     if (Array.isArray(value)) {
       return this.formatArray(
-        value.map(v => this.formatValue(v)),
+        value.map((v) => this.formatValue(v)),
         0,
         ', ',
         '',
@@ -132,7 +132,7 @@ export default class Renderer {
    * Return the export name to be used as the prop type or type alias name.
    */
   getObjectName(...names: string[]): string {
-    return names.map(name => formatName(name)).join('');
+    return names.map((name) => formatName(name)).join('');
   }
 
   /**
@@ -222,7 +222,7 @@ export default class Renderer {
     const { attributes, subsets, name } = this.schematic;
 
     // Subsets
-    Object.keys(subsets).forEach(setName => {
+    Object.keys(subsets).forEach((setName) => {
       const setAttributes: Definition<Config>[] = [];
       let subset = subsets[setName];
 
@@ -233,7 +233,7 @@ export default class Renderer {
       const nullable = subset.nullable || {};
       const optional = subset.optional || {};
 
-      subset.attributes.forEach(attribute => {
+      subset.attributes.forEach((attribute) => {
         let setConfig = baseAttributes[attribute];
 
         /* istanbul ignore next Hard to test */
@@ -274,7 +274,7 @@ export default class Renderer {
     const { name, shapes } = this.schematic;
 
     Object.keys(shapes).forEach((key: string) => {
-      const attributes = Object.keys(shapes[key]).map(attribute =>
+      const attributes = Object.keys(shapes[key]).map((attribute) =>
         DefinitionFactory.factory(this.options, attribute, shapes[key][attribute]),
       );
 
@@ -334,7 +334,7 @@ export default class Renderer {
    * Render an array of values by formatting each value and prepending an indentation.
    */
   renderArrayItems(items: PrimitiveType[], depth: number = 0, valueType: string = ''): string[] {
-    return items.map(item => this.wrapItem(this.formatValue(item, valueType), depth));
+    return items.map((item) => this.wrapItem(this.formatValue(item, valueType), depth));
   }
 
   /**
@@ -342,7 +342,7 @@ export default class Renderer {
    */
   renderArrayDefinitions(items: Definition<Config>[], depth: number = 0): string[] {
     return Array.from(
-      new Set(items.map(item => this.wrapItem(this.renderAttribute(item, depth), depth))),
+      new Set(items.map((item) => this.wrapItem(this.renderAttribute(item, depth), depth))),
     );
   }
 
@@ -361,7 +361,7 @@ export default class Renderer {
 
     if (Array.isArray(value)) {
       constValue = this.formatArray(
-        value.map(v => this.formatValue(v)),
+        value.map((v) => this.formatValue(v)),
         0,
         ', ',
         '',
@@ -445,7 +445,7 @@ export default class Renderer {
     depth: number = 0,
     sep: string = ',',
   ): string[] {
-    return properties.map(prop =>
+    return properties.map((prop) =>
       this.wrapProperty(this.wrapPropertyName(prop), this.renderAttribute(prop, depth), depth, sep),
     );
   }
@@ -479,7 +479,7 @@ export default class Renderer {
    * Render a polymorph definition.
    */
   renderPolymorph(definition: PolymorphDefinition, depth: number): string {
-    definition.valueTypes.forEach(value => {
+    definition.valueTypes.forEach((value) => {
       if (!(value instanceof ShapeDefinition || value instanceof ReferenceDefinition)) {
         throw new TypeError('Polymorphic relations must be references or shape references.');
       } else if (!value.config.name) {
@@ -562,7 +562,7 @@ export default class Renderer {
       }
     };
 
-    attributes.forEach(definition => {
+    attributes.forEach((definition) => {
       if (includeAttributes) {
         attributesTemplate.push(this.wrapItem(this.formatValue(definition.attribute, 'string'), 2));
       }
@@ -581,7 +581,7 @@ export default class Renderer {
         const customType = definition.config.typeSuffix !== '_type';
         const args = [
           this.formatObject(
-            definition.valueTypes.map(valueDefinition =>
+            definition.valueTypes.map((valueDefinition) =>
               this.wrapProperty(
                 this.formatObjectProperty(valueDefinition.config.name!),
                 getRelationSchemaName(valueDefinition as ReferenceDefinition),
@@ -636,7 +636,7 @@ export default class Renderer {
         relationsTemplate.push(`  .define(${this.formatObject(useDefineList, 1)})`);
       }
     } else {
-      Object.keys(relations).forEach(relation => {
+      Object.keys(relations).forEach((relation) => {
         relationsTemplate.push(`  .${relation}(${this.formatObject(relations[relation], 1)})`);
       });
     }

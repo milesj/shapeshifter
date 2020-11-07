@@ -24,8 +24,8 @@ describe('definitions/Object', () => {
 
   it('errors if `keyType` is not a string', () => {
     truthyValues
-      .filter(value => typeof value !== 'string')
-      .forEach(value => {
+      .filter((value) => typeof value !== 'string')
+      .forEach((value) => {
         expect(
           // @ts-expect-error
           () => new ObjectDefinition(options, 'foo', { keyType: value, valueType: 'string' }),

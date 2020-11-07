@@ -23,6 +23,6 @@ export default function loader(this: webpack.loader.LoaderContext) {
   // Transpile the schematics
   new Transpiler(options)
     .transpile(schematicsSource)
-    .then(source => callback(null, source))
-    .catch(error => callback(error));
+    .then((source) => callback(null, source))
+    .catch((error) => callback(error));
 }

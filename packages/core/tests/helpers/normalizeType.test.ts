@@ -13,7 +13,7 @@ describe('helpers/normalizeType', () => {
       'boolean',
       'number',
       'string',
-    ].forEach(value => {
+    ].forEach((value) => {
       expect(normalizeType(value)).toBe(value);
     });
   });

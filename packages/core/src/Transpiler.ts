@@ -72,12 +72,12 @@ export default class Transpiler {
   /* istanbul ignore next */
   transpile(targets: string[]): Promise<string> {
     return Promise.all(
-      targets.map(target => {
+      targets.map((target) => {
         const stats = fs.statSync(target);
         const paths = [];
 
         if (stats.isDirectory()) {
-          paths.push(...fs.readdirSync(target).map(file => path.resolve(target, file)));
+          paths.push(...fs.readdirSync(target).map((file) => path.resolve(target, file)));
         } else if (stats.isFile()) {
           paths.push(path.resolve(target));
         } else {
@@ -86,7 +86,7 @@ export default class Transpiler {
 
         return paths;
       }),
-    ).then(targetPaths =>
+    ).then((targetPaths) =>
       this.generate(targetPaths.reduce((paths, target) => [...paths, ...target], [])),
     );
   }
@@ -95,7 +95,7 @@ export default class Transpiler {
    * Transpile a folder by looping over all JS and JSON files and rendering them.
    */
   transpileFolder(folderPath: string): string {
-    return this.generate(fs.readdirSync(folderPath).map(file => path.join(folderPath, file)));
+    return this.generate(fs.readdirSync(folderPath).map((file) => path.join(folderPath, file)));
   }
 
   /**
@@ -176,7 +176,7 @@ export default class Transpiler {
         return;
       }
 
-      this.options.renderers.forEach(renderer => {
+      this.options.renderers.forEach((renderer) => {
         RendererFactory.factory(renderer, this.options, builder, schematic).parse();
 
         rendered.add(schematic.path);

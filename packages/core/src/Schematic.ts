@@ -110,7 +110,7 @@ export default class Schematic {
     const { primaryKey = 'id' } = this.metadata;
 
     // Convert to type definitions
-    Object.keys(attributes).forEach(attribute => {
+    Object.keys(attributes).forEach((attribute) => {
       const config = toConfig(attributes[attribute]);
 
       // Force primary key to key type

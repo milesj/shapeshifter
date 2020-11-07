@@ -19,9 +19,7 @@ export default class PolymorphDefinition extends Definition<PolymorphConfig> {
         optional: bool(),
         type: string('polymorph').notEmpty(),
         typeSuffix: string('_type').notEmpty(),
-        valueTypes: array(this.createUnionType())
-          .notEmpty()
-          .required(),
+        valueTypes: array(this.createUnionType()).notEmpty().required(),
       },
       {
         name: 'PolymorphDefinition',

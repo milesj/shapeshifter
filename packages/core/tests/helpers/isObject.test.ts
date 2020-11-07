@@ -4,8 +4,8 @@ import { allValues } from '../mocks';
 describe('helpers/isObject', () => {
   it('returns false for non-objects', () => {
     allValues
-      .filter(value => typeof value !== 'object')
-      .forEach(value => {
+      .filter((value) => typeof value !== 'object')
+      .forEach((value) => {
         expect(isObject(value)).toBe(false);
       });
   });

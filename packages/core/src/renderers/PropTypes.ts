@@ -50,7 +50,7 @@ export default class PropTypesRenderer extends Renderer {
   renderEnum(definition: EnumDefinition, depth: number): string {
     const { constants } = this.schematic;
     const { constant, values, valueType } = definition.config;
-    const items = values.map(value =>
+    const items = values.map((value) =>
       this.wrapItem(
         constant && typeof value === 'string' && typeof constants[value] !== 'undefined'
           ? value

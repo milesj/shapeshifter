@@ -8,7 +8,7 @@
     "coverage": "yarn run jest --coverage",
     "eslint": "beemo eslint",
     "jest": "beemo jest",
-    "prettier": "beemo prettier",
+    "format": "beemo prettier",
     "pretest": "yarn run type",
     "test": "yarn run jest",
     "test:bin": "shapeshifter --attributes --definitions --schemas --schema-generics --typescript ./tests/schemas/types-schemas.json",
