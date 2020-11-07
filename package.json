@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "build": "yarn run type",
-    "check": "flow check && tsc --noEmit --lib esnext,esnext.asynciterable ./tests/expected/graphql/typescript/*.ts ./tests/expected/common/typescript/*.ts",
+    "check": "yarn run check:flow && yarn run check:ts",
+    "check:flow": "flow check",
+    "check:ts": "tsc --noEmit --lib esnext,esnext.asynciterable ./tests/expected/graphql/typescript/*.ts ./tests/expected/common/typescript/*.ts",
     "coverage": "yarn run jest --coverage",
     "lint": "beemo eslint",
     "jest": "beemo jest",
