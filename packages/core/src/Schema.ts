@@ -76,7 +76,7 @@ export default class Schema<T = unknown> {
     relation: string,
     polymorph?: PolymorphRelation,
   ): this {
-    if ("production" !== process.env.NODE_ENV) {
+    if (process.env.NODE_ENV !== 'production') {
       if (!(schema instanceof Schema)) {
         throw new TypeError(`Relation "${attribute}" is not a valid schema.`);
       } else if (this.relationTypes[attribute] && this.relationTypes[attribute] !== relation) {
